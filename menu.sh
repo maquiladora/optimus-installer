@@ -1,13 +1,7 @@
 #!/bin/bash
 
 # source config.conf
-
-#while :
-#do
-	#clear
-
-
-
+clear
 
 	tput cup 2 	4 ; echo -ne  "\033[46;30m      OPTIMUS INSTALLER      \e[0m"
 	tput cup 3 	4 ; echo -ne  "\033[46;30m            V1.00            \e[0m"
@@ -150,4 +144,3 @@
 			clear
 			;;
 	esac
-done
