@@ -1,7 +1,7 @@
 apt-get -qq -y install libpam-google-authenticator
 
 if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd; then
-  echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/ssh
+  echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
 fi
 
 if grep -q "ChallengeResponseAuthentication no" /etc/ssh/sshd_config; then
@@ -10,4 +10,4 @@ fi
 
 service sshd restart
 
-google-authenticator
+google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 1
