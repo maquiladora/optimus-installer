@@ -34,7 +34,14 @@ read y
 
 case "$y" in
 
-	c)
+  a)
+    tput reset
+    clear
+    source /installer/ssh-google-authenticator/install.sh
+    read -p "Done. Press [Enter] key to continue..."
+    ;;
+
+  c)
 		tput reset
 		clear
 		source /srv/installer/crypt/install.sh
