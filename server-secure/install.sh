@@ -13,8 +13,7 @@ read -p "Voulez vous remplacer le port de connexion SSH par le port 7822 ? " -n 
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-    echo "hopla"
-    sed -i 's/Port 22/Port 7822/g' /etc/ssh/sshd_config
+    sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
     service sshd restart
 fi
 
