@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source config.conf
+# source config.conf
 
 #while :
 #do
