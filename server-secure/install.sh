@@ -4,7 +4,7 @@ echo
 read -p "Voulez vous modifier le mot de passe root ? " -n 1 -r
 echo
 echo "suggestion sécurisée : "
-< /dev/urandom tr -dc _A-Za-z0-9 | head -c${1:-32};echo;
+< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo;
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -20,13 +20,13 @@ then
     service sshd restart
 fi
 
-if [ -d "/home/optimus" ]
+if [ ! -d "/home/optimus" ]
 then
   echo
   read -p "Voulez vous créer un utilisateur secondaire dénommé optimus ? " -n 1 -r
   echo
   echo "suggestion sécurisée : "
-  < /dev/urandom tr -dc _A-Za-z0-9 | head -c${1:-32};echo;
+  < /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo;
   echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
