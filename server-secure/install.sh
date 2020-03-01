@@ -2,6 +2,7 @@
 
 echo
 read -p "Voulez vous modifier le mot de passe root ? " -n 1 -r
+echo
 echo "suggestion sécurisée : "
 < /dev/urandom tr -dc _A-Za-z0-9 | head -c${1:-32};echo;
 echo
@@ -19,16 +20,22 @@ then
     service sshd restart
 fi
 
-echo
-read -p "Voulez vous créer un utilisateur secondaire dénommé optimus ? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[YyOo]$ ]]
+if [ -d "/home/optimus" ]
 then
-    adduser optimus
-    if [ -f "/root/.google_authenticator" ]
-    then
-      cp /root/.google_authenticator /home/optimus/.google_authenticator
-    fi
+  echo
+  read -p "Voulez vous créer un utilisateur secondaire dénommé optimus ? " -n 1 -r
+  echo
+  echo "suggestion sécurisée : "
+  < /dev/urandom tr -dc _A-Za-z0-9 | head -c${1:-32};echo;
+  echo
+  if [[ $REPLY =~ ^[YyOo]$ ]]
+  then
+      adduser optimus
+      if [ -f "/root/.google_authenticator" ]
+      then
+        cp /root/.google_authenticator /home/optimus/.google_authenticator
+      fi
+  fi
 fi
 
 echo

@@ -32,7 +32,7 @@ tput cup 22 3; echo -ne "\e[32m q. Quit \e[0m"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
 
-tput cup 26 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 26 21
+tput cup 25 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read y
 
