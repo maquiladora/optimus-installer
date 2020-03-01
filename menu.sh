@@ -41,7 +41,7 @@ case "$y" in
   a)
     tput reset
     clear
-    source /installer/server_secure/install.sh
+    source /installer/server-secure/install.sh
     read -p "Done. Press [Enter] key to continue..."
     ;;
 
