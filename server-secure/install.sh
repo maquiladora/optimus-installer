@@ -2,6 +2,8 @@
 
 echo
 read -p "Voulez vous modifier le mot de passe root ? " -n 1 -r
+echo "suggestion sécurisée : "
+< /dev/urandom tr -dc _A-Za-z0-9 | head -c${1:-32};echo;
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -23,6 +25,10 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
     adduser optimus
+    if [ -f "/root/.google_authenticator" ]
+    then
+      cp /root/.google_authenticator /home/optimus/.google_authenticator
+    fi
 fi
 
 echo
@@ -35,7 +41,7 @@ then
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
     service sshd restart
   else
-    echo "L'accès SSD de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé"
+    echo "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé préalablement"
   fi
 fi
 
