@@ -6,5 +6,6 @@ cd /
 rm -R /installer
 mkdir /installer
 git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
-chmod +x /installer/menu.sh
-./installer/menu.sh
+cd /installer
+chmod +x menu.sh
+./menu.sh
