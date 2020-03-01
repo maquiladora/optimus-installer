@@ -12,7 +12,7 @@ then
   sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
 fi
 
-service sshd restart
+systemctl restart sshd
 
 google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
 if [ -d "/home/optimus" ]
