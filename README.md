@@ -7,6 +7,14 @@ Il est recommandé de créer une partition spécifique /srv pour stocker les don
 
 Si le disque ne contient qu'une seule partition, ce qui est notamment le cas par défaut sur les VPS OVH, les scripts peuvent redimensionner la partition root à 4Gb et créer une partition secondaire avec le reste de l'espace libre. Cette fonction ne doit être utilisée que sur une installation vierge, au risque sinon de corrompre le système ou de perdre des données.<br/>
 
+Pour lancer les scripts depuis la ligne de commande :
+
+<pre>
+  <code>
+    wget -qO- https://vest.optimus-avocats.fr/part_vps.sh | bash
+  </code>
+</pre>
+
 L'arborescence OPTIMUS est la suivante :
 
 <ul>
