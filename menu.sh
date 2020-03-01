@@ -7,7 +7,7 @@ while : ; do
 clear
 
 tput cup 2 	4; echo -ne  "\033[46;30m          OPTIMUS INSTALLER          \e[0m"
-tput cup 3 	4; echo -ne  "\033[46;30m                V1.04                \e[0m"
+tput cup 3 	4; echo -ne  "\033[46;30m                V1.05                \e[0m"
 
 tput cup 5  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m a. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m a. Sécuriser le serveur \e[0m"; fi
 tput cup 6  3; if grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config; then echo -ne "\e[32m b. Sécuriser l'accès SSH avec GOOGLE AUTHENTICATOR \e[0m"; else echo -ne "\e[31m b. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR \e[0m"; fi
@@ -173,8 +173,7 @@ case "$y" in
   u)
 		tput reset
 		clear
-    bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
-    $(basename $0) && exit
+    exit && bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
 		;;
 
 	s)
