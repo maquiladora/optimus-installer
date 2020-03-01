@@ -7,7 +7,7 @@ while : ; do
 clear
 
 tput cup 2 	4; echo -ne  "\033[46;30m          OPTIMUS INSTALLER          \e[0m"
-tput cup 3 	4; echo -ne  "\033[46;30m                V1.00                \e[0m"
+tput cup 3 	4; echo -ne  "\033[46;30m                V1.01                \e[0m"
 
 tput cup 5  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m a. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m a. Sécuriser le serveur \e[0m"; fi
 tput cup 6  3; if grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config; then echo -ne "\e[32m b. Sécuriser l'accès SSH avec GOOGLE AUTHENTICATOR \e[0m"; else echo -ne "\e[31m b. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR \e[0m"; fi
@@ -32,6 +32,7 @@ tput cup 8  3; if lsblk -o MOUNTPOINT -n /dev/sda2 | grep -q '/srv'; then echo -
 
 #tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
 
+tput cup 21 3; echo -ne "\e[32m u. Update Installer \e[0m"
 tput cup 22 3; echo -ne "\e[32m q. Quit \e[0m"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
@@ -154,10 +155,16 @@ case "$y" in
 		read -p "Done. Press [Enter] key to continue..."
 		;;
 
-	q)
+  q)
+    tput reset
+    clear
+    exit 1
+    ;;
+
+  u)
 		tput reset
 		clear
-		exit 1
+    bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
 		;;
 
 	s)
