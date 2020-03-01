@@ -4,7 +4,5 @@ apt-get -qq -y install git
 rm -R /installer
 mkdir /installer
 git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
-cd /
-cd installer
 chmod +x menu.sh
-./menu.sh
+source /installer/menu.sh
