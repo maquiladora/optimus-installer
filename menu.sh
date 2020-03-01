@@ -6,7 +6,7 @@ clear
 tput cup 2 	4; echo -ne  "\033[46;30m      OPTIMUS INSTALLER      \e[0m"
 tput cup 3 	4; echo -ne  "\033[46;30m            V1.00            \e[0m"
 
-tput cup 5  3; if grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config;                                   then echo -ne "\e[32m a. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR (facultatif mais recommandé) \e[0m;" else echo -ne "\e[31m a. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR (facultatif mais recommandé) \e[0m"; fi
+tput cup 5  3; if [ grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config ];                                   then echo -ne "\e[32m a. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR (facultatif mais recommandé) \e[0m;" else echo -ne "\e[31m a. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR (facultatif mais recommandé) \e[0m"; fi
 #tput cup 5 	3; if [ -f "/etc/srv" ]; 		                then echo -ne "\e[32m c. Create /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Create /srv partitions \e[0m"; fi
 #tput cup 6 	3; if [ -f "/etc/init.d/cryptomount" ]; 		then echo -ne "\e[32m c. Crypt /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Crypt srv partitions \e[0m"; fi
 #tput cup 7 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m v. Set Installation Variables \e[0m"; 			else echo -ne "\e[31m v. Set Installation Variables \e[0m"; fi
