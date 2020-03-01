@@ -7,12 +7,14 @@ while : ; do
 clear
 
 tput cup 2 	4; echo -ne  "\033[46;30m          OPTIMUS INSTALLER          \e[0m"
-tput cup 3 	4; echo -ne  "\033[46;30m                V1.01                \e[0m"
+tput cup 3 	4; echo -ne  "\033[46;30m                V1.03                \e[0m"
 
 tput cup 5  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m a. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m a. Sécuriser le serveur \e[0m"; fi
 tput cup 6  3; if grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config; then echo -ne "\e[32m b. Sécuriser l'accès SSH avec GOOGLE AUTHENTICATOR \e[0m"; else echo -ne "\e[31m b. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR \e[0m"; fi
 tput cup 7  3; if lsblk -o NAME -n /dev/sda2 | grep -q 'sda2'; then echo -ne "\e[32m c. Créer une partition /dev/sda2 indépendante \e[0m"; else echo -ne "\e[31m c. Créer une partition /dev/sda2 indépendante \e[0m"; fi
-tput cup 8  3; if lsblk -o MOUNTPOINT -n /dev/sda2 | grep -q '/srv'; then echo -ne "\e[32m d. Crypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m d. Crypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
+tput cup 8  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 | grep -q '/srv'; then echo -ne "\e[32m d. Activer le cryptage sur la partition /dev/sda2 \e[0m"; else echo -ne "\e[31m d. Activer le cryptage sur la partition /dev/sda2 \e[0m"; fi
+
+tput cup 10 3; if ! lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 | grep -q '/srv'; then echo -ne "\e[32m f. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m d. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
 #lsblk -o MOUNTPOINT -n /dev/sda2
 
 #tput cup 5 	3; if [ -f "/etc/srv" ]; 		                then echo -ne "\e[32m c. Create /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Create /srv partitions \e[0m"; fi
