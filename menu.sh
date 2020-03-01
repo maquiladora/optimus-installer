@@ -2,15 +2,15 @@
 
 source config.conf
 
-while :
-do
-	clear
+#while :
+#do
+	#clear
 
 
 
 
-	tput cup 2 	4 ; echo -ne  "\033[46;30m       OPTIMUS INSTALLER      \e[0m"
-	tput cup 3 	4 ; echo -ne  "\033[46;30m             V1.00            \e[0m"
+	tput cup 2 	4 ; echo -ne  "\033[46;30m      OPTIMUS INSTALLER      \e[0m"
+	tput cup 3 	4 ; echo -ne  "\033[46;30m            V1.00            \e[0m"
 
   tput cup 6 	3; if [ -f "/etc/srv" ]; 		                then echo -ne "\e[32m c. Create /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Create /srv partitions \e[0m"; fi
 	tput cup 6 	3; if [ -f "/etc/init.d/cryptomount" ]; 		then echo -ne "\e[32m c. Crypt /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Crypt srv partitions \e[0m"; fi
