@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo
-read -p "Voulez vous mettre à jour le système (update/upgrade) ? " -n 1 -r
+read -p "Voulez vous mettre à jour le système -> update/upgrade (O/N) ? " -n 1 -r -i 'O'
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
