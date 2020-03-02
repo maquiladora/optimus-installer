@@ -34,21 +34,32 @@ then
   echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
-      adduser --disabled-login --gecos "" optimus
-      if [ -f "/root/.google_authenticator" ]
-      then
-        cp /root/.google_authenticator /home/optimus/.google_authenticator
-      fi
-      read -p $'\e[32mVoulez vous générer un mot de passe automatiquement (o/n) ? \e[0m' -n 1 -r
-      echo
-      if [[ $REPLY =~ ^[YyOo]$ ]]
-      then
-        newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-        echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
-        echo "Le nouveau mot de passe de l'utilisateur optimus est : $newoptimuspass"
-      else
-        passwd
-      fi
+    adduser --disabled-login --gecos "" optimus
+    if [ -f "/root/.google_authenticator" ]
+    then
+      cp /root/.google_authenticator /home/optimus/.google_authenticator
+    fi
+  fi
+fi
+
+
+if [ -d "/home/optimus" ]
+then
+  echo
+  read -p $'\e[32mVoulez vous modifier le mot de passe de l\'utilisateur optimus (o/n) ? \e[0m' -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[YyOo]$ ]]
+  then
+    read -p $'\e[32mVoulez vous générer un mot de passe automatiquement (o/n) ? \e[0m' -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[YyOo]$ ]]
+    then
+      newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+      echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
+      echo "Le nouveau mot de passe de l'utilisateur optimus est : $newoptimuspass"
+    else
+      passwd
+    fi
   fi
 fi
 
