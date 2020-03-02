@@ -24,5 +24,6 @@ L'arborescence OPTIMUS est la suivante :
   <li>/srv/webmail contient le client ROUNDCUBE</li>
   <li>/srv/website contient un espace pour héberger le site web du cabinet</li>
   <li>/srv/backup contient les sauvegardes quotidiennes de la base de données</li>
+  <li>/srv/cloud contient le serveur WEBDAV</li>
   <li>/srv/api contient l'api de communication</li>
 </ul>
