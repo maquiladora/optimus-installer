@@ -25,6 +25,6 @@ then
 
   echo -e "\e[35mLE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
   echo -e "\e[32mAPPUYER SUR [ENTREE] POUR CONTINUER\e[0m"
-  read -p
+  read -p ""
   reboot
 fi
