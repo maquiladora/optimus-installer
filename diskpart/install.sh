@@ -26,8 +26,8 @@ then
   update-initramfs -u > /dev/null
 
   echo
-  echo -e "\e[35LE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
-  echo -e "\e[32APPUYER SUR [ENTREE] POUR REDEMARRER\e[0m"
+  echo -e "\e[35mLE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
+  echo -e "\e[32mAPPUYER SUR [ENTREE] POUR REDEMARRER\e[0m"
   read -n 1
   reboot
 fi
