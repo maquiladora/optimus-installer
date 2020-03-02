@@ -9,12 +9,11 @@ clear
 tput cup 2 	4; echo -ne  "\033[46;30m          OPTIMUS INSTALLER          \e[0m"
 tput cup 3 	4; echo -ne  "\033[46;30m                V1.06                \e[0m"
 
-tput cup 5  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m a. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m a. Sécuriser le serveur \e[0m"; fi
-tput cup 6  3; if grep -q "ChallengeResponseAuthentication yes" /etc/ssh/sshd_config; then echo -ne "\e[32m b. Sécuriser l'accès SSH avec GOOGLE AUTHENTICATOR \e[0m"; else echo -ne "\e[31m b. Sécuriser le serveur SSH avec un GOOGLE AUTHENTICATOR \e[0m"; fi
-tput cup 7  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo -ne "\e[32m c. Créer une partition /dev/sda2 indépendante \e[0m"; else echo -ne "\e[31m c. Créer une partition /dev/sda2 indépendante \e[0m"; fi
-tput cup 8  3; if blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo -ne "\e[32m d. Activer le cryptage sur la partition /dev/sda2 \e[0m"; else echo -ne "\e[31m d. Activer le cryptage sur la partition /dev/sda2 \e[0m"; fi
+tput cup 5  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo -ne "\e[32m a. Créer une partition /dev/sda2 indépendante \e[0m"; else echo -ne "\e[31m a. Créer une partition /dev/sda2 indépendante \e[0m"; fi
+tput cup 6  3; if blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo -ne "\e[32m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; else echo -ne "\e[31m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; fi
+tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo -ne "\e[32m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
+tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m d. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m d. Sécuriser le serveur \e[0m"; fi
 
-tput cup 10 3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo -ne "\e[32m f. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m f. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
 #lsblk -o MOUNTPOINT -n /dev/sda2
 
 #tput cup 5 	3; if [ -f "/etc/srv" ]; 		                then echo -ne "\e[32m c. Create /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Create /srv partitions \e[0m"; fi
@@ -46,39 +45,40 @@ read -n 1 y
 case "$y" in
 
   a)
-    tput reset
-    clear
-    source /installer/server-secure/install.sh
-    read -p "Done. Press [Enter] key to continue..."
-    ;;
-
-  b)
-    tput reset
-    clear
-    source /installer/ssh-google-authenticator/install.sh
-    read -p "Done. Press [Enter] key to continue..."
-    ;;
-
-  c)
 		tput reset
 		clear
 		source /installer/diskpart/install.sh
 		read -p "Done. Press [Enter] key to continue..."
 		;;
 
-  d)
+  b)
   	tput reset
   	clear
   	source /installer/crypt-setup/install.sh
   	read -p "Done. Press [Enter] key to continue..."
   	;;
 
-  f)
+  c)
     tput reset
     clear
     source /installer/decrypt/install.sh
     read -p "Done. Press [Enter] key to continue..."
     ;;
+
+  d)
+    tput reset
+    clear
+    source /installer/server-secure/install.sh
+    read -p "Done. Press [Enter] key to continue..."
+    ;;
+
+
+
+
+
+
+
+
 
 	v)
 		tput reset

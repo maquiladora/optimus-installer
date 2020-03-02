@@ -116,6 +116,30 @@ else
   systemctl restart ssh
 fi
 
+
+echo
+read -p $'\e[32mVoulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR (o/n) ? \e[0m' -n 1 -r
+echo
+if [[ $REPLY =~ ^[YyOo]$ ]]
+then
+  apt-get -qq -y install libpam-google-authenticator
+  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
+  then
+    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+  fi
+  sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+  systemctl restart sshd
+  google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
+  if [ -d "/home/optimus" ]
+  then
+    cp /root/.google_authenticator /home/optimus/.google_authenticator
+  fi
+else
+  sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+  systemctl restart sshd
+fi
+
+
 echo
 read -p $'\e[32mVoulez vous installer FAIL2BAN (o/n) ? \e[0m' -n 1 -r
 echo
