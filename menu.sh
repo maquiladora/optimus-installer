@@ -7,7 +7,7 @@ while : ; do
 clear
 
 tput cup 2 	4; echo -ne  "\033[46;30m          OPTIMUS INSTALLER          \e[0m"
-tput cup 3 	4; echo -ne  "\033[46;30m                V1.06                \e[0m"
+tput cup 3 	4; echo -ne  "\033[46;30m                V1.07                \e[0m"
 
 tput cup 5  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo -ne "\e[32m a. Créer une partition /dev/sda2 indépendante \e[0m"; else echo -ne "\e[31m a. Créer une partition /dev/sda2 indépendante \e[0m"; fi
 tput cup 6  3; if blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo -ne "\e[32m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; else echo -ne "\e[31m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; fi
@@ -33,8 +33,8 @@ tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32
 
 #tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
 
-tput cup 21 3; echo -ne "\e[32m u. Update Installer \e[0m"
-tput cup 22 3; echo -ne "\e[32m q. Quit \e[0m"
+tput cup 20 3; echo -ne "\e[32m u. Update Installer \e[0m"
+tput cup 21 3; echo -ne "\e[32m q. Quit \e[0m"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
 
@@ -48,28 +48,27 @@ case "$y" in
 		tput reset
 		clear
 		source /installer/diskpart/install.sh
-		read -p "Done. Press [Enter] key to continue..."
 		;;
 
   b)
   	tput reset
   	clear
   	source /installer/crypt-setup/install.sh
-  	read -p "Done. Press [Enter] key to continue..."
+  	read -p "Appuyez sur [ENTREE] pour continuer..."
   	;;
 
   c)
     tput reset
     clear
     source /installer/decrypt/install.sh
-    read -p "Done. Press [Enter] key to continue..."
+    read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   d)
     tput reset
     clear
     source /installer/server-secure/install.sh
-    read -p "Done. Press [Enter] key to continue..."
+    read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
 
@@ -84,84 +83,84 @@ case "$y" in
 		tput reset
 		clear
 		source config.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	d)
 		tput reset
 		clear
 		source /srv/installer/dns/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	0)
 		tput reset
 		clear
 		source /srv/installer/letsencrypt/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	1)
 		tput reset
 		clear
 		source /srv/installer/mysql/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	2)
 		tput reset
 		clear
 		source /srv/installer/apache/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	3)
 		tput reset
 		clear
 		source /srv/installer/mail/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	4)
 		tput reset
 		clear
 		source /srv/installer/roundcube/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	5)
 		tput reset
 		clear
 		source /srv/installer/owncloud/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	6)
 		tput reset
 		clear
 		source /srv/installer/rsync/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	7)
 		tput reset
 		clear
 		source /srv/installer/optimus/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	8)
 		tput reset
 		clear
 		source /srv/installer/optimus_user/install.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	b)
 		tput reset
 		clear
 		source /srv/installer/db_backup.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
   q)
@@ -180,7 +179,7 @@ case "$y" in
 		tput reset
 		clear
 		source saver.sh
-		read -p "Done. Press [Enter] key to continue..."
+		read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
 	*)
