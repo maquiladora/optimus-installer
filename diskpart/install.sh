@@ -21,6 +21,7 @@ then
   update-initramfs -u
 
   echo
-  read -p $'Le serveur doit redémarrer pour prendre en compte les changements. Pressez [Entrée] pour redémarrer...'
+  echo "Le serveur doit redémarrer pour prendre en compte les changements"
+  read -p "Pressez [Entrée] pour redémarrer..."
   reboot
 fi
