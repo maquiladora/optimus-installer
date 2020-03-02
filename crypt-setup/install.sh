@@ -6,19 +6,20 @@ then
   DEBIAN_FRONTEND=noninteractive apt-get -qq install keyboard-configuration > /dev/null
   apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
   echo -e "\e[35mCREATION D'UNE CLE DE DECRYPTAGE...\e[0m"
-  dd if=/dev/urandom of=/root/keyfile bs=1024 count=4 > /dev/null
-  chmod 0400 /root/keyfile
-  #cryptsetup luksAddKey /dev/sda2 /root/keyfile
-  openssl genrsa -out /root/private.pem 2048
-  openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem
-  openssl rsautl -encrypt -inkey /root/public.pem -pubin -in /root/keyfile -out /root/keyfile_encrypted
+  mkdir /root/tmpramfs
+  mount ramfs /root/tmpramfs/ -t ramfs
+  head -c 256 < /dev/urandom > /root/tmpramfs/keyfile
+  chmod 0400 /root/tmpramfs/keyfile
+  openssl genrsa -out /root/private.pem 4096 &> /dev/null
+  openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/tmpramfs/public.pem &> /dev/null
+  openssl rsautl -encrypt -inkey /root/tmpramfs/public.pem -pubin -in /root/tmpramfs/keyfile -out /root/keyfile_encrypted &> /dev/null
+  umount /root/tmpramfs
   sleep 0.5
   echo -e "\e[35mACTIVATION DU CRYPTAGE SUR LA PARTITION /dev/sda2...\e[0m"
-  /sbin/cryptsetup --batch-mode luksFormat /dev/sda2 /root/keyfile
+  /sbin/cryptsetup --batch-mode luksFormat /dev/sda2 < openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted
   sleep 0.5
   echo -e "\e[35mOUVERTURE DE LA PARTITION CRYPTEE...\e[0m"
-  openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted -out /root/keyfile_decrypted
-  /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2 --key-file /root/keyfile_decrypted
+  /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2 --key-file < openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted
   sleep 0.5
   echo -e "\e[35mFORMATAGE DE LA PARTITION CRYPTEE EN EXT4...\e[0m"
   /sbin/mkfs.ext4 /dev/mapper/cryptsda2 > /dev/null
