@@ -1,6 +1,15 @@
 #!/bin/bash
 
 echo
+read -p "Voulez vous mettre à jour le système ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[YyOo]$ ]]
+then
+  apt-get -qq -y update
+  apt-get -qq -y upgrade
+fi
+
+echo
 read -p "Voulez vous modifier le mot de passe root ? " -n 1 -r
 echo
 echo "suggestion sécurisée : "
@@ -45,11 +54,30 @@ if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   if [ $(getent passwd optimus) ]
   then
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+    sed -i 's/PermitRootLogin yes/PermitRootLogin yes no/g' /etc/ssh/sshd_config
     systemctl restart sshd
   else
     echo "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé préalablement"
   fi
+fi
+
+echo
+read -p "Voulez vous installer FAIL2BAN ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[YyOo]$ ]]
+then
+  apt-get -qq -y install fail2ban
+  fail2ban-client status
+fi
+
+echo
+read -p "Voulez vous activer le firewall ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[YyOo]$ ]]
+then
+  apt-get -qq -y install ufw
+  ufw allow 22
+  ufw enable
 fi
 
 echo
