@@ -17,7 +17,7 @@ then
   read -p "Voulez vous générer un mot de passe automatiquement ? " -n 1 -r
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
-    newrootpass=$(/dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+    newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo "$newrootpass\n$newrootpass" | passwd root
     echo "Le nouveau mot de passe de l'utilisateur root est : $newrootpass"
   else
@@ -60,7 +60,7 @@ then
       read -p "Voulez vous générer un mot de passe automatiquement ? " -n 1 -r
       if [[ $REPLY =~ ^[YyOo]$ ]]
       then
-        newoptimuspass=$(/dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+        newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
         echo "$newoptimuspass\n$newoptimuspass" | passwd optimus
         echo "Le nouveau mot de passe de l'utilisateur optimus est : $newoptimuspass"
       else
