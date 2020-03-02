@@ -26,7 +26,7 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
     sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-    systemctl restart sshd
+    service ssh restart
 fi
 
 if [ ! -d "/home/optimus" ]
@@ -55,7 +55,7 @@ then
   if [ $(getent passwd optimus) ]
   then
     sed -i 's/PermitRootLogin yes/PermitRootLogin yes no/g' /etc/ssh/sshd_config
-    systemctl restart sshd
+    service ssh restart
   else
     echo "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé préalablement"
   fi
