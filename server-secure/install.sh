@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo
-read -p $"\e[31m Voulez vous mettre à jour le système -> update/upgrade (o/n) ? \e[0m" -n 1 -r
+read -p $'\e[31m Voulez vous mettre à jour le système -> update/upgrade (o/n) ? \e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -19,7 +19,7 @@ then
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    @echo -e "$newrootpass\n$newrootpass" | passwd root
+    DEBIAN_FRONTEND=noninteractive echo -e "$newrootpass\n$newrootpass" | passwd root
     echo "Le nouveau mot de passe de l'utilisateur root est : $newrootpass"
   else
     passwd
