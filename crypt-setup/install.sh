@@ -3,7 +3,7 @@
 if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'
 then
   echo -e "\e[35mINSTALLATION DES PAQUETS REQUIS...\e[0m"
-  apt-get -qq -y install keyboard-configuration > /dev/null
+  apt-get -qq -y install keyboard-configuration
   apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
   echo -e "\e[35mCREATION D'UNE CLE DE DECRYPTAGE...\e[0m"
   dd if=/dev/urandom of=/root/keyfile bs=1024 count=4 > /dev/null
