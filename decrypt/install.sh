@@ -2,7 +2,7 @@
 
 if [ -f /root/keyfile ]
 then
-  /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2 --key-file < openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted
+  openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
 else
   /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
 fi
