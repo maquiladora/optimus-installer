@@ -17,3 +17,4 @@ then
   mount /dev/mapper/cryptsda2 /srv
 else
   echo -e "\e[31mOPERATION IMPOSSIBLE : AUCUNE PARTITION /dev/sda2 DETECTEE\e[0m"
+fi
