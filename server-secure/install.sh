@@ -21,11 +21,22 @@ then
 fi
 
 echo
+read -p "Voulez vous activer le firewall ? " -n 1 -r
+echo
+if [[ $REPLY =~ ^[YyOo]$ ]]
+then
+  apt-get -qq -y install ufw
+  ufw allow 22
+  ufw enable
+fi
+
+echo
 read -p "Voulez vous remplacer le port de connexion SSH par le port 7822 ? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
     sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
+    ufw allow 7822
     systemctl restart ssh
 fi
 
@@ -54,7 +65,7 @@ if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   if [ $(getent passwd optimus) ]
   then
-    sed -i 's/PermitRootLogin yes/PermitRootLogin yes no/g' /etc/ssh/sshd_config
+    sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
     systemctl restart ssh
   else
     echo "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé préalablement"
@@ -69,15 +80,4 @@ then
   apt-get -qq -y install fail2ban
   fail2ban-client status
 fi
-
-echo
-read -p "Voulez vous activer le firewall ? " -n 1 -r
-echo
-if [[ $REPLY =~ ^[YyOo]$ ]]
-then
-  apt-get -qq -y install ufw
-  ufw allow 22
-  ufw enable
-fi
-
 echo
