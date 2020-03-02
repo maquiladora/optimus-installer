@@ -20,7 +20,7 @@ then
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
-    echo "Le nouveau mot de passe de l'utilisateur root est : $newrootpass"
+    echo "Nouveau mot de passe root : $newrootpass"
   else
     passwd
   fi
@@ -56,7 +56,7 @@ then
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
       echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
-      echo "Le nouveau mot de passe de l'utilisateur optimus est : $newoptimuspass"
+      echo "Nouveau mot de passe utilisateur optimus : $newoptimuspass"
     else
       passwd
     fi
@@ -70,15 +70,21 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   apt-get -qq -y install ufw
-  if grep -q "Port 7822" /etc/ssh/sshd_config
+  if ! which ufw > /dev/null
   then
-    ufw allow 7822
-  else
-    ufw allow 22
+    if grep -q "Port 7822" /etc/ssh/sshd_config
+    then
+      ufw allow 7822
+    else
+      ufw allow 22
+    fi
   fi
   ufw --force enable
 else
-  ufw --force disable
+  if ! which ufw > /dev/null
+  then
+    ufw --force disable
+  fi
 fi
 
 
@@ -88,13 +94,19 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  ufw allow 7822
-  ufw deny 22
+  if ! which ufw > /dev/null
+  then
+    ufw allow 7822
+    ufw deny 22
+  fi
   systemctl restart ssh
 else
   sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
-  ufw deny 7822
-  ufw allow 22
+  if ! which ufw > /dev/null
+  then
+    ufw deny 7822
+    ufw allow 22
+  fi
   systemctl restart ssh
 fi
 
