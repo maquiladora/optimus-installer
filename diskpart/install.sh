@@ -17,13 +17,14 @@ then
   chmod +x /etc/initramfs-tools/scripts/local-premount/resizefs
   cp /installer/diskpart/rc.local /etc/rc.local
   chmod +x /etc/rc.local
+  sleep 0.5
 
-  echo -e "\e[35mMISE A JOUR INITRAMFS...\e[0m"
+  echo -e "\e[35mMISE A JOUR DU MODULE INITRAMFS...\e[0m"
   apt-get remove -qq cryptsetup-initramfs > /dev/null
   update-initramfs -u > /dev/null
 
   echo -e "\e[35mLE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
   echo -e "\e[32mAPPUYER SUR [ENTREE] POUR CONTINUER\e[0m"
-  read -p -n 1
+  read -p
   reboot
 fi
