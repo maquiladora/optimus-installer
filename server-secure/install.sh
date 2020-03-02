@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo
-read -p $'\e[31m Voulez vous mettre à jour le système -> update/upgrade (o/n) ? \e[0m' -n 1 -r
+read -p $'\e[32mVoulez vous mettre à jour le système -> update/upgrade (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -10,16 +10,16 @@ then
 fi
 
 echo
-read -p "Voulez vous modifier le mot de passe root (o/n) ? " -n 1 -r
+read -p $'\e[32mVoulez vous modifier le mot de passe root (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-  read -p "Voulez vous générer un mot de passe automatiquement (o/n) ? " -n 1 -r
+  read -p $'\e[32mVoulez vous générer un mot de passe automatiquement (o/n) ?\e[0m' -n 1 -r
   echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    DEBIAN_FRONTEND=noninteractive echo -e "$newrootpass\n$newrootpass" | passwd root
+    echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
     echo "Le nouveau mot de passe de l'utilisateur root est : $newrootpass"
   else
     passwd
@@ -30,7 +30,7 @@ fi
 if [ ! -d "/home/optimus" ]
 then
   echo
-  read -p "Voulez vous créer un utilisateur secondaire dénommé optimus (o/n) ? " -n 1 -r
+  read -p $'\e[32mVoulez vous créer un utilisateur secondaire dénommé optimus (o/n) ?\e[0m' -n 1 -r
   echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
@@ -39,7 +39,7 @@ then
       then
         cp /root/.google_authenticator /home/optimus/.google_authenticator
       fi
-      read -p "Voulez vous générer un mot de passe automatiquement (o/n) ? " -n 1 -r
+      read -p $'\e[32mVoulez vous générer un mot de passe automatiquement (o/n) ?\e[0m' -n 1 -r
       echo
       if [[ $REPLY =~ ^[YyOo]$ ]]
       then
@@ -54,7 +54,7 @@ fi
 
 
 echo
-read -p "Voulez vous remplacer le port de connexion SSH par le port 7822 (o/n) ? " -n 1 -r
+read -p $'\e[32mVoulez vous remplacer le port de connexion SSH par le port 7822 (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -65,7 +65,7 @@ fi
 
 
 echo
-read -p "Voulez vous activer le firewall (o/n) ? " -n 1 -r
+read -p $'\e[32mVoulez vous activer le firewall (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -81,7 +81,7 @@ fi
 
 
 echo
-read -p "Voulez vous interdire l'accès SSH à l'utilisateur root (o/n) ? " -n 1 -r
+read -p $'\e[32mVoulez vous interdire l'accès SSH à l'utilisateur root (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -95,7 +95,7 @@ then
 fi
 
 echo
-read -p "Voulez vous installer FAIL2BAN (o/n) ? " -n 1 -r
+read -p $'\e[32mVoulez vous installer FAIL2BAN (o/n) ?\e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
