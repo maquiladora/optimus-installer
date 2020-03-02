@@ -12,6 +12,8 @@ if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   echo -e "\e[35mCREATION DES SCRIPTS DE REPARTITIONNEMENT...\e[0m"
 
+  apt-get remove -qq cryptsetup-initramfs > /dev/null
+
   cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
   chmod +x /etc/initramfs-tools/hooks/resizefs_hook
 
