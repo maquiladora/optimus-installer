@@ -11,5 +11,6 @@ chmod +x /etc/rc.local
 
 update-initramfs -u
 
-read -p "System needs to reboot to finish. Press [Enter] key to continue..."
+echo
+read -p "Le serveur doit redémarrer pour prendre en compte les changements\nPressez [Entrée] pour continuer..."
 reboot
