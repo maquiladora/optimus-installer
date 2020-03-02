@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo
-read -p "Voulez vous mettre à jour le système ? " -n 1 -r
+read -p "Voulez vous mettre à jour le système (update/upgrade) ? " -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
@@ -12,12 +12,17 @@ fi
 echo
 read -p "Voulez vous modifier le mot de passe root ? " -n 1 -r
 echo
-echo "suggestion sécurisée : "
-< /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo;
-echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
+  read -p "Voulez vous générer un mot de passe automatiquement ? " -n 1 -r
+  if [[ $REPLY =~ ^[YyOo]$ ]]
+  then
+    newrootpass=$(/dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+    echo "$newrootpass\n$newrootpass" | passwd root
+    echo "Le nouveau mot de passe de l'utilisateur root est : $newrootpass"
+  else
     passwd
+  fi
 fi
 
 echo
@@ -26,8 +31,8 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   apt-get -qq -y install ufw
-  ufw allow 22
-  ufw enable
+  ufw --force allow 22
+  ufw --force enable
 fi
 
 echo
@@ -45,15 +50,21 @@ then
   echo
   read -p "Voulez vous créer un utilisateur secondaire dénommé optimus ? " -n 1 -r
   echo
-  echo "suggestion sécurisée : "
-  < /dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32};echo;
-  echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
-      adduser optimus
+      adduser --disabled-login --gecos "" optimus
       if [ -f "/root/.google_authenticator" ]
       then
         cp /root/.google_authenticator /home/optimus/.google_authenticator
+      fi
+      read -p "Voulez vous générer un mot de passe automatiquement ? " -n 1 -r
+      if [[ $REPLY =~ ^[YyOo]$ ]]
+      then
+        newoptimuspass=$(/dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+        echo "$newoptimuspass\n$newoptimuspass" | passwd optimus
+        echo "Le nouveau mot de passe de l'utilisateur optimus est : $newoptimuspass"
+      else
+        passwd
       fi
   fi
 fi
