@@ -1,6 +1,7 @@
 #!/bin/bash
 
-apt-get -qq -y install git
+apt-get remove -qq cryptsetup-initramfs
+apt-get -qq install git
 
 rm -R /installer
 mkdir /installer
