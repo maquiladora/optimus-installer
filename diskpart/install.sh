@@ -9,7 +9,7 @@ read -p $'\e[32mETES VOUS SUR (o/n) ? \e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-  echo -e "\e[35mCREATION DES SCRIPTS DE REDEMARRAGE\e[0m"
+  echo -e "\e[35mCREATION DES SCRIPTS DE REDEMARRAGE...\e[0m"
 
   cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
   chmod +x /etc/initramfs-tools/hooks/resizefs_hook
@@ -23,7 +23,8 @@ then
   update-initramfs -u
 
   echo
-  echo "\e[35LE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
-  read -p "\e[35PRESSEZ [ENTREE] POUR REDEMARRER...\e[0m"
+  echo -e "\e[35LE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
+  echo -e "\e[32APPUYER SUR [ENTREE] POUR REDEMARRER\e[0m"
+  read -n 1
   reboot
 fi
