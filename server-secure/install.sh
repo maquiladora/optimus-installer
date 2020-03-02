@@ -70,18 +70,15 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   apt-get -qq -y install ufw
-  if ! which ufw > /dev/null
+  if grep -q "Port 7822" /etc/ssh/sshd_config
   then
-    if grep -q "Port 7822" /etc/ssh/sshd_config
-    then
-      ufw allow 7822
-    else
-      ufw allow 22
-    fi
+    ufw allow 7822
+  else
+    ufw allow 22
   fi
   ufw --force enable
 else
-  if ! which ufw > /dev/null
+  if which ufw > /dev/null
   then
     ufw --force disable
   fi
@@ -94,7 +91,7 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  if ! which ufw > /dev/null
+  if which ufw > /dev/null
   then
     ufw allow 7822
     ufw deny 22
@@ -102,7 +99,7 @@ then
   systemctl restart ssh
 else
   sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
-  if ! which ufw > /dev/null
+  if which ufw > /dev/null
   then
     ufw deny 7822
     ufw allow 22
