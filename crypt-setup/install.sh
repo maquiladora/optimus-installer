@@ -5,11 +5,16 @@ then
   echo -e "\e[35mINSTALLATION DES PAQUETS REQUIS...\e[0m"
   apt-get -qq install keyboard-configuration > /dev/null
   apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
+  echo -e "\e[35mCREATION D'UNE CLE DE DECRYPTAGE...\e[0m"
+  dd if=/dev/urandom of=/root/keyfile bs=1024 count=4
+  chmod 0400 /root/keyfile
+  #cryptsetup luksAddKey /dev/sda2 /root/keyfile
+  sleep 0.5
   echo -e "\e[35mACTIVATION DU CRYPTAGE SUR LA PARTITION /dev/sda2...\e[0m"
-  /sbin/cryptsetup --batch-mode luksFormat /dev/sda2
+  /sbin/cryptsetup --batch-mode luksFormat /dev/sda2 /root/keyfile
   sleep 0.5
   echo -e "\e[35mOUVERTURE DE LA PARTITION CRYPTEE...\e[0m"
-  /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
+  /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2 --key-file /root/keyfile
   sleep 0.5
   echo -e "\e[35mFORMATAGE DE LA PARTITION CRYPTEE EN EXT4...\e[0m"
   /sbin/mkfs.ext4 /dev/mapper/cryptsda2
