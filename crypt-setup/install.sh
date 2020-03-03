@@ -26,7 +26,7 @@ then
   /sbin/mkfs.ext4 /dev/mapper/cryptsda2 &> /dev/null
   sleep 0.5
   echo -e "\e[35mSAUVEGARDE DU HEADER...\e[0m"
-  cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file /root/headerbackup
+  cryptsetup luksHeaderBackup /dev/sda2 --header-backup-file /root/headerbackup
   sleep 0.5
   echo -e "\e[35mMONTAGE DE LA PARTITION DANS /srv...\e[0m"
   mount /dev/mapper/cryptsda2 /srv
