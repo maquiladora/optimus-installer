@@ -72,19 +72,19 @@ read -p $'\e[32mVoulez vous activer le firewall (o/n) ? \e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-  apt-get -qq -y install ufw
+  apt-get -qq install ufw &> /dev/null
   if grep -q "Port 7822" /etc/ssh/sshd_config
   then
-    ufw allow 7822
+    /sbin/ufw allow 7822 &> /dev/null
   else
-    ufw allow 22
+    /sbin/ufw allow 22 &> /dev/null
   fi
-  ufw --force enable
+  /sbin/ufw --force enable &> /dev/null
   echo -e "\e[35mLE FIREWALL A ETE ACTIVE AVEC SUCCES...\e[0m"
 else
   if which ufw > /dev/null
   then
-    ufw --force disable
+    /sbin/ufw --force disable &> /dev/null
     echo -e "\e[35mLE FIREWALL A ETE DESACTIVE...\e[0m"
   fi
 fi
@@ -98,8 +98,8 @@ then
   sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
   if which ufw > /dev/null
   then
-    ufw allow 7822 &> /dev/null
-    ufw deny 22 &> /dev/null
+    /sbin/ufw allow 7822 &> /dev/null
+    /sbin/ufw deny 22 &> /dev/null
   fi
   systemctl restart ssh
   echo -e "\e[35mLE SERVEUR SSH ECOUTE DESORMAIS LE PORT 7822\e[0m"
@@ -107,8 +107,8 @@ else
   sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
   if which ufw > /dev/null
   then
-    ufw deny 7822 &> /dev/null
-    ufw allow 22 &> /dev/null
+    /sbin/ufw deny 7822 &> /dev/null
+    /sbin/ufw allow 22 &> /dev/null
     echo -e "\e[35mLE SERVEUR SSH ECOUTE DESORMAIS LE PORT PAR DEFAUT 22\e[0m"
   fi
   systemctl restart ssh
@@ -131,7 +131,7 @@ then
 else
   sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
   systemctl restart ssh
-  echo -e "\e[35mL'UTILISATEUR ROOT EST AUUTORISE A SE CONNECTER AU SERVEUR SSH\e[0m"
+  echo -e "\e[35mL'UTILISATEUR ROOT EST AUTORISE A SE CONNECTER AU SERVEUR SSH\e[0m"
 fi
 
 
