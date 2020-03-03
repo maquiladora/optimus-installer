@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f /root/keyfile ]
+if [ -f /root/keyfile_encrypted ]
 then
   openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
 else

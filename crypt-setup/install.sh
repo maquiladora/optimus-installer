@@ -3,7 +3,7 @@
 if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'
 then
   echo -e "\e[35mINSTALLATION DES PAQUETS REQUIS...\e[0m"
-  DEBIAN_FRONTEND=noninteractive apt-get -qq install keyboard-configuration
+  DEBIAN_FRONTEND=noninteractive apt-get -qq install keyboard-configuration &> /dev/null
   apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
   echo -e "\e[35mCREATION D'UNE CLE DE DECRYPTAGE...\e[0m"
   mkdir /root/tmpramfs
@@ -23,7 +23,7 @@ then
   openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
   sleep 0.5
   echo -e "\e[35mFORMATAGE DE LA PARTITION CRYPTEE EN EXT4...\e[0m"
-  /sbin/mkfs.ext4 /dev/mapper/cryptsda2 > /dev/null
+  /sbin/mkfs.ext4 /dev/mapper/cryptsda2 &> /dev/null
   sleep 0.5
   echo -e "\e[35mSAUVEGARDE DU HEADER...\e[0m"
   cryptsetup luksHeaderBackup /dev/sda1 --header-backup-file /root/headerbackup
