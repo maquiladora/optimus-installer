@@ -5,8 +5,10 @@ read -p $'\e[32mVoulez vous mettre à jour le système -> update/upgrade (o/n) ?
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-  apt-get -qq -y update
-  apt-get -y upgrade
+  echo -e "\e[35mTELECHARGEMENT ET INSTALLATION DES MISES A JOUR...\e[0m"
+  apt-get -qq update &> /dev/null
+  apt-get -qq upgrade &> /dev/null
+  echo -e "\e[35mMISES A JOUR EFFECTUEES AVEC SUCCES...\e[0m"
 fi
 
 echo
@@ -20,7 +22,7 @@ then
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
-    echo "Nouveau mot de passe root : $newrootpass"
+    echo -e "\e[35mNOUVEAU MOT DE PASSE ROOT\e[0m \e[33m: $newrootpass\e[0m"
   else
     passwd
   fi
@@ -34,11 +36,12 @@ then
   echo
   if [[ $REPLY =~ ^[YyOo]$ ]]
   then
-    adduser --disabled-login --gecos "" optimus
+    adduser --disabled-login --gecos "" optimus &> /dev/null
     if [ -f "/root/.google_authenticator" ]
     then
       cp /root/.google_authenticator /home/optimus/.google_authenticator
     fi
+    echo -e "\e[35mUTILISATEUR optimus CREE AVEC SUCCES...\e[0m"
   fi
 fi
 
@@ -56,7 +59,7 @@ then
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
       echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
-      echo "Nouveau mot de passe utilisateur optimus : $newoptimuspass"
+      echo -e "\e[35mNOUVEAU MOT DE PASSE UTILISATEUR OPTIMUS\e[0m \e[33m: $newoptimuspass\e[0m"
     else
       passwd
     fi
@@ -77,10 +80,12 @@ then
     ufw allow 22
   fi
   ufw --force enable
+  echo -e "\e[35mLE FIREWALL A ETE ACTIVE AVEC SUCCES...\e[0m"
 else
   if which ufw > /dev/null
   then
     ufw --force disable
+    echo -e "\e[35mLE FIREWALL A ETE DESACTIVE...\e[0m"
   fi
 fi
 
@@ -93,16 +98,18 @@ then
   sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
   if which ufw > /dev/null
   then
-    ufw allow 7822
-    ufw deny 22
+    ufw allow 7822 &> /dev/null
+    ufw deny 22 &> /dev/null
   fi
   systemctl restart ssh
+  echo -e "\e[35mLE SERVEUR SSH ECOUTE DESORMAIS LE PORT 7822\e[0m"
 else
   sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
   if which ufw > /dev/null
   then
-    ufw deny 7822
-    ufw allow 22
+    ufw deny 7822 &> /dev/null
+    ufw allow 22 &> /dev/null
+    echo -e "\e[35mLE SERVEUR SSH ECOUTE DESORMAIS LE PORT PAR DEFAUT 22\e[0m"
   fi
   systemctl restart ssh
 fi
@@ -117,12 +124,14 @@ then
   then
     sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
     systemctl restart ssh
+    echo -e "\e[35mL'UTILISATEUR ROOT NE PEUT PLUS SE CONNECTER AU SERVEUR SSH\e[0m"
   else
-    echo "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'a pas été créé préalablement"
+    echo -e "\e[31mL'ACCES SSH DE L'UTILISATEUR ROOT NE PEUT PAS ETRE DESACTIVE SI L'UTILISATEUR OPTIMUS N'A PAS ETE CREE PREALABLEMENT\e[0m"
   fi
 else
   sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
   systemctl restart ssh
+  echo -e "\e[35mL'UTILISATEUR ROOT EST AUUTORISE A SE CONNECTER AU SERVEUR SSH\e[0m"
 fi
 
 
@@ -143,9 +152,11 @@ then
   then
     cp /root/.google_authenticator /home/optimus/.google_authenticator
   fi
+  echo -e "\e[35mL'ACCES AU SERVEUR SSH A ETE SECURISE PAR UN CODE GOOGLE AUTHENTICATOR\e[0m"
 else
   sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
   systemctl restart sshd
+  echo -e "\e[35mGOOGLE AUTHENTICATOR A ETE DESACTIVE SUR LE SERVEUR SSH\e[0m"
 fi
 
 
@@ -154,8 +165,8 @@ read -p $'\e[32mVoulez vous installer FAIL2BAN (o/n) ? \e[0m' -n 1 -r
 echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
-  apt-get -qq -y install fail2ban
-  fail2ban-client status
+  apt-get -qq install fail2ban &> /dev/null
+  echo -e "\e[35mFAIL2BAN A ETE INSTALLE AVEC SUCCES\e[0m"
 fi
 
 echo
