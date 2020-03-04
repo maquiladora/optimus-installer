@@ -82,7 +82,7 @@ then
   /sbin/ufw --force enable &> /dev/null
   echo -e "\e[35mLE FIREWALL A ETE ACTIVE AVEC SUCCES...\e[0m"
 else
-  if which ufw > /dev/null
+  if which /sbin/ufw > /dev/null
   then
     /sbin/ufw --force disable &> /dev/null
     echo -e "\e[35mLE FIREWALL A ETE DESACTIVE...\e[0m"
@@ -96,7 +96,7 @@ echo
 if [[ $REPLY =~ ^[YyOo]$ ]]
 then
   sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  if which ufw > /dev/null
+  if which /sbin/ufw > /dev/null
   then
     /sbin/ufw allow 7822 &> /dev/null
     /sbin/ufw deny 22 &> /dev/null
@@ -105,7 +105,7 @@ then
   echo -e "\e[35mLE SERVEUR SSH ECOUTE DESORMAIS LE PORT 7822\e[0m"
 else
   sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
-  if which ufw > /dev/null
+  if which /sbin/ufw > /dev/null
   then
     /sbin/ufw deny 7822 &> /dev/null
     /sbin/ufw allow 22 &> /dev/null
