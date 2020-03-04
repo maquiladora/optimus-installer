@@ -37,9 +37,3 @@ then
 else
   echo -e "\e[31mOPERATION IMPOSSIBLE : AUCUNE PARTITION /dev/sda2 DETECTEE\e[0m"
 fi
-
-mkdir /root/tmpramfs
-mount ramfs /root/tmpramfs/ -t ramfs
-UUID=$(</root/uid)
-wget -qO- https://installer.optimus-avocats.fr/autodecryptor/$UUID_keyfile > /root/tmpramfs/keyfile_encrypted
-openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
