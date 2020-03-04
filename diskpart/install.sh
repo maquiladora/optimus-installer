@@ -9,7 +9,7 @@ then
   echo
 
 
-  if [ ! $DISKPART_AREYOUSURE ] then echo_green "Etes vous sûr ?"; read -p "(O)ui / (N)on ? " -i "O" -e DISKPART_AREYOUSURE;fi
+  if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(O)ui / (N)on ? " -i "O" -e DISKPART_AREYOUSURE; fi
 
   if [ $DISKPART_AREYOUSURE = "O" ]
   then
