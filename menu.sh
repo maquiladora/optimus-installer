@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# source config.conf
+source functions.sh
+source config.sh
 
 while : ; do
 

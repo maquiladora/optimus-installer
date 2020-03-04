@@ -8,11 +8,12 @@ then
   echo -e "\e[31mIL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES\e[0m"
   echo
 
-  read -p $'\e[32mETES VOUS SUR (o/n) ? \e[0m' -n 1 -r
-  echo
-  if [[ $REPLY =~ ^[YyOo]$ ]]
+
+  if [ ! $DISKPART_AREYOUSURE ] then; echo_green "Etes vous sûr ?";read -p "(O)ui / (N)on ? " -i "O" -e DISKPART_AREYOUSURE;fi
+
+  if [ $DISKPART_AREYOUSURE = "O" ]
   then
-    echo -e "\e[35mMISE EN PLACE DES SCRIPTS DE REPARTITIONNEMENT...\e[0m"
+    echo_magenta "Mise en place des scripts de partitionnement..."
     cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
     chmod +x /etc/initramfs-tools/hooks/resizefs_hook
     cp /installer/diskpart/resizefs /etc/initramfs-tools/scripts/local-premount/resizefs
@@ -21,17 +22,17 @@ then
     chmod +x /etc/rc.local
     sleep 0.5
 
-    echo -e "\e[35mMISE A JOUR DU MODULE INITRAMFS...\e[0m"
+    echo_magenta "Mise à jour du module INITRAMFS..."
     apt-get remove -qq cryptsetup-initramfs > /dev/null
     update-initramfs -u > /dev/null
 
-    echo -e "\e[35mLE SERVEUR DOIT REDEMARRER POUR REDIMENSIONNER LES PARTITIONS\e[0m"
-    echo -e "\e[32mAPPUYER SUR [ENTREE] POUR CONTINUER\e[0m"
+    echo_red "Un redémarrage est nécessaire pour finaliser le partitionnement"
+    echo_red "APPUYER SUR [ENTREE] POUR CONTINUER"
     read -p ""
     reboot
   fi
 else
-  echo -e "\e[31mOPERATION IMPOSSIBLE : LA PARTITION /dev/sda2 EXISTE DEJA\e[0m"
-  echo -e "\e[32mAPPUYER SUR [ENTREE] POUR CONTINUER\e[0m"
+  echo_red "Opération impossible : la partition /dev/sda2 existe déjà"
+  echo_red "APPUYER SUR [ENTREE] POUR CONTINUER"
   read -p ""
 fi
