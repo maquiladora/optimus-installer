@@ -2,7 +2,7 @@
 
 mkdir /root/tmpramfs
 mount ramfs /root/tmpramfs/ -t ramfs
-wget -O /root/tmpramfs/keyfile_encrypted https://installer.optimus-avocats.fr/autodecryptor/$(</root/uid)_keyfile
+wget -qO /root/tmpramfs/keyfile_encrypted https://installer.optimus-avocats.fr/autodecryptor/$(</root/uid)_keyfile
 openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
 umount /root/tmpramfs
 rmdir /root/tmpramfs
