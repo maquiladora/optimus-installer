@@ -42,7 +42,10 @@ then
     fi
     echo_magenta "L'utilisateur optimus a été créé avec succès !"
   fi
+fi
 
+if [ -d "/home/optimus" ]
+then
   if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEOPTIMUSPASS; fi
   if [[ $SECURE_CHANGEOPTIMUSPASS =~ ^[YyOo]$ ]]
   then
