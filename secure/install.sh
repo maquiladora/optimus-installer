@@ -92,7 +92,7 @@ if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer l
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  if [ which /sbin/ufw ]
+  if verbose which /sbin/ufw
   then
      /sbin/ufw allow 7822
     verbose /sbin/ufw deny 22
@@ -133,7 +133,7 @@ if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'ac
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq -y install libpam-google-authenticator
-  if [ ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd ]
+  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
   then
     verbose echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
   fi
@@ -151,6 +151,7 @@ else
   echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
 fi
 
+echo
 echo_green "==== FAIL2BAN ===="
 if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
 if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
