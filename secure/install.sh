@@ -20,8 +20,8 @@ then
   if [[ $SECURE_GENERATEROOTPASS =~ ^[YyOo]$ ]]
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    verbose echo -e "$newrootpass\n$newrootpass" | passwd root
-    echo_magenta -e "Nouveau mot de passe root : $newrootpass"
+    echo -e "$newrootpass\n$newrootpass" | passwd root
+    echo_magenta "Nouveau mot de passe root : $newrootpass"
   else
     passwd root
   fi
@@ -38,7 +38,7 @@ then
     then
       verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
     fi
-    echo_magenta -e "L'utilisateur optimus a été créé avec succès !\e[0m"
+    echo_magenta "L'utilisateur optimus a été créé avec succès !\e[0m"
   fi
 fi
 
@@ -52,8 +52,8 @@ then
     if [[ $SECURE_GENERATEOPTIMUSPASS =~ ^[YyOo]$ ]]
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-      verbose echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus
-      echo_magenta -e "Nouveau mot de passe optimus : $newoptimuspass"
+      echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus
+      echo_magenta "Nouveau mot de passe optimus : $newoptimuspass"
     else
       passwd optimus
     fi
@@ -123,7 +123,7 @@ else
 fi
 
 
-if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_ACTIVATEGOOGLEAUTH; fi
+if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_ACTIVATEGOOGLEAUTH; fi
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq -y install libpam-google-authenticator
