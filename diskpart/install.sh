@@ -27,6 +27,7 @@ then
     verbose apt-get remove -qq cryptsetup-initramfs
     verbose update-initramfs -u
 
+    echo
     echo_red "Un redémarrage est nécessaire pour finaliser le partitionnement"
     echo_red "APPUYER SUR [ENTREE] POUR CONTINUER"
     read -p ""
