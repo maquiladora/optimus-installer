@@ -147,7 +147,7 @@ then
   verbose apt-get -qq -y install libpam-google-authenticator
   if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
   then
-    verbose echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
   fi
   verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
   verbose systemctl restart sshd
