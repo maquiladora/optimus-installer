@@ -1,6 +1,6 @@
 #!/bin/bash
-source ../functions.sh
-source ../config.sh
+source /installer/functions.sh
+source /installer/config.sh
 
 if [ ! lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2' ]
 then
