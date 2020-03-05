@@ -13,6 +13,40 @@ then
 fi
 
 echo
+echo_green "==== FIREWALL ===="
+if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ENABLEFW; fi
+if [[ $SECURE_ENABLEFW =~ ^[YyOo]$ ]]
+then
+  verbose apt-get -qq install ufw
+  if grep -q "Port 7822" /etc/ssh/sshd_config
+  then
+    verbose /sbin/ufw allow 7822
+  else
+    verbose /sbin/ufw allow 22
+  fi
+  verbose /sbin/ufw --force enable
+  echo_magenta "Le Firewall a été activé avec succès !"
+else
+  if [ $(which /sbin/ufw) ]
+  then
+    verbose /sbin/ufw --force disable
+    echo_magenta "Le Firewall a été désactivé"
+  fi
+fi
+
+echo
+echo_green "==== FAIL2BAN ===="
+if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
+if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
+then
+  verbose apt-get -qq install fail2ban
+  echo_magenta "FAIL2BAN a été installé avec succès"
+else
+  verbose apt-get -qq remove fail2ban
+  echo_magenta "FAIL2BAN a été desinstallé avec succès"
+fi
+
+echo
 echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
 if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEROOTPASS; fi
 if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
@@ -61,40 +95,6 @@ then
       passwd optimus
     fi
   fi
-fi
-
-echo
-echo_green "==== FIREWALL ===="
-if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ENABLEFW; fi
-if [[ $SECURE_ENABLEFW =~ ^[YyOo]$ ]]
-then
-  verbose apt-get -qq install ufw
-  if grep -q "Port 7822" /etc/ssh/sshd_config
-  then
-    verbose /sbin/ufw allow 7822
-  else
-    verbose /sbin/ufw allow 22
-  fi
-  verbose /sbin/ufw --force enable
-  echo_magenta "Le Firewall a été activé avec succès !"
-else
-  if [ $(which /sbin/ufw) ]
-  then
-    verbose /sbin/ufw --force disable
-    echo_magenta "Le Firewall a été désactivé"
-  fi
-fi
-
-echo
-echo_green "==== FAIL2BAN ===="
-if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
-if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
-then
-  verbose apt-get -qq install fail2ban
-  echo_magenta "FAIL2BAN a été installé avec succès"
-else
-  verbose apt-get -qq remove fail2ban
-  echo_magenta "FAIL2BAN a été desinstallé avec succès"
 fi
 
 echo
