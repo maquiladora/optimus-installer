@@ -2,7 +2,6 @@
 source /installer/functions.sh
 source /installer/config.sh
 
-echo
 echo_green "==== MISE A JOUR DU SYSTEME ===="
 if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_UPDATE; fi
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
@@ -30,9 +29,9 @@ then
 fi
 
 echo
+echo_green "==== UTILISATEUR OPTIMUS ===="
 if [ ! -d "/home/optimus" ]
 then
-  echo_green "==== CREATION DE L'UTILISATEUR OPTIMUS ===="
   if [ ! $SECURE_CREATEOPTIMUSUSER ]; then echo_green "Voulez vous créer l'utilisateur secondaire dénommé optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CREATEOPTIMUSUSER; fi
   if [[ $SECURE_CREATEOPTIMUSUSER =~ ^[YyOo]$ ]]
   then
@@ -41,15 +40,10 @@ then
     then
       verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
     fi
-    echo_magenta "L'utilisateur optimus a été créé avec succès !\e[0m"
+    echo_magenta "L'utilisateur optimus a été créé avec succès !"
   fi
-fi
 
-echo
-if [ -d "/home/optimus" ]
-then
-  echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR OPTIMUS ===="
-  if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEOPTIMUSPASS; fi
+  if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEOPTIMUSPASS; fi
   if [[ $SECURE_CHANGEOPTIMUSPASS =~ ^[YyOo]$ ]]
   then
     if [ ! $SECURE_GENERATEOPTIMUSPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEOPTIMUSPASS; fi
