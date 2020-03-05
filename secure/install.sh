@@ -3,6 +3,7 @@ source /installer/functions.sh
 source /installer/config.sh
 
 echo
+echo_green "==== MISE A JOUR DU SYSTEME ===="
 if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(O)ui / (N)on ? " -i "O" -e SECURE_UPDATE; fi
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
 then
@@ -13,6 +14,7 @@ then
 fi
 
 echo
+echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
 if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CHANGEROOTPASS; fi
 if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
 then
@@ -27,9 +29,10 @@ then
   fi
 fi
 
-
+echo
 if [ ! -d "/home/optimus" ]
 then
+  echo_green "==== CREATION DE L'UTILISATEUR OPTIMUS ===="
   if [ ! $SECURE_CREATEOPTIMUSUSER ]; then echo_green "Voulez vous créer l'utilisateur secondaire dénommé optimus ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CREATEOPTIMUSUSER; fi
   if [[ $SECURE_CREATEOPTIMUSUSER =~ ^[YyOo]$ ]]
   then
@@ -42,9 +45,10 @@ then
   fi
 fi
 
-
+echo
 if [ -d "/home/optimus" ]
 then
+  echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR OPTIMUS ===="
   if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CHANGEOPTIMUSPASS; fi
   if [[ $SECURE_CHANGEOPTIMUSPASS =~ ^[YyOo]$ ]]
   then
@@ -60,7 +64,8 @@ then
   fi
 fi
 
-
+echo
+echo_green "==== FIREWALL ===="
 if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_ENABLEFW; fi
 if [[ $SECURE_ENABLEFW =~ ^[YyOo]$ ]]
 then
@@ -81,7 +86,8 @@ else
   fi
 fi
 
-
+ech
+echo_green "==== SERVEUR SSH ===="
 if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_SSHREPLACEDEFAULTPORT; fi
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
@@ -145,7 +151,7 @@ else
   echo_magenta "L'accès SSH du serveur n'est désormais plus décurisé par Google Authenticator"
 fi
 
-
+echo_green "==== FAIL2BAN ===="
 if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_INSTALLFAIL2BAN; fi
 if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then

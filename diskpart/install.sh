@@ -4,7 +4,7 @@ source /installer/config.sh
 
 if ! lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'
 then
-  echo_red "!! ATTENTION !!"
+  echo_red_blink "!! ATTENTION !!"
   echo_red "CETTE OPERATION ET RISQUEE"
   echo_red "ELLE PEUT CORROMPRE LE DISQUE ET LE SYSTEME"
   echo_red "IL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES"
