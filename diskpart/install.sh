@@ -4,14 +4,14 @@ source /installer/config.sh
 
 if ! lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'
 then
-  echo_red_blink "!! ATTENTION !!"
+  echo_red "!! ATTENTION !!"
   echo_red "CETTE OPERATION ET RISQUEE"
   echo_red "ELLE PEUT CORROMPRE LE DISQUE ET LE SYSTEME"
   echo_red "IL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES"
   echo
 
 
-  if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(O)ui / (N)on ? " -i "O" -e DISKPART_AREYOUSURE; fi
+  if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_AREYOUSURE; fi
   if [[ $DISKPART_AREYOUSURE =~ ^[YyOo]$ ]]
   then
     echo_magenta "Mise en place des scripts de partitionnement..."

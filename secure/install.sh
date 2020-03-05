@@ -4,7 +4,7 @@ source /installer/config.sh
 
 echo
 echo_green "==== MISE A JOUR DU SYSTEME ===="
-if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(O)ui / (N)on ? " -i "O" -e SECURE_UPDATE; fi
+if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_UPDATE; fi
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Téléchargement et installation des mises à jour..."
@@ -15,10 +15,10 @@ fi
 
 echo
 echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
-if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CHANGEROOTPASS; fi
+if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEROOTPASS; fi
 if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
 then
-  if [ ! $SECURE_GENERATEROOTPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_GENERATEROOTPASS; fi
+  if [ ! $SECURE_GENERATEROOTPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEROOTPASS; fi
   if [[ $SECURE_GENERATEROOTPASS =~ ^[YyOo]$ ]]
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
@@ -33,7 +33,7 @@ echo
 if [ ! -d "/home/optimus" ]
 then
   echo_green "==== CREATION DE L'UTILISATEUR OPTIMUS ===="
-  if [ ! $SECURE_CREATEOPTIMUSUSER ]; then echo_green "Voulez vous créer l'utilisateur secondaire dénommé optimus ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CREATEOPTIMUSUSER; fi
+  if [ ! $SECURE_CREATEOPTIMUSUSER ]; then echo_green "Voulez vous créer l'utilisateur secondaire dénommé optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CREATEOPTIMUSUSER; fi
   if [[ $SECURE_CREATEOPTIMUSUSER =~ ^[YyOo]$ ]]
   then
     verbose adduser --disabled-login --gecos "" optimus
@@ -49,10 +49,10 @@ echo
 if [ -d "/home/optimus" ]
 then
   echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR OPTIMUS ===="
-  if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_CHANGEOPTIMUSPASS; fi
+  if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEOPTIMUSPASS; fi
   if [[ $SECURE_CHANGEOPTIMUSPASS =~ ^[YyOo]$ ]]
   then
-    if [ ! $SECURE_GENERATEOPTIMUSPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_GENERATEOPTIMUSPASS; fi
+    if [ ! $SECURE_GENERATEOPTIMUSPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEOPTIMUSPASS; fi
     if [[ $SECURE_GENERATEOPTIMUSPASS =~ ^[YyOo]$ ]]
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
@@ -66,7 +66,7 @@ fi
 
 echo
 echo_green "==== FIREWALL ===="
-if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_ENABLEFW; fi
+if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ENABLEFW; fi
 if [[ $SECURE_ENABLEFW =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install ufw
@@ -88,7 +88,7 @@ fi
 
 ech
 echo_green "==== SERVEUR SSH ===="
-if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_SSHREPLACEDEFAULTPORT; fi
+if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHREPLACEDEFAULTPORT; fi
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
@@ -111,7 +111,7 @@ else
 fi
 
 
-if [ ! $SECURE_SSHDISABLEROOTACCESS ]; then echo_green "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_SSHDISABLEROOTACCESS; fi
+if [ ! $SECURE_SSHDISABLEROOTACCESS ]; then echo_green "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHDISABLEROOTACCESS; fi
 if [[ $SECURE_SSHDISABLEROOTACCESS =~ ^[YyOo]$ ]]
 then
   if [ $(getent passwd optimus) ]
@@ -129,7 +129,7 @@ else
 fi
 
 
-if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_ACTIVATEGOOGLEAUTH; fi
+if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ACTIVATEGOOGLEAUTH; fi
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq -y install libpam-google-authenticator
@@ -152,7 +152,7 @@ else
 fi
 
 echo_green "==== FAIL2BAN ===="
-if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_INSTALLFAIL2BAN; fi
+if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
 if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install fail2ban
