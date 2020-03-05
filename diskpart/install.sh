@@ -2,7 +2,7 @@
 source /installer/functions.sh
 source /installer/config.sh
 
-if [ ! lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2' ]
+if ! lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'
 then
   echo_red "!! ATTENTION !!"
   echo_red "CETTE OPERATION ET RISQUEE"
