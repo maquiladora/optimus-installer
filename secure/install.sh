@@ -79,7 +79,7 @@ then
   verbose /sbin/ufw --force enable
   echo_magenta "Le Firewall a été activé avec succès !"
 else
-  if which /sbin/ufw
+  if if [ $(which /sbin/ufw) ]
   then
     verbose /sbin/ufw --force disable
     echo_magenta "Le Firewall a été désactivé"
@@ -92,7 +92,7 @@ if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer l
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  if verbose which /sbin/ufw
+  if [ $(which /sbin/ufw) ]
   then
      /sbin/ufw allow 7822
     verbose /sbin/ufw deny 22
@@ -101,7 +101,7 @@ then
   echo_magenta "Le serveur SSH écoute désormais sur le port 7822"
 else
   verbose sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
-  if which /sbin/ufw
+  if [ $(which /sbin/ufw) ]
   then
     verbose /sbin/ufw deny 7822
     verbose /sbin/ufw allow 22
