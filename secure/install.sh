@@ -1,6 +1,6 @@
 #!/bin/bash
-source ./functions.sh
-source ./config.sh
+source ../functions.sh
+source ../config.sh
 
 echo
 if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_UPDATE; fi
