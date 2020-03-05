@@ -13,17 +13,17 @@ then
   if [[ $DISKPART_AREYOUSURE =~ ^[YyOo]$ ]]
   then
     echo_magenta "Mise en place des scripts de partitionnement..."
-    cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
-    chmod +x /etc/initramfs-tools/hooks/resizefs_hook
-    cp /installer/diskpart/resizefs /etc/initramfs-tools/scripts/local-premount/resizefs
-    chmod +x /etc/initramfs-tools/scripts/local-premount/resizefs
-    cp /installer/diskpart/rc.local /etc/rc.local
-    chmod +x /etc/rc.local
+    verbose cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
+    verbose chmod +x /etc/initramfs-tools/hooks/resizefs_hook
+    verbose cp /installer/diskpart/resizefs /etc/initramfs-tools/scripts/local-premount/resizefs
+    verbose chmod +x /etc/initramfs-tools/scripts/local-premount/resizefs
+    verbose cp /installer/diskpart/rc.local /etc/rc.local
+    verbose chmod +x /etc/rc.local
     sleep 0.5
 
     echo_magenta "Mise à jour du module INITRAMFS..."
-    apt-get remove -qq cryptsetup-initramfs
-    update-initramfs -u
+    verbose apt-get remove -qq cryptsetup-initramfs
+    verbose update-initramfs -u
 
     echo_red "Un redémarrage est nécessaire pour finaliser le partitionnement"
     echo_red "APPUYER SUR [ENTREE] POUR CONTINUER"
