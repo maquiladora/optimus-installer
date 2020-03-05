@@ -87,6 +87,18 @@ else
 fi
 
 echo
+echo_green "==== FAIL2BAN ===="
+if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
+if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
+then
+  verbose apt-get -qq install fail2ban
+  echo_magenta "FAIL2BAN a été installé avec succès"
+else
+  verbose apt-get -qq remove fail2ban
+  echo_magenta "FAIL2BAN a été desinstallé avec succès"
+fi
+
+echo
 echo_green "==== SERVEUR SSH ===="
 if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHREPLACEDEFAULTPORT; fi
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
@@ -94,7 +106,7 @@ then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
   if [ $(which /sbin/ufw) ]
   then
-     /sbin/ufw allow 7822
+    verbose /sbin/ufw allow 7822
     verbose /sbin/ufw deny 22
   fi
   verbose systemctl restart ssh
@@ -149,15 +161,6 @@ else
   verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
   verbose systemctl restart sshd
   echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
-fi
-
-echo
-echo_green "==== FAIL2BAN ===="
-if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
-if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
-then
-  verbose apt-get -qq install fail2ban
-  echo_magenta "FAIL2BAN a été installé avec succès"
 fi
 
 echo
