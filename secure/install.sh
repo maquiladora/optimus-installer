@@ -3,7 +3,7 @@ source /installer/functions.sh
 source /installer/config.sh
 
 echo
-if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -p "(O)ui / (N)on ? " -i "O" -e SECURE_UPDATE; fi
+if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(O)ui / (N)on ? " -i "O" -e SECURE_UPDATE; fi
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Téléchargement et installation des mises à jour..."
