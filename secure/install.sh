@@ -22,7 +22,8 @@ then
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
-    echo_magenta -n "Nouveau mot de passe root : "; echo_cyan $newrootpass
+    echo_magenta "Nouveau mot de passe root : "
+    echo_cyan $newrootpass
   else
     passwd root
   fi
@@ -54,7 +55,8 @@ then
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
       echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
-      echo_magenta "Nouveau mot de passe optimus : "; echo_cyan $newoptimuspass
+      echo_magenta "Nouveau mot de passe optimus : ";
+      echo_cyan $newoptimuspass
     else
       passwd optimus
     fi
