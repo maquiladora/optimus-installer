@@ -56,7 +56,7 @@ then
     if [[ $SECURE_GENERATEOPTIMUSPASS =~ ^[YyOo]$ ]]
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-      echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus
+      verbose echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus
       echo_magenta "Nouveau mot de passe optimus : $newoptimuspass"
     else
       passwd optimus
@@ -86,7 +86,7 @@ else
   fi
 fi
 
-ech
+echo
 echo_green "==== SERVEUR SSH ===="
 if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHREPLACEDEFAULTPORT; fi
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
@@ -94,8 +94,8 @@ then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
   if which /sbin/ufw
   then
-    /sbin/ufw allow 7822
-    /sbin/ufw deny 22
+    verbose /sbin/ufw allow 7822
+    verbose /sbin/ufw deny 22
   fi
   verbose systemctl restart ssh
   echo_magenta "Le serveur SSH écoute désormais sur le port 7822"
