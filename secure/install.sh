@@ -79,7 +79,7 @@ then
   verbose /sbin/ufw --force enable
   echo_magenta "Le Firewall a été activé avec succès !"
 else
-  if if [ $(which /sbin/ufw) ]
+  if [ $(which /sbin/ufw) ]
   then
     verbose /sbin/ufw --force disable
     echo_magenta "Le Firewall a été désactivé"
