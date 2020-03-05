@@ -22,7 +22,7 @@ then
   if [[ $SECURE_GENERATEROOTPASS =~ ^[YyOo]$ ]]
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    echo -e "$newrootpass\n$newrootpass" | passwd root
+    echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
     echo_magenta "Nouveau mot de passe root : $newrootpass"
   else
     passwd root
@@ -56,7 +56,7 @@ then
     if [[ $SECURE_GENERATEOPTIMUSPASS =~ ^[YyOo]$ ]]
     then
       newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-      verbose echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus
+      echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
       echo_magenta "Nouveau mot de passe optimus : $newoptimuspass"
     else
       passwd optimus
@@ -92,9 +92,9 @@ if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer l
 if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
-  if which /sbin/ufw
+  if [ which /sbin/ufw ]
   then
-    verbose /sbin/ufw allow 7822
+     /sbin/ufw allow 7822
     verbose /sbin/ufw deny 22
   fi
   verbose systemctl restart ssh
@@ -148,7 +148,7 @@ then
 else
   verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
   verbose systemctl restart sshd
-  echo_magenta "L'accès SSH du serveur n'est désormais plus décurisé par Google Authenticator"
+  echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
 fi
 
 echo_green "==== FAIL2BAN ===="
