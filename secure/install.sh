@@ -22,7 +22,7 @@ then
   then
     newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
-    echo_magenta "Nouveau mot de passe root : "; echo_cyan $newrootpass
+    echo_magenta "Nouveau mot de passe root : " | echo_cyan $newrootpass
   else
     passwd root
   fi
