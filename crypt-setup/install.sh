@@ -31,7 +31,7 @@ then
   /sbin/mkfs.ext4 /dev/mapper/cryptsda2 &> /dev/null
   sleep 0.5
   echo_magenta "Sauvegarde du header"
-  cryptsetup luksHeaderBackup /dev/sda2 --header-backup-file /root/headerbackup
+  verbose cryptsetup luksHeaderBackup /dev/sda2 --header-backup-file /root/headerbackup
   sleep 0.5
   echo_magenta "Montage de la partition dans /srv"
   mount /dev/mapper/cryptsda2 /srv
