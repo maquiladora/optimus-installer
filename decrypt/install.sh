@@ -1,4 +1,6 @@
 #!/bin/bash
+source /installer/functions.sh
+source /installer/config.sh
 
 mkdir /root/tmpramfs
 mount ramfs /root/tmpramfs/ -t ramfs
