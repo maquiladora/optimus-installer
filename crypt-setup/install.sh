@@ -7,8 +7,8 @@ then
   echo_green "==== CHIFFREMENT DU DISQUE ===="
   echo_magenta "Installation des paquets requis..."
   DEBIAN_FRONTEND=noninteractive apt-get -qq install keyboard-configuration &> /dev/null
-  apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
-  apt-get -qq install curl
+  verbose apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
+  verbose apt-get -qq install curl
   echo_magenta "Création d'une clé de chiffrement..."
   mkdir /root/tmpramfs
   mount ramfs /root/tmpramfs/ -t ramfs
@@ -19,7 +19,7 @@ then
   openssl rsautl -encrypt -inkey /root/tmpramfs/public.pem -pubin -in /root/tmpramfs/keyfile -out /root/tmpramfs/keyfile_encrypted &> /dev/null
   sleep 0.5
   echo_magenta "Envoi de la clé de chiffrement sur le serveur distant"
-  curl -X POST -F "$(</root/uid)=@/root/tmpramfs/keyfile_encrypted" https://decrypt.optimus-avocats.fr/autodecryptor/index.php
+  curl -X POST -F "$(</root/uid)=@/root/tmpramfs/keyfile_encrypted" https://decrypt.optimus-avocats.fr/index.php
   echo_magenta "Activation du chiffrement sur la partition"
   openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup --batch-mode luksFormat /dev/sda2
   sleep 0.5
