@@ -150,7 +150,7 @@ then
   fi
   verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
   verbose systemctl restart sshd
-  verbose google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
+  google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
   if [ -d "/home/optimus" ]
   then
     verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
