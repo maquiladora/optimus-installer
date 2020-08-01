@@ -2,7 +2,7 @@
 source /installer/functions.sh
 source /installer/config.sh
 
-if [ ! $DOMAIN ] then  echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
+if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
 
 if [ ! $APACHE_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(o)ui / (n)on ? " -n 1 -e APACHE_AREYOUSURE; fi
 if [[ $APACHE_AREYOUSURE =~ ^[YyOo]$ ]]
