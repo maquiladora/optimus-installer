@@ -9,7 +9,7 @@ if [[ $APACHE_DEFAULSITE_AREYOUSURE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
 
-  if [ ! -d "/srv/www.$DOMAIN" ];  then  verbose mkdir /srv/www.$DOMAIN; fi
+  if [ ! -d "/srv/www.$DOMAIN" ]; then verbose mkdir /srv/www.$DOMAIN; fi
   if [ ! -f "/srv/www.$DOMAIN/index.html" ]; then verbose echo "HELLO WORLD !" > /srv/www.$DOMAIN/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then sed -e 's/%DOMAIN%/$DOMAIN/g' /installer/apache/default_vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
 

@@ -80,6 +80,13 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
+  f)
+    tput reset
+    clear
+    source /installer/website/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
 	v)
 		tput reset
 		clear
