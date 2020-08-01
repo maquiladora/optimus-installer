@@ -21,5 +21,5 @@ then
   echo_magenta "Création du site par défaut www.$DOMAIN"
   verbose mkdir /srv/website
   verbose cp /installer/apache/index.html /srv/website
-  verbose sed -e 's/$DOMAIN/'$DOMAIN'/g' /srv/installer/apache/default_vhost > /etc/apache2/sites-enabled/$DOMAIN.config
+  verbose sed -e 's/$DOMAIN/'$DOMAIN'/g' /installer/apache/default_vhost > /etc/apache2/sites-enabled/$DOMAIN.conf
 fi
