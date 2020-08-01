@@ -72,12 +72,12 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-    d)
-      tput reset
-      clear
-      source /installer/apache/install.sh
-      read -p "Appuyez sur [ENTREE] pour continuer..."
-      ;;
+  e)
+    tput reset
+    clear
+    source /installer/apache/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
 
 
 
