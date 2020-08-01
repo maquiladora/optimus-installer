@@ -15,6 +15,7 @@ then
   fi
 
   sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/srv\/website/g' /etc/apache2/sites-enabled/000-default.conf
+  sed -i 's/ServerAdmin webmaster@localhost/ServerAdmin admin@$DOMAIN/g' /etc/apache2/sites-enabled/000-default.conf
   verbose systemctl restart apache2
 fi
 
@@ -31,7 +32,7 @@ then
     echo_magenta "Création du site par défaut www.$DOMAIN"
     if [ ! -d "/srv/website" ];  then  verbose mkdir /srv/website; fi
     if [ ! -f "/srv/website/index.html" ]; then verbose cp /installer/apache/index.html /srv/website; fi
-    if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then verbose sed -e 's/$DOMAIN/'$DOMAIN'/g' /installer/apache/default_vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
+    if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then sed -e 's/$DOMAIN/'$DOMAIN'/g' /installer/apache/default_vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
     verbose systemctl restart apache2
   fi
 
