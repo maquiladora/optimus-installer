@@ -15,7 +15,21 @@ then
   fi
 
   sed -i 's/DocumentRoot \/var\/www\/html/DocumentRoot \/srv\/website/g' /etc/apache2/sites-enabled/000-default.conf
-  sed -i 's/ServerAdmin webmaster@localhost/ServerAdmin admin@$DOMAIN/g' /etc/apache2/sites-enabled/000-default.conf
+
+  if grep -q "<Directory /srv/website/>" "/etc/apache2/apache2.conf"
+  then
+    printf '<Directory /srv/website/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n' >> /etc/apache2/apache2.conf
+  fi
+
+  if [ ! -d "/srv/website" ];  then  verbose mkdir /srv/website; fi
+  if [ ! -f "/srv/website/index.html" ]; then touch /srv/website/index.html; fi
+
+  <Directory /srv/website/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+
   verbose systemctl restart apache2
 fi
 
