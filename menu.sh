@@ -79,14 +79,6 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-
-
-
-
-
-
-
-
 	v)
 		tput reset
 		clear
