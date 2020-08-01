@@ -14,7 +14,7 @@ then
     verbose /sbin/ufw allow 443
   fi
 
-  sed -i 's/DocumentRoot \/var\/www\/html DocumentRoot \/srv\/website/g' /etc/apache2/a2ensite 000-default.conf
+  sed -i 's/DocumentRoot \/var\/www\/html DocumentRoot \/srv\/website/g' /etc/apache2/000-default.conf
   verbose systemctl restart apache2
 fi
 
