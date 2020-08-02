@@ -16,6 +16,8 @@ then
 
   verbose sed -i 's/\/var\/lib\/mysql/\/srv\/databases/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
+  verbose chown mysql:mysql /srv/databases
+
   verbose systemctl restart mysql
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
