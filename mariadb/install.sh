@@ -10,7 +10,7 @@ then
   #debconf-set-selections <<< 'mariadb-server-10.3 mysql-server/root_password password hopla'
   #debconf-set-selections <<< 'mariadb-server-10.3 mysql-server/root_password_again password hopla'
   verbose apt-get -qq -y install mariadb-server
-  verbos emysql -u root -e "SET PASSWORD for 'root'@localhost = PASSWORD('test3')"
+  verbose mariadb -u root -e "SET PASSWORD for 'root'@localhost = PASSWORD('test3')"
 
 
   verbose systemctl stop mariadb
