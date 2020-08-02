@@ -15,7 +15,7 @@ tput cup 6  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; the
 tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo -ne "\e[32m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
 tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m d. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m d. Sécuriser le serveur \e[0m"; fi
 tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. Installer le serveur web APACHE \e[0m"; else echo -ne "\e[31m e. Installer le serveur web APACHE \e[0m"; fi
-tput cup 10 3; echo " f. Installer un espace d'hébergement www"
+tput cup 10 3; if [ -d "/srv/www" ];	then echo -ne "\e[32m f. Installer l'espace d'hébergement www \e[0m"; else echo -ne "\e[31m f. Installer l'espace d'hébergement www \e[0m"; fi
 tput cup 11 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
 tput cup 12 3; if [ -d "/etc/mysql" ];	then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
 #13 MAIL SERVER i
