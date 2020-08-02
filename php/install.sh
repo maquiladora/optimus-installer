@@ -7,7 +7,7 @@ if [[ $PHP_AREYOUSURE =~ ^[YyOo]$ ]]
 then
 
   echo_magenta "Installation de PHP en cours..."
-  verbose apt-get -qq install php5 php5-mysql php5-mcrypt php5-imap php5-xmlrpc php5-curl
+  verbose apt-get -qq install php php-mysql php-mcrypt php-imap php-xmlrpc php-curl
   echo_magenta "PHP a été installé avec succès !"
 
 fi
