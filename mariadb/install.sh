@@ -11,7 +11,7 @@ then
 
   debconf-set-selections <<< 'mysql-server mysql-server/root_password password hopla'
   debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password hopla'
-
+  debconf-set-selections <<< 'mysql-community-server mysql-community-server/data-dir /srv/databases'
   verbose apt-get -qq -y install mariadb-server
 
   verbose sed -i 's/\/var\/lib\/mysql/\/srv\/databases/g' /etc/mysql/mariadb.conf.d/50-server.cnf
