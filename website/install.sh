@@ -11,11 +11,11 @@ then
 
   if [ ! -d "/srv/www.$DOMAIN" ]; then verbose mkdir /srv/www.$DOMAIN; fi
   if [ ! -f "/srv/www.$DOMAIN/index.html" ]; then verbose echo "HELLO WORLD !" > /srv/www.$DOMAIN/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then sed -e 's/%DOMAIN%/$DOMAIN/g' /installer/apache/default_vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then sed -e 's/%DOMAIN%/$DOMAIN/g' /installer/website/vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
 
   if grep -q "<Directory /srv/www.$DOMAIN/>" "/etc/apache2/apache2.conf"
   then
-    printf '<Directory /srv/www.$DOMAIN/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n' >> /etc/apache2/apache2.conf
+    printf "<Directory /srv/www.$DOMAIN/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
   fi
 
   verbose systemctl restart apache2

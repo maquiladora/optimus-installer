@@ -87,90 +87,6 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-	v)
-		tput reset
-		clear
-		source config.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	d)
-		tput reset
-		clear
-		source /srv/installer/dns/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	0)
-		tput reset
-		clear
-		source /srv/installer/letsencrypt/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	1)
-		tput reset
-		clear
-		source /srv/installer/mysql/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	2)
-		tput reset
-		clear
-		source /srv/installer/apache/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	3)
-		tput reset
-		clear
-		source /srv/installer/mail/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	4)
-		tput reset
-		clear
-		source /srv/installer/roundcube/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	5)
-		tput reset
-		clear
-		source /srv/installer/owncloud/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	6)
-		tput reset
-		clear
-		source /srv/installer/rsync/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	7)
-		tput reset
-		clear
-		source /srv/installer/optimus/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	8)
-		tput reset
-		clear
-		source /srv/installer/optimus_user/install.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	b)
-		tput reset
-		clear
-		source /srv/installer/db_backup.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
   q)
     tput reset
     clear
@@ -181,20 +97,6 @@ case "$y" in
 		tput reset
 		clear
     bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
-		;;
-
-	s)
-		tput reset
-		clear
-		source saver.sh
-		read -p "Appuyez sur [ENTREE] pour continuer..."
-		;;
-
-	*)
-		tput cup 26 21
-		read -p "Unknown command. Press [Enter] key to continue..."
-		tput reset
-		clear
 		;;
 esac
 done

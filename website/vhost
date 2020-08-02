@@ -1,0 +1,10 @@
+<VirtualHost *:80>
+  ServerAdmin webmaster@%DOMAIN%
+  ServerName %DOMAIN%
+  ServerAlias www.%DOMAIN%
+  DirectoryIndex index.html
+  DocumentRoot /srv/website
+  LogLevel warn
+  ErrorLog /var/log/apache2/%DOMAIN%-error.log
+  CustomLog /var/log/apache2/%DOMAIN%-access.log combined
+</VirtualHost>
