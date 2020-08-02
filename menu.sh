@@ -16,7 +16,7 @@ tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | gre
 tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m d. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m d. Sécuriser le serveur \e[0m"; fi
 tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. Installer le serveur web APACHE \e[0m"; else echo -ne "\e[31m e. Installer le serveur web APACHE \e[0m"; fi
 tput cup 10 3; echo " f. Installer un espace d'hébergement www"
-#11 PHP g
+tput cup 11 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
 #12 MYSQL h
 #13 MAIL SERVER i
 #14 WEBMAIL j
@@ -91,6 +91,13 @@ case "$y" in
     tput reset
     clear
     source /installer/website/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  g)
+    tput reset
+    clear
+    source /installer/php/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 

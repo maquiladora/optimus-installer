@@ -9,15 +9,15 @@ if [[ $APACHE_DEFAULSITE_AREYOUSURE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
 
-  if [ ! -d "/srv/www.$DOMAIN" ]; then verbose mkdir /srv/www.$DOMAIN; fi
-  if [ ! -f "/srv/www.$DOMAIN/index.html" ]; then verbose echo "HELLO WORLD !" > /srv/www.$DOMAIN/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/www.$DOMAIN.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/website/vhost > /etc/apache2/sites-enabled/www.$DOMAIN.conf; fi
+  if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
+  if [ ! -f "/srv/www/index.html" ]; then verbose echo "HELLO WORLD !" > /srv/www/index.html; fi
+  if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/website/vhost > /etc/apache2/sites-enabled/www.conf; fi
 
-  if ! grep -q "<Directory /srv/www.$DOMAIN/>" /etc/apache2/apache2.conf
+  if ! grep -q "<Directory /srv/www/>" /etc/apache2/apache2.conf
   then
-    printf "<Directory /srv/www.$DOMAIN/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
+    printf "<Directory /srv/www/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
   fi
 
   verbose systemctl restart apache2
-  echo_magenta "L'espace d'hébergement www.$DOMAIN a été créé avec succès dans /srv/www.$DOMAIN !"
+  echo_magenta "L'espace d'hébergement www.$DOMAIN a été installé avec succès !"
 fi
