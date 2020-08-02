@@ -7,7 +7,7 @@ then
 
   echo_magenta "Installation du serveur MARIADB..."
 
-  if [ ! -d "/srv/databases" ]; then verbose mkdir /srv/databases; fi
+  #if [ ! -d "/srv/databases" ]; then verbose mkdir /srv/databases; fi
 
   debconf-set-selections <<< 'mysql-server mysql-server/root_password password hopla'
   debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password hopla'
