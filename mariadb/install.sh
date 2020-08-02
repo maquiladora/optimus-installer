@@ -7,8 +7,8 @@ then
 
   echo_magenta "Installation du serveur MARIADB..."
 
-  debconf-set-selections <<< 'mysql-server mysql-server/root_password password hopla'
-  debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password hopla'
+  debconf-set-selections <<< 'mariadb-server mysql-server/root_password password hopla'
+  debconf-set-selections <<< 'mariadb-server mysql-server/root_password_again password hopla'
   verbose apt-get -qq -y install mariadb-server
 
   verbose systemctl stop mariadb
