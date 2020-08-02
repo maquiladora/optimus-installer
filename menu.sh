@@ -17,7 +17,7 @@ tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32
 tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. Installer le serveur web APACHE \e[0m"; else echo -ne "\e[31m e. Installer le serveur web APACHE \e[0m"; fi
 tput cup 10 3; echo " f. Installer un espace d'hébergement www"
 tput cup 11 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
-#12 MYSQL h
+tput cup 12 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
 #13 MAIL SERVER i
 #14 WEBMAIL j
 #15 CLOUD k
@@ -98,6 +98,13 @@ case "$y" in
     tput reset
     clear
     source /installer/php/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  h)
+    tput reset
+    clear
+    source /installer/mariadb/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
