@@ -7,17 +7,20 @@ then
 
   echo_magenta "Installation du serveur MARIADB..."
 
-  #if [ ! -d "/srv/databases" ]; then verbose mkdir /srv/databases; fi
-
   debconf-set-selections <<< 'mysql-server mysql-server/root_password password hopla'
   debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password hopla'
-  debconf-set-selections <<< 'mysql-community-server mysql-community-server/data-dir select "/srv/databases"'
   verbose apt-get -qq -y install mariadb-server
 
-  #verbose sed -i 's/\/var\/lib\/mysql/\/srv\/databases/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+  verbose systemctl stop mariadb
 
-  #verbose chown mysql:mysql /srv/databases
-  #verbose chmod +755 /srv/databases
+  if [ ! -d "/srv/databases" ]
+  then
+    verbose mv /var/lib/mysql /srv
+    verbose mv /srv/mysql /srv/databases
+    verbose ln -s /srv/databases /var/lib/mysql
+  fi
+
+  verbose systemctl start mariadb
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
 
