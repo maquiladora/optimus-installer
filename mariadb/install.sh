@@ -17,6 +17,7 @@ then
   verbose sed -i 's/\/var\/lib\/mysql/\/srv\/databases/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
   verbose chown mysql:mysql /srv/databases
+  verbose chmod +755 /srv/databases
 
   verbose systemctl restart mysql
 
