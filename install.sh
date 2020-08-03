@@ -5,6 +5,7 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
+sudo DEBIAN_FRONTEND=noninteractive
 sudo apt-get -qq -y update
 sudo apt-get -qq -y upgrade
 sudo apt-get -qq remove cryptsetup-initramfs
