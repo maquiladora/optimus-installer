@@ -5,9 +5,10 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
-apt-get update
-apt-get remove -qq cryptsetup-initramfs
-apt-get -qq install git
+sudo apt-get -qq update
+sudo apt-get -qq upgrade
+sudo apt-get -qq remove cryptsetup-initramfs
+sudo apt-get -qq install git
 
 rm -R /installer
 mkdir /installer
