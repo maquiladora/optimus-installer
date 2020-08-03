@@ -5,6 +5,7 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
+apt-get update
 apt-get remove -qq cryptsetup-initramfs
 apt-get -qq install git
 
