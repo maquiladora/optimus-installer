@@ -27,8 +27,8 @@ then
   then
     if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3309; fi
     sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-    sed -i 's/#port                   = 3306/port                   = 3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-    verbose mariadb -u root -phopla -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'test' WITH GRANT OPTION;"
+    sed -i 's/#port                   = 3306/port                    = 3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    verbose mariadb -u root -ptest -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'test' WITH GRANT OPTION;"
   fi
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
