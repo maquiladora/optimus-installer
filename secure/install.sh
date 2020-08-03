@@ -150,20 +150,37 @@ if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'ac
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq -y install libpam-google-authenticator
-  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
+  if ! grep -q "auth sufficient pam_google_authenticator.so" /etc/pam.d/sshd
   then
-    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+    echo 'auth sufficient pam_google_authenticator.so' >> /etc/pam.d/sshd
   fi
   verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+  verbose sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+  if ! grep -q 'AuthenticationMethods publickey,password publickey,keyboard-interactive' /etc/ssh/sshd_config
+  then
+    echo 'AuthenticationMethods publickey,password publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+  fi
+  if ! grep -q '#@include common-auth' /etc/ssh/sshd_config
+  then
+    verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
+  fi
   verbose systemctl restart sshd
+
   google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
+
   if [ -d "/home/optimus" ]
   then
     verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
   fi
+
   echo_magenta "L'accès SSH du serveur est désormais sécurisé par un code 2FA GOOGLE AUTHENTICATOR"
+
 else
   verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+
+
+
+
   verbose systemctl restart sshd
   echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
 fi
