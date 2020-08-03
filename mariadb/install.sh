@@ -10,8 +10,9 @@ then
 
   echo_magenta "Installation du serveur MARIADB..."
 
+  debconf-set-selections <<< 'mariadb-server mysql-server/root_password password hopla'
+  debconf-set-selections <<< 'mariadb-server mysql-server/root_password_again password hopla'
   verbose apt-get -qq -y install mariadb-server
-  verbose mariadb -u root -e "SET PASSWORD for 'root'@'%' = PASSWORD('test3')"
 
   verbose systemctl stop mariadb
 
@@ -22,6 +23,10 @@ then
     verbose ln -s /srv/databases /var/lib/mysql
   fi
 
+  sleep(0.5)
+  
+  verbose systemctl start mariadb
+
   if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connexion à distance ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_REMOTEACCESS; fi
   if [[ $MARIADB_REMOTEACCESS =~ ^[YyOo]$ ]]
   then
@@ -30,8 +35,6 @@ then
     sed -i 's/3306/3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     verbose mariadb -u root -ptest3 -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'test3' WITH GRANT OPTION;"
   fi
-
-  verbose systemctl start mariadb
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
 

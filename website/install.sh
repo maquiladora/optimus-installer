@@ -7,8 +7,8 @@ echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
 
 if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
 
-if [ ! $APACHE_DEFAULSITE_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement www.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e APACHE_DEFAULSITE_AREYOUSURE; fi
-if [[ $APACHE_DEFAULSITE_AREYOUSURE =~ ^[YyOo]$ ]]
+if [ ! $WWW_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement www.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e WWW_AREYOUSURE; fi
+if [[ $WWW_AREYOUSURE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
 
