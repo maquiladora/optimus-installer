@@ -109,14 +109,14 @@ fi
 if [ ! $SECURE_SSHDISABLEROOTACCESS ]; then echo_green "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHDISABLEROOTACCESS; fi
 if [[ $SECURE_SSHDISABLEROOTACCESS =~ ^[YyOo]$ ]]
 then
-  if [ $(getent passwd optimus) ]
+  if [ $(getent passwd debian) ]
   then
     verbose sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
     verbose sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
     verbose systemctl restart ssh
     echo_magenta "L'accès SSH est désormais interdit à l'utilisateur root"
   else
-    echo_red "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur optimus n'existe pas"
+    echo_red "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur debian n'existe pas"
   fi
 else
   verbose sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
