@@ -23,7 +23,7 @@ then
     verbose ln -s /srv/databases /var/lib/mysql
   fi
 
-  sleep(0.5)
+  sleep 0.5
 
   verbose systemctl start mariadb
 
