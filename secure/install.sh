@@ -66,42 +66,22 @@ then
 fi
 
 echo
-echo_green "==== UTILISATEUR OPTIMUS ===="
-if [ ! -d "/home/optimus" ]
+echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
+if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilsateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
+if [[ $SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
 then
-  if [ ! $SECURE_CREATEOPTIMUSUSER ]; then echo_green "Voulez vous créer l'utilisateur secondaire dénommé optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CREATEOPTIMUSUSER; fi
-  if [[ $SECURE_CREATEOPTIMUSUSER =~ ^[YyOo]$ ]]
+  if [ ! $SECURE_GENERATEDEBIANPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEDEBIANPASS; fi
+  if [[ $SECURE_GENERATEDEBIANPASS =~ ^[YyOo]$ ]]
   then
-    verbose adduser --disabled-login --gecos "" optimus
-    if [ -f "/root/.google_authenticator" ]
-    then
-      verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
-    fi
-    #verbose mkdir /home/optimus/.ssh
-    #verbose cp /home/debian/.ssh/authorized_keys /home/optimus/.ssh/authorized_keys
-    #verbose chmod /home/optimus/.ssh/authorized_keys
-    #verbose /usr/sbin/usermod -a -G sudo optimus
-    echo_magenta "L'utilisateur optimus a été créé avec succès !"
+    newdebianpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+    echo -e "$newdebianpass\n$newdebianpass" | passwd debian &> /dev/null
+    echo_magenta "Nouveau mot de passe de l'utilisateur DEBIAN : ";
+    echo_cyan $newdebianpass
+  else
+    passwd debian
   fi
 fi
 
-if [ -d "/home/optimus" ]
-then
-  if [ ! $SECURE_CHANGEOPTIMUSPASS ]; then echo_green "Voulez vous modifier le mot de passe optimus ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEOPTIMUSPASS; fi
-  if [[ $SECURE_CHANGEOPTIMUSPASS =~ ^[YyOo]$ ]]
-  then
-    if [ ! $SECURE_GENERATEOPTIMUSPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEOPTIMUSPASS; fi
-    if [[ $SECURE_GENERATEOPTIMUSPASS =~ ^[YyOo]$ ]]
-    then
-      newoptimuspass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-      echo -e "$newoptimuspass\n$newoptimuspass" | passwd optimus &> /dev/null
-      echo_magenta "Nouveau mot de passe optimus : ";
-      echo_cyan $newoptimuspass
-    else
-      passwd optimus
-    fi
-  fi
-fi
 
 echo
 echo_green "==== SERVEUR SSH ===="
@@ -134,6 +114,7 @@ then
   if [ $(getent passwd optimus) ]
   then
     verbose sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+    verbose sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
     verbose systemctl restart ssh
     echo_magenta "L'accès SSH est désormais interdit à l'utilisateur root"
   else
@@ -141,6 +122,7 @@ then
   fi
 else
   verbose sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
+  verbose sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
   verbose systemctl restart ssh
   echo_magenta "L'accès SSH est désormais autorisé pour l'utilisateur root"
 fi
@@ -150,26 +132,18 @@ if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'ac
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq -y install libpam-google-authenticator
-  if ! grep -q "auth sufficient pam_google_authenticator.so" /etc/pam.d/sshd
+  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
   then
-    echo 'auth sufficient pam_google_authenticator.so' >> /etc/pam.d/sshd
+    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
   fi
   verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-  #verbose sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-  if ! grep -q 'AuthenticationMethods publickey,password publickey,keyboard-interactive' /etc/ssh/sshd_config
-  then
-    echo 'AuthenticationMethods publickey,password publickey,keyboard-interactive' >> /etc/ssh/sshd_config
-  fi
-  if ! grep -q '#@include common-auth' /etc/ssh/sshd_config
-  then
-    verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
-  fi
 
   google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
 
-  if [ -d "/home/optimus" ]
+  if [ -d "/home/debian" ]
   then
-    verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
+    verbose cp /root/.google_authenticator /home/debian/.google_authenticator
+    verbose chown debian:debian /home/debian/.google_authenticator
   fi
 
   verbose systemctl restart sshd
