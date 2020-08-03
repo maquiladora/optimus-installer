@@ -5,12 +5,11 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
-export DEBIAN_FRONTEND=noninteractive
-export DEBIAN_PRIORITY=critical
-sudo apt-get -qq -y update
-sudo apt-get -qq -y upgrade
-sudo apt-get -qq remove cryptsetup-initramfs
-sudo apt-get -qq install git
+sudo apt-get --yes --force-yes update
+sudo apt-get --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+sudo apt-get --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+sudo apt-get --yes --force-yes remove cryptsetup-initramfs
+sudo apt-get --yes --force-yes install git
 
 rm -R /installer
 mkdir /installer
