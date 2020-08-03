@@ -24,7 +24,7 @@ then
   fi
 
   sleep(0.5)
-  
+
   verbose systemctl start mariadb
 
   if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connexion à distance ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_REMOTEACCESS; fi
@@ -33,7 +33,7 @@ then
     if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3309; fi
     sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     sed -i 's/3306/3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-    verbose mariadb -u root -ptest3 -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'test3' WITH GRANT OPTION;"
+    verbose mariadb -u root -phopla -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY 'test3' WITH GRANT OPTION;"
   fi
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
