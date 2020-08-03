@@ -75,6 +75,10 @@ then
     then
       verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
     fi
+    #verbose mkdir /home/optimus/.ssh
+    #verbose cp /home/debian/.ssh/authorized_keys /home/optimus/.ssh/authorized_keys
+    #verbose chmod /home/optimus/.ssh/authorized_keys
+    #verbose /usr/sbin/usermod -a -G sudo optimus
     echo_magenta "L'utilisateur optimus a été créé avec succès !"
   fi
 fi
