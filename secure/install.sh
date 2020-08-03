@@ -7,10 +7,8 @@ if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Téléchargement et installation des mises à jour..."
-  #verbose apt-get -qq update
-  #verbose apt-get -qq upgrade
-  apt-get update
-  apt-get upgrade
+  apt-get -qq update
+  apt-get -qq upgrade
   echo_magenta "Mises à jour effectuées avec succès !"
 fi
 
