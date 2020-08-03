@@ -44,8 +44,8 @@ then
 
   echo_magenta "Montage de la partition dans /srv"
   mount /dev/mapper/cryptsda2 /srv
-  #umount /root/tmpramfs
-  #rmdir /root/tmpramfs
+  umount /root/tmpramfs
+  rmdir /root/tmpramfs
 
 else
   echo_red "Opération impossible : la partition /dev/sda2 n'existe pas"

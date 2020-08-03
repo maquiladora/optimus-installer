@@ -2,6 +2,7 @@
 source /installer/functions.sh
 source /installer/config.sh
 
+echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
 
 if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi

@@ -38,7 +38,7 @@ fi
 
 echo
 echo_green "==== FAIL2BAN ===="
-if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous protéger l\'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
+if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous installer FAIL2BAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
 if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install fail2ban
@@ -155,7 +155,7 @@ then
     echo 'auth sufficient pam_google_authenticator.so' >> /etc/pam.d/sshd
   fi
   verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-  verbose sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+  #verbose sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
   if ! grep -q 'AuthenticationMethods publickey,password publickey,keyboard-interactive' /etc/ssh/sshd_config
   then
     echo 'AuthenticationMethods publickey,password publickey,keyboard-interactive' >> /etc/ssh/sshd_config
@@ -164,7 +164,6 @@ then
   then
     verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
   fi
-  verbose systemctl restart sshd
 
   google-authenticator -t -f -d -w 3 -r 3 -R 30 -e 4
 
@@ -173,14 +172,11 @@ then
     verbose cp /root/.google_authenticator /home/optimus/.google_authenticator
   fi
 
+  verbose systemctl restart sshd
   echo_magenta "L'accès SSH du serveur est désormais sécurisé par un code 2FA GOOGLE AUTHENTICATOR"
 
 else
   verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
-
-
-
-
   verbose systemctl restart sshd
   echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
 fi

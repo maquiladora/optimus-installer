@@ -1,6 +1,7 @@
 source /installer/functions.sh
 source /installer/config.sh
 
+echo
 echo_green "==== INSTALLATION DU SERVEUR DE BASES DE DONNEES MARIADB ===="
 
 if [ ! $MARIADB_AREYOUSURE ]; then echo_green "Souhaitez vous installer le serveur de bases de données MARIADB ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_AREYOUSURE; fi
