@@ -5,7 +5,8 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
-DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_PRIORITY=critical
 sudo apt-get -qq -y update
 sudo apt-get -qq -y upgrade
 sudo apt-get -qq remove cryptsetup-initramfs
