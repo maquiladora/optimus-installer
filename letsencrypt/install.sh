@@ -8,13 +8,13 @@ if [ ! $LETSENCRYPT_AREYOUSURE ]; then echo_green "Souhaitez vous installer les 
 if [[ $LETSENCRYPT_AREYOUSURE =~ ^[YyOo]$ ]]
 then
 
-    echo_magenta "Installing de letsencrypt en cours..."
+    echo_magenta "Installation de letsencrypt en cours..."
     verbose apt-get -qq -y install letsencrypt python-certbot-apache
 
-    if [ -d "/srv/www.$DOMAIN" ]; then DOMAINS_TO_INSTALL="-d $DOMAIN -d www.$DOMAIN"; fi
-    if [ -d "/srv/cloud.$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d cloud.$DOMAIN"; fi
-    if [ -d "/srv/webmail.$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d webmail.$DOMAIN"; fi
-    if [ -d "/srv/api.$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
+    if [ -d "/srv/www" ]; then DOMAINS_TO_INSTALL="-d $DOMAIN -d www.$DOMAIN"; fi
+    if [ -d "/srv/cloud" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d cloud.$DOMAIN"; fi
+    if [ -d "/srv/webmail" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d webmail.$DOMAIN"; fi
+    if [ -d "/srv/api" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
 
     verbose certbot run -n --apache --agree-tos --email webmaster@$DOMAIN $DOMAINS_TO_INSTALL
 
