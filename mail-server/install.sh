@@ -90,11 +90,11 @@ echo_magenta "Installation des bases de données MARIADB"
 db_version=$(cat /srv/databases/MAIL_DB_VERSION)
 for file in /installer/mail-server/*.sql
 do
-	file="${file:16:-4}"
+	file="${file:23:-4}"
 	if [[ $file > $db_version ]]
 	then
 		echo -e "$file.sql exécuté"
-		mariadb < /installer/mail/$file.sql
+		mariadb < /installer/mail-server/$file.sql
     $file > /srv/databases/MAIL_DB_VERSION
   else
     echo -e "$file.sql ignoré"
