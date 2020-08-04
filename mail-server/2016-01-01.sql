@@ -102,17 +102,3 @@ CREATE TABLE IF NOT EXISTS userpref (
   PRIMARY KEY  (prefid),
   KEY username (username)
 ) ENGINE=MyISAM;
-
-GRANT ALL ON server.mailboxes TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.mailboxes_acl TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.mailboxes_acl_anyone TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.mailboxes_domains TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.awl TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.bayes_expire TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.bayes_global_vars TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.bayes_token TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.bayes_vars TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-GRANT ALL ON server.userpref TO '$mysql_mail_user'@'localhost' IDENTIFIED BY '$mysql_mail_password';
-
-INSERT IGNORE INTO mailboxes VALUES (NULL, 'postmaster@$domain', '$mysql_mail_password', '0', '1', 'root@$domain', null, null, null, null);
-INSERT IGNORE INTO mailboxes_domains VALUES (NULL, 1, '$domain');

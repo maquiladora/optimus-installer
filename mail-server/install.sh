@@ -24,6 +24,10 @@ verbose mariadb -u root -e "GRANT ALL ON server.bayes_token TO '$MARIADB_MAIL_US
 verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 
+echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
+verbose mariadb -u root -e "INSERT IGNORE INTO mailboxes VALUES (NULL, 'postmaster@$DOMAIN', '$MARIADB_MAIL_PASSWORD', '0', '1', 'root@$DOMAIN', null, null, null, null);"
+verbose mariadb -u root -e "INSERT IGNORE INTO mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
+
 echo_magenta "Installation des paquets de POSTFIX"
 DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
