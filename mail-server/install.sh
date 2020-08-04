@@ -13,16 +13,16 @@ verbose mkdir -p /srv/mailboxes
 verbose chown mailboxes:mailboxes /srv/mailboxes
 
 echo_magenta "Création de l'utilisateur MARIADB"
-verbose mariadb -u root -e "GRANT ALL ON server.mailboxes TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl_anyone TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_domains TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.awl TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.bayes_expire TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.bayes_global_vars TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.bayes_token TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
-verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl_anyone TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_domains TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.awl TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_expire TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_global_vars TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_token TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'%' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 
 echo_magenta "Installation des paquets de POSTFIX"
 DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
