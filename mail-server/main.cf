@@ -1,6 +1,7 @@
 queue_directory = /var/spool/postfix
 command_directory = /usr/sbin
 daemon_directory = /usr/lib/postfix
+shlib_directory = /usr/lib/postfix/lib
 mail_owner = postfix
 
 myhostname = $domain
@@ -9,7 +10,7 @@ myorigin = $domain
 mydestination =
 inet_interfaces = all
 
- 
+
 
 unknown_local_recipient_reject_code = 550
 home_mailbox = Maildir/
@@ -47,7 +48,7 @@ mailbox_transport = virtual
 #RECIPIENT AND SENDER BCC
 recipient_bcc_maps = mysql:/etc/postfix/recipient_bcc.cf
 sender_bcc_maps = mysql:/etc/postfix/sender_bcc.cf
-receive_override_options = no_address_mappings 
+receive_override_options = no_address_mappings
 
 #SMTP AUTH
 smtpd_sasl_auth_enable = yes
@@ -75,7 +76,3 @@ smtpd_tls_CAfile    = /etc/letsencrypt/live/$domain/chain.pem
 smtpd_tls_received_header = yes
 smtpd_tls_session_cache_timeout = 3600s
 tls_random_source = dev:/dev/urandom
-
-
-
-
