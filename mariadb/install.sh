@@ -46,6 +46,7 @@ then
   sed -i 's/#port                   = 3306/port                    = 3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
   verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
   verbose systemctl restart mariadb
-  echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
+  echo_magenta "L'accès à distance à la base de données MARIADB a été ouvert avec succès !"
+  echo_magenta "Le mot de passe de l'utilisateur ROOT distant est : "
   echo_cyan $MARIADB_REMOTE_ROOT_PASSWORD
 fi
