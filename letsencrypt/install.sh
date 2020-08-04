@@ -15,6 +15,7 @@ then
     if [ -d "/srv/cloud" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d cloud.$DOMAIN"; fi
     if [ -d "/srv/webmail" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d webmail.$DOMAIN"; fi
     if [ -d "/srv/api" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
+    if [ -d "/srv/mailboxes" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d imap.$DOMAIN -d mail.$DOMAIN -d smtp.$DOMAIN"; fi
 
     verbose certbot run -n --apache --agree-tos --email webmaster@$DOMAIN $DOMAINS_TO_INSTALL
 
