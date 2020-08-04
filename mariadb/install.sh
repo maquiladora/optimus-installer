@@ -29,7 +29,7 @@ if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connex
 if [[ $MARIADB_REMOTEACCESS =~ ^[YyOo]$ ]]
 then
   if [ ! $MARIADB_REMOTE_ROOT_PASSWORD ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e MARIADB_REMOTE_ROOT_PASSWORD_AREYOUSURE; fi
-  if [[ $MARIADB_REMOTE_ROOT_PASSWORD_AREYOUSURE =~ ^[YyOo]$ ]]
+  if [[ ! $MARIADB_REMOTE_ROOT_PASSWORD && $MARIADB_REMOTE_ROOT_PASSWORD_AREYOUSURE =~ ^[YyOo]$ ]]
   then
     MARIADB_REMOTE_ROOT_PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
     echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
