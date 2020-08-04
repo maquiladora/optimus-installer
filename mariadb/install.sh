@@ -20,7 +20,7 @@ then
   fi
   sleep 0.5
   verbose systemctl start mariadb
-  verbose mariadb -u root -e "SET PASSWORD for 'root'@'localhost' = PASSWORD('test');FLUSH PRIVILEGES;"
+  #verbose mariadb -u root -e "SET PASSWORD for 'root'@'localhost' = PASSWORD('test');FLUSH PRIVILEGES;"
 
   if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connexion à distance ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_REMOTEACCESS; fi
   if [[ $MARIADB_REMOTEACCESS =~ ^[YyOo]$ ]]
