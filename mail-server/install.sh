@@ -25,7 +25,7 @@ verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USE
 verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 
 echo_magenta "Installation des paquets de POSTFIX"
-verbose DEBIAN_FRONTEND=noninteractive apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
+DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
 echo_magenta "Modification des fichiers de configuration de POSTFIX"
 sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/saslauthd > /etc/default/saslauthd
@@ -86,13 +86,17 @@ verbose service spamass-milter restart
 verbose service postfix restart
 verbose service dovecot restart
 
-#echo_magenta "Installation des bases de données MARIADB"
-#for file in /installer/mail-server/*.sql
-#do
-	#file="${file:20:-4}"
-	#if [[ $file > $db_version ]]
-		#then
-		#echo -e "Lancement de $file.sql"
-		#sed -e 's/$domain/'$domain'/g' -e 's/$mysql_mail_user/'$mysql_mail_user'/g' -e 's/$mysql_mail_password/'$mysql_mail_password'/g' /srv/installer/mail/$file.sql | mysql -f -u root -p$mysql_root_password
-	#fi
-#done
+echo_magenta "Installation des bases de données MARIADB"
+db_version=$(cat /srv/databases/MAIL_DB_VERSION)
+for file in /installer/mail-server/*.sql
+do
+	file="${file:20:-4}"
+	if [[ $file > $db_version ]]
+	then
+		echo -e "$file.sql exécuté"
+		mariadb < /installer/mail/$file.sql
+    $file > /srv/databases/MAIL_DB_VERSION
+  else
+    echo -e "$file.sql ignoré"
+  fi
+done
