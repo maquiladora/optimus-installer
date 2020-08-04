@@ -28,6 +28,15 @@ echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
 verbose mariadb -u root -e "INSERT IGNORE INTO mailboxes VALUES (NULL, 'postmaster@$DOMAIN', '$MARIADB_MAIL_PASSWORD', '0', '1', 'root@$DOMAIN', null, null, null, null);"
 verbose mariadb -u root -e "INSERT IGNORE INTO mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
 
+echo_magenta "Ouverture des ports du Firewall"
+if [ $(which /sbin/ufw) ]
+then
+  verbose /sbin/ufw allow 993
+  verbose /sbin/ufw allow 587
+  verbose /sbin/ufw allow 465
+  verbose /sbin/ufw allow 25
+fi
+
 echo_magenta "Installation des paquets de POSTFIX"
 DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
