@@ -28,15 +28,19 @@ echo_green "==== CONNEXION A DISTANCE A LA BASE DE DONNEES ===="
 if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connexion à distance ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_REMOTEACCESS; fi
 if [[ $MARIADB_REMOTEACCESS =~ ^[YyOo]$ ]]
 then
-  if [ ! $MARIADB_REMOTE_ROOT_PASSWORD ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e MARIADB_REMOTE_ROOT_PASSWORD_AREYOUSURE; fi
-  if [[ ! $MARIADB_REMOTE_ROOT_PASSWORD && $MARIADB_REMOTE_ROOT_PASSWORD_AREYOUSURE =~ ^[YyOo]$ ]]
+  if [ ! $MARIADB_REMOTE_ROOT_PASSWORD ]
   then
-    MARIADB_REMOTE_ROOT_PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
-    echo_cyan $MARIADB_REMOTE_ROOT_PASSWORD
-  else
-    echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
-    read MARIADB_REMOTE_ROOT_PASSWORD;
+    echo_green "Voulez vous générer un mot de passe automatiquement ?"
+    read -n 1 -p "(o)ui / (n)on ? " -e MARIADB_REMOTE_ROOT_PASSWORD_GENERATE
+    if [[$MARIADB_REMOTE_ROOT_PASSWORD_GENERATE =~ ^[YyOo]$ ]]
+    then
+      MARIADB_REMOTE_ROOT_PASSWORD=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+      echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
+      echo_cyan $MARIADB_REMOTE_ROOT_PASSWORD
+    else
+      echo_magenta "Nouveau mot de passe de l'utilisateur ROOT distant : "
+      read MARIADB_REMOTE_ROOT_PASSWORD;
+    fi
   fi
 
   if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3309; fi
