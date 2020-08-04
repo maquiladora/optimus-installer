@@ -25,7 +25,7 @@ verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USE
 verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 
 echo_magenta "Installation des paquets de POSTFIX"
-DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
+DEBIAN_FRONTEND=noninteractive apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
 echo_magenta "Modification des fichiers de configuration de POSTFIX"
 sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/saslauthd > /etc/default/saslauthd
