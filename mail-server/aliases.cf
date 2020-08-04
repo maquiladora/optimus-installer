@@ -1,0 +1,5 @@
+user = $mysql_mail_user
+password = $mysql_mail_password
+dbname = server
+hosts = 127.0.0.1
+query = SELECT email FROM mailboxes WHERE status=1 and (aliases = '%s' OR aliases LIKE '%s;%%' OR aliases LIKE '%%;%s;%%' OR aliases LIKE '%%;%s')

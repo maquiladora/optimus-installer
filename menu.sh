@@ -18,6 +18,7 @@ tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. I
 tput cup 10 3; if [ -d "/srv/www" ];	then echo -ne "\e[32m f. Installer l'espace d'hébergement www \e[0m"; else echo -ne "\e[31m f. Installer l'espace d'hébergement www \e[0m"; fi
 tput cup 11 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
 tput cup 12 3; if [ -d "/etc/mysql" ];	then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
+tput cup 13 3; if [ -d "/etc/dovecot" ];	then echo -ne "\e[32m i. Installer le serveur mail \e[0m"; else echo -ne "\e[32m i. Installer le serveur mail \e[0m"; fi
 #13 MAIL SERVER i
 #14 WEBMAIL j
 #15 CLOUD k
@@ -108,6 +109,12 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
+  i)
+    tput reset
+    clear
+    source /installer/mail-server/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
 
 
   l)

@@ -1,0 +1,5 @@
+user = $mysql_mail_user
+password = $mysql_mail_password
+dbname = server
+hosts = 127.0.0.1
+query = SELECT password FROM mailboxes WHERE email='%s' AND status=1

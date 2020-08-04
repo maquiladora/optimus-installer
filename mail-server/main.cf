@@ -1,0 +1,81 @@
+queue_directory = /var/spool/postfix
+command_directory = /usr/sbin
+daemon_directory = /usr/lib/postfix
+mail_owner = postfix
+
+myhostname = $domain
+mydomain = $domain
+myorigin = $domain
+mydestination =
+inet_interfaces = all
+
+ 
+
+unknown_local_recipient_reject_code = 550
+home_mailbox = Maildir/
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+
+debug_peer_level = 2
+
+sendmail_path = /usr/sbin/sendmail.postfix
+newaliases_path = /usr/bin/newaliases.postfix
+setgid_group = postdrop
+html_directory = no
+manpage_directory = /usr/share/man
+sample_directory = /usr/share/doc/postfix-2.3.3/samples
+readme_directory = /usr/share/doc/postfix-2.3.3/README_FILES
+
+#MESSAGE SIZE LIMIT
+message_size_limit = 20971520
+
+#ERROR REPORTING
+notify_classes = bounce, 2bounce, protocol, resource, software
+
+#VIRTUAL MAILBOXES
+virtual_mailbox_domains = mysql:/etc/postfix/virtual_domains.cf
+virtual_mailbox_base = /
+virtual_mailbox_maps = mysql:/etc/postfix/maildirs.cf
+virtual_alias_maps = mysql:/etc/postfix/aliases.cf mysql:/etc/postfix/redirections.cf
+
+virtual_minimum_uid = 200
+virtual_uid_maps = static:203
+virtual_gid_maps = static:203
+
+mailbox_transport = virtual
+
+#RECIPIENT AND SENDER BCC
+recipient_bcc_maps = mysql:/etc/postfix/recipient_bcc.cf
+sender_bcc_maps = mysql:/etc/postfix/sender_bcc.cf
+receive_override_options = no_address_mappings 
+
+#SMTP AUTH
+smtpd_sasl_auth_enable = yes
+smtpd_recipient_restrictions = permit_mynetworks, permit_sasl_authenticated, permit_auth_destination, reject
+smtpd_sasl_security_options = noanonymous
+
+#SIEVE INTEGRATION
+mailbox_command = /usr/lib/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT" -d "$USER"
+virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
+
+#SPAMASSASSIN - CLAMAV
+milter_default_action = accept
+smtpd_milters = unix:/clamav/clamav-milter.ctl, unix:/spamass/spamass.sock
+
+#TRANSPORT
+transport_maps = mysql:/etc/postfix/transport.cf
+
+#TLS
+smtpd_use_tls = yes
+smtpd_tls_auth_only = yes
+smtpd_tls_cert_file = /etc/letsencrypt/live/$domain/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/$domain/privkey.pem
+smtpd_tls_CAfile    = /etc/letsencrypt/live/$domain/chain.pem
+smtpd_tls_received_header = yes
+smtpd_tls_session_cache_timeout = 3600s
+tls_random_source = dev:/dev/urandom
+
+
+
+

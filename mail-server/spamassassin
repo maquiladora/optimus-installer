@@ -1,0 +1,4 @@
+ENABLED=1
+OPTIONS="-d 127.0.0.1 -p 783 --create-prefs --max-children 5 --username spamd -H /var/log/spamassassin -s /var/log/spamassassin/spamd.log -x --sql-config"
+PIDFILE="/var/run/spamassassin.pid"
+CRON=1

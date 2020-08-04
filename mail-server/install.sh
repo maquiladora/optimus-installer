@@ -1,0 +1,98 @@
+source /installer/functions.sh
+source /installer/config.sh
+
+echo
+echo_green "==== INSTALLATION DU SERVEUR MAIL ===="
+
+echo_magenta "Création de l'utilisateur/groupe mailboxes"
+[ $(getent group mailboxes) ] || verbose groupadd mailboxes --gid 203
+[ $(getent passwd mailboxes) ] || verbose useradd -g mailboxes -s /bin/false -d /srv/mailboxes --uid 203 mailboxes
+
+echo_magenta "Création des dossiers"
+verbose mkdir -p /srv/mailboxes
+verbose chown mailboxes:mailboxes /srv/mailboxes
+
+echo_magenta "Création de l'utilisateur MARIADB"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl_anyone TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_domains TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.awl TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_expire TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_global_vars TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_token TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MARIADB_MAIL_USER'@'localhost' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
+
+echo_magenta "Installation des paquets de POSTFIX"
+verbose DEBIAN_FRONTEND=noninteractive apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
+
+echo_magenta "Modification des fichiers de configuration de POSTFIX"
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/saslauthd > /etc/default/saslauthd
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/aliases.cf > /etc/postfix/aliases.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/maildirs.cf > /etc/postfix/maildirs.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/main.cf > /etc/postfix/main.cf
+cp /installer/mail-server/master.cf /etc/postfix/
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/recipient_bcc.cf > /etc/postfix/recipient_bcc.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/redirections.cf > /etc/postfix/redirections.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/sender_bcc.cf > /etc/postfix/sender_bcc.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/smtpauth.cf > /etc/postfix/smtpauth.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/transport.cf > /etc/postfix/transport.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/virtual_domains.cf > /etc/postfix/virtual_domains.cf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/smtpd.conf > /etc/postfix/sasl/smtpd.conf
+
+echo_magenta "Installation des paquets de DOVECOT"
+verbose apt-get -qq -y install dovecot-imapd dovecot-mysql dovecot-sieve dovecot-managesieved
+
+echo_magenta "Modification des fichiers de configuration de DOVECOT"
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/dovecot.conf > /etc/dovecot/dovecot.conf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
+
+
+echo_magenta "Installation des paquets de SPAMASSASSIN"
+verbose apt-get -qq -y install spamass-milter
+
+echo_magenta "Création de l'utilisateur/groupe spamd"
+[ $(getent group spamd) ] || verbose groupadd spamd --gid 202
+[ $(getent passwd spamd) ] || verbose useradd -g spamd -s /bin/false -d /var/log/spamassassin --uid 202 spamd
+
+echo_magenta "Création du fichier de log SPAMASSASSIN"
+verbose mkdir -p /var/log/spamassassin
+verbose chown spamd:spamd /var/log/spamassassin
+
+echo_magenta "Activation de SPAMASSASSIN au lancement de la machine"
+verbose systemctl -q enable spamassassin
+
+echo_magenta "Modification des fichiers de configuration de SPAMASSASSIN"
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/spamassassin > /etc/default/spamassassin
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MARIADB_MAIL_USER'/g' -e 's/$mysql_mail_password/'$MARIADB_MAIL_PASSWORD'/g' /installer/mail-server/local.cf > /etc/spamassassin/local.cf
+sed -e 's/$domain/'$DOMAIN'/g' /installer/mail-server/spamass-milter > /etc/default/spamass-milter
+verbose sa-update
+
+
+echo_magenta "Installation des paquets de CLAMAV"
+verbose apt-get -qq -y install clamav-milter
+
+echo_magenta "Modification des fichiers de configuration de CLAMAV"
+verbose cp /installer/mail-server/clamav-milter.conf /etc/clamav/
+verbose cp /installer/mail-server/clamav-milter /etc/default/
+
+echo_magenta "Redémarrage des services"
+verbose service clamav-daemon restart
+verbose service clamav-milter restart
+verbose service spamassassin restart
+verbose service spamass-milter restart
+verbose service postfix restart
+verbose service dovecot restart
+
+#echo_magenta "Installation des bases de données MARIADB"
+#for file in /installer/mail-server/*.sql
+#do
+	#file="${file:20:-4}"
+	#if [[ $file > $db_version ]]
+		#then
+		#echo -e "Lancement de $file.sql"
+		#sed -e 's/$domain/'$domain'/g' -e 's/$mysql_mail_user/'$mysql_mail_user'/g' -e 's/$mysql_mail_password/'$mysql_mail_password'/g' /srv/installer/mail/$file.sql | mysql -f -u root -p$mysql_root_password
+	#fi
+#done
