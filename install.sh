@@ -2,7 +2,7 @@
 
 if [ ! -f /root/uid ]
 then
-  </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
+  sudo </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes --force-yes update
@@ -15,7 +15,7 @@ sudo rm -R /installer
 sudo mkdir /installer
 sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
 
-if ! grep -q "source /installer/menu.sh" /root/.bashrc
+if ! sudo grep -q "source /installer/menu.sh" /root/.bashrc
 then
   echo "source /installer/menu.sh" >> /root/.bashrc
 fi
