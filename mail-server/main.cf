@@ -1,7 +1,7 @@
 queue_directory = /var/spool/postfix
 command_directory = /usr/sbin
-daemon_directory = /usr/lib/postfix
-shlib_directory = /usr/lib/postfix/lib
+daemon_directory = /usr/lib/postfix/sbin
+shlib_directory = /usr/lib/postfix
 mail_owner = postfix
 
 myhostname = $domain
