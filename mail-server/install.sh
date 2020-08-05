@@ -90,6 +90,9 @@ verbose apt-get -qq -y install clamav-milter
 echo_magenta "Modification des fichiers de configuration de CLAMAV"
 verbose cp /installer/mail-server/clamav-milter.conf /etc/clamav/
 verbose cp /installer/mail-server/clamav-milter /etc/default/
+sed -e 's/$domain/'$DOMAIN'/g' /installer/mail-server/virusaction.sh > /etc/clamav/virusaction.sh
+verbose chown clamav:clamav /etc/clamav/virusaction.sh
+verbose chmod 755 /etc/clamav/virusaction.sh
 
 echo_magenta "Redémarrage des services"
 verbose service clamav-daemon restart
