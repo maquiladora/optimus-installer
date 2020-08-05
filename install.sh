@@ -1,8 +1,4 @@
 #!/bin/bash
-source config.sh
-
-if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
-
 if [ ! -f /root/uid ]
 then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
@@ -17,6 +13,9 @@ DEBIAN_FRONTEND=noninteractive apt-get --yes install git
 rm -R /installer
 mkdir /installer
 git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
+
+source /installer/config.sh
+if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
 if ! grep -q "source /installer/menu.sh" /root/.bashrc
 then
