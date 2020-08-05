@@ -33,17 +33,17 @@ L'arborescence OPTIMUS est la suivante :
 Le serveur mail est composé des éléments suivants :
 
 <ul>
-  <li>POSTFIX pour la distribution du courrier entrant et l'envoi des mails via SMTP sécurisé (port 587 - SSL/TLS)</li>
-  <li>DOVECOT pour la consultation des mails via IMAP sécurisé (port 993 - SSL/TLS)</li>
-  <li>SPAMASSASSIN pour filtrer les spams via des règles configurables (whitelist, blacklist, scoring)</li>
-  <li>CLAMAV pour mettre en quarantaine les messages qui contiennent des virus</li>
-  <li>SIEVE pour mettre en place des règles de filtrage (par exemple le classement automatique des SPAMS dans un dossier "Indésirables"). Ce protocole permet également de mettre en place des messages d'absence intelligents et configurables</li>
-  <li>ALIASES : Une boite de messagerie peut être contactée via plusieurs adresses email.</li>
-  <li>REDIRECTIONS : redirection automatique des messages destinés à une adresse vers une ou plusieurs autres adresses</li>
-  <li>RECIPIENT_BCC : envoi d'une copie des mails entrants déstinés à une adresse sur une seconde adresse</li>
-  <li>SENDER_BCC : envoi d'une copie des mails envoyés depuis une adresse sur une seconde adresse</li>
+  <li>POSTFIX pour la distribution des courriels entrants et l'envoi des courriels sortants via SMTP sécurisé (port 587 - SSL/TLS)</li>
+  <li>DOVECOT pour la consultation des courriels via IMAP sécurisé (port 993 - SSL/TLS)</li>
+  <li>SPAMASSASSIN pour filtrer les courriels indésirables via des règles configurables (whitelist, blacklist, scoring)</li>
+  <li>CLAMAV pour mettre en quarantaine les courriels qui contiennent des virus</li>
+  <li>SIEVE pour mettre en place des règles de filtrage (par exemple le classement automatique des spams dans un dossier "Indésirables"). Ce protocole permet également de mettre en place des messages d'absence intelligents et configurables</li>
+  <li>ALIASES : Une boite de messagerie peut être contactée via plusieurs adresses</li>
+  <li>REDIRECTIONS : redirection automatique des courriels destinés à une adresse vers une ou plusieurs autres adresses</li>
+  <li>RECIPIENT_BCC : envoi d'une copie des courriels entrants destinés à une adresse sur une seconde adresse</li>
+  <li>SENDER_BCC : envoi d'une copie des courriels envoyés depuis une adresse sur une seconde adresse</li>
 </ul>
 
 Il est ainsi possible de créer et gérer autant d'adresses mail que nécessaire sur les domaines dont vous êtes propriétaire.
 
-Les mails peuvent être consultés via n'importe quel logiciel client (OUTLOOK, THUNDERBIRD, K9 MAIL sur ANDROID, IPHONE) ou via le webmail intégré au serveur.
+Les courriels peuvent être consultés via n'importe quel logiciel client (OUTLOOK, THUNDERBIRD, K9 MAIL sur ANDROID, IPHONE) ou via le webmail intégré au serveur.

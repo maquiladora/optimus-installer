@@ -65,7 +65,7 @@ fi
 
 echo
 echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
-if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilsateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
+if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilisateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
 if [[ $SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
 then
   if [ ! $SECURE_GENERATEDEBIANPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEDEBIANPASS; fi
