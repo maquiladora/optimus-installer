@@ -12,7 +12,7 @@ echo_magenta "Création des dossiers"
 verbose mkdir -p /srv/mailboxes
 verbose chown mailboxes:mailboxes /srv/mailboxes
 
-echo_magenta "Détermination du nom d'höte"
+echo_magenta "Détermination du nom d'hôte"
 verbose echo $DOMAIN > /etc/hostname
 
 echo_magenta "Création de l'utilisateur MARIADB"
