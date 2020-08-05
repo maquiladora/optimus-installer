@@ -17,7 +17,7 @@ then
     if [ -d "/srv/api" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
     if [ -d "/srv/mailboxes" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d imap.$DOMAIN -d smtp.$DOMAIN"; fi
 
-    verbose certbot run -n --apache --extend --agree-tos --email webmaster@$DOMAIN $DOMAINS_TO_INSTALL
+    verbose certbot run -n --apache --agree-tos --email webmaster@$DOMAIN $DOMAINS_TO_INSTALL
 
     echo_magenta "les certificats SSL ont été installés avec succès..."
 
