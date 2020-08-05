@@ -1,7 +1,7 @@
 #!/bin/bash
 source /installer/config.sh
 
-if [ $DOMAIN ]; then verbose echo $DOMAIN > /etc/hostname; fi
+if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
 if [ ! -f /root/uid ]
 then
