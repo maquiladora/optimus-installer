@@ -18,7 +18,7 @@ home_mailbox = Maildir/
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
-debug_peer_level = 2
+debug_peer_level = 4
 
 sendmail_path = /usr/sbin/sendmail.postfix
 newaliases_path = /usr/bin/newaliases.postfix
@@ -49,7 +49,6 @@ mailbox_transport = virtual
 #RECIPIENT AND SENDER BCC
 recipient_bcc_maps = mysql:/etc/postfix/recipient_bcc.cf
 sender_bcc_maps = mysql:/etc/postfix/sender_bcc.cf
-receive_override_options = no_address_mappings
 
 #SMTP AUTH
 smtpd_sasl_auth_enable = yes
