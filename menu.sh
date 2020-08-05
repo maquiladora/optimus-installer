@@ -15,32 +15,21 @@ tput cup 6  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; the
 tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo -ne "\e[32m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
 tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m d. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m d. Sécuriser le serveur \e[0m"; fi
 tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. Installer le serveur web APACHE \e[0m"; else echo -ne "\e[31m e. Installer le serveur web APACHE \e[0m"; fi
-tput cup 10 3; if [ -d "/srv/www" ];	then echo -ne "\e[32m f. Installer l'espace d'hébergement www \e[0m"; else echo -ne "\e[31m f. Installer l'espace d'hébergement www \e[0m"; fi
-tput cup 11 3; if [ -d "/etc/php" ];	then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
-tput cup 12 3; if [ -d "/srv/databases" ];	then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
-tput cup 13 3; if [ -d "/srv/mailboxes" ];	then echo -ne "\e[32m i. Installer le serveur mail \e[0m"; else echo -ne "\e[32m i. Installer le serveur mail \e[0m"; fi
-#13 MAIL SERVER i
+tput cup 10 3; if [ -d "/srv/www" ]; then echo -ne "\e[32m f. Installer l'espace d'hébergement www \e[0m"; else echo -ne "\e[31m f. Installer l'espace d'hébergement www \e[0m"; fi
+tput cup 11 3; if [ -d "/etc/php" ]; then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
+tput cup 12 3; if [ -d "/srv/databases" ]; then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
+tput cup 13 3; if [ -d "/srv/mailboxes" ]; then echo -ne "\e[32m i. Installer le serveur mail \e[0m"; else echo -ne "\e[31m i. Installer le serveur mail \e[0m"; fi
 #14 WEBMAIL j
 #15 CLOUD k
 tput cup 16 3; if [ -d "/etc/letsencrypt" ]; then echo -ne "\e[32m l. Installer les certificats HTTPS \e[0m"; else echo -ne "\e[31m l. Installer les certificats HTTPS \e[0m"; fi
 
-#lsblk -o MOUNTPOINT -n /dev/sda2
-
-#tput cup 5 	3; if [ -f "/etc/srv" ]; 		                then echo -ne "\e[32m c. Create /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Create /srv partitions \e[0m"; fi
-#tput cup 6 	3; if [ -f "/etc/init.d/cryptomount" ]; 		then echo -ne "\e[32m c. Crypt /srv partition \e[0m"; 		        else echo -ne "\e[31m c. Crypt srv partitions \e[0m"; fi
 #tput cup 7 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m v. Set Installation Variables \e[0m"; 			else echo -ne "\e[31m v. Set Installation Variables \e[0m"; fi
 #tput cup 8 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m d. Show DNS zone \e[0m"; 										else echo -ne "\e[31m d. Show DNS zone \e[0m"; fi
-
-#tput cup 10 3; if [ -d "/etc/letsencrypt" ]; 						then echo -ne "\e[32m 0. Install TLS certificates \e[0m"; 				else echo -ne "\e[31m 0. Install TLS certificates \e[0m"; fi
-#tput cup 11 3; if [ -f "/etc/mysql/my.cnf" ]; 					then echo -ne "\e[32m 1. Install MYSQL database server \e[0m"; 		else echo -ne "\e[31m 1. Install MYSQL database server \e[0m"; fi
-#tput cup 12 3; if [ -f "/etc/apache2/apache2.conf" ]; 	then echo -ne "\e[32m 2. Install APACHE web server \e[0m"; 				else echo -ne "\e[31m 2. Install APACHE web server \e[0m"; fi
-#tput cup 13 3; if [ -f "/etc/dovecot/dovecot.conf" ]; 	then echo -ne "\e[32m 3. Install MAIL server \e[0m"; 							else echo -ne "\e[31m 3. Install MAIL server \e[0m"; fi
 #tput cup 14 3; if [ -d "/srv/roundcube" ]; 							then echo -ne "\e[32m 4. Install ROUNDCUBE webmail \e[0m"; 				else echo -ne "\e[31m 4. Install ROUNDCUBE webmail \e[0m"; fi
 #tput cup 15 3; if [ -d "/srv/owncloud" ]; 							then echo -ne "\e[32m 5. Install OWNCLOUD server \e[0m"; 					else echo -ne "\e[31m 5. Install OWNCLOUD server \e[0m"; fi
 #tput cup 16 3; if [ -f "/etc/default/rsync" ]; 					then echo -ne "\e[32m 6. Install RSYNC backup \e[0m"; 						else echo -ne "\e[31m 6. Install RSYNC backup \e[0m"; fi
 #tput cup 17 3; if [ -d "/srv/optimus" ]; 								then echo -ne "\e[32m 7. Install OPTIMUS-AVOCATS \e[0m"; 					else echo -ne "\e[31m 7. Install OPTIMUS-AVOCATS \e[0m"; fi
 #tput cup 18 3; if [ -d "/srv/optimus" ]; 								then echo -ne "\e[32m 8. Create new OPTIMUS-AVOCATS user \e[0m";	else echo -ne "\e[31m 8. Create new OPTIMUS-AVOCATS user \e[0m"; fi
-
 #tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
 
 tput cup 20 3; echo -ne "\e[32m u. Update Installer \e[0m"
