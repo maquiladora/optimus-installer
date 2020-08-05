@@ -20,5 +20,8 @@ then
   echo "source /installer/menu.sh" >> /root/.bashrc
 fi
 
+if [ $DOMAIN ]; then verbose echo $DOMAIN > /etc/hostname; fi
+
+
 chmod +x /installer/menu.sh
 source /installer/menu.sh
