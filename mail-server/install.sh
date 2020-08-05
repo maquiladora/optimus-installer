@@ -30,6 +30,21 @@ then
   verbose mariadb -u root -e "GRANT ALL ON server.bayes_vars TO '$MAILSERVER_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_PASSWORD';"
   verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MAILSERVER_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_PASSWORD';"
 
+  echo_magenta "Installation des bases de données MARIADB"
+  db_version=$(cat /srv/databases/MAIL_DB_VERSION)
+  for file in /installer/mail-server/*.sql
+  do
+    file="${file:23:-4}"
+    if [[ $file > $db_version ]]
+    then
+      echo -e "$file.sql exécuté"
+      mariadb < /installer/mail-server/$file.sql
+      echo $file > /srv/databases/MAIL_DB_VERSION
+    else
+      echo -e "$file.sql ignoré"
+    fi
+  done
+
   echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
   verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes VALUES (NULL, 'postmaster@$DOMAIN', '$MAILSERVER_PASSWORD', '0', '1', 'root@$DOMAIN', null, null, null, null);"
   verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
@@ -107,20 +122,5 @@ then
   verbose service spamass-milter restart
   verbose service postfix restart
   verbose service dovecot restart
-
-  echo_magenta "Installation des bases de données MARIADB"
-  db_version=$(cat /srv/databases/MAIL_DB_VERSION)
-  for file in /installer/mail-server/*.sql
-  do
-  	file="${file:23:-4}"
-  	if [[ $file > $db_version ]]
-  	then
-  		echo -e "$file.sql exécuté"
-  		mariadb < /installer/mail-server/$file.sql
-      echo $file > /srv/databases/MAIL_DB_VERSION
-    else
-      echo -e "$file.sql ignoré"
-    fi
-  done
 
 fi
