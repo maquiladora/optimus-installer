@@ -17,7 +17,6 @@ Subject: ***VIRUS*** $SUBJECT
 
 Le courriel ci-dessous contenait un virus.
 Le message est mis en quarantaine.
-Pour plus d'information vous pouvez contacter postmaster@%domain.
 
 Signature    :  $VIRUS
 Date         :  $DATE
