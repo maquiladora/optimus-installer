@@ -1,3 +1,4 @@
+#!/bin/bash
 source /installer/functions.sh
 source /installer/config.sh
 

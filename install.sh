@@ -1,6 +1,8 @@
 #!/bin/bash
 source /installer/config.sh
 
+if [ $DOMAIN ]; then verbose echo $DOMAIN > /etc/hostname; fi
+
 if [ ! -f /root/uid ]
 then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
@@ -20,9 +22,6 @@ if ! grep -q "source /installer/menu.sh" /root/.bashrc
 then
   echo "source /installer/menu.sh" >> /root/.bashrc
 fi
-
-if [ $DOMAIN ]; then verbose echo $DOMAIN > /etc/hostname; fi
-
 
 chmod +x /installer/menu.sh
 source /installer/menu.sh
