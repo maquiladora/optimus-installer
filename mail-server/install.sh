@@ -12,6 +12,9 @@ echo_magenta "Création des dossiers"
 verbose mkdir -p /srv/mailboxes
 verbose chown mailboxes:mailboxes /srv/mailboxes
 
+echo_magenta "Détermination du nom d'höte"
+verbose echo $DOMAIN > /etc/hostname
+
 echo_magenta "Création de l'utilisateur MARIADB"
 verbose mariadb -u root -e "GRANT ALL ON server.mailboxes TO '$MARIADB_MAIL_USER'@'127.0.0.1' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
 verbose mariadb -u root -e "GRANT ALL ON server.mailboxes_acl TO '$MARIADB_MAIL_USER'@'127.0.0.1' IDENTIFIED BY '$MARIADB_MAIL_PASSWORD';"
