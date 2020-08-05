@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/config.sh
+source config.sh
 
 if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
