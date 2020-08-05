@@ -27,3 +27,17 @@ L'arborescence OPTIMUS est la suivante :
   <li>/srv/webmail contient le client ROUNDCUBE</li>
   <li>/srv/www contient un espace pour héberger le site web du cabinet</li>
 </ul>
+
+Le serveur mail est composé des éléments suivants :
+
+<ul>
+  <li>POSTFIX pour la distribution du courrier entrant et l'envoi des mails via SMTP sécurisé (port 587 - SSL/TLS)</li>
+  <li>DOVECOT pour la consultation des mails via IMAP sécurisé (port 993 - SSL/TLS)</li>
+  <li>SPAMASSASSIN pour filtrer les spams via des règles configurables (whitelist, blacklist)</li>
+  <li>CLAMAV pour scanner les mails entrants et mettre en quarantaine ceux qui contiennent des virus</li>
+  <li>SIEVE pour mettre en place des règles de filtrage des mails (par exemple le classement automatiques des SPAMS). Ce protocole permet par exemple aussi de mettre en place des messages d'absence intelligents et configurables</li>
+  <li>ALIASES : Une boite mail peut avoir plusieurs adresses.</li>
+  <li>REDIRECTIONS : rediriger automatiquement les messages à destinations d'une boite mail vers une ou plusieurs adresses</li>
+  <li>RECIPIENT_BCC : possibilité d'envoyer une copie des mails entrants dans une boite mail sur une seconde adresse</li>
+  <li>SENDER_BCC : possibilité d'envoyer une copie des mails envoyés depuis une adresse sur une seconde adresse</li>
+</ul>
