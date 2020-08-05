@@ -31,7 +31,13 @@ then
   verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MAILSERVER_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_PASSWORD';"
 
   echo_magenta "Installation des bases de données MARIADB"
-  verbose db_version=$(cat /srv/databases/MAIL_DB_VERSION)
+  if [ -f "/srv/databases/MAIL_DB_VERSION" ]
+  then
+    verbose db_version=$(cat /srv/databases/MAIL_DB_VERSION)
+  else
+    verbose db_version=1900-01-01
+  fi
+
   for file in /installer/mail-server/*.sql
   do
     file="${file:23:-4}"

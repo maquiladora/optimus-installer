@@ -1,4 +1,5 @@
 #!/bin/bash
+source /installer/config.sh
 
 if [ ! -f /root/uid ]
 then
