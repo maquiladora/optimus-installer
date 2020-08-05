@@ -1,3 +1,4 @@
+compatibility_level=2
 queue_directory = /var/spool/postfix
 command_directory = /usr/sbin
 daemon_directory = /usr/lib/postfix/sbin
@@ -62,7 +63,7 @@ dovecot_destination_recipient_limit = 1
 
 #SPAMASSASSIN - CLAMAV
 milter_default_action = accept
-smtpd_milters = unix:/clamav/clamav-milter.ctl, unix:/spamass/spamass.sock
+smtpd_milters = unix:/var/spool/postfix/clamav/clamav-milter.ctl, unix:/var/spool/postfix/spamass/spamass.sock
 
 #TRANSPORT
 transport_maps = mysql:/etc/postfix/transport.cf
