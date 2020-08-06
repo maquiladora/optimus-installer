@@ -57,6 +57,7 @@ then
     verbose /sbin/ufw allow 993
     verbose /sbin/ufw allow 587
     verbose /sbin/ufw allow 465
+    verbose /sbin/ufw allow 143
     verbose /sbin/ufw allow 25
   fi
 
