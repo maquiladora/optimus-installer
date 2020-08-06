@@ -13,7 +13,7 @@ openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encr
 umount /root/tmpramfs
 rmdir /root/tmpramfs
 
-if lsblk -o NAME -n /dev/mapper/cryptsda2 2>/dev/null | grep -q cryptsda2
+if ! lsblk -o NAME -n /dev/mapper/cryptsda2 2>/dev/null | grep -q cryptsda2
 then
   if [ -f /root/keyfile_encrypted ]
   then
