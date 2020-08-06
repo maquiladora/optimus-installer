@@ -65,26 +65,26 @@ then
   DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
   echo_magenta "Modification des fichiers de configuration de POSTFIX"
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/saslauthd > /etc/default/saslauthd
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/aliases.cf > /etc/postfix/aliases.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/maildirs.cf > /etc/postfix/maildirs.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/main.cf > /etc/postfix/main.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/saslauthd > /etc/default/saslauthd
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/aliases.cf > /etc/postfix/aliases.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/maildirs.cf > /etc/postfix/maildirs.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/main.cf > /etc/postfix/main.cf
   cp /installer/mail-server/master.cf /etc/postfix/
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/recipient_bcc.cf > /etc/postfix/recipient_bcc.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/redirections.cf > /etc/postfix/redirections.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/sender_bcc.cf > /etc/postfix/sender_bcc.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/smtpauth.cf > /etc/postfix/smtpauth.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/transport.cf > /etc/postfix/transport.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/virtual_domains.cf > /etc/postfix/virtual_domains.cf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/smtpd.conf > /etc/postfix/sasl/smtpd.conf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/recipient_bcc.cf > /etc/postfix/recipient_bcc.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/redirections.cf > /etc/postfix/redirections.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/sender_bcc.cf > /etc/postfix/sender_bcc.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/smtpauth.cf > /etc/postfix/smtpauth.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/transport.cf > /etc/postfix/transport.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/virtual_domains.cf > /etc/postfix/virtual_domains.cf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/smtpd.conf > /etc/postfix/sasl/smtpd.conf
 
   echo_magenta "Installation des paquets de DOVECOT"
   verbose apt-get -qq -y install dovecot-imapd dovecot-mysql dovecot-sieve dovecot-managesieved
 
   echo_magenta "Modification des fichiers de configuration de DOVECOT"
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot.conf > /etc/dovecot/dovecot.conf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
-  sed -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot.conf > /etc/dovecot/dovecot.conf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
+  sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_PASSWORD'/g' /installer/mail-server/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
 
 
   echo_magenta "Installation des paquets de SPAMASSASSIN"
