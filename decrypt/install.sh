@@ -24,3 +24,12 @@ mount /dev/mapper/cryptsda2 /srv
 sleep 0.5
 
 if [ -d /etc/mysql ]; then verbose systemctl restart mariadb; fi
+if [ -d /etc/mailboxes ]
+then
+  verbose systemctl restart postfix
+  verbose systemctl restart devocot
+  verbose systemctl restart spamassassin
+  verbose systemctl restart spamass-milter
+  verbose systemctl restart clamav-daemon
+  verbose systemctl restart clamav-milter
+fi
