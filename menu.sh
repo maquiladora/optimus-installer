@@ -33,7 +33,8 @@ tput cup 16 3; if [ -d "/etc/letsencrypt" ]; then echo -ne "\e[32m l. Installer 
 #tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
 
 tput cup 20 3; echo -ne "\e[32m u. Update Installer \e[0m"
-tput cup 21 3; echo -ne "\e[32m q. Quit \e[0m"
+tput cup 21 3; echo -ne "\e[32m v. Reboot server \e[0m"
+tput cup 22 3; echo -ne "\e[32m x. Quit \e[0m"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
 
@@ -113,16 +114,22 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-  q)
-    tput reset
-    clear
-    exit 1
-    ;;
-
   u)
 		tput reset
 		clear
     bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
 		;;
+
+  v)
+    tput reset
+    reboot
+    exit 1
+    ;;
+
+  x)
+      tput reset
+      clear
+      exit 1
+      ;;
 esac
 done
