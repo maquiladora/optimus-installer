@@ -41,9 +41,9 @@ then
     then
       echo -e "$file.sql exécuté"
       mariadb < /installer/mail-server/$file.sql
-      echo $file > /srv/databases/MAIL_DB_VERSION
+      echo$file > /srv/databases/MAIL_DB_VERSION
     else
-      echo -e "$file.sql ignoré"
+      echo_magenta "--> $file.sql ignoré"
     fi
   done
 
