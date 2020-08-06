@@ -1,7 +1,6 @@
 #!/bin/bash
-
-source functions.sh
-source config.sh
+source /installer/functions.sh
+source /installer/config.sh
 
 while : ; do
 
