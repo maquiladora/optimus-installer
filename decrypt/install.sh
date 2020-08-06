@@ -13,7 +13,7 @@ openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encr
 umount /root/tmpramfs
 rmdir /root/tmpramfs
 
-if lsblk -o NAME -n /dev/mapper/cryptsda2 2>/dev/null
+if lsblk -o NAME -n /dev/mapper/cryptsda2 2>/dev/null | grep -q 'cryptsda2'
 then
   if [ -f /root/keyfile_encrypted ]
   then
@@ -35,7 +35,7 @@ if [ -d /srv/databases ]; then verbose systemctl restart mariadb; fi
 if [ -d /srv/mailboxes ]
 then
   verbose systemctl restart postfix
-  verbose systemctl restart devocot
+  verbose systemctl restart dovecot
   verbose systemctl restart spamassassin
   verbose systemctl restart spamass-milter
   verbose systemctl restart clamav-daemon
