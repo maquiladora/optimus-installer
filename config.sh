@@ -4,7 +4,9 @@ VERBOSE=2 #STDOUT pas affiché. STDERR en rouge
 #VERBOSE=3 #STDOUT et STDERR pas affiché (mode silencieux)
 
 DOMAIN='demoptimus.fr'
-SALT='54e!GF%erfzts65'
+
+#MUST BE 16 CHARACTERS
+AES_KEY='54e!GF%erfzts65F'
 
 #DISKPART_AREYOUSURE=N
 SECURE_UPDATE=Y

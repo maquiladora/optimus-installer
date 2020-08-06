@@ -32,7 +32,7 @@ then
   verbose mariadb -u root -e "GRANT ALL ON server.userpref TO '$MAILSERVER_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_PASSWORD';"
 
   echo_magenta "Installation des bases de données MARIADB"
-  if [ -f "/srv/databases/MAIL_DB_VERSION" ]; then verbose db_version=$(cat /srv/databases/MAIL_DB_VERSION); fi
+  if [ -f "/srv/databases/MAIL_DB_VERSION" ]; then db_version=$(cat /srv/databases/MAIL_DB_VERSION); fi
 
   for file in /installer/mail-server/*.sql
   do
@@ -48,7 +48,7 @@ then
   done
 
   echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
-  verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes VALUES (NULL, '$MAILSERVER_POSTMASTER_MAILBOX_USER', hash('sha512','$SALT$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD'), '0', '1', null, null, null, null, null);"
+  verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes VALUES (NULL, '$MAILSERVER_POSTMASTER_MAILBOX_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD',''$AES_KEY'), '0', '1', null, null, null, null, null);"
   verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
 
   echo_magenta "Ouverture des ports du Firewall"
