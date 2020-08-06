@@ -10,7 +10,7 @@ LOCAL_IP=$( ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '(
 echo_magenta "Voici les enregistrements DNS à renseigner dans votre nom de domaine $DOMAIN :"
 echo ""
 
-sed -e 's/$domain/'$DOMAIN'/g' -e 's/$public_ip/'$PUBLIC_IP'/g' /srv/installer/dns/zone.conf
+sed -e 's/$domain/'$DOMAIN'/g' -e 's/$public_ip/'$PUBLIC_IP'/g' /installer/zonedns/zone.conf
 cat /etc/dkim/keys/$DOMAIN/mail.txt
 echo ""
 
