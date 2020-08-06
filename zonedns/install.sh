@@ -15,7 +15,7 @@ echo
 sed -e 's/$domain/'$DOMAIN'/g' -e 's/$public_ip/'$PUBLIC_IP'/g' /installer/zonedns/zone.conf
 sed -e 's/IN/10800 IN/g' -e ':a;N;$!ba;s/\n/\ /g' -e 's/\t/ /g' /etc/dkim/keys/$DOMAIN/mail.txt
 
-
+echo
 echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
 echo ""
 echo "22   SSH"
@@ -26,3 +26,5 @@ echo "465  SMTPS"
 echo "587  SMTPS"
 echo "993  IMAPS"
 echo "3306 MYSQL"
+
+echo
