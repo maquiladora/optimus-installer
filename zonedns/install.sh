@@ -13,7 +13,7 @@ echo_magenta "Voici les enregistrements DNS à renseigner dans votre nom de doma
 echo
 
 sed -e 's/$domain/'$DOMAIN'/g' -e 's/$public_ip/'$PUBLIC_IP'/g' /installer/zonedns/zone.conf
-sed -e 's/IN/10800 IN/g' /etc/dkim/keys/$DOMAIN/mail.txt
+sed -e 's/IN/10800 IN/g' -e ':a;N;$!ba;s/\n/\ /g' -e 's/\t/ /g' /etc/dkim/keys/$DOMAIN/mail.txt
 
 
 echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
