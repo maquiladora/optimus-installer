@@ -31,6 +31,7 @@ mount /dev/mapper/cryptsda2 /srv
 sleep 0.5
 
 echo_magenta "Redémarrage des services"
+if [ -d /srv/www || -d /srv/api || -d /srv/cloud || -d /srv/webmail ]; then verbose systemctl restart apache2; fi
 if [ -d /srv/databases ]; then verbose systemctl restart mariadb; fi
 if [ -d /srv/mailboxes ]
 then

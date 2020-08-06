@@ -60,9 +60,11 @@ mailbox_command = /usr/lib/dovecot/dovecot-lda -f "$SENDER" -a "$RECIPIENT" -d "
 virtual_transport = dovecot
 dovecot_destination_recipient_limit = 1
 
-#SPAMASSASSIN - CLAMAV
+#SPAMASSASSIN - CLAMAV - OPENDKIM
 milter_default_action = accept
-smtpd_milters = unix:/var/spool/postfix/clamav/clamav-milter.ctl, unix:/var/spool/postfix/spamass/spamass.sock
+milter_protocol = 2
+smtpd_milters = unix:/var/spool/postfix/clamav/clamav-milter.ctl, unix:/var/spool/postfix/spamass/spamass.sock, inet:localhost:8891
+non_smtpd_milters = inet:localhost:8891
 
 #TRANSPORT
 transport_maps = mysql:/etc/postfix/transport.cf

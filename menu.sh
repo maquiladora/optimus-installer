@@ -32,6 +32,7 @@ tput cup 16 3; if [ -d "/etc/letsencrypt" ]; then echo -ne "\e[32m l. Installer 
 #tput cup 18 3; if [ -d "/srv/optimus" ]; 								then echo -ne "\e[32m 8. Create new OPTIMUS-AVOCATS user \e[0m";	else echo -ne "\e[31m 8. Create new OPTIMUS-AVOCATS user \e[0m"; fi
 #tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
 
+tput cup 19 3; echo -ne "\e[32m t. SHOW DNS ZONE \e[0m"
 tput cup 20 3; echo -ne "\e[32m u. Update Installer \e[0m"
 tput cup 21 3; echo -ne "\e[32m v. Reboot server \e[0m"
 tput cup 22 3; echo -ne "\e[32m x. Quit \e[0m"
@@ -111,6 +112,13 @@ case "$y" in
     tput reset
     clear
     source /installer/letsencrypt/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  t)
+    tput reset
+    clear
+    source /installer/zonedns/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 

@@ -118,12 +118,25 @@ then
   verbose chown clamav:clamav /etc/clamav/virusaction.sh
   verbose chmod 755 /etc/clamav/virusaction.sh
 
+
+  echo_magenta "Installation d'OPENDKIM"
+  verbose apt-get -qq -y install opendkim opendkim-tools
+  verbose mkdir -p /etc/dkim/keys/$DOMAIN
+  verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
+  verbose chown opendkim:opendkim -R /etc/dkim
+  verbose cp /installer/mail-server/opendkim.conf /etc/
+  verbose echo "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" >> /etc/dkim/KeyTable
+  verbose echo "*@$DOMAIN mail._domainkey.$DOMAIN" >> /etc/dkim/SigningTable
+  verbose echo "$DOMAIN" >> /etc/dkim/TrustedHosts
+  verbose sed -i 's/SOCKET=local:$RUNDIR\/opendkim.sock/SOCKET="inet:8891:localhost"/g' /etc/default/opendkim
+
   echo_magenta "Redémarrage des services"
-  verbose service clamav-daemon restart
-  verbose service clamav-milter restart
-  verbose service spamassassin restart
-  verbose service spamass-milter restart
-  verbose service postfix restart
-  verbose service dovecot restart
+  verbose systemctl restart clamav-daemon
+  verbose systemctl restart clamav-milter
+  verbose systemctl restart spamassassin
+  verbose systemctl restart spamass-milter
+  verbose systemctl restart postfix
+  verbose systemctl restart dovecot
+  verbose systemctl restart opendkim
 
 fi
