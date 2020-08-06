@@ -2,17 +2,18 @@
 source /installer/functions.sh
 source /installer/config.sh
 
+echo
 echo_green "==== ZONE DNS ===="
+echo
 
 PUBLIC_IP=$(  wget -qO- ipinfo.io/ip )
 LOCAL_IP=$( ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' )
 
 echo_magenta "Voici les enregistrements DNS à renseigner dans votre nom de domaine $DOMAIN :"
-echo ""
+echo
 
 sed -e 's/$domain/'$DOMAIN'/g' -e 's/$public_ip/'$PUBLIC_IP'/g' /installer/zonedns/zone.conf
-cat /etc/dkim/keys/$DOMAIN/mail.txt
-echo ""
+sed -e 's/IN/10800 IN/g' /etc/dkim/keys/%DOMAIN/mail.txt
 
 
 echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
