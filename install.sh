@@ -23,4 +23,4 @@ then
 fi
 
 sudo chmod +x /installer/menu.sh
-sudo /installer/menu.sh
+#sudo /installer/menu.sh
