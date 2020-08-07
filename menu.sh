@@ -6,8 +6,8 @@ while : ; do
 
 clear
 
-tput cup 2 	4; echo -ne  "\033[46;30m          ALLSPARK INSTALLER          \e[0m"
-tput cup 3 	4; echo -ne  "\033[46;30m                 V1.26                \e[0m"
+tput cup 2 	3; echo -ne  "\033[46;30m          ALLSPARK INSTALLER          \e[0m"
+tput cup 3 	3; echo -ne  "\033[46;30m                 V1.26                \e[0m"
 
 tput cup 5  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo_green "a. Créer une partition /dev/sda2 indépendante"; else echo_red "a. Créer une partition /dev/sda2 indépendante"; fi
 tput cup 6  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo_green "b. Activer le cryptage sur la partition /dev/sda2"; else echo_red "b. Activer le cryptage sur la partition /dev/sda2"; fi
