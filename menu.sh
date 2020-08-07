@@ -10,17 +10,17 @@ tput cup 2 	4; echo -ne  "\033[46;30m          ALLSPARK INSTALLER          \e[0m
 tput cup 3 	4; echo -ne  "\033[46;30m                 V1.26                \e[0m"
 
 tput cup 5  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo_green "a. Créer une partition /dev/sda2 indépendante"; else echo_red "a. Créer une partition /dev/sda2 indépendante"; fi
-tput cup 6  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo -ne "\e[32m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; else echo -ne "\e[31m b. Activer le cryptage sur la partition /dev/sda2 \e[0m"; fi
-tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo -ne "\e[32m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo -ne "\e[31m c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; fi
-tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo -ne "\e[32m d. Sécuriser le serveur \e[0m"; else echo -ne "\e[31m d. Sécuriser le serveur \e[0m"; fi
-tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo -ne "\e[32m e. Installer le serveur web APACHE \e[0m"; else echo -ne "\e[31m e. Installer le serveur web APACHE \e[0m"; fi
-tput cup 10 3; if [ -d "/srv/www" ]; then echo -ne "\e[32m f. Installer l'espace d'hébergement www \e[0m"; else echo -ne "\e[31m f. Installer l'espace d'hébergement www \e[0m"; fi
-tput cup 11 3; if [ -d "/etc/php" ]; then echo -ne "\e[32m g. Installer PHP \e[0m"; else echo -ne "\e[31m g. Installer PHP \e[0m"; fi
-tput cup 12 3; if [ -d "/srv/databases" ]; then echo -ne "\e[32m h. Installer MARIADB \e[0m"; else echo -ne "\e[31m h. Installer MARIADB \e[0m"; fi
-tput cup 13 3; if [ -d "/srv/mailboxes" ]; then echo -ne "\e[32m i. Installer le serveur mail \e[0m"; else echo -ne "\e[31m i. Installer le serveur mail \e[0m"; fi
+tput cup 6  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo_green "b. Activer le cryptage sur la partition /dev/sda2"; else echo_red "b. Activer le cryptage sur la partition /dev/sda2"; fi
+tput cup 7  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo_green "c. Decrypter la partition /dev/sda2 et la monter sur /srv \e[0m"; else echo_red "c. Decrypter la partition /dev/sda2 et la monter sur /srv"; fi
+tput cup 8  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo_green "d. Sécuriser le serveur"; else echo_red "d. Sécuriser le serveur"; fi
+tput cup 9  3; if [ -f "/etc/apache2/apache2.conf" ];	then echo_green "e. Installer le serveur web APACHE"; else echo_red "e. Installer le serveur web APACHE"; fi
+tput cup 10 3; if [ -d "/srv/www" ]; then echo_green "f. Installer l'espace d'hébergement www"; else echo_red "f. Installer l'espace d'hébergement www"; fi
+tput cup 11 3; if [ -d "/etc/php" ]; then echo_green "g. Installer PHP"; else echo_red "g. Installer PHP"; fi
+tput cup 12 3; if [ -d "/srv/databases" ]; then echo_green "h. Installer MARIADB"; else echo_red "h. Installer MARIADB"; fi
+tput cup 13 3; if [ -d "/srv/mailboxes" ]; then echo_green "i. Installer le serveur mail"; else echo_red "i. Installer le serveur mail"; fi
 #14 WEBMAIL j
 #15 CLOUD k
-tput cup 16 3; if [ -d "/etc/letsencrypt" ]; then echo -ne "\e[32m l. Installer les certificats HTTPS \e[0m"; else echo -ne "\e[31m l. Installer les certificats HTTPS \e[0m"; fi
+tput cup 16 3; if [ -d "/etc/letsencrypt" ]; then echo_green "l. Installer les certificats HTTPS"; else echo_red "l. Installer les certificats HTTPS"; fi
 
 #tput cup 7 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m v. Set Installation Variables \e[0m"; 			else echo -ne "\e[31m v. Set Installation Variables \e[0m"; fi
 #tput cup 8 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m d. Show DNS zone \e[0m"; 										else echo -ne "\e[31m d. Show DNS zone \e[0m"; fi
