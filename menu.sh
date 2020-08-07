@@ -16,7 +16,7 @@ clear
 tput cup 2 	3; echo -ne  "\033[46;30m          ALLSPARK INSTALLER          \e[0m"
 tput cup 3 	3; echo -ne  "\033[46;30m                 V1.26                \e[0m"
 
-tput cup 5  3; if stat /var/cache/apt/ | grep -q 'Modify'; then echo_green "a. Mettre à jour le système"; else echo_red "a. Mettre à jour le système"; fi
+tput cup 5  3; if [ -f "/root/LAST_UPGRADE" ]; then echo_green "a. Mettre à jour le système"; else echo_red "a. Mettre à jour le système"; fi
 tput cup 6  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo_green "b. Créer une partition /dev/sda2 indépendante"; else echo_red "b. Créer une partition /dev/sda2 indépendante"; fi
 tput cup 7  3; if /sbin/blkid /dev/sda2 2>/dev/null | grep -q 'crypto_LUKS'; then echo_green "c. Activer le cryptage sur la partition /dev/sda2"; else echo_red "c. Activer le cryptage sur la partition /dev/sda2"; fi
 tput cup 8  3; if lsblk -o MOUNTPOINT -n /dev/mapper/cryptsda2 2>/dev/null | grep -q '/srv'; then echo_green "d. Decrypter la partition /dev/sda2 et la monter sur /srv"; else echo_red "d. Decrypter la partition /dev/sda2 et la monter sur /srv"; fi
@@ -52,6 +52,7 @@ case "$y" in
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+    echo date +'%Y%m%d' > /root/LAST_UPGRADE
 		;;
 
   b)
