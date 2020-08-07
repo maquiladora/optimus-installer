@@ -124,7 +124,9 @@ case "$y" in
   u)
 		tput reset
 		clear
-    bash <(wget -qO-  https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
+    rm -R /installer
+    mkdir /installer
+    git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
 		;;
 
   v)
