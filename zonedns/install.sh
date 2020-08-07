@@ -6,20 +6,20 @@ echo
 echo_green "==== ZONE DNS ===="
 echo
 
-PUBLIC_IP=$(  wget -qO- ipinfo.io/ip )
-LOCAL_IP=$( ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' )
+PUBLIC_IP=$( wget -qO- ipinfo.io/ip )
+LOCAL_IP=$( /sbin/ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' )
 
 echo_magenta "Voici les enregistrements DNS à renseigner dans votre nom de domaine $DOMAIN :"
 echo
 
-echo '@ 10800 IN A $PUBLIC_IP'
+echo "@ 10800 IN A $PUBLIC_IP"
 echo 'api 10800 IN A $PUBLIC_IP'
 echo 'cloud 10800 IN A $PUBLIC_IP'
 echo 'mail 10800 IN A $PUBLIC_IP'
 echo 'optimus 10800 IN A $PUBLIC_IP'
 echo 'webmail 10800 IN A $PUBLIC_IP'
 echo 'www 10800 IN A $PUBLIC_IP'
-echo '@ 10800 IN MX 50 mail.$DOMAIN.'
+echo "'"@ 10800 IN MX 50 mail.$DOMAIN."'"
 echo '@ 10800 IN TXT "v=spf1 mx ~all"'
 sed -e 's/IN/10800 IN/g' -e ':a;N;$!ba;s/\n/\ /g' -e 's/\t/ /g' /etc/dkim/keys/$DOMAIN/mail.txt
 
