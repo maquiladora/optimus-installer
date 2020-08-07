@@ -10,11 +10,11 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-co
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes remove cryptsetup-initramfs
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes install git
 
-rm -R /installer
-mkdir /installer
-git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
+sudo rm -R /installer
+sudo mkdir /installer
+sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
 
-source /installer/config.sh
+sudo source /installer/config.sh
 if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
 if ! grep -q "source /installer/menu.sh" /root/.bashrc
@@ -22,5 +22,5 @@ then
   echo "source /installer/menu.sh" >> /root/.bashrc
 fi
 
-chmod +x /installer/menu.sh
-source /installer/menu.sh
+sudo chmod +x /installer/menu.sh
+sudo source /installer/menu.sh
