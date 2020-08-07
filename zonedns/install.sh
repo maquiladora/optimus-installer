@@ -31,7 +31,7 @@ echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le ser
 echo ""
 if grep -q "Port 7822" /etc/ssh/sshd_config
 then
-  echo "7822   SSH"
+  echo "7822 SSH"
 else
   echo "22   SSH"
 fi
