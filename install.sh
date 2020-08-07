@@ -4,11 +4,11 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
 
-DEBIAN_FRONTEND=noninteractive apt-get --yes update
-DEBIAN_FRONTEND=noninteractive apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
-DEBIAN_FRONTEND=noninteractive apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-DEBIAN_FRONTEND=noninteractive apt-get --yes remove cryptsetup-initramfs
-DEBIAN_FRONTEND=noninteractive apt-get --yes install git
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes remove cryptsetup-initramfs
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes install git
 
 rm -R /installer
 mkdir /installer
