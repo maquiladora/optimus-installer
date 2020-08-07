@@ -1,7 +1,7 @@
 #!/bin/bash
-if [ ! -f /root/uid ]
+if [ ! -f ~/uid ]
 then
-  </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
+  </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > ~/uid
 fi
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
@@ -23,4 +23,3 @@ then
 fi
 
 sudo chmod +x /installer/menu.sh
-sudo /installer/menu.sh
