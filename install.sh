@@ -14,7 +14,7 @@ sudo rm -R /installer
 sudo mkdir /installer
 sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
 
-sudo source /installer/config.sh
+source /installer/config.sh
 if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
 if ! grep -q "sudo /installer/menu.sh" ~/.bashrc
