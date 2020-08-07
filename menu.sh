@@ -26,23 +26,17 @@ tput cup 11 3; if [ -d "/srv/www" ]; then echo_green "g. Installer l'espace d'h√
 tput cup 12 3; if [ -d "/etc/php" ]; then echo_green "h. Installer PHP"; else echo_red "h. Installer PHP"; fi
 tput cup 13 3; if [ -d "/srv/databases" ]; then echo_green "i. Installer MARIADB"; else echo_red "i. Installer MARIADB"; fi
 tput cup 14 3; if [ -d "/srv/mailboxes" ]; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
-#14 WEBMAIL j
-#15 CLOUD k
-tput cup 17 3; if [ -d "/etc/letsencrypt" ]; then echo_green "l. Installer les certificats HTTPS"; else echo_red "l. Installer les certificats HTTPS"; fi
+tput cup 15 3; echo_green "k. Configuration de la zone DNS"
+tput cup 16 3; if [ -d "/srv/webmail" ]; then echo_green "l. Installer le webmail ROUNDCUBE"; else echo_red "l. Installer le webmail ROUNDCUBE"; fi
+tput cup 17 3; if [ -d "/srv/cloud" ]; then echo_green "m. Installer le serveur SABREDAV"; else echo_red "n. Installer le serveur SABREDAV"; fi
+tput cup 18 3; if [ -d "/srv/api" ]; then echo_green "o. Installer l'api de comunication"; else echo_red "o. Installer l'api de communication"; fi
+tput cup 19 3; if [ -d "/srv/optimus" ]; then echo_green "p. Installer le client OPTIMUS-AVOCATS"; else echo_red "p. Installer le client OPTIMUS-AVOCATS"; fi
+tput cup 20 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
+tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer RSYNC"; else echo_red "r. Installer RSYNC"; fi
 
-#tput cup 7 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m v. Set Installation Variables \e[0m"; 			else echo -ne "\e[31m v. Set Installation Variables \e[0m"; fi
-#tput cup 8 	3; if [ -f "/srv/installer/config.conf" ]; 	then echo -ne "\e[32m d. Show DNS zone \e[0m"; 										else echo -ne "\e[31m d. Show DNS zone \e[0m"; fi
-#tput cup 14 3; if [ -d "/srv/roundcube" ]; 							then echo -ne "\e[32m 4. Install ROUNDCUBE webmail \e[0m"; 				else echo -ne "\e[31m 4. Install ROUNDCUBE webmail \e[0m"; fi
-#tput cup 15 3; if [ -d "/srv/owncloud" ]; 							then echo -ne "\e[32m 5. Install OWNCLOUD server \e[0m"; 					else echo -ne "\e[31m 5. Install OWNCLOUD server \e[0m"; fi
-#tput cup 16 3; if [ -f "/etc/default/rsync" ]; 					then echo -ne "\e[32m 6. Install RSYNC backup \e[0m"; 						else echo -ne "\e[31m 6. Install RSYNC backup \e[0m"; fi
-#tput cup 17 3; if [ -d "/srv/optimus" ]; 								then echo -ne "\e[32m 7. Install OPTIMUS-AVOCATS \e[0m"; 					else echo -ne "\e[31m 7. Install OPTIMUS-AVOCATS \e[0m"; fi
-#tput cup 18 3; if [ -d "/srv/optimus" ]; 								then echo -ne "\e[32m 8. Create new OPTIMUS-AVOCATS user \e[0m";	else echo -ne "\e[31m 8. Create new OPTIMUS-AVOCATS user \e[0m"; fi
-#tput cup 20 3; echo -ne "\e[32m b. DB backup \e[0m"
-
-tput cup 20 3; echo_green "t. Afficher la configuration de la zone DNS"
-tput cup 21 3; echo_green "u. Update Installer"
-tput cup 22 3; echo_green "v. Reboot server"
-tput cup 23 3; echo_green "x. Quit"
+tput cup 23 3; echo_green "u. Update Installer"
+tput cup 24 3; echo_green "v. Reboot server"
+tput cup 25 3; echo_green "x. Quit"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
 
@@ -122,18 +116,17 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-
-  l)
-    tput reset
-    clear
-    source /installer/letsencrypt/install.sh
-    read -p "Appuyez sur [ENTREE] pour continuer..."
-    ;;
-
-  t)
+  k)
     tput reset
     clear
     source /installer/zonedns/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  q)
+    tput reset
+    clear
+    source /installer/letsencrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 

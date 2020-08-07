@@ -29,7 +29,12 @@ echo_magenta "Pensez à renseigner le reverse DNS de votre serveur à : $DOMAIN"
 echo
 echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
 echo ""
-echo "22   SSH"
+if grep -q "Port 7822" /etc/ssh/sshd_config
+then
+  echo "7822   SSH"
+else
+  echo "22   SSH"
+fi
 echo "80   HTTP"
 echo "143  IMAP"
 echo "443  HTTPS"

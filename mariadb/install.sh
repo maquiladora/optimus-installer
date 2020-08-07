@@ -42,7 +42,6 @@ then
 
   if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3306; fi
   sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-  #sed -i 's/#port                   = 3306/port                    = 3309/g' /etc/mysql/mariadb.conf.d/50-server.cnf
   verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
   verbose systemctl restart mariadb
   echo_magenta "L'accès à distance à la base de données MARIADB a été ouvert avec succès sur le port 3306 !"
