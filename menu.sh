@@ -51,8 +51,6 @@ case "$y" in
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
     DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-    DEBIAN_FRONTEND=noninteractive sudo apt-get --yes remove cryptsetup-initramfs
-    DEBIAN_FRONTEND=noninteractive sudo apt-get --yes install git
 		;;
 
   b)

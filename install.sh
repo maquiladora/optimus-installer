@@ -4,6 +4,9 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > ~/uid
 fi
 
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes remove cryptsetup-initramfs
+DEBIAN_FRONTEND=noninteractive sudo apt-get --yes install git
+
 sudo rm -R /installer
 sudo mkdir /installer
 sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
