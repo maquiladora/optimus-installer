@@ -25,6 +25,7 @@ then
   echo_magenta "Envoi de la clé de chiffrement sur le serveur distant"
   curl -X POST -F "$(<~/uid)=@~/tmpramfs/keyfile_encrypted" https://decrypt.optimus-avocats.fr/index.php
 
+
   echo_magenta "Activation du chiffrement sur la partition"
   openssl rsautl -decrypt -inkey ~/private.pem -in ~/tmpramfs/keyfile_encrypted | /sbin/cryptsetup --batch-mode luksFormat /dev/sda2
   sleep 0.5
