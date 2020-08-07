@@ -4,8 +4,9 @@ then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > ~/uid
 fi
 
-DEBIAN_FRONTEND=noninteractive sudo apt-get --yes remove cryptsetup-initramfs
-DEBIAN_FRONTEND=noninteractive sudo apt-get --yes install git
+DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes update
+DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes remove cryptsetup-initramfs
+DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes install git
 
 sudo rm -R /installer
 sudo mkdir /installer
