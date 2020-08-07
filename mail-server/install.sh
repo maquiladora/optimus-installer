@@ -39,7 +39,7 @@ then
     file="${file:23:-4}"
     if [[ $file > $db_version ]]
     then
-      echo -e "$file.sql exécuté"
+      echo_magenta "--> $file.sql exécuté"
       mariadb < /installer/mail-server/$file.sql
       echo $file > /srv/databases/MAIL_DB_VERSION
     else
