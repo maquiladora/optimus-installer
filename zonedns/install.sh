@@ -24,6 +24,9 @@ echo '@ 10800 IN TXT "v=spf1 mx ~all"'
 sed -e 's/IN/10800 IN/g' -e ':a;N;$!ba;s/\n/\ /g' -e 's/\t/ /g' /etc/dkim/keys/$DOMAIN/mail.txt
 
 echo
+echo_magenta "Pensez à renseigner le reverse DNS de votre serveur à : $DOMAIN"
+
+echo
 echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
 echo ""
 echo "22   SSH"

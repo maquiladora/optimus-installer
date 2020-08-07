@@ -20,10 +20,3 @@ echo_yellow()(echo -e "\e[33m${1}\e[0m")
 echo_blue()(echo -e "\e[34m${1}\e[0m")
 echo_magenta()(echo -e "\e[35m${1}\e[0m")
 echo_cyan()(echo -e "\e[36m${1}\e[0m")
-
-if [ ! -f /root/uid ]
-then
-  </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
-fi
-
-if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
