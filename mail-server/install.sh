@@ -125,9 +125,9 @@ then
   verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
   verbose chown opendkim:opendkim -R /etc/dkim
   verbose cp /installer/mail-server/opendkim.conf /etc/
-  verbose echo "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" >> /etc/dkim/KeyTable
-  verbose echo "*@$DOMAIN mail._domainkey.$DOMAIN" >> /etc/dkim/SigningTable
-  verbose echo "$DOMAIN" >> /etc/dkim/TrustedHosts
+  echo "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" >> /etc/dkim/KeyTable
+  echo "*@$DOMAIN mail._domainkey.$DOMAIN" >> /etc/dkim/SigningTable
+  echo "$DOMAIN" >> /etc/dkim/TrustedHosts
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendkim.sock/SOCKET="inet:8891:localhost"/g' /etc/default/opendkim
 
   echo_magenta "Redémarrage des services"

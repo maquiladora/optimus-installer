@@ -21,4 +21,9 @@ then
 
     echo_magenta "les certificats SSL ont été installés avec succès..."
 
+    verbose systemctl restart apache2
+    verbose systemctl restart postfix
+    verbose systemctl restart dovecot
+    verbose systemctl restart opendkim
+
 fi
