@@ -11,7 +11,7 @@ Pour lancer les scripts depuis la ligne de commande :
 
 <pre>
   <code>
-    bash <(wget -qO- https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh)
+     bash <(wget -qO- https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh);sudo /installer/menu.sh
   </code>
 </pre>
 
