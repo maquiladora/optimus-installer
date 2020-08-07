@@ -25,3 +25,5 @@ if [ ! -f /root/uid ]
 then
   </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
 fi
+
+if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
