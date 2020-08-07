@@ -6,19 +6,19 @@ echo
 echo_green "==== DECHIFFREMENT DE LA PARTITION CHIFFREE ===="
 
 echo_magenta "Ouverture de la partition cryptée via le serveur de clé distant..."
-mkdir /root/tmpramfs
-mount ramfs /root/tmpramfs/ -t ramfs
-wget -qO /root/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$(</root/uid)_keyfile
-openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
-umount /root/tmpramfs
-rmdir /root/tmpramfs
+mkdir ~/tmpramfs
+mount ramfs ~/tmpramfs/ -t ramfs
+wget -qO ~/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$(<~/uid)_keyfile
+openssl rsautl -decrypt -inkey ~/private.pem -in ~/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
+umount ~/tmpramfs
+rmdir ~/tmpramfs
 
 if ! lsblk -o NAME -n /dev/mapper/cryptsda2 2>/dev/null | grep -q cryptsda2
 then
-  if [ -f /root/keyfile_encrypted ]
+  if [ -f ~/keyfile_encrypted ]
   then
     echo_magenta "Ouverture de la partition chiffrée avec une clé locale..."
-    openssl rsautl -decrypt -inkey /root/private.pem -in /root/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
+    openssl rsautl -decrypt -inkey ~/private.pem -in ~/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
   else
     echo_magenta "Ouverture de la partition chiffrée avec une clé saisie dans le terminal..."
     /sbin/cryptsetup luksOpen /dev/sda2 cryptsda2
