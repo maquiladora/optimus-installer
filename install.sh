@@ -17,9 +17,9 @@ sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /insta
 sudo source /installer/config.sh
 if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
-if ! grep -q "source /installer/menu.sh" ~/.bashrc
+if ! grep -q "sudo /installer/menu.sh" ~/.bashrc
 then
-  echo "source /installer/menu.sh" >> ~/.bashrc
+  echo "sudo /installer/menu.sh" >> ~/.bashrc
 fi
 
 sudo chmod +x /installer/menu.sh
