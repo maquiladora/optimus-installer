@@ -15,9 +15,14 @@ then
     if [ -d "/srv/cloud" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d cloud.$DOMAIN"; fi
     if [ -d "/srv/webmail" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d webmail.$DOMAIN"; fi
     if [ -d "/srv/api" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
-    if [ -d "/srv/mailboxes" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d mail.$DOMAIN"; fi
 
-    verbose certbot run -n --apache --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL
+    verbose certbot run -n --apache --agree-tos --email postmaster@$DOMAIN $DOMAINS_TO_INSTALL
+
+    if [ -d "/srv/mailboxes" ]
+    then
+      verbose systemctl stop apache2
+      verbose certbot certonly run -n --standalone --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
+    fi
 
     echo_magenta "les certificats SSL ont été installés avec succès..."
 

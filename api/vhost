@@ -1,0 +1,10 @@
+<VirtualHost *:80>
+  ServerAdmin postmaster@%DOMAIN%
+  ServerName api.%DOMAIN%
+  ServerAlias %DOMAIN%
+  DirectoryIndex index.html
+  DocumentRoot /srv/api
+  LogLevel warn
+  ErrorLog /var/log/apache2/api-error.log
+  CustomLog /var/log/apache2/api-access.log combined
+</VirtualHost>

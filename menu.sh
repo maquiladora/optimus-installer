@@ -26,11 +26,11 @@ tput cup 11 3; if [ -d "/srv/www" ]; then echo_green "g. Installer l'espace d'h√
 tput cup 12 3; if [ -d "/etc/php" ]; then echo_green "h. Installer PHP"; else echo_red "h. Installer PHP"; fi
 tput cup 13 3; if [ -d "/srv/databases" ]; then echo_green "i. Installer MARIADB"; else echo_red "i. Installer MARIADB"; fi
 tput cup 14 3; if [ -d "/srv/mailboxes" ]; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
-tput cup 15 3; echo_green "k. Configuration de la zone DNS"
-tput cup 16 3; if [ -d "/srv/webmail" ]; then echo_green "l. Installer le webmail ROUNDCUBE"; else echo_red "l. Installer le webmail ROUNDCUBE"; fi
-tput cup 17 3; if [ -d "/srv/cloud" ]; then echo_green "m. Installer le serveur SABREDAV"; else echo_red "n. Installer le serveur SABREDAV"; fi
-tput cup 18 3; if [ -d "/srv/api" ]; then echo_green "o. Installer l'api de comunication"; else echo_red "o. Installer l'api de communication"; fi
-tput cup 19 3; if [ -d "/srv/optimus" ]; then echo_green "p. Installer le client OPTIMUS-AVOCATS"; else echo_red "p. Installer le client OPTIMUS-AVOCATS"; fi
+tput cup 15 3; if [ -d "/srv/webmail" ]; then echo_green "k. Installer le webmail ROUNDCUBE"; else echo_red "k. Installer le webmail ROUNDCUBE"; fi
+tput cup 16 3; if [ -d "/srv/cloud" ]; then echo_green "l. Installer le serveur SABREDAV"; else echo_red "l. Installer le serveur SABREDAV"; fi
+tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de comunication"; else echo_red "m. Installer l'api de communication"; fi
+tput cup 18 3; if [ -d "/srv/optimus" ]; then echo_green "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
+tput cup 19 3; echo_green "o. Configuration de la zone DNS"
 tput cup 20 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
 tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer RSYNC"; else echo_red "r. Installer RSYNC"; fi
 
@@ -92,7 +92,7 @@ case "$y" in
   g)
     tput reset
     clear
-    source /installer/website/install.sh
+    source /installer/www/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
@@ -117,7 +117,7 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-  k)
+  o)
     tput reset
     clear
     source /installer/zonedns/install.sh

@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-  ServerAdmin webmaster@%DOMAIN%
+  ServerAdmin postmaster@%DOMAIN%
   ServerName www.%DOMAIN%
   ServerAlias %DOMAIN%
   DirectoryIndex index.html
