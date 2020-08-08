@@ -37,7 +37,7 @@ else
 fi
 echo "80   HTTP"
 echo "143  IMAP"
-echo "443  HTTPS"
+if [-d /etc/letsencrypt ]; then echo "443  HTTPS"; fi
 echo "465  SMTPS"
 echo "587  SMTPS"
 echo "993  IMAPS"

@@ -24,7 +24,8 @@ then
       verbose certbot certonly -n --standalone --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
     fi
 
-    echo_magenta "les certificats SSL ont été installés avec succès..."
+    echo_magenta "Ouverture du port 443 dans le firewall"
+    if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 443; fi
 
     verbose systemctl restart apache2
     verbose systemctl restart postfix
