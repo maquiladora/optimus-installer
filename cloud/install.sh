@@ -33,9 +33,14 @@ then
   chown -R debian:debian /srv/cloud
   cd /srv/cloud
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
-  chown -R www-data:www-data /srv/cloud;
+
+  echo_magenta "Installation du module OPTIMUS"
+  cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
+  cp /installer/cloud/server.php /srv/cloud/server.php
+
 
   echo_magenta "Redémarrage des services"
+  chown -R www-data:www-data /srv/cloud;
   verbose systemctl restart apache2
 
 
