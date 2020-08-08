@@ -74,7 +74,9 @@ then
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot.conf > /etc/dovecot/dovecot.conf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
-
+  chmod +666 /var/log/dovecot.log
+  chmod +666 /var/log/dovecot-info.log
+  chmod +666 /var/log/dovecot-debug.log
 
   echo_magenta "Installation des paquets de SPAMASSASSIN"
   verbose apt-get -qq -y install spamass-milter
