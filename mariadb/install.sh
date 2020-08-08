@@ -35,6 +35,17 @@ then
     fi
   done
 
+  echo_magenta "Creation de l'utilisateur 'admin'"
+  verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('1', '1', '$MARIADB_ADMIN_USER', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'), '$(date +'%F %T), null, null, null);"
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `email` varchar(128) NOT NULL UNIQUE,
+  `password` varbinary(128) NOT NULL,
+  `created` datetime,
+  `updated` datetime,
+  `token` varchar(32) UNIQUE,
+  `token_expiration` datetime,
+
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
 fi
 
