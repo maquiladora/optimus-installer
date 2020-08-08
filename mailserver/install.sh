@@ -17,7 +17,7 @@ then
   verbose chown mailboxes:mailboxes /srv/mailboxes
 
   echo_magenta "Création de l'utilisateur MARIADB"
-  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE mailserver.* TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON mailserver.* TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
 
   echo_magenta "Installation des bases de données MARIADB"
@@ -37,8 +37,8 @@ then
   done
 
   echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
-  verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes VALUES (NULL, '$MAILSERVER_POSTMASTER_MAILBOX_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD','$AES_KEY'), '0', '1', null, null, null, null, null);"
-  verbose mariadb -u root -e "INSERT IGNORE INTO server.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
+  verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes VALUES (NULL, '$MAILSERVER_POSTMASTER_MAILBOX_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD','$AES_KEY'), '0', '1', null, null, null, null, null);"
+  verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
 
   echo_magenta "Ouverture des ports du Firewall"
   if [ $(which /sbin/ufw) ]
