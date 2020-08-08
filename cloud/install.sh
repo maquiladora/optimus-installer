@@ -27,8 +27,8 @@ then
   php -r "if (hash_file('sha384', 'composer-setup.php') != 'e5325b19b381bfd88ce90a5ddb7823406b2a38cff6bb704b0acc289a09c8128d4a8ce2bbafcd1fcbdc38666422fe2806') unlink('composer-setup.php'); echo PHP_EOL;"
   php composer-setup.php --install-dir /srv/cloud
   php -r "unlink('composer-setup.php');"
-  chown -R debian:debian /srv/cloud;
-  verbose sudo -u debian /srv/cloud/composer.phar require sabre/dav ~3.2.0
+  chown -R debian:debian /srv/cloud
+  sudo -u debian /srv/cloud/composer.phar require sabre/dav ~3.2.0
   chown -R www-data:www-data /srv/cloud;
 
 
