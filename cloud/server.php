@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS' AND (strpos($_SERVER['HTTP_USER_AGENT'],'davfs')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Microsoft-WebDAV')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Chrome')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Dictate')!=FALSE))
 {
-	header("Access-Control-Allow-Origin: https://optimus.$domain");
+	header("Access-Control-Allow-Origin: https://optimus.%DOMAIN%");
 	header("Access-Control-Allow-Credentials: true");
 	header("Access-Control-Allow-Methods: OPTIONS,GET,HEAD,DELETE,PROPFIND,PUT,PROPPATCH,COPY,MOVE,REPORT,MKCOL,POST,LOCK,UNLOCK");
 	header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS' AND (strpos($_SERVER['HTTP_USER_AGEN
 }
 else
 {
-	header("Access-Control-Allow-Origin: https://optimus.$domain");
+	header("Access-Control-Allow-Origin: https://optimus.%DOMAIN%");
 	header("Access-Control-Allow-Credentials: true");
 	header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 }
@@ -62,7 +62,7 @@ $server->addPlugin(new Sabre\CardDAV\VCFExportPlugin());
 $aclPlugin = new Sabre\DAVACL\Plugin();
 $aclPlugin->allowAccessToNodesWithoutACL = false;
 $aclPlugin->hideNodesFromListings = true;
-$aclPlugin->adminPrincipals[] = 'principals/postmaster@$domain';
+$aclPlugin->adminPrincipals[] = 'principals/postmaster@%DOMAIN%';
 $server->addPlugin($aclPlugin);
 
 $server->exec();

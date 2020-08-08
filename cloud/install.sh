@@ -36,7 +36,7 @@ then
 
   echo_magenta "Installation du module OPTIMUS"
   cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
-  cp /installer/cloud/server.php /srv/cloud/server.php
+  sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
 
 
   echo_magenta "Redémarrage des services"
