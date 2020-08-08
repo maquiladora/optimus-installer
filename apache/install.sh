@@ -10,6 +10,7 @@ if [[ $APACHE_AREYOUSURE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Installation du serveur Apache en cours..."
   verbose apt-get -qq install apache2
+  verbose a2enmod rewrite
   if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 80; fi
   verbose rm /var/www/html/index.html
   verbose touch /var/www/html/index.html
