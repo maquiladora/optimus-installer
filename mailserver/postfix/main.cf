@@ -5,9 +5,9 @@ daemon_directory = /usr/lib/postfix/sbin
 shlib_directory = /usr/lib/postfix
 mail_owner = postfix
 
-myhostname = $domain
-mydomain = $domain
-myorigin = $domain
+myhostname = $DOMAIN
+mydomain = $DOMAIN
+myorigin = $DOMAIN
 mydestination =
 inet_interfaces = all
 
@@ -72,9 +72,9 @@ transport_maps = mysql:/etc/postfix/transport.cf
 #TLS
 smtpd_use_tls = yes
 smtpd_tls_auth_only = yes
-smtpd_tls_cert_file = /etc/letsencrypt/live/$domain/fullchain.pem
-smtpd_tls_key_file = /etc/letsencrypt/live/$domain/privkey.pem
-smtpd_tls_CAfile    = /etc/letsencrypt/live/$domain/chain.pem
+smtpd_tls_cert_file = /etc/letsencrypt/live/$DOMAIN/fullchain.pem
+smtpd_tls_key_file = /etc/letsencrypt/live/$DOMAIN/privkey.pem
+smtpd_tls_CAfile    = /etc/letsencrypt/live/$DOMAIN/chain.pem
 smtpd_tls_received_header = yes
 smtpd_tls_session_cache_timeout = 3600s
 tls_random_source = dev:/dev/urandom

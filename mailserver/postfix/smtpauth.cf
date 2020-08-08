@@ -1,5 +1,5 @@
-user = $mysql_mail_user
-password = $mysql_mail_password
+user = $MAILSERVER_MARIADB_USER
+password = $MAILSERVER_MARIADB_PASSWORD
 dbname = mailserver
 hosts = 127.0.0.1
-query = SELECT AES_DECRYPT(password,'$aes_key') AS password FROM mailboxes WHERE email='%s' AND status=1
+query = SELECT AES_DECRYPT(password,'$AES_KEY') AS password FROM mailboxes WHERE email='%s' AND status=1

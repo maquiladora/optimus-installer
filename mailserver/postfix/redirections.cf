@@ -1,5 +1,5 @@
-user = $mysql_mail_user
-password = $mysql_mail_password
+user = $MAILSERVER_MARIADB_USER
+password = $MAILSERVER_MARIADB_PASSWORD
 dbname = mailserver
 hosts = 127.0.0.1
 query = SELECT redirections FROM mailboxes WHERE email='%s'
