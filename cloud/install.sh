@@ -38,11 +38,24 @@ then
   cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
   sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
 
+  echo_magenta "Installation des bases de données MARIADB"
+  if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
+
+  for file in /installer/mail-server/*.sql
+  do
+    file="${file:17:-4}"
+    if [[ $file > $db_version ]]
+    then
+      echo_magenta "--> $file.sql exécuté"
+      mariadb < /installer/cloud/$file.sql
+      echo $file > /srv/databases/CLOUD_DB_VERSION
+    else
+      echo_magenta "--> $file.sql ignoré"
+    fi
+  done
 
   echo_magenta "Redémarrage des services"
   chown -R www-data:www-data /srv/cloud;
   verbose systemctl restart apache2
-
-
 
 fi
