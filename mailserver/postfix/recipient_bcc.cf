@@ -1,5 +1,5 @@
 user = $mysql_mail_user
 password = $mysql_mail_password
-dbname = server
+dbname = mailserver
 hosts = 127.0.0.1
 query = SELECT recipient_bcc FROM mailboxes WHERE email='%s'

@@ -1,17 +1,17 @@
 rewrite_header subject ***SPAM*** (_HITS_)
 
-user_scores_dsn DBI:mysql:server:127.0.0.1:3306
+user_scores_dsn DBI:mysql:mailserver:127.0.0.1:3306
 user_scores_sql_username $mysql_mail_user
 user_scores_sql_password $mysql_mail_password
 user_scores_sql_custom_query SELECT preference, value FROM _TABLE_ WHERE username = _USERNAME_ OR username = '$GLOBAL' OR username = CONCAT('%',_DOMAIN_) ORDER BY username ASC
 
 auto_whitelist_factory          Mail::SpamAssassin::SQLBasedAddrList
-user_awl_dsn                    DBI:mysql:mserver:127.0.0.1
+user_awl_dsn                    DBI:mysql:mailserver:127.0.0.1
 user_awl_sql_username           $mysql_mail_user
 user_awl_sql_password           $mysql_mail_password
 user_awl_sql_table              awl
 
 bayes_store_module              Mail::SpamAssassin::BayesStore::MySQL
-bayes_sql_dsn                   DBI:mysql:server:127.0.0.1
+bayes_sql_dsn                   DBI:mysql:mailserver:127.0.0.1
 bayes_sql_username              $mysql_mail_user
 bayes_sql_password              $mysql_mail_password
