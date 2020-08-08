@@ -34,14 +34,13 @@ then
   cd /srv/cloud
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
 
-  echo_magenta "Installation du module OPTIMUS"
+  echo_magenta "Installation du module SABREDAV OPTIMUS"
   cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
   sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
-
-  for file in /installer/mail-server/*.sql
+  for file in /installer/cloud/*.sql
   do
     file="${file:17:-4}"
     if [[ $file > $db_version ]]
