@@ -29,7 +29,7 @@ then
   php composer-setup.php --install-dir /etc
   php -r "unlink('composer-setup.php');"
 
-  echo_magenta "Installation de SABREDAV (et ses dépendance)"
+  echo_magenta "Installation de SABREDAV (et ses dépendances)"
   chown -R debian:debian /srv/cloud
   cd /srv/cloud
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
