@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS server CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE server;
+CREATE DATABASE IF NOT EXISTS mailserver CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE mailserver;
 
 CREATE TABLE IF NOT EXISTS mailboxes (
   id int(11) NOT NULL AUTO_INCREMENT,
