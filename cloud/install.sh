@@ -12,7 +12,7 @@ if [[ $CLOUD_AREYOUSURE =~ ^[YyOo]$ ]]
 then
   echo_magenta "Création de l'espace d'hébergement cloud.$DOMAIN..."
 
-  if [ ! -d "/srv/cloud" ]; then verbose mkdir /srv/cloud; chown www-data:www-data /srv/cloud; fi
+  if [ ! -d "/srv/cloud" ]; then verbose mkdir /srv/cloud; fi
   if [ ! -f "/srv/cloud/index.html" ]; then echo "cloud" > /srv/cloud/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
 
@@ -27,7 +27,9 @@ then
   php -r "if (hash_file('sha384', 'composer-setup.php') != 'e5325b19b381bfd88ce90a5ddb7823406b2a38cff6bb704b0acc289a09c8128d4a8ce2bbafcd1fcbdc38666422fe2806') unlink('composer-setup.php'); echo PHP_EOL;"
   php composer-setup.php --install-dir /srv/cloud
   php -r "unlink('composer-setup.php');"
-  verbose /srv/cloud/composer.phar require sabre/dav ~3.2.0
+  chown -R debian:debian /srv/cloud;
+  verbose sudo -u debian /srv/cloud/composer.phar require sabre/dav ~3.2.0
+  chown -R www-data:www-data /srv/cloud;
 
 
   verbose systemctl restart apache2
