@@ -1,7 +1,6 @@
 <VirtualHost *:80>
   ServerAdmin postmaster@%DOMAIN%
   ServerName cloud.%DOMAIN%
-  ServerAlias %DOMAIN%
   DirectoryIndex index.html
   DocumentRoot /srv/cloud
   LogLevel warn

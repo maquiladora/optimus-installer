@@ -1,7 +1,6 @@
 <VirtualHost *:80>
   ServerAdmin postmaster@%DOMAIN%
   ServerName api.%DOMAIN%
-  ServerAlias %DOMAIN%
   DirectoryIndex index.html
   DocumentRoot /srv/api
   LogLevel warn

@@ -1,7 +1,6 @@
 <VirtualHost *:80>
   ServerAdmin postmaster@%DOMAIN%
   ServerName webmail.%DOMAIN%
-  ServerAlias %DOMAIN%
   DirectoryIndex index.html
   DocumentRoot /srv/webmail
   LogLevel warn
