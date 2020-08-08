@@ -113,7 +113,7 @@ case "$y" in
   j)
     tput reset
     clear
-    source /installer/mail-server/install.sh
+    source /installer/mailserver/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
