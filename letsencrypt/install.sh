@@ -21,7 +21,7 @@ then
     if [ -d "/srv/mailboxes" ]
     then
       verbose systemctl stop apache2
-      verbose certbot certonly run -n --standalone --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
+      verbose certbot certonly -n --standalone --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
     fi
 
     echo_magenta "les certificats SSL ont été installés avec succès..."
