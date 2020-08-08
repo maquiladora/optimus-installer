@@ -23,15 +23,19 @@ then
 
     echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
+  echo_magenta "Installation de COMPOSER"
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   php -r "if (hash_file('sha384', 'composer-setup.php') != 'e5325b19b381bfd88ce90a5ddb7823406b2a38cff6bb704b0acc289a09c8128d4a8ce2bbafcd1fcbdc38666422fe2806') unlink('composer-setup.php'); echo PHP_EOL;"
-  php composer-setup.php --install-dir /srv/cloud
+  php composer-setup.php --install-dir /etc
   php -r "unlink('composer-setup.php');"
-  #chown -R debian:debian /srv/cloud
-  chown -R www-data:www-data /srv/cloud
-  cd /srv/cloud
-  sudo -u www-data /srv/cloud/composer.phar require sabre/dav ~3.2.0
 
+  echo_magenta "Installation de SABREDAV (et ses dépendance)"
+  chown -R debian:debian /srv/cloud
+  cd /srv/cloud
+  sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
+  chown -R www-data:www-data /srv/cloud;
+
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
 
 
