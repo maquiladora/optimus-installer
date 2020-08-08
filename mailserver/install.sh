@@ -72,7 +72,7 @@ then
 
   echo_magenta "Modification des fichiers de configuration de DOVECOT"
   sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_MARIADB_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_MARIADB_PASSWORD'/g' /installer/mailserver/dovecot/dovecot.conf > /etc/dovecot/dovecot.conf
-  cat /installer/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
+  envsubst < /installer/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
   sed -e 's/$aes_key/'$AES_KEY'/g' -e 's/$domain/'$DOMAIN'/g' -e 's/$mysql_mail_user/'$MAILSERVER_MARIADB_USER'/g' -e 's/$mysql_mail_password/'$MAILSERVER_MARIADB_PASSWORD'/g' /installer/mailserver/dovecot/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
 
 
