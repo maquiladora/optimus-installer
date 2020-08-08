@@ -17,7 +17,7 @@ else
 error_reporting(E_ALL);
 require('/srv/cloud/vendor/autoload.php');
 
-$pdo = new \PDO('mysql:dbname=optimus','root','6neXU4*Bm2ej');
+$pdo = new \PDO('mysql:dbname=cloud','%CLOUD_MARIADB_USER%','%CLOUD_MARIADB_PASSWORD%');
 $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
 function exception_error_handler($errno, $errstr, $errfile, $errline) {

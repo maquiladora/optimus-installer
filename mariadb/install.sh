@@ -17,7 +17,23 @@ then
     verbose ln -s /srv/databases /var/lib/mysql
   fi
   sleep 0.5
+
+  echo_magenta "Démarrage du service..."
   verbose systemctl start mariadb
+
+  echo_magenta "Installation de la base de donnée 'users'"
+  for file in /installer/mariadb/*.sql
+  do
+    file="${file:19:-4}"
+    if [[ $file > $db_version ]]
+    then
+      echo_magenta "--> $file.sql exécuté"
+      mariadb < /installer/mariadb/$file.sql
+      echo $file > /srv/databases/USERS_DB_VERSION
+    else
+      echo_magenta "--> $file.sql ignoré"
+    fi
+  done
 
   echo_magenta "Le serveur MARIADB a été installé avec succès !"
 fi
