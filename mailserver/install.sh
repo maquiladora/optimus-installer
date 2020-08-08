@@ -2,6 +2,11 @@
 source /installer/functions.sh
 source /installer/config.sh
 
+export $DOMAIN
+export $AESKEY
+export $MAILSERVER_MARIADB_USER;
+export $MAILSERVER_MARIADB_PASSWORD;
+
 echo
 echo_green "==== INSTALLATION DU SERVEUR MAIL ===="
 if [ ! $MAILSERVER_AREYOUSURE ]; then echo_green "Souhaitez vous installer le serveur mail ?"; read -p "(o)ui / (n)on ? " -n 1 -e MAILSERVER_AREYOUSURE; fi
