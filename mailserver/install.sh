@@ -54,26 +54,26 @@ then
   DEBIAN_FRONTEND=noninteractive verbose apt-get -qq -y install postfix postfix-mysql sasl2-bin libsasl2-modules libsasl2-modules-sql
 
   echo_magenta "Modification des fichiers de configuration de POSTFIX"
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/saslauthd > /etc/default/saslauthd
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/aliases.cf > /etc/postfix/aliases.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/maildirs.cf > /etc/postfix/maildirs.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/main.cf > /etc/postfix/main.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/master.cf > /etc/postfix/master.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/recipient_bcc.cf > /etc/postfix/recipient_bcc.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/redirections.cf > /etc/postfix/redirections.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/sender_bcc.cf > /etc/postfix/sender_bcc.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/smtpauth.cf > /etc/postfix/smtpauth.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/transport.cf > /etc/postfix/transport.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/virtual_domains.cf > /etc/postfix/virtual_domains.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/smtpd.conf > /etc/postfix/sasl/smtpd.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/saslauthd > /etc/default/saslauthd
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/aliases.cf > /etc/postfix/aliases.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/maildirs.cf > /etc/postfix/maildirs.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/main.cf > /etc/postfix/main.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/master.cf > /etc/postfix/master.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/recipient_bcc.cf > /etc/postfix/recipient_bcc.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/redirections.cf > /etc/postfix/redirections.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/sender_bcc.cf > /etc/postfix/sender_bcc.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/smtpauth.cf > /etc/postfix/smtpauth.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/transport.cf > /etc/postfix/transport.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/virtual_domains.cf > /etc/postfix/virtual_domains.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/postfix/smtpd.conf > /etc/postfix/sasl/smtpd.conf
 
   echo_magenta "Installation des paquets de DOVECOT"
   verbose apt-get -qq -y install dovecot-imapd dovecot-mysql dovecot-sieve dovecot-managesieved
 
   echo_magenta "Modification des fichiers de configuration de DOVECOT"
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot.conf > /etc/dovecot/dovecot.conf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot.conf > /etc/dovecot/dovecot.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/dovecot/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
 
 
   echo_magenta "Installation des paquets de SPAMASSASSIN"
@@ -91,9 +91,9 @@ then
   verbose systemctl -q enable spamassassin
 
   echo_magenta "Modification des fichiers de configuration de SPAMASSASSIN"
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/spamassassin > /etc/default/spamassassin
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/local.cf > /etc/spamassassin/local.cf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/spamass-milter > /etc/default/spamass-milter
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/spamassassin > /etc/default/spamassassin
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/local.cf > /etc/spamassassin/local.cf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/spamassassin/spamass-milter > /etc/default/spamass-milter
   verbose sa-update
 
 
@@ -101,9 +101,9 @@ then
   verbose apt-get -qq -y install clamav-milter
 
   echo_magenta "Modification des fichiers de configuration de CLAMAV"
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/clamav-milter.conf > /etc/clamav/clamav-milter.conf
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/clamav-milter > /etc/default/clamav-milter
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/virusaction.sh > /etc/clamav/virusaction.sh
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/clamav-milter.conf > /etc/clamav/clamav-milter.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/clamav-milter > /etc/default/clamav-milter
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/clamav/virusaction.sh > /etc/clamav/virusaction.sh
   verbose chown clamav:clamav /etc/clamav/virusaction.sh
   verbose chmod 755 /etc/clamav/virusaction.sh
 
@@ -113,7 +113,7 @@ then
   verbose mkdir -p /etc/dkim/keys/$DOMAIN
   verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
   verbose chown opendkim:opendkim -R /etc/dkim
-  envsubst '${AESKEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
   echo "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" >> /etc/dkim/KeyTable
   echo "*@$DOMAIN mail._domainkey.$DOMAIN" >> /etc/dkim/SigningTable
   echo "$DOMAIN" >> /etc/dkim/TrustedHosts
