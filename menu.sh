@@ -124,7 +124,7 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-  k)
+  l)
     tput reset
     clear
     source /installer/cloud/install.sh
