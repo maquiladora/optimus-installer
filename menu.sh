@@ -117,7 +117,7 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
-  o)
+  m)
     tput reset
     clear
     source /installer/api/install.sh
