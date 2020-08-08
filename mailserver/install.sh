@@ -21,7 +21,7 @@ then
   verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
 
   echo_magenta "Installation des bases de données MARIADB"
-  if [ -f "/srv/databases/MAIL_DB_VERSION" ]; then db_version=$(cat /srv/databases/MAIL_DB_VERSION); fi
+  if [ -f "/srv/databases/MAILSERVER_DB_VERSION" ]; then db_version=$(cat /srv/databases/MAILSERVER_DB_VERSION); fi
 
   for file in /installer/mailserver/*.sql
   do
@@ -30,7 +30,7 @@ then
     then
       echo_magenta "--> $file.sql exécuté"
       mariadb < /installer/mailserver/$file.sql
-      echo $file > /srv/databases/MAIL_DB_VERSION
+      echo $file > /srv/databases/MAILSERVER_DB_VERSION
     else
       echo_magenta "--> $file.sql ignoré"
     fi
