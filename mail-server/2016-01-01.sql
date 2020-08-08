@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS server CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS server CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE server;
 
 CREATE TABLE IF NOT EXISTS mailboxes (
@@ -13,29 +13,27 @@ CREATE TABLE IF NOT EXISTS mailboxes (
   recipient_bcc text,
   transport text,
   PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS mailboxes_acl (
   from_user varchar(100) NOT NULL,
   to_user varchar(100) NOT NULL,
   dummy char(1) DEFAULT 1,
   PRIMARY KEY (from_user,to_user)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS mailboxes_acl_anyone (
   from_user varchar(100) NOT NULL,
   dummy char(1) DEFAULT 1,
   PRIMARY KEY (from_user)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS mailboxes_domains (
   id int(11) NOT NULL AUTO_INCREMENT,
   status tinyint(1) NOT NULL DEFAULT 0,
   domain varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY (id)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS awl (
   username varchar(100) NOT NULL default '',
@@ -45,20 +43,19 @@ CREATE TABLE IF NOT EXISTS awl (
   totscore float NOT NULL default '0',
   signedby varchar(255) NOT NULL default '',
   PRIMARY KEY (username,email,signedby,ip)
-) ENGINE=InnoDB;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS bayes_expire (
   id int(11) NOT NULL default '0',
   runtime int(11) NOT NULL default '0',
   KEY bayes_expire_idx1 (id)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS bayes_global_vars (
   variable varchar(30) NOT NULL default '',
   value varchar(200) NOT NULL default '',
   PRIMARY KEY  (variable)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT IGNORE INTO bayes_global_vars VALUES ('VERSION','3');
 
@@ -67,7 +64,7 @@ CREATE TABLE IF NOT EXISTS bayes_seen (
   msgid varchar(200) binary NOT NULL default '',
   flag char(1) NOT NULL default '',
   PRIMARY KEY  (id,msgid)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS bayes_token (
   id int(11) NOT NULL default '0',
@@ -77,7 +74,7 @@ CREATE TABLE IF NOT EXISTS bayes_token (
   atime int(11) NOT NULL default '0',
   PRIMARY KEY  (id, token),
   INDEX bayes_token_idx1 (id, atime)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS bayes_vars (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -92,7 +89,7 @@ CREATE TABLE IF NOT EXISTS bayes_vars (
   newest_token_age int(11) NOT NULL default '0',
   PRIMARY KEY  (id),
   UNIQUE bayes_vars_idx1 (username)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS userpref (
   username varchar(100) NOT NULL default '',
@@ -101,4 +98,4 @@ CREATE TABLE IF NOT EXISTS userpref (
   prefid int(11) NOT NULL auto_increment,
   PRIMARY KEY  (prefid),
   KEY username (username)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
