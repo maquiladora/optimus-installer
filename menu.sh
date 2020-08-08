@@ -120,6 +120,13 @@ case "$y" in
   o)
     tput reset
     clear
+    source /installer/api/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  o)
+    tput reset
+    clear
     source /installer/zonedns/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
