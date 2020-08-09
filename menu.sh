@@ -14,7 +14,7 @@ while : ; do
 clear
 
 tput cup 2 	3; echo -ne  "\033[46;30m          ALLSPARK INSTALLER          \e[0m"
-tput cup 3 	3; echo -ne  "\033[46;30m                 V1.27                \e[0m"
+tput cup 3 	3; echo -ne  "\033[46;30m                 V1.28                \e[0m"
 
 tput cup 5  3; if [ -f "/root/LAST_UPGRADE" ]; then echo_green "a. Mettre à jour le système"; else echo_red "a. Mettre à jour le système"; fi
 tput cup 6  3; if lsblk -o NAME -n /dev/sda2 2>/dev/null | grep -q 'sda2'; then echo_green "b. Créer une partition /dev/sda2 indépendante"; else echo_red "b. Créer une partition /dev/sda2 indépendante"; fi
