@@ -112,9 +112,12 @@ then
 
   echo_magenta "Installation d'OPENDKIM"
   verbose apt-get -qq -y install opendkim opendkim-tools
-  verbose mkdir -p /etc/dkim/keys/$DOMAIN
-  verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
-  verbose chown opendkim:opendkim -R /etc/dkim
+  if [ ! -f /etc/dkim/keys/$DOMAIN/mail.private ]
+  then
+    verbose mkdir -p /etc/dkim/keys/$DOMAIN
+    verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
+    verbose chown opendkim:opendkim -R /etc/dkim
+fi
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
 
   if ! grep -q "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" /etc/dkim/KeyTable
