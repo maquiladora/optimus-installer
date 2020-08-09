@@ -139,6 +139,9 @@ then
   mkdir /etc/opendmarc/
   echo "localsost" > /etc/opendmarc/ignore.hosts
   echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
+  verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendkim
+  verbose systemctl enable opendmarc
+
 
   verbose mkdir -p /etc/dkim/keys/$DOMAIN
   verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
@@ -155,5 +158,6 @@ then
   verbose systemctl restart postfix
   verbose systemctl restart dovecot
   verbose systemctl restart opendkim
+  verbose systemctl restart opendmarc
 
 fi
