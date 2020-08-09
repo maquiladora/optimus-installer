@@ -139,15 +139,8 @@ then
   mkdir /etc/opendmarc/
   echo "localsost" > /etc/opendmarc/ignore.hosts
   echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
-  verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendkim
+  verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendmarc
   verbose systemctl enable opendmarc
-
-
-  verbose mkdir -p /etc/dkim/keys/$DOMAIN
-  verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
-  verbose chown opendkim:opendkim -R /etc/dkim
-  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
-
 
 
   echo_magenta "Redémarrage des services"
