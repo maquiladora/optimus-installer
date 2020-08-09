@@ -63,7 +63,7 @@ dovecot_destination_recipient_limit = 1
 #SPAMASSASSIN - CLAMAV - OPENDKIM
 milter_default_action = accept
 milter_protocol = 2
-smtpd_milters = unix:/var/spool/postfix/clamav/clamav-milter.ctl, unix:/var/spool/postfix/spamass/spamass.sock, inet:localhost:8891
+smtpd_milters = unix:/var/spool/postfix/clamav/clamav-milter.ctl, unix:/var/spool/postfix/spamass/spamass.sock, inet:localhost:8891, inet:localhost:8892
 non_smtpd_milters = inet:localhost:8891
 
 #TRANSPORT

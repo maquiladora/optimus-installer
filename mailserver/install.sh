@@ -133,6 +133,20 @@ then
   fi
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendkim.sock/SOCKET="inet:8891:localhost"/g' /etc/default/opendkim
 
+  echo_magenta "Installation d'OPENDMARC"
+  verbose apt-get -qq -y install opendmarc
+  envsubst '${DOMAIN}' < /installer/mailserver/opendmarc/opendmarc.conf > /etc/opendmarc.conf
+  mkdir /etc/opendmarc/
+  echo "localsost" > /etc/opendmarc/ignore.hosts
+  echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
+
+  verbose mkdir -p /etc/dkim/keys/$DOMAIN
+  verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
+  verbose chown opendkim:opendkim -R /etc/dkim
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /installer/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
+
+
+
   echo_magenta "Redémarrage des services"
   verbose systemctl restart clamav-daemon
   verbose systemctl restart clamav-milter
