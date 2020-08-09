@@ -21,6 +21,8 @@ echo "webmail 10800 IN A $PUBLIC_IP"
 echo "www 10800 IN A $PUBLIC_IP"
 echo "@ 10800 IN MX 50 mail.$DOMAIN."
 echo '@ 10800 IN TXT "v=spf1 mx ~all"'
+echo '_dmarc TXT ( "v=DMARC1;p=quarantine;sp=quarantine;pct=100;adkim=r;aspf=r;fo=1;ri=86400;rua=mailto:postmaster@%DOMAIN;ruf=mailto:postmaster@%DOMAIN;rf=afrf" )'
+
 sed -e 's/IN/10800 IN/g' -e ':a;N;$!ba;s/\n/\ /g' -e 's/\t/ /g' /etc/dkim/keys/$DOMAIN/mail.txt
 
 echo
