@@ -12,6 +12,9 @@ then
   verbose apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
   verbose apt-get -qq install curl
 
+  echo_magenta "Démontage de la partition"
+  umount /srv
+
   echo_magenta "Création d'une clé de chiffrement..."
   mkdir /root/tmpramfs
   mount ramfs /root/tmpramfs/ -t ramfs
