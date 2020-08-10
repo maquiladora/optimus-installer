@@ -144,6 +144,13 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
+  n)
+    tput reset
+    clear
+    source /installer/optimus/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
   o)
     tput reset
     clear
