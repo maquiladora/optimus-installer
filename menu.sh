@@ -1,11 +1,12 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+
 
 if [ -f /root/allspark/config.sh ]
 then
   cp /root/allspark/config.sh /installer/config.sh
 fi
+source /installer/config.sh
 
 if [ ! -f /root/uid ]
 then
