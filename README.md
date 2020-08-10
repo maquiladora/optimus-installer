@@ -39,7 +39,7 @@ Le serveur mail est composé des éléments suivants :
   <li>CLAMAV pour mettre en quarantaine les courriels qui contiennent des virus</li>
   <li>SIEVE pour mettre en place des règles de filtrage (par exemple le classement automatique des spams dans un dossier "Indésirables"). Ce protocole permet également de mettre en place des messages d'absence intelligents et configurables</li>
   <li>ACL pour partager dossiers ou sous dossiers avec d'autres utilisateurs du même domaine</li>
-  <li>OPENDKIM pour authentifier l'expéditeur auprès des destinataires et éviter d'être classé en indésirable</li>
+  <li>OPENDKIM et OPENDMARC pour authentifier l'expéditeur auprès des destinataires et éviter d'être classé en indésirable</li>
   <li>ALIASES : Une boite de messagerie peut être contactée via plusieurs adresses</li>
   <li>REDIRECTIONS : redirection automatique des courriels destinés à une adresse vers une ou plusieurs autres adresses</li>
   <li>RECIPIENT_BCC : envoi d'une copie des courriels entrants destinés à une adresse sur une seconde adresse</li>
