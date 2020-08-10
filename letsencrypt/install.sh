@@ -15,6 +15,8 @@ then
     if [ -d "/srv/cloud" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d cloud.$DOMAIN"; fi
     if [ -d "/srv/webmail" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d webmail.$DOMAIN"; fi
     if [ -d "/srv/api" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d api.$DOMAIN"; fi
+    if [ -d "/srv/optimus" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d optimus.$DOMAIN"; fi
+    if [ -d "/srv/files/partage@$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d partage.$DOMAIN"; fi
 
     verbose certbot run -n --apache --agree-tos --email postmaster@$DOMAIN $DOMAINS_TO_INSTALL
 
