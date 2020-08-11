@@ -21,6 +21,13 @@ then
     printf "<Directory /srv/webmail/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
   fi
 
+  echo_magenta "Installation des extensions PHP nécessaires"
+  #verbose apt-get install php-ldap php-intl
+  #verbose pear install Net_SMTP
+  #verbose pear install Auth_SASL
+  #verbose pear install Net_IDNA2
+  #verbose pear install Mail_mime
+
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
-  echo_magenta "L'espace d'hébergement webmail.$DOMAIN a été installé avec succès !"
 fi
