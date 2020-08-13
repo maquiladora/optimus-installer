@@ -1,6 +1,6 @@
 # ALL SPARK INSTALLER
 
-Ce "repo" contient des scripts de notre conception permettant d'installer très rapidement un serveur "ALL SPARK" qui constitue la base de toutes les applications développées par notre association CYBERTRON. Ce serveur sécurisé permet de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec les applications CYBERTRON (dont OPTIMUS AVOCATS).  
+Ce dépôt contient des scripts de notre conception permettant d'installer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).  
 
 Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.  
 
@@ -11,11 +11,11 @@ Ils ont été testés sur deux types d'hébergement :
 
 # PREPARATION D'UN VPS
 
-Le VPS (Virtual Private Server) a l'avantage de la simplicité. C'est l'hébergeur qui gère votre machine moyennant un abonnement mensuel compris entre 3 € HT et 20 € HT / mois selon les performances de la machine et l'espace disque souhaité.
-La performance de la connexion internet d'un tel serveur est souvent supérieure à ce que vous pourrez avoir avec votre fournisseur d'accès au bureau.
+Le VPS (Virtual Private Server) a l'avantage de la simplicité. C'est l'hébergeur qui gère votre machine moyennant un abonnement mensuel compris entre 3 € HT et 20 € HT / mois selon les performances de la machine et l'espace disque souhaité. La performance de la connexion internet d'un tel serveur est souvent bien supérieure à ce que vous pourrez obtenir avec votre fournisseur d'accès d'internet.
+
 Il y a toutefois deux réserves à l'utilisation d'un VPS :
 * Si vous n'avez plus de connexion internet au bureau, vous n'aurez plus accès à rien (mais on peut aujourd'hui facilement basculer sur la 4G de son téléphone comme solution de secours provisoire)
-* Votre serveur peut faire l'objet d'une réquisition judiciaire sur demande d'un juge et l'hébergeur s'y pliera sans que vous en soyez nécessairement informé. Si vous travaillez sur des dossiers très sensibles, héberger vos données dans votre cabinet peut ainsi s'avérer être une meilleure option.
+* Votre serveur peut faire l'objet d'une réquisition ou d'une saisie sur demande d'un juge et l'hébergeur s'y pliera sans que vous en soyez préalablement informé. Si vous travaillez sur des dossiers très sensibles, héberger vos données dans votre cabinet peut ainsi s'avérer être une meilleure option.
 
 Voici la démarche pour réserver un VPS, par exemple chez l'hébergeur OVH CLOUD :
 * Créez un compte sur https://www.ovh.com/auth/ ou connectez vous avec votre compte existant.
@@ -31,8 +31,7 @@ Voici la démarche pour réserver un VPS, par exemple chez l'hébergeur OVH CLOU
 * Sur la page suivante "Paiement de votre commande", choisissez le mode de paiement. La carte bancaire permet d'activer le serveur dans la journée. La mise en place d'un prélèvement reporte de 2 à 3 jours l'ouverture du serveur. Il est possible de changer le mode de paiement à tout moment par la suite. Validez ensuite les conditions générales en cochant les cases au bas de la page. Finissez la commande en cliquant CONFIRMER ET PAYER
 Vous recevrez, habituellement dans l'heure qui suit, un mail vous informant de l'ouverture du serveur, contenant le mot de passe d'accès.  
 
-A noter :
-Par défaut le disque des VPS ne contient qu'une seule partition. Les scripts ALL SPARK peuvent redimensionner la partition système à 20Gb et créer une partition secondaire chiffrée avec le reste de l'espace libre.
+A noter : Par défaut le disque des VPS ne contient qu'une seule partition. Les scripts ALL SPARK peuvent redimensionner la partition système à 20Gb et créer une partition secondaire chiffrée avec le reste de l'espace libre.
 
 
 # PREPARATION D'UN NUC8I5BEK2
@@ -59,12 +58,12 @@ Il faut ensuite installer DEBIAN 10.5 sur le NUC.
 Pour ce faire il faut télécharger l'iSO de DEBIAN 10.5 : https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso  
 Puis l'installer sur une clé USB d'au moins 1 Go avec par exemple le logiciel RUFUS : https://rufus.ie/fr_FR.html  
 
-DEBIAN ne reconnait pas la carte WIFI du NUC par défaut car cela nécessite un pilote propriétaire INTEL.  
+DEBIAN ne reconnait pas la carte WIFI du NUC par défaut car elle requiert un pilote propriétaire INTEL.  
 Ce pilote est téléchargeable ici : http://ftp.us.debian.org/debian/pool/non-free/f/firmware-nonfree/firmware-iwlwifi_20190114-2_all.deb  
 Il suffit de copier le fichier dans le dossier "firmware" de la clé USB pour que la carte wifi soit détectée pendant l'installation.  
 Nous recommandons cependant de connecter le NUC en filaire et pas en WIFI. Dans ce cas cette étape est optionnelle.
 
-Pour lancer l'installation il suffit ensuite d'insérer la clé USB dans un des ports USB du NUC et de le redémarrer. Il devrait lancer l'installation de DEBIAN 10.5 depuis la clé USB et vous devriez voir le menu d'installation bleu.
+Pour lancer l'installation il suffit ensuite d'insérer la clé USB dans un des ports USB du NUC et de le redémarrer. Il devrait lancer l'installation de DEBIAN 10.5 depuis la clé USB et vous devriez ensuite voir le menu d'installation bleu.
 Choisissez "Install" (2e option) pour lancer l'installation non graphique.  
 Ensuite répondez comme suit aux questions posées :  
 * Select a language : English
@@ -81,14 +80,11 @@ Ensuite répondez comme suit aux questions posées :
 * Install the GRUB boot loader : Yes -> /dev/nvme0n1
 * Finish the installation : Retirez la clé USB puis "continue"
 
-A l'issue de l'installation, si vous avez suivi ces instructions, le système consomme 20Go et le reste de l'espace disque est libre est non configuré.  
-Cet espace libre sera monté sur /srv et servira à stocker les données.  
-Il est recommandé de chiffrer cette partition /srv pour que les données soient inutilisables en cas de vol du NUC.  
-Les scripts d'installation ALL SPARK réaliseront ces opérations à votre place.  
+A l'issue de l'installation, si vous avez suivi ces instructions, le système consomme 20Go et le reste de l'espace disque est libre est non configuré. Cet espace libre sera monté sur /srv et servira à stocker les données. Il est recommandé de chiffrer cette partition /srv pour que les données soient inutilisables en cas de vol du NUC. Les scripts d'installation ALL SPARK réaliseront ces opérations à votre place.  
 
 
 
-# ORGANISATION DES FICHIERS
+# ORGANISATION DES DOSSIERS
 
 L'arborescence OPTIMUS est la suivante :
 * /srv/api contient l'api de communication
@@ -116,6 +112,7 @@ Une fois connecté au terminal, voici la commande à taper pour installer les sc
   </code>
 </pre>
 
+Le menu ALL SPARK se lance alors sur votre machine et il suffit de suivre les directives qui apparaissent à l'écran.  
 
 
 # SERVEUR MAIL
