@@ -2,9 +2,9 @@
 
 Ce "repo" contient des scripts de notre conception permettant d'installer très rapidement un serveur "ALL SPARK" qui constitue la base de toutes les applications développées par notre association CYBERTRON.
 
-Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.
-Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieurs).
-Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2
+Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.  
+Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieurs).  
+Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2.  
 
 
 # PREPARATION D'UN NUC8I5BEK2
