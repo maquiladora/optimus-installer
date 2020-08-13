@@ -4,13 +4,44 @@ Ce "repo" contient des scripts de notre conception permettant d'installer très 
 
 Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.  
 Ils ont été testés sur deux types d'hébergement :
-* des serveurs VPS, si vous souhaitez confier l'hébergement à un professionnel (par exemple OVH : )
-Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2.  
+* des serveurs VPS, si vous souhaitez confier l'hébergement à un professionnel (par exemple OVH)
+* des mini-PCs Intel NUC8I5BEK2 si vous préférez héberger vos données à votre cabinet.
+
+
+# PREPARATION D'UN VPS
+
+Le VPS (Virtual Private Server) a l'avantage de la simplicité. C'est l'hébergeur qui gère votre machine moyennant un abonnement mensuel compris entre 3 € HT et 20 € HT / mois selon les performances de la machine et l'espace disque souhaité.
+La performance de la connexion internet d'un tel serveur est souvent supérieure à ce que vous pourrez avoir avec votre fournisseur d'accès au bureau.
+Il y a toutefois deux réserves à l'utilisation d'un VPS :
+* Si vous n'avez plus de connexion internet au bureau, vous n'aurez plus accès à rien (mais on peut aujourd'hui facilement basculer sur la 4G de son téléphone en dernier recours)
+* Votre serveur peut faire l'objet d'une réquisition judiciaire sur demande d'un juge et l'hébergeur s'y pliera sans que vous en soyez nécessairement informé. Si vous travaillez sur des dossiers très sensibles, héberger vos données dans votre cabinet peut ainsi s'avérer être une meilleure option.
+
+Voilà la démarche pour réserver un VPS, par exemple chez l'hébergeur OVH CLOUD :
+* Créez un compte sur https://www.ovh.com/auth/ ou connectez vous avec votre compte existant.
+* Remplissez les champs d'identification de votre cabinet
+* Une fois l'inscription terminée, rendez vous ici pour réserver un VPS : https://www.ovh.com/fr/order/vps
+* Choisissez l'offre qui vous convient. Nous recommandons de démarrer avec l'offre VALUE qui intègre 40Go de stockage, sachant qu'on peut passer à une offre supérieure plus tard en cas de besoin.
+* Sur la page suivante : "Configurez votre VPS", renseignez les champs comme suit :
+  * Choix du système d'exploitation : Distribution Uniquement -> Debian -> Version 10
+  * Localisation du datacenter : Europe de l'Ouest, France, Strasbourg (SBG)
+  * Quantité : 1
+* Sur la page suivante : "Options", aucune option n'est indispensable mais la sauvegarde automatisée à 3€ / mois peut être judicieuse (possibilité de souscrire les options ultérieurement)
+* Sur la page suivante durée d'engagement, sélectionnez "sans engagement"
+* Sur la page suivante PAIEMENT DE VOTRE COMMANDE, choisissez le mode de paiement. La carte bancaire permet d'activer le serveur dans la journée. La mise en place d'un prélèvement reporte de 2 à 3 jours l'ouverture du serveur. Il est possible de changer le mode de paiement à tout moment par la suite. Validez ensuite les conditions générales en cochant les cases au bas de la page. Finissez la commande en cliquant CONFIRMER ET PAYER
+Vous recevrez, habituellement dans l'heure qui suit, un mail vous informant de l'ouverture du serveur, contenant le mot de passe d'accès.  
+
+A noter :
+Par défaut le disque des VPS ne contient qu'une seule partition. Les scripts ALL SPARK peuvent redimensionner la partition système à 20Gb et créer une partition secondaire avec le reste de l'espace libre
 
 
 # PREPARATION D'UN NUC8I5BEK2
 
-Nous recommandons ce produit INTEL NUC8I5BEK2 : https://www.amazon.fr/gp/product/B07JBM1CFH  
+Héberger vos données à votre cabinet sur une machine dédiée ne peut se faire que si :
+- vous disposez d'une connexion internet rapide et fiable (type fibre)
+- votre FAI (fournisseur d'accès internet) vous garantit une IP FIXE
+- vous pouvez rediriger les ports entrants et sortants vers le serveur (via votre box internet ou votre routeur)
+
+Pour le serveur, nous recommandons ce mini PC INTEL NUC8I5BEK2 : https://www.amazon.fr/gp/product/B07JBM1CFH  
 Nous préconisons d'y ajouter 8 Go de RAM : https://www.amazon.fr/Crucial-CT16G4SFD824A-PC4-19200-260-Pin-M%C3%A9moire/dp/B019FRD3SE/  
 Et un disque SSD NVMe de 500 Go ou 1 To : https://www.amazon.fr/Samsung-SSD-Interne-Plus-NVMe/dp/B07MBQPQ62/  
 Soit un investissement total qui devrait rester sous le seuil d'immobilisation de 500 € HT.  
@@ -56,31 +87,6 @@ Il est recommandé de chiffrer cette partition /srv pour que les données soient
 Les scripts d'installation ALL SPARK réaliseront ces opérations à votre place.  
 
 
-# PREPARATION D'UN VPS
-
-Le VPS (Virtual Private Server) a l'avantage de la simplicité. C'est l'hébergeur qui gère votre machine moyennant un abonnement mensuel compris entre 3 € HT et 20 € HT / mois selon les performances de la machine et l'espace disque souhaité.
-La performance de la connexion internet d'un tel serveur est souvent supérieure à ce que vous pourrez avoir avec votre fournisseur d'accès au bureau.
-Il y a toutefois deux réserves à l'utilisation d'un VPS :
-* Si vous n'avez plus de connexion internet au bureau, vous n'aurez plus accès à rien (mais on peut aujourd'hui facilement basculer sur la 4G de son téléphone en dernier recours)
-* Votre serveur peut faire l'objet d'une réquisition judiciaire sur demande d'un juge et l'hébergeur s'y pliera sans que vous en soyez nécessairement informé. Si vous travaillez sur des dossiers très sensibles, héberger vos données dans votre cabinet peut ainsi s'avérer être une meilleure option.
-
-Voilà la démarche pour réserver un VPS, par exemple chez l'hébergeur OVH CLOUD :
-* Créez un compte sur https://www.ovh.com/auth/ ou connectez vous avec votre compte existant.
-* Remplissez les champs d'identification de votre cabinet
-* Une fois l'inscription terminée, rendez vous ici pour réserver un VPS : https://www.ovh.com/fr/order/vps
-* Choisissez l'offre qui vous convient. Nous recommandons de démarrer avec l'offre VALUE qui intègre 40Go de stockage, sachant qu'on peut passer à une offre supérieure plus tard en cas de besoin.
-* Sur la page suivante : "Configurez votre VPS", renseignez les champs comme suit :
-  * Choix du système d'exploitation : Distribution Uniquement -> Debian -> Version 10
-  * Localisation du datacenter : Europe de l'Ouest, France, Strasbourg (SBG)
-  * Quantité : 1
-* Sur la page suivante : "Options", aucune option n'est indispensable mais la sauvegarde automatisée à 3€ / mois peut être judicieuse (possibilité de souscrire les options ultérieurement)
-* Sur la page suivante durée d'engagement, sélectionnez "sans engagement"
-* Sur la page suivante PAIEMENT DE VOTRE COMMANDE, choisissez le mode de paiement. La carte bancaire permet d'activer le serveur dans la journée. La mise en place d'un prélèvement reporte de 2 à 3 jours l'ouverture du serveur. Il est possible de changer le mode de paiement à tout moment par la suite. Validez ensuite les conditions générales en cochant les cases au bas de la page. Finissez la commande en cliquant CONFIRMER ET PAYER
-Vous recevrez, habituellement dans l'heure qui suit, un mail vous informant de l'ouverture du serveur, contenant le mot de passe d'accès.  
-
-A noter :
-Par défaut le disque des VPS ne contient qu'une seule partition. Les scripts ALL SPARK peuvent redimensionner la partition système à 20Gb et créer une partition secondaire avec le reste de l'espace libre
-
 
 # ORGANISATION DES FICHIERS
 
@@ -113,6 +119,8 @@ Une fois connecté au terminal, voici la commande à taper pour installer les sc
 
 
 # SERVEUR MAIL
+
+Prérequis : disposer d'un nom de domaine et en avoir le contrôle.
 
 Le serveur mail est composé des éléments suivants :
 
