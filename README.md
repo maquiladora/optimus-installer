@@ -6,7 +6,7 @@ Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et sup
 Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2
 
 
-<u><b>PREPARATION POUR INSTALLATION SUR UN NUC8I5BEK2</b></u>
+#PREPARATION POUR INSTALLATION SUR UN NUC8I5BEK2
 
 Pour l'utilisation sur un serveur VPS, passez directement à l'étape suivante<br/>
 
@@ -60,7 +60,7 @@ L'arborescence OPTIMUS est la suivante :
   <li>/srv/www contient un espace pour héberger le site web du cabinet</li>
 </ul>
 
-<b><u>SERVEUR MAIL</u></b>
+#SERVEUR MAIL
 
 Le serveur mail est composé des éléments suivants :
 
