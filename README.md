@@ -47,13 +47,13 @@ Nous préconisons d'y ajouter 8 Go de RAM : https://www.amazon.fr/Crucial-CT16G4
 Et un disque SSD NVMe de 500 Go ou 1 To : https://www.amazon.fr/Samsung-SSD-Interne-Plus-NVMe/dp/B07MBQPQ62/  
 Soit un investissement total qui devrait rester sous le seuil d'immobilisation de 500 € HT.  
 
-Une fois le NUC lancé, on commence par quelques réglages préalables.    
-Au démarrage du NUC, lorsque le logo INTEL apparait, tapez F2 pour entrer dans le menu du BIOS.  
-Cliquez sur "ADVANCED" pour entrer dans le menu avancé.  
-Dans la section "BOOT (UEFI Boot Priority)", décochez "UEFI BOOT" pour permettre au NUC de démarrer depuis son disque NVMe.  
-Dans la section "BOOT (Legacy Boot Priority)", déplacez le disque NVME en première position.  
-Dans la section "POWER", sélectionnez "AFTER POWER FAILURE : POWER ON" pour que le NUC redémarre en cas de coupure de courant.  
-Appuyez sur "F10" et "ENTREE" pour sauvegarder les modifications et redémarrer.  
+Une fois le NUC lancé, on commence par quelques réglages préalables :
+* Au démarrage du NUC, lorsque le logo INTEL apparait, tapez F2 pour entrer dans le menu du BIOS.  
+* Cliquez sur "ADVANCED" pour entrer dans le menu avancé.  
+* Dans la section "BOOT (UEFI Boot Priority)", décochez "UEFI BOOT" pour permettre au NUC de démarrer depuis son disque NVMe.  
+* Dans la section "BOOT (Legacy Boot Priority)", déplacez le disque NVME en première position.  
+* Dans la section "POWER", sélectionnez "AFTER POWER FAILURE : POWER ON" pour que le NUC redémarre en cas de coupure de courant.  
+* Appuyez sur "F10" et "ENTREE" pour sauvegarder les modifications et redémarrer.  
 
 Il faut ensuite installer DEBIAN 10.5 sur le NUC.  
 Pour ce faire il faut télécharger l'iSO de DEBIAN 10.5 : https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso  
@@ -64,8 +64,7 @@ Ce pilote est téléchargeable ici : http://ftp.us.debian.org/debian/pool/non-fr
 Il suffit de copier le fichier dans le dossier "firmware" de la clé USB pour que la carte wifi soit détectée pendant l'installation.  
 Nous recommandons cependant de connecter le NUC en filaire et pas en WIFI. Dans ce cas cette étape est optionnelle.
 
-Pour lancer l'installation il suffit ensuite d'insérer la clé USB dans un des ports USB du NUC et de le redémarrer.  
-Il devrait lancer l'installation de DEBIAN 10.5 depuis la clé USB et vous devriez voir le menu d'installation bleu.  
+Pour lancer l'installation il suffit ensuite d'insérer la clé USB dans un des ports USB du NUC et de le redémarrer. Il devrait lancer l'installation de DEBIAN 10.5 depuis la clé USB et vous devriez voir le menu d'installation bleu.
 Choisissez "Install" (2e option) pour lancer l'installation non graphique.  
 Ensuite répondez comme suit aux questions posées :  
 * Select a language : English
@@ -100,14 +99,14 @@ L'arborescence OPTIMUS est la suivante :
 * /srv/increments contient les sauvegardes incrémentielles quotidienne du dossier /srv
 * /srv/mailboxes contient les boites mail des utilisateurs, qui seront servies via IMAP
 * /srv/webmail contient le client ROUNDCUBE
-* /srv/www contient un espace pour héberger le site web du cabinet
+* /srv/www contient un espace pour héberger votre site web
 
 
 # LANCEMENT DES SCRIPTS ALL SPARK
 
 Le plus simple pour contrôler un serveur DEBIAN est de s'y connecter avec le logiciel PUTTY : https://www.putty.org/
 L'identifiant est "debian".  
-Le mot de passe est celui que vous avez renseigné (NUC) ou celui qui vous a été envoyé par mail (VPS)
+Le mot de passe est celui que vous avez renseigné lors de l'installaiton (NUC) ou celui qui vous a été envoyé par mail (VPS)
 
 Une fois connecté au terminal, voici la commande à taper pour installer les scripts ALL SPARK
 
@@ -139,6 +138,6 @@ Le serveur mail est composé des éléments suivants :
   <li>SENDER_BCC : envoi d'une copie des courriels envoyés depuis une adresse sur une seconde adresse</li>
 </ul>
 
-Il est ainsi possible de créer et gérer autant d'adresses mail que nécessaire sur les domaines dont vous êtes propriétaire.
+Il est ainsi possible de créer et gérer autant d'adresses mail que nécessaire sur le domaine dont vous êtes propriétaire.
 
 Les courriels peuvent être consultés via n'importe quel logiciel client (OUTLOOK, THUNDERBIRD, K9 MAIL sur ANDROID, IPHONE) ou via le webmail intégré au serveur.
