@@ -1,31 +1,28 @@
 # ALL SPARK INSTALLER
 
-Ce "repo" contient des scripts d'installation de notre conception permettant d'installer très rapidement un serveur "ALL SPARK" qui constitue la base de toutes les applications développées par notre association CYBERTRON.
+Ce "repo" contient des scripts de notre conception permettant d'installer très rapidement un serveur "ALL SPARK" qui constitue la base de toutes les applications développées par notre association CYBERTRON.
 
-
-Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5<br/>
-Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieurs)<br/>
+Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.
+Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieurs).
 Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2
 
 
-# PREPARATION POUR INSTALLATION SUR UN NUC8I5BEK2
+# PREPARATION D'UN NUC8I5BEK2
 
-Pour l'utilisation sur un serveur VPS, passez directement à l'étape suivante<br/>
+Au démarrage du NUC, lorsque le logo INTEL apparait, tapez F2 pour entrer dans le BIOS.
+Cliquez sur "ADVANCED" pour entrer dans le menu avancé.
+Dans la section "BOOT (UEFI Boot Priority)", décochez "UEFI BOOT" pour permettre au NUC de démarrer depuis son disque NVMe.
+Dans la section "BOOT (Legacy Boot Priority)", déplacez le disque NVME en première position.
+Dans la section "POWER", sélectionnez "AFTER POWER FAILURE : POWER ON" pour que le NUC redémarre en cas de coupure de courant
+Appuyez sur "F10" et "ENTREE" pour savegarder les modifications et redémarrer.
 
-Au démarrage du NUC, lorsque le logo INTEL apparait, tapez F2 pour entrer dans le BIOS<br/>
-Cliquez sur "ADVANCED" pour entrer dans le menu avancé<br/>
-Dans la section "BOOT (UEFI Boot Priority)", décochez "UEFI BOOT" pour permettre au NUC de démarrer depuis son disque NVMe<br/>
-Dans la section "BOOT (Legacy Boot Priority)", déplacez le disque NVME en première position<br/>
-Dans la section "POWER", sélectionnez "AFTER POWER FAILURE : POWER ON" pour que le NUC redémarre en cas de coupure de courant<br/>
-Appuyez sur "F10" et "ENTREE" pour savegarder les modifications et redémarrer.<br/>
-<br/>
-Le NUC devrait maintenant lancer l'installation de DEBIAN 10.5 depuis la clé USB<br/>
-Choisissez "Install" (2e option) pour lancer l'installation non graphique<br/>
-Ensuite répondez comme suit aux questions posées :<br/>
-<ul>
-<li>Select a language : English</li>
-<li>Select your location : other -> Europe -> France</li>
-<li>Configure locales : en_US.UTF-8</li>
+Le NUC devrait maintenant lancer l'installation de DEBIAN 10.5 depuis la clé USB.
+Choisissez "Install" (2e option) pour lancer l'installation non graphique.
+Ensuite répondez comme suit aux questions posées :
+
+* Select a language : English
+* Select your location : other -> Europe -> France
+* Configure locales : en_US.UTF-8
 <li>Keymap to use : French</li>
 <li>Configure the Network : eno1 Intel Corporation Device</li>
 <li>Root Password : Choisissez un mot de passe de 10 caractères minimum mélangeant chiffres, minuscules, majuscules et caractères spéciaux et surtout ne l'oubliez pas !</li>
