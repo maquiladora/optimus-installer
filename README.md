@@ -1,12 +1,14 @@
-# optimus-installer
-Scripts d'installation pour serveur et station de travail optimus<br/>
+# ALL SPARK INSTALLER
+
+Ce "repo" contient des scripts d'installation de notre conception permettant d'installer très rapidement un serveur "ALL SPARK" qui constitue la base de toutes les applications développées par notre association CYBERTRON.
+
 
 Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5<br/>
-Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieur)s<br/>
+Ils ont été principalement testés sur des serveurs OVH VPS VALUE NVMe (et supérieurs)<br/>
 Ils ont également été testés pour une installation sur des mini-PCs Intel NUC8I5BEK2
 
 
-#PREPARATION POUR INSTALLATION SUR UN NUC8I5BEK2
+# PREPARATION POUR INSTALLATION SUR UN NUC8I5BEK2
 
 Pour l'utilisation sur un serveur VPS, passez directement à l'étape suivante<br/>
 
@@ -60,7 +62,7 @@ L'arborescence OPTIMUS est la suivante :
   <li>/srv/www contient un espace pour héberger le site web du cabinet</li>
 </ul>
 
-#SERVEUR MAIL
+# SERVEUR MAIL
 
 Le serveur mail est composé des éléments suivants :
 
