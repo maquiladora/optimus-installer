@@ -1,0 +1,8 @@
+
+[Unit]
+Description=Sauvegarde incrémentielle
+
+[Service]
+Type=simple
+ExecStart=/srv/increments-backup.sh
+StandardError=journal

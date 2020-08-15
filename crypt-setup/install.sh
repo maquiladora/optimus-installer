@@ -21,8 +21,8 @@ then
   </dev/urandom tr -dc A-Za-z0-9 | head -c${1:-256} > /root/tmpramfs/keyfile
   chmod 0400 /root/tmpramfs/keyfile
   openssl genrsa -out /root/private.pem 4096 &> /dev/null
-  openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/tmpramfs/public.pem &> /dev/null
-  openssl rsautl -encrypt -inkey /root/tmpramfs/public.pem -pubin -in /root/tmpramfs/keyfile -out /root/tmpramfs/keyfile_encrypted &> /dev/null
+  openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem &> /dev/null
+  openssl rsautl -encrypt -inkey /root/public.pem -pubin -in /root/tmpramfs/keyfile -out /root/tmpramfs/keyfile_encrypted &> /dev/null
   sleep 0.5
 
   echo_magenta "Envoi de la clé de chiffrement sur le serveur distant"

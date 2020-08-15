@@ -1,4 +1,4 @@
-rewrite_header subject ***SPAM*** (_HITS_)
+rewrite_header subject ***SPAM*** (_SCORE_)
 
 user_scores_dsn DBI:mysql:mailserver:127.0.0.1:3306
 user_scores_sql_username $MAILSERVER_MARIADB_USER

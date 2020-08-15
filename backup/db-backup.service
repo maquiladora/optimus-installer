@@ -1,0 +1,8 @@
+
+[Unit]
+Description=Sauvegarde des bases de données
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php /srv/db-backup/db-backup.php
+StandardError=journal

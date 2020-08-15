@@ -1,0 +1,9 @@
+[Unit]
+Description=Sauvegarde quotidienne des bases de données
+
+[Timer]
+OnCalendar=*-*-* 23:30:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target
