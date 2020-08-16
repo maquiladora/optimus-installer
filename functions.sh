@@ -102,7 +102,7 @@ require()
 
     if [ grep -q "$variable=" /root/.allspark ]
     then
-      verbose sed -i "s/$variable=${!variable}/$variable=$valeur/g" /etc/ssh/sshd_config
+      verbose sed -i "s/$variable=${!variable}/$variable=$valeur/g" /root/.allspark
     else
       echo "export $variable=$valeur"  >> /root/.allspark
     fi
