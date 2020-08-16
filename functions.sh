@@ -37,7 +37,7 @@ require()
       read -p "(o)ui / (n)on ? " -n 1 -e generate
       if [[ $generate =~ ^[YyOo]$ ]]
       then
-        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
       fi
     fi
 
