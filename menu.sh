@@ -2,6 +2,8 @@
 source /installer/functions.sh
 
 require PART_TO_ENCRYPT
+require PART_TO_ENCRYPT2
+require PART_TO_ENCRYPT3 password
 
 while : ; do
 
