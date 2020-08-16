@@ -98,15 +98,15 @@ require()
       read valeur
     fi
 
-    if [ $type ] && [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
+    if [ $variable == 'DOMAIN' ]; then echo $valeur > /etc/hostname; fi
 
     if grep -q "$variable=" /root/.allspark
     then
-      verbose sed -i "s/$variable=${!variable}/$variable=$valeur/g" /root/.allspark
+      verbose sed -i "s/$variable=/$variable=$valeur/g" /root/.allspark
     else
       echo "export $variable=$valeur"  >> /root/.allspark
     fi
 
-    export $variable=$valeur
+    export ${!variable}=$valeur
   fi
 )
