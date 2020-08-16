@@ -12,12 +12,13 @@ then
   echo_red "ELLE PEUT CORROMPRE LE DISQUE ET LE SYSTEME"
   echo_red "IL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES"
   echo
-    echo $FIRSTSECTOR | /usr/sbin/sfdisk /dev/nvme0n1 --append --force
 
   if [ ! $DISKPART_USE_FREESPACE ]; then echo_green "Souhaitez vous utiliser l'espace non partitionné de $FREESPACE"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_USE_FREESPACE; fi
   if [[ $DISKPART_USE_FREESPACE =~ ^[Yy]$ ]]
   then
-
+    echo $FIRSTSECTOR | /usr/sbin/sfdisk /dev/nvme0n1 --append --force
+    /usr/sbin/mkfs.ext4 /dev/nvme0n1p2
+    mount /dev/nvme0n1p2 /srv
   else
     if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_AREYOUSURE; fi
     if [[ $DISKPART_AREYOUSURE =~ ^[YyOo]$ ]]
