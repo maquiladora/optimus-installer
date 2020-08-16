@@ -41,11 +41,11 @@ if [ ! $PART_TO_ENCRYPT ]
 then
   if [ -e /dev/nvme0n1 ]
   then
-    export PART_TO_ENCRYPT = nvme0n1
+    export PART_TO_ENCRYPT=nvme0n1
   else
     if [ -e /dev/sda ]
     then
-      export PART_TO_ENCRYPT = sda2
+      export PART_TO_ENCRYPT=sda2
     fi
   fi
 fi
