@@ -1,8 +1,5 @@
 #!/bin/bash
 source /installer/functions.sh
-require PART_TO_ENCRYPT
-source /root/.allspark
-
 
 while : ; do
 
