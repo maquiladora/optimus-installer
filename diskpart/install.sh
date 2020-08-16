@@ -21,7 +21,7 @@ then
     /usr/sbin/mkfs.ext4 /dev/$PART_TO_ENCRYPT
     mount /dev/$PART_TO_ENCRYPT /srv
   else
-    if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Etes vous sûr ?"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_AREYOUSURE; fi
+    if [ ! $DISKPART_AREYOUSURE ]; then echo_green "Souhaitez vous repartitionner la partition système ?"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_AREYOUSURE; fi
     if [[ $DISKPART_AREYOUSURE =~ ^[YyOo]$ ]]
     then
       echo_magenta "Mise en place des scripts de partitionnement..."
