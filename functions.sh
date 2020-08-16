@@ -18,6 +18,7 @@ then
     if [ -f $1 ]
     then
       echo_green "Souhaitez vous remplacer votre fichier de configuration par le fichier $1 ?"
+      echo_red "Cette opération écrasera tous vos paramètres antérieurs !"
       read -p "(o)ui / (n)on ? " -n 1 -e replace_config
       if [[ $replace_config =~ ^[YyOo]$ ]]
       then
