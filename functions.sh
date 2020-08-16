@@ -23,5 +23,7 @@ echo_cyan()(echo -e "\e[36m${1}\e[0m")
 
 require()
 (
-  echo ${\$${1}}
+
+param=${1}
+echo ${!param}
 )
