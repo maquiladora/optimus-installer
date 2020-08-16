@@ -48,6 +48,6 @@ require()
     fi
 
     sed -i "/$variable=/d" /root/allspark/config.sh
-    echo "$variable=$valeur"  >> /root/allspark/config.sh
+    echo "export $variable=$valeur"  >> /root/allspark/config.sh
   fi
 )

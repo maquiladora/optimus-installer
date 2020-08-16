@@ -10,7 +10,7 @@ require HOPLA password
 require TEST
 require DOMAIN
 
-echo HOPLA=$HOPLA
+echo "HOPLA=$HOPLA"
 
 echo
 echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
