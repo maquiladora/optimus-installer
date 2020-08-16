@@ -22,6 +22,8 @@ then
       if [[ $replace_config =~ ^[YyOo]$ ]]
       then
         cp $1 /root/.allspark
+        echo_magenta "Le fichier de configuration a bien été remplacé !"
+        exit 0
       fi
     else
       echo_red "Le fichier $1 n'existe pas !"
