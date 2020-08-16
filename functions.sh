@@ -39,11 +39,11 @@ source /root/.allspark
 
 if [ ! $PART_TO_ENCRYPT ]
 then
-  if [ -f /dev/nvme0n1 ]
+  if [ -e /dev/nvme0n1 ]
   then
     export PART_TO_ENCRYPT = nvme0n1
   else
-    if [ -f /dev/sda ]
+    if [ -e /dev/sda ]
     then
       export PART_TO_ENCRYPT = sda2
     fi
