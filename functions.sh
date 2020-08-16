@@ -37,6 +37,20 @@ fi
 
 source /root/.allspark
 
+if [ ! $PART_TO_ENCRYPT ]
+then
+  if [ -f /dev/nvme0n1 ]
+  then
+    export PART_TO_ENCRYPT = nvme0n1
+  else
+    if [ -f /dev/sda ]
+    then
+      export PART_TO_ENCRYPT = sda2
+    fi
+  fi
+fi
+
+
 verbose()
 (
   if [ $VERBOSE = 1 ]
