@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 echo_red()(echo -e "\e[31m${1}\e[0m")
 echo_green()(echo -e "\e[32m${1}\e[0m")
 echo_yellow()(echo -e "\e[33m${1}\e[0m")
@@ -8,19 +9,30 @@ echo_magenta()(echo -e "\e[35m${1}\e[0m")
 echo_cyan()(echo -e "\e[36m${1}\e[0m")
 
 
+if [ $1 ]
+then
+  if [ ! -f /root/.allspark ] && [ -f $1 ]
+  then
+    cp $1 /root/.allspark
+  else
+    if [ -f $1 ]
+    then
+      echo_green "Souhaitez vous remplacer votre fichier de configuration par le fichier $1 ?"
+      read -p "(o)ui / (n)on ? " -n 1 -e replace_config
+      if [[ $replace_config =~ ^[YyOo]$ ]]
+      then
+        cp $1 /root/.allspark
+      fi
+    else
+      echo_red "Le fichier $1 n'existe pas !"
+      read -p "Appuyez sur [ENTREE] pour continuer..."
+    fi
+  fi
+fi
+
 if [ ! -f /root/.allspark ]
 then
   cp /installer/config.sh /root/.allspark
-fi
-
-if [ $1 ] && [ -f $1 ]
-then
-  echo_green "Souhaitez vous remplacer votre fichier de configuration par le fichier $1 ?"
-  read -p "(o)ui / (n)on ? " -n 1 -e replace_config
-  if [[ $replace_config =~ ^[YyOo]$ ]]
-  then
-    cp $1 /root/.allspark
-  fi
 fi
 
 source /root/.allspark
