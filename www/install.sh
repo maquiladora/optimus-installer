@@ -1,7 +1,7 @@
 #!/bin/bash
 source /installer/functions.sh
 require DOMAIN
-source /root/.allspark
+#source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
