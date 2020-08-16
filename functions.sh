@@ -74,6 +74,17 @@ verbose()
 )
 
 
+update_conf()
+(
+  if grep -q "$$1=" /root/.allspark
+  then
+    verbose sed -i "s/$$1=/$$1=$2/g" /root/.allspark
+  else
+    echo "export $$1=$2"  >> /root/.allspark
+  fi
+)
+
+
 require()
 (
   variable=${1}
@@ -121,11 +132,6 @@ require()
 
     if [ $variable == 'DOMAIN' ]; then echo $valeur > /etc/hostname; fi
 
-    if grep -q "$variable=" /root/.allspark
-    then
-      verbose sed -i "s/$variable=/$variable=$valeur/g" /root/.allspark
-    else
-      echo "export $variable=$valeur"  >> /root/.allspark
-    fi
+    update_conf $variable $valeur
   fi
 )

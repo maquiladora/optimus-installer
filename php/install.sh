@@ -1,6 +1,5 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
 
 echo
 echo_green "==== INSTALLATION DE PHP ===="
