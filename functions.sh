@@ -14,6 +14,7 @@ verbose()
   fi
 )
 
+
 echo_red()(echo -e "\e[31m${1}\e[0m")
 echo_green()(echo -e "\e[32m${1}\e[0m")
 echo_yellow()(echo -e "\e[33m${1}\e[0m")
@@ -21,15 +22,30 @@ echo_blue()(echo -e "\e[34m${1}\e[0m")
 echo_magenta()(echo -e "\e[35m${1}\e[0m")
 echo_cyan()(echo -e "\e[36m${1}\e[0m")
 
+
 require()
 (
-variable=${1}
-type=${2}
+  variable=${1}
+  type=${2}
+  value=''
 
-if [ ${!variable} == 'demoptimus.fr' ]
-then
-  echo "oui"
-else
-  echo "non"
-fi
+  if [ ! ${!variable} ]
+  then
+    if [ $type == 'password']
+    then
+      echo_green "Souhaitez vous générer un mot de passe automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e generate; fi
+      if [[ $generate =~ ^[YyOo]$ ]]
+      then
+        $value=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+      fi
+    fi
+
+    if [ ! $value ]
+    then
+      echo_green 'Merci de renseigner la variable "$value" :'
+      read $value
+    fi
+
+    echo "$variable=$value"
+  fi
 )

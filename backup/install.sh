@@ -6,7 +6,7 @@ echo_magenta "Installation de RSYNC en cours..."
 verbose apt-get -qq install rsync sendmail
 
 echo_magenta "Test d'un require"
-require DOMAIN
+require HOPLA password
 
 echo
 echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
