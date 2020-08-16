@@ -31,7 +31,7 @@ require()
 
   if [ ! ${!variable} ]
   then
-    if [ $type == 'password' ]
+    if [ $type && $type == 'password' ]
     then
       echo_green "Souhaitez vous générer un mot de passe automatiquement ?"
       read -p "(o)ui / (n)on ? " -n 1 -e generate
