@@ -1,6 +1,6 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+require DOMAIN
 
 echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
