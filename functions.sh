@@ -33,7 +33,8 @@ require()
   then
     if [ $type == 'password']
     then
-      echo_green "Souhaitez vous générer un mot de passe automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e generate; fi
+      echo_green "Souhaitez vous générer un mot de passe automatiquement ?"
+      read -p "(o)ui / (n)on ? " -n 1 -e generate
       if [[ $generate =~ ^[YyOo]$ ]]
       then
         $value=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
