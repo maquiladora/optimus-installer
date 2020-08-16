@@ -167,11 +167,8 @@ case "$y" in
   u)
 		tput reset
 		clear
-    rm -R /installer
-    mkdir /installer
-    git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
-    chmod +x /installer/menu.sh
-    source /installer/menu.sh
+    source /installer/update/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
   v)
