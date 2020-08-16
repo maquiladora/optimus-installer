@@ -26,7 +26,7 @@ require()
 variable=${1}
 type=${2}
 
-if ${!param} == 'demoptimus.fr'
+if [ ${!variable} == 'demoptimus.fr' ]
 then
   echo "oui"
 else
