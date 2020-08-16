@@ -10,8 +10,7 @@ echo_green "==== DECHIFFREMENT DE LA PARTITION CHIFFREE ===="
 echo_magenta "Ouverture de la partition cryptée via le serveur de clé distant..."
 mkdir /root/tmpramfs
 mount ramfs /root/tmpramfs/ -t ramfs
-echo $UUID_keyfile
-wget -qO /root/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$UUID_keyfile
+wget -qO /root/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$($UUID)_keyfile
 openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/$PART_TO_ENCRYPT crypt$PART_TO_ENCRYPT
 umount /root/tmpramfs
 rmdir /root/tmpramfs
