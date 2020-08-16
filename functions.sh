@@ -100,7 +100,7 @@ require()
 
     if [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
 
-    if [ ! grep -q "$variable=" /root/.allspark ]
+    if [ grep -q "$variable=" /root/.allspark ]
     then
       verbose sed -i "s/$variable=${!variable}/$variable=$valeur/g" /etc/ssh/sshd_config
     else
