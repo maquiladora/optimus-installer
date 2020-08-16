@@ -35,6 +35,8 @@ then
   cp /installer/config.sh /root/.allspark
 fi
 
+source /root/.allspark
+
 verbose()
 (
   if [ $VERBOSE = 1 ]
