@@ -38,7 +38,7 @@ fi
 source /root/.allspark
 
 
-if [ ! -v $PART_TO_ENCRYPT ]
+if [ -z $PART_TO_ENCRYPT ]
 then
   if [ -e /dev/nvme0n1 ]
   then
@@ -80,7 +80,7 @@ require()
   type=${2}
   valeur=
 
-  if [ ! -v ${!variable} ]
+  if [ -z ${!variable} ]
   then
 
     if [ $type ] && [ $type == 'uuid' ]
@@ -113,7 +113,7 @@ require()
       fi
     fi
 
-    if [ ! -v $valeur ]
+    if [ -z $valeur ]
     then
       echo_green "Merci de renseigner la variable $variable :"
       read valeur
