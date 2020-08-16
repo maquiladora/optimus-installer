@@ -1,6 +1,6 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+source /root/allspark/config.sh
 
 echo_magenta "Installation de RSYNC en cours..."
 verbose apt-get -qq install rsync sendmail
