@@ -1,6 +1,8 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+require PART_TO_ENCRYPT
+require UUID uuid
+source /root/.allspark
 
 if lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT
 then
@@ -18,7 +20,7 @@ then
   echo_magenta "Création d'une clé de chiffrement..."
   mkdir /root/tmpramfs
   mount ramfs /root/tmpramfs/ -t ramfs
-  </dev/urandom tr -dc A-Za-z0-9 | head -c${1:-256} > /root/tmpramfs/keyfile
+  </dev/urandom tr -dc A-Za-z0-9 | head -c 256 > /root/tmpramfs/keyfile
   chmod 0400 /root/tmpramfs/keyfile
   openssl genrsa -out /root/private.pem 4096 &> /dev/null
   openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem &> /dev/null
@@ -26,14 +28,13 @@ then
   sleep 0.5
 
   echo_magenta "Envoi de la clé de chiffrement sur le serveur distant"
-  curl -X POST -F "$(</root/uid)=@/root/tmpramfs/keyfile_encrypted" https://decrypt.optimus-avocats.fr/index.php
+  curl -X POST -F "$UUID=@/root/tmpramfs/keyfile_encrypted" https://decrypt.optimus-avocats.fr/index.php
 
   echo_magenta "Activation du chiffrement sur la partition"
   openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup --batch-mode luksFormat /dev/$PART_TO_ENCRYPT
   sleep 0.5
 
   echo_magenta "Ouverture de la partition chiffrée"
-  UUID=$(</root/uid)
   openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/$PART_TO_ENCRYPT crypt$PART_TO_ENCRYPT
   sleep 0.5
 

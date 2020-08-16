@@ -5,6 +5,7 @@
 export VERBOSE=2
 export DOMAIN=
 export AES_KEY=
+export UUID=
 export LAST_UPGRADE=
 export DISKPART_AREYOUSURE=
 export DISKPART_USEFREESPACE=
