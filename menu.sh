@@ -1,21 +1,9 @@
 #!/bin/bash
 source /installer/functions.sh
 
+require UID uuid
+require DOMAIN domain
 
-if [ ! -f /root/allspark/config.sh ]
-then
-  mkdir -p /root/allspark
-  cp /installer/config.sh /root/allspark/config.sh
-fi
-
-source /root/allspark/config.sh
-
-if [ ! -f /root/uid ]
-then
-  </dev/urandom tr -dc A-Z0-9 | head -c${1:-16} > /root/uid
-fi
-
-if [ $DOMAIN ]; then echo $DOMAIN > /etc/hostname; fi
 
 while : ; do
 

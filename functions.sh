@@ -1,4 +1,18 @@
 #!/bin/bash
+if [ ! -f /root/allspark/config.sh ]
+then
+  mkdir -p /root/allspark
+  cp /installer/config.sh /root/.allspark/.config.sh
+fi
+
+if [ $1 ]
+then
+  echo $1
+  source $1
+else
+  source /root/.allspark/.config.sh
+fi
+
 
 verbose()
 (
@@ -31,13 +45,34 @@ require()
 
   if [ ! ${!variable} ]
   then
+
+    if [ $type ] && [ $type == 'uuid' ]
+    then
+      echo_green "Souhaitez vous générer l'identifiant unique $variable automatiquement ?"
+      read -p "(o)ui / (n)on ? " -n 1 -e generate_uuid
+      if [[ $generate_uuid =~ ^[YyOo]$ ]]
+      then
+        valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
+      fi
+    fi
+
     if [ $type ] && [ $type == 'password' ]
     then
       echo_green "Souhaitez vous générer le mot de passe $variable automatiquement ?"
-      read -p "(o)ui / (n)on ? " -n 1 -e generate
-      if [[ $generate =~ ^[YyOo]$ ]]
+      read -p "(o)ui / (n)on ? " -n 1 -e generate_pwd
+      if [[ $generate_pwd =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
+      fi
+    fi
+
+    if [ $type ] && [ $type == 'aeskey' ]
+    then
+      echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"
+      read -p "(o)ui / (n)on ? " -n 1 -e generate_aes
+      if [[ $generate_aes =~ ^[YyOo]$ ]]
+      then
+        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
       fi
     fi
 
@@ -46,6 +81,8 @@ require()
       echo_green "Merci de renseigner la variable $variable :"
       read valeur
     fi
+
+    if [ $type == 'domain' ] then echo $valeur > /etc/hostname; fi
 
     sed -i "/$variable=/d" /root/allspark/config.sh
     echo "export $variable=$valeur"  >> /root/allspark/config.sh
