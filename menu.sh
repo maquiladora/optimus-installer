@@ -41,6 +41,7 @@ case "$y" in
 		tput reset
 		clear
     source /installer/upgrade/install.sh
+    source /root/.allspark
     read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
