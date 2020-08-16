@@ -40,16 +40,15 @@ case "$y" in
   a)
 		tput reset
 		clear
-    DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
-    DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
-    DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
-    echo date +'%Y%m%d' > /root/LAST_UPGRADE
+    source /installer/upgrade/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
   b)
 		tput reset
 		clear
 		source /installer/diskpart/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
   c)
