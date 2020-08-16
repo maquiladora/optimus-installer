@@ -38,7 +38,7 @@ fi
 source /root/.allspark
 
 
-if [ ! $PART_TO_ENCRYPT ]
+if [ ! -v $PART_TO_ENCRYPT ]
 then
   if [ -e /dev/nvme0n1 ]
   then
@@ -49,13 +49,14 @@ then
       export PART_TO_ENCRYPT=sda2
     fi
   fi
+  if grep -q "PART_TO_ENCRYPT=" /root/.allspark
+  then
+    verbose sed -i "s/PART_TO_ENCRYPT=/PART_TO_ENCRYPT=$PART_TO_ENCRYPT/g" /root/.allspark
+  else
+    echo "export PART_TO_ENCRYPT=$PART_TO_ENCRYPT" >> /root/.allspark
+  fi
 fi
-if grep -q "PART_TO_ENCRYPT=" /root/.allspark
-then
-  verbose sed -i "s/PART_TO_ENCRYPT=/PART_TO_ENCRYPT=$PART_TO_ENCRYPT/g" /root/.allspark
-else
-  echo "export PART_TO_ENCRYPT=$PART_TO_ENCRYPT" >> /root/.allspark
-fi
+
 
 
 verbose()
@@ -79,7 +80,7 @@ require()
   type=${2}
   valeur=
 
-  if [ ! ${!variable} ]
+  if [ ! -v ${!variable} ]
   then
 
     if [ $type ] && [ $type == 'uuid' ]
@@ -112,7 +113,7 @@ require()
       fi
     fi
 
-    if [ ! $valeur ]
+    if [ ! -v $valeur ]
     then
       echo_green "Merci de renseigner la variable $variable :"
       read valeur
