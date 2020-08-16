@@ -98,7 +98,7 @@ require()
       read valeur
     fi
 
-    if [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
+    if [ $type ] && [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
 
     if grep -q "$variable=" /root/.allspark
     then
