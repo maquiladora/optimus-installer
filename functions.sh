@@ -100,8 +100,13 @@ require()
 
     if [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
 
-    sed -i "/$variable=/d" /root/.allspark
-    echo "export $variable=$valeur"  >> /root/.allspark
-    export ${!variable}=$valeur
+    if [ ! grep -q "$variable="/root/.allspark ]
+    then
+      verbose sed -i "s/$variable=${!variable}/$variable=$valeur/g" /etc/ssh/sshd_config
+    else
+      echo "export $variable=$valeur"  >> /root/.allspark
+    fi
+
+    export $variable=$valeur
   fi
 )
