@@ -23,7 +23,13 @@ echo_cyan()(echo -e "\e[36m${1}\e[0m")
 
 require()
 (
+variable=${1}
+type=${2}
 
-param=${1}
-echo ${!param}
+if ${!param} == 'demoptimus.fr'
+then
+  echo "oui"
+else
+  echo "non"
+fi
 )
