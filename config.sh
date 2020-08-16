@@ -1,8 +1,7 @@
 #!/bin/bash
-#VERBOSE=1 #STDOUT normal, STDERR en rouge
+#export VERBOSE=1 #STDOUT normal, STDERR en rouge
 #export VERBOSE=2 #STDOUT pas affiché. STDERR en rouge
-#VERBOSE=3 #STDOUT et STDERR pas affiché (mode silencieux)
-
+#export VERBOSE=3 #STDOUT et STDERR pas affiché (mode silencieux)
 export VERBOSE=2
 export DOMAIN=
 export AES_KEY=

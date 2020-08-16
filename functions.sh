@@ -9,6 +9,7 @@ then
   cp $1 /root/.allspark
 fi
 
+source /root/.allspark
 
 verbose()
 (
