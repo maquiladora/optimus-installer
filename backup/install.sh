@@ -11,6 +11,8 @@ require TEST
 require DOMAIN
 
 echo "HOPLA=$HOPLA"
+echo "TEST=$TEST"
+echo "DOMAIN=$DOMAIN"
 
 echo
 echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
