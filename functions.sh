@@ -6,7 +6,12 @@ fi
 
 if [ $1 ] && [ -f $1 ]
 then
-  cp $1 /root/.allspark
+  echo_green "Souhaitez vous remplacer votre fichier de configuration par le fichier $1 ?"
+  read -p "(o)ui / (n)on ? " -n 1 -e replace_config
+  if [[ $replace_config =~ ^[YyOo]$ ]]
+  then
+    cp $1 /root/.allspark
+  fi
 fi
 
 source /root/.allspark
