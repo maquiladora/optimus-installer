@@ -4,12 +4,9 @@ then
   cp /installer/config.sh /root/.allspark
 fi
 
-if [ $1 ]
+if [ $1 ] && [ -f $1 ]
 then
-  echo $1
-  source $1
-else
-  source /root/.allspark
+  cp $1 /root/.allspark
 fi
 
 

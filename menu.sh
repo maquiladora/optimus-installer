@@ -31,7 +31,8 @@ tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts
 tput cup 23 3; echo_green "u. Update Installer"
 tput cup 24 3; echo_green "v. Reboot server"
 tput cup 25 3; echo_green "x. Quit"
-tput cup 25 3; echo_green "z. ${1}"
+tput cup 25 3; echo_green "y. ${1}"
+tput cup 25 3; echo_green "z. $SECURE_CHANGEROOTPASS"
 
 #tput cup 24 3; echo -ne "\e[32m s. Save \e[0m"
 
