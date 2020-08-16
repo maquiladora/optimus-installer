@@ -2,8 +2,10 @@
 source /installer/functions.sh
 source /installer/config.sh
 
+echo_magenta "Installation de RSYNC en cours..."
 verbose apt-get install rsync sendmail
 
+echo_magenta "Test d'un require"
 require DOMAIN
 
 echo
