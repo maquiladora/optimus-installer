@@ -102,5 +102,6 @@ require()
 
     sed -i "/$variable=/d" /root/.allspark
     echo "export $variable=$valeur"  >> /root/.allspark
+    source /root/.allspark
   fi
 )
