@@ -163,6 +163,7 @@ case "$y" in
     tput reset
     clear
     nano /root/.allspark
+    source /installer/menu.sh
     ;;
 
   u)
