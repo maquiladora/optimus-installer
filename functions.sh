@@ -35,9 +35,6 @@ then
   cp /installer/config.sh /root/.allspark
 fi
 
-source /root/.allspark
-
-
 verbose()
 (
   if [ $VERBOSE = 1 ]
@@ -106,8 +103,5 @@ require()
     else
       echo "export $variable=$valeur"  >> /root/.allspark
     fi
-
-    declare -g PART_TO_ENCRYPT
-    PART_TO_ENCRYPT=Hop
   fi
 )

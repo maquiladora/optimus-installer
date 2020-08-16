@@ -2,6 +2,9 @@
 source /installer/functions.sh
 
 require PART_TO_ENCRYPT
+
+source /root/.allspark
+
 echo $PART_TO_ENCRYPT
 exit 1
 
