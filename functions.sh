@@ -33,7 +33,7 @@ require()
   then
     if [ $type ] && [ $type == 'password' ]
     then
-      echo_green "Souhaitez vous générer un mot de passe automatiquement ?"
+      echo_green "Souhaitez vous générer le mot de passe $variable automatiquement ?"
       read -p "(o)ui / (n)on ? " -n 1 -e generate
       if [[ $generate =~ ^[YyOo]$ ]]
       then
@@ -47,6 +47,7 @@ require()
       read valeur
     fi
 
-    echo "$variable=$valeur"
+    sed -i "/$variable=/d" /root/allspark/config.sh
+    echo "$variable=$valeur"  >> /root/allspark/config.sh
   fi
 )
