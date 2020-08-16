@@ -1,6 +1,8 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+require PART_TO_ENCRYPT
+require UUID uuid
+source /root/.allspark
 
 echo
 echo_green "==== DECHIFFREMENT DE LA PARTITION CHIFFREE ===="
@@ -8,7 +10,7 @@ echo_green "==== DECHIFFREMENT DE LA PARTITION CHIFFREE ===="
 echo_magenta "Ouverture de la partition cryptée via le serveur de clé distant..."
 mkdir /root/tmpramfs
 mount ramfs /root/tmpramfs/ -t ramfs
-wget -qO /root/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$(</root/uid)_keyfile
+wget -qO /root/tmpramfs/keyfile_encrypted https://decrypt.optimus-avocats.fr/$UUID_keyfile
 openssl rsautl -decrypt -inkey /root/private.pem -in /root/tmpramfs/keyfile_encrypted | /sbin/cryptsetup luksOpen /dev/$PART_TO_ENCRYPT crypt$PART_TO_ENCRYPT
 umount /root/tmpramfs
 rmdir /root/tmpramfs
