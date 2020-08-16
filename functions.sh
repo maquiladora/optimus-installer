@@ -43,7 +43,7 @@ require()
 
     if [ ! $valeur ]
     then
-      echo_green 'Merci de renseigner la variable $variable :'
+      echo_green "Merci de renseigner la variable $variable :"
       read $valeur
     fi
 
