@@ -1,11 +1,10 @@
 #!/bin/bash
 source /installer/functions.sh
 require DOMAIN
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
-
-if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
 
 if [ ! $WWW_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement www.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e WWW_AREYOUSURE; fi
 if [[ $WWW_AREYOUSURE =~ ^[YyOo]$ ]]
