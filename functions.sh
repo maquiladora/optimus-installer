@@ -1,8 +1,7 @@
 #!/bin/bash
-if [ ! -f /root/allspark/config.sh ]
+if [ ! -f /root/.allspark ]
 then
-  mkdir -p /root/.allspark
-  cp /installer/config.sh /root/.allspark/.config.sh
+  cp /installer/config.sh /root/.allspark
 fi
 
 if [ $1 ]
@@ -10,7 +9,7 @@ then
   echo $1
   source $1
 else
-  source /root/.allspark/.config.sh
+  source /root/.allspark
 fi
 
 

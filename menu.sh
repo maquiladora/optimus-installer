@@ -3,6 +3,7 @@ source /installer/functions.sh
 
 require PART_TO_ENCRYPT
 
+echo $1
 
 while : ; do
 
