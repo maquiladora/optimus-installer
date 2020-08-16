@@ -4,6 +4,8 @@ source /installer/config.sh
 
 verbose apt-get install rsync sendmail
 
+require DOMAIN
+
 echo
 echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
 if [ ! $BACKUP_AREYOUSURE ]; then echo_green "Souhaitez vous mettre en place les sauvegardes incrémentielles ?"; read -p "(o)ui / (n)on ? " -n 1 -e BACKUP_AREYOUSURE; fi

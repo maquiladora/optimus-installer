@@ -20,3 +20,8 @@ echo_yellow()(echo -e "\e[33m${1}\e[0m")
 echo_blue()(echo -e "\e[34m${1}\e[0m")
 echo_magenta()(echo -e "\e[35m${1}\e[0m")
 echo_cyan()(echo -e "\e[36m${1}\e[0m")
+
+require()
+(
+  echo ${${1}}
+)
