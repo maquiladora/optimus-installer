@@ -49,12 +49,7 @@ then
       export PART_TO_ENCRYPT=sda2
     fi
   fi
-  if grep -q "PART_TO_ENCRYPT=" /root/.allspark
-  then
-    verbose sed -i "s/PART_TO_ENCRYPT=/PART_TO_ENCRYPT=$PART_TO_ENCRYPT/g" /root/.allspark
-  else
-    echo "export PART_TO_ENCRYPT=$PART_TO_ENCRYPT" >> /root/.allspark
-  fi
+  update_conf PART_TO_ENCRYPT $PART_TO_ENCRYPT
 fi
 
 
