@@ -100,7 +100,7 @@ require()
 
     if [ $type == 'domain' ]; then echo $valeur > /etc/hostname; fi
 
-    sed -i "/$variable=/d" /root/allspark/config.sh
-    echo "export $variable=$valeur"  >> /root/allspark/config.sh
+    sed -i "/$variable=/d" /root/.allspark
+    echo "export $variable=$valeur"  >> /root/.allspark
   fi
 )
