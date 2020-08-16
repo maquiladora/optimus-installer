@@ -5,6 +5,7 @@
 export VERBOSE=2
 export DOMAIN=
 export AES_KEY=
+export LAST_UPGRADE=
 export DISKPART_AREYOUSURE=
 export PART_TO_ENCRYPT=
 export SECURE_UPDATE=Y
