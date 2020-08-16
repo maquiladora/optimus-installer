@@ -1,8 +1,7 @@
 #!/bin/bash
 source /installer/functions.sh
 
-require UID uuid
-require DOMAIN domain
+require PART_TO_ENCRYPT
 
 
 while : ; do
