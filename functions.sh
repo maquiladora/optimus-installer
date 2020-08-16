@@ -27,7 +27,7 @@ require()
 (
   variable=${1}
   type=${2}
-  valeur=''
+  valeur=
 
   if [ ! ${!variable} ]
   then
