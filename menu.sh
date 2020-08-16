@@ -38,7 +38,7 @@ tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de comu
 tput cup 18 3; if [ -d "/srv/optimus" ]; then echo_green "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
 tput cup 19 3; echo_green "o. Configuration de la zone DNS"
 tput cup 20 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
-tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer RSYNC"; else echo_red "r. Installer RSYNC"; fi
+tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts de sauvegardes"; else echo_red "r. Installer RSYNC"; fi
 
 tput cup 23 3; echo_green "u. Update Installer"
 tput cup 24 3; echo_green "v. Reboot server"
@@ -162,6 +162,13 @@ case "$y" in
     tput reset
     clear
     source /installer/letsencrypt/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  r)
+    tput reset
+    clear
+    source /installer/backup/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
