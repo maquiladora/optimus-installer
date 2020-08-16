@@ -25,7 +25,7 @@ then
       fi
     else
       echo_red "Le fichier $1 n'existe pas !"
-      read -p "Appuyez sur [ENTREE] pour continuer..."
+      exit 1
     fi
   fi
 fi
