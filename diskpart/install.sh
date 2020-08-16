@@ -1,6 +1,7 @@
 #!/bin/bash
 source /installer/functions.sh
-source /installer/config.sh
+require PART_TO_ENCRYPT
+source /root/.allspark
 
 FREESPACE=$(/usr/sbin/sfdisk --list-free --quiet /dev/$PART_TO_ENCRYPT | grep -v "Size" |  awk '{print $NF}')
 FIRSTSECTOR=$(/usr/sbin/sfdisk --list-free --quiet /dev/$PART_TO_ENCRYPT | grep -v "Size" |  awk '{print $1}')
