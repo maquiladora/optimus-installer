@@ -4,6 +4,7 @@ source /installer/functions.sh
 
 if [ ! -f /root/allspark/config.sh ]
 then
+  mkdir -p /root/allspark
   cp /installer/config.sh /root/allspark/config.sh
 fi
 
