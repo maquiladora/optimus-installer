@@ -27,7 +27,7 @@ require()
 (
   variable=${1}
   type=${2}
-  value=''
+  valeur=''
 
   if [ ! ${!variable} ]
   then
@@ -37,16 +37,16 @@ require()
       read -p "(o)ui / (n)on ? " -n 1 -e generate
       if [[ $generate =~ ^[YyOo]$ ]]
       then
-        value=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
+        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
       fi
     fi
 
-    if [ ! $value ]
+    if [ ! $valeur ]
     then
-      echo_green 'Merci de renseigner la variable "$variable" :'
-      read $value
+      echo_green 'Merci de renseigner la variable $variable :'
+      read $valeur
     fi
 
-    echo "$variable=$value"
+    echo "$variable=$valeur"
   fi
 )
