@@ -2,7 +2,7 @@
 source /installer/functions.sh
 
 require PART_TO_ENCRYPT
-echo "PART=$PART_TO_ENCRYPT"
+echo $PART_TO_ENCRYPT
 exit 1
 
 while : ; do

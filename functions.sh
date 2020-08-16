@@ -107,6 +107,6 @@ require()
       echo "export $variable=$valeur"  >> /root/.allspark
     fi
 
-    PART_TO_ENCRYPT=hop
+    declare -g PART_TO_ENCRYPT=hop
   fi
 )
