@@ -3,6 +3,13 @@ source /installer/functions.sh
 
 require PART_TO_ENCRYPT
 
+if [ $PART_TO_ENCRYPT ]
+then
+  echo "oui"
+else
+  echo "non"
+fi
+
 while : ; do
 
 clear
