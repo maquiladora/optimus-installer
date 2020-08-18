@@ -35,7 +35,7 @@ fi
 
 if [ ! -f /root/.allspark ]
 then
-  cp /installer/config.sh /root/.allspark
+  cp /etc/allspark/config.sh /root/.allspark
 fi
 
 source /root/.allspark

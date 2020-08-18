@@ -29,11 +29,11 @@ then
   for file in /etc/allspark/mariadb/*.sql
   do
     file="${file:22:-4}"
-    if [[ $file > $db_version ]]
+    if [[ $file > $MARIADB_DB_VERSION ]]
     then
       echo_magenta "--> $file.sql exécuté"
       mariadb < /etc/allspark/mariadb/$file.sql
-      echo $file > /srv/databases/USERS_DB_VERSION
+      update_conf MARIADB_DB_VERSION $file
     else
       echo_magenta "--> $file.sql ignoré"
     fi
@@ -51,8 +51,8 @@ then
   if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3306; fi
   sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
   verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
-  verbose systemctl restart mariadb
-  echo_magenta "L'accès à distance à la base de données MARIADB a été ouvert avec succès sur le port 3306 !"
-  echo_magenta "Le mot de passe de l'utilisateur ROOT distant est : "
-  echo_cyan $MARIADB_REMOTE_ROOT_PASSWORD
 fi
+
+echo
+echo_magenta "Redémarrage des services"
+verbose systemctl restart mariadb
