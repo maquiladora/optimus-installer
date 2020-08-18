@@ -1,6 +1,7 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
+require DOMAIN
+source /root/.allspark
 
 echo
 echo_green "==== ZONE DNS ===="

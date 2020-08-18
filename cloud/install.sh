@@ -13,7 +13,7 @@ then
 
   if [ ! -d "/srv/cloud" ]; then verbose mkdir /srv/cloud; fi
   if [ ! -f "/srv/cloud/index.html" ]; then echo "cloud" > /srv/cloud/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
 
   if ! grep -q "<Directory /srv/cloud/>" /etc/apache2/apache2.conf
   then
@@ -34,12 +34,12 @@ then
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
 
   echo_magenta "Installation du module SABREDAV OPTIMUS"
-  cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
-  sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
+  cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
+  sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
-  for file in /installer/cloud/*.sql
+  for file in /etc/allspark/cloud/*.sql
   do
     file="${file:20:-4}"
     if [[ $file > $db_version ]]

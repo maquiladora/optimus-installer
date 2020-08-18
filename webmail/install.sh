@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 require DOMAIN
 source /root/.allspark
 
@@ -14,7 +14,7 @@ then
   echo_magenta "Création de l'espace d'hébergement webmail.$DOMAIN..."
 
   if [ ! -d "/srv/webmail" ]; then verbose mkdir /srv/webmail; fi
-  if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
   #verbose apt-get install php-ldap php-intl
@@ -49,8 +49,8 @@ then
   #sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
 
   #echo_magenta "Installation du module SABREDAV OPTIMUS"
-  #cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
-  #sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
+  #cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
+  #sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2

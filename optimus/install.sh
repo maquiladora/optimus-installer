@@ -1,6 +1,7 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
+require DOMAIN
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DU CLIENT OPTIMUS ===="
@@ -14,7 +15,7 @@ then
 
   if [ ! -d "/srv/optimus" ]; then verbose mkdir /srv/optimus; fi
   if [ ! -f "/srv/optimus/index.html" ]; then echo "optimus" > /srv/optimus/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/optimus.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/optimus/vhost > /etc/apache2/sites-enabled/optimus.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/optimus.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/optimus/vhost > /etc/apache2/sites-enabled/optimus.conf; fi
 
   if ! grep -q "<Directory /srv/optimus/>" /etc/apache2/apache2.conf
   then

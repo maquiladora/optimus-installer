@@ -1,8 +1,7 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
-
-if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
+source /etc/allspark/functions.sh
+require DOMAIN
+source /root/.allspark
 
 if [ ! $LETSENCRYPT_AREYOUSURE ]; then echo_green "Souhaitez vous installer les certificats SSL HTTPS ?"; read -p "(o)ui / (n)on ? " -n 1 -e LETSENCRYPT_AREYOUSURE; fi
 if [[ $LETSENCRYPT_AREYOUSURE =~ ^[YyOo]$ ]]
