@@ -1,6 +1,7 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
+require DOMAIN
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT API ===="
@@ -14,7 +15,7 @@ then
 
   if [ ! -d "/srv/api" ]; then verbose mkdir /srv/api; fi
   if [ ! -f "/srv/api/index.html" ]; then echo "API" > /srv/api/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
 
   if ! grep -q "<Directory /srv/api/>" /etc/apache2/apache2.conf
   then

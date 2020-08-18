@@ -1,11 +1,10 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
+require DOMAIN
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DU CLOUD SABREDAV (WEBDAV) ===="
-
-if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
 
 if [ ! $CLOUD_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement cloud.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e CLOUD_AREYOUSURE; fi
 if [[ $CLOUD_AREYOUSURE =~ ^[YyOo]$ ]]
@@ -42,12 +41,12 @@ then
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
   for file in /installer/cloud/*.sql
   do
-    file="${file:17:-4}"
+    file="${file:20:-4}"
     if [[ $file > $db_version ]]
     then
       echo_magenta "--> $file.sql exécuté"
-      mariadb < /installer/cloud/$file.sql
-      echo $file > /srv/databases/CLOUD_DB_VERSION
+      mariadb < /etc/allspark/cloud/$file.sql
+      update_conf CLOUD_DB_VERSION $file
     else
       echo_magenta "--> $file.sql ignoré"
     fi
