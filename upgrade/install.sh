@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes update
 DEBIAN_FRONTEND=noninteractive sudo apt-get --yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" upgrade
