@@ -14,14 +14,13 @@ then
   echo_magenta "Création de l'espace d'hébergement webmail.$DOMAIN..."
 
   if [ ! -d "/srv/webmail" ]; then verbose mkdir /srv/webmail; fi
-  if [ ! -f "/srv/webmail/index.html" ]; then echo "webmail" > /srv/webmail/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   if ! grep -q "<Directory /srv/webmail/>" /etc/apache2/apache2.conf
   then
-    printf "<Directory /srv/webmail/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\nphp_flag display_errors Off\n\tphp_flag log_errors On\n\tphp_value error_log logs/errors\n\tphp_value upload_max_filesize 20M\n\tphp_value post_max_size 24M\n\tphp_value memory_limit 64M\n\tphp_flag zlib.output_compression Off\n\tphp_flag suhosin.session.encrypt Off\n\tphp_flag session.auto_start Off\n\tphp_value session.gc_maxlifetime 21600\n\tphp_value session.gc_divisor 500\n\tphp_value session.gc_probability 1\n\t</Directory>\n\n" >> /etc/apache2/apache2.conf
+    printf "<Directory /srv/webmail/public_html/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride Limit\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
   fi
-  
+
   echo_magenta "Installation des extensions PHP nécessaires"
   #verbose apt-get install php-ldap php-intl
   #verbose pear install Net_SMTP
@@ -39,10 +38,10 @@ then
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE roundcubemail CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-  echo_magenta "Creation de l'utilisateur 'admin'"
+  echo_magenta "Creation de l'utilisateur MARIADB 'roundcube'"
   verbose mariadb -u root -e "GRANT ALL PRIVILEGES ON roundcubemail.* TO roundcube@localhost IDENTIFIED BY 'password';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES;"
-  mariadb < /srv/webmail/SQL/mysql.initial.sql
+  mariadb roundcubemail < /srv/webmail/SQL/mysql.initial.sql
 
 
 

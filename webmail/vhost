@@ -1,9 +1,22 @@
 <VirtualHost *:80>
   ServerAdmin postmaster@%DOMAIN%
   ServerName webmail.%DOMAIN%
-  DirectoryIndex index.html
-  DocumentRoot /srv/webmail
+  DirectoryIndex index.php
+  DocumentRoot /srv/webmail/public_html
   LogLevel warn
   ErrorLog /var/log/apache2/webmail-error.log
   CustomLog /var/log/apache2/webmail-access.log combined
+
+  php_flag display_errors Off
+  php_flag log_errors On
+  php_value error_log logs/errors
+  php_value upload_max_filesize 20M
+  php_value post_max_size 24M
+  php_value memory_limit 64M
+  php_flag zlib.output_compression Off
+  php_flag suhosin.session.encrypt Off
+  php_flag session.auto_start Off
+  php_value session.gc_maxlifetime 21600
+  php_value session.gc_divisor 500
+  php_value session.gc_probability 1
 </VirtualHost>
