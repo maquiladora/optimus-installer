@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 require PART_TO_ENCRYPT
 source /root/.allspark
 
@@ -25,11 +25,11 @@ then
     if [[ $DISKPART_AREYOUSURE =~ ^[YyOo]$ ]]
     then
       echo_magenta "Mise en place des scripts de partitionnement..."
-      verbose cp /installer/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
+      verbose cp /etc/allspark/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
       verbose chmod +x /etc/initramfs-tools/hooks/resizefs_hook
-      verbose cp /installer/diskpart/resizefs /etc/initramfs-tools/scripts/local-premount/resizefs
+      verbose cp /etc/allspark/diskpart/resizefs /etc/initramfs-tools/scripts/local-premount/resizefs
       verbose chmod +x /etc/initramfs-tools/scripts/local-premount/resizefs
-      verbose cp /installer/diskpart/rc.local /etc/rc.local
+      verbose cp /etc/allspark/diskpart/rc.local /etc/rc.local
       verbose chmod +x /etc/rc.local
       sleep 0.5
 
