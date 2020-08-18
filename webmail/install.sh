@@ -30,11 +30,11 @@ then
   #verbose pear install Mail_mime
 
   echo_magenta "Installation de ROUNDCUBE"
-  chown -R debian:debian /srv/webmail
   cd /srv/webmail
-  wget https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
-  tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
-  rm roundcubemail-1.4.8-complete.tar.gz
+  verbose wget https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
+  verbose tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
+  verbose rm roundcubemail-1.4.8-complete.tar.gz
+  verbose chown -R www-data:www-data /srv/webmail
 
   #echo_magenta "Installation de COMPOSER"
   #php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
