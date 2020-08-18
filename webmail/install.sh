@@ -31,8 +31,8 @@ then
 
   echo_magenta "Installation de ROUNDCUBE"
   cd /srv/webmail
-  verbose wget https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
-  verbose tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
+  wget -q https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
+  tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
   verbose rm roundcubemail-1.4.8-complete.tar.gz
   verbose chown -R www-data:www-data /srv/webmail
 
