@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 
 while : ; do
 
@@ -40,7 +40,7 @@ case "$y" in
   a)
 		tput reset
 		clear
-    source /installer/upgrade/install.sh
+    source /etc/allspark/upgrade/install.sh
     source /root/.allspark
     read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
@@ -48,112 +48,112 @@ case "$y" in
   b)
 		tput reset
 		clear
-		source /installer/diskpart/install.sh
+		source /etc/allspark/diskpart/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 
   c)
   	tput reset
   	clear
-  	source /installer/crypt-setup/install.sh
+  	source /etc/allspark/crypt-setup/install.sh
   	read -p "Appuyez sur [ENTREE] pour continuer..."
   	;;
 
   d)
     tput reset
     clear
-    source /installer/decrypt/install.sh
+    source /etc/allspark/decrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   e)
     tput reset
     clear
-    source /installer/secure/install.sh
+    source /etc/allspark/secure/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   f)
     tput reset
     clear
-    source /installer/apache/install.sh
+    source /etc/allspark/apache/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   g)
     tput reset
     clear
-    source /installer/www/install.sh
+    source /etc/allspark/www/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   h)
     tput reset
     clear
-    source /installer/php/install.sh
+    source /etc/allspark/php/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   i)
     tput reset
     clear
-    source /installer/mariadb/install.sh
+    source /etc/allspark/mariadb/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   j)
     tput reset
     clear
-    source /installer/mailserver/install.sh
+    source /etc/allspark/mailserver/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   k)
     tput reset
     clear
-    source /installer/webmail/install.sh
+    source /etc/allspark/webmail/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   l)
     tput reset
     clear
-    source /installer/cloud/install.sh
+    source /etc/allspark/cloud/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   m)
     tput reset
     clear
-    source /installer/api/install.sh
+    source /etc/allspark/api/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   n)
     tput reset
     clear
-    source /installer/optimus/install.sh
+    source /etc/allspark/optimus/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   o)
     tput reset
     clear
-    source /installer/zonedns/install.sh
+    source /etc/allspark/zonedns/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   q)
     tput reset
     clear
-    source /installer/letsencrypt/install.sh
+    source /etc/allspark/letsencrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   r)
     tput reset
     clear
-    source /installer/backup/install.sh
+    source /etc/allspark/backup/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
@@ -161,13 +161,13 @@ case "$y" in
     tput reset
     clear
     nano /root/.allspark
-    source /installer/menu.sh
+    source /etc/allspark/menu.sh
     ;;
 
   u)
 		tput reset
 		clear
-    source /installer/update/install.sh
+    source /etc/allspark/update/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
 		;;
 

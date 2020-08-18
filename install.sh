@@ -3,13 +3,13 @@ DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes update
 DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes remove cryptsetup-initramfs
 DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes install git unzip zip sudo
 
-sudo rm -R /installer
-sudo mkdir /installer
-sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
+sudo rm -R /etc/allspark
+sudo mkdir /etc/allspark
+sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /etc/allspark
 
-if ! grep -q "sudo /installer/menu.sh" ~/.bashrc
+if ! grep -q "sudo /etc/allspark/menu.sh" ~/.bashrc
 then
-  echo "sudo /installer/menu.sh" >> ~/.bashrc
+  echo "sudo /etc/allspark/menu.sh" >> ~/.bashrc
 fi
 
-sudo chmod +x /installer/menu.sh
+sudo chmod +x /etc/allspark/menu.sh
