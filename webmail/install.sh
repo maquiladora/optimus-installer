@@ -18,7 +18,7 @@ then
 
   if ! grep -q "<Directory /srv/webmail/>" /etc/apache2/apache2.conf
   then
-    printf "<Directory /srv/webmail/public_html/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride Limit\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
+    printf "<Directory /srv/webmail/public_html/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride Options Limit\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
   fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
