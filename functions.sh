@@ -109,6 +109,7 @@ require()
       if [[ $generate_pwd =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
+        echo_cyan $valeur
       fi
     fi
 
@@ -119,6 +120,7 @@ require()
       if [[ $generate_aes =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
+        echo_cyan $valeur
       fi
     fi
 

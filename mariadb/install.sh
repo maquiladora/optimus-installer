@@ -28,7 +28,7 @@ then
   echo_magenta "Installation de la base de donnée 'users'"
   for file in /etc/allspark/mariadb/*.sql
   do
-    file="${file:19:-4}"
+    file="${file:22:-4}"
     if [[ $file > $db_version ]]
     then
       echo_magenta "--> $file.sql exécuté"
