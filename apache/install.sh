@@ -1,6 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
 
 echo
 echo_green "==== INSTALLATION DU SERVEUR WEB APACHE ===="
