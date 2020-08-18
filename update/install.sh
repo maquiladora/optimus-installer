@@ -1,6 +1,6 @@
 #!/bin/bash
-rm -R /installer
-mkdir /installer
-git clone -b vest https://github.com/MetallianFR68/optimus-installer /installer
-chmod +x /installer/menu.sh
-source /installer/menu.sh
+rm -R /etc/allspark
+mkdir /etc/allspark
+git clone -b vest https://github.com/MetallianFR68/optimus-installer /etc/allspark
+chmod +x /etc/allspark/menu.sh
+source /etc/allspark/menu.sh
