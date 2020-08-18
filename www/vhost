@@ -7,4 +7,11 @@
   LogLevel warn
   ErrorLog /var/log/apache2/www-error.log
   CustomLog /var/log/apache2/www-access.log combined
+
+  <Directory /srv/www/>
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+  
 </VirtualHost>
