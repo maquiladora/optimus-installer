@@ -1,5 +1,9 @@
-source /installer/functions.sh
-source /installer/config.sh
+source /etc/allspark/functions.sh
+require MARIADB_ADMIN_USER
+require MARIADB_ADMIN_PASSWORD password
+require MARIADB_REMOTE_ROOT_PASSWORD password
+require AES_KEY aeskey
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DU SERVEUR DE BASES DE DONNEES MARIADB ===="
@@ -22,13 +26,13 @@ then
   verbose systemctl start mariadb
 
   echo_magenta "Installation de la base de donnée 'users'"
-  for file in /installer/mariadb/*.sql
+  for file in /etc/allspark/mariadb/*.sql
   do
     file="${file:19:-4}"
     if [[ $file > $db_version ]]
     then
       echo_magenta "--> $file.sql exécuté"
-      mariadb < /installer/mariadb/$file.sql
+      mariadb < /etc/allspark/mariadb/$file.sql
       echo $file > /srv/databases/USERS_DB_VERSION
     else
       echo_magenta "--> $file.sql ignoré"
