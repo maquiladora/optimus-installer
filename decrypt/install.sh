@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 require PART_TO_ENCRYPT
 require UUID uuid
 source /root/.allspark
