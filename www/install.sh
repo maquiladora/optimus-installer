@@ -1,5 +1,5 @@
 #!/bin/bash
-source /installer/functions.sh
+source /etc/allspark/functions.sh
 require DOMAIN
 source /root/.allspark
 
@@ -13,7 +13,7 @@ then
 
   if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
   if [ ! -f "/srv/www/index.html" ]; then echo "WWW" > /srv/www/index.html; fi
-  if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/www/vhost > /etc/apache2/sites-enabled/www.conf; fi
+  if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/www/vhost > /etc/apache2/sites-enabled/www.conf; fi
 
   if ! grep -q "<Directory /srv/www/>" /etc/apache2/apache2.conf
   then
