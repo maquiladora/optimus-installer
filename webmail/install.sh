@@ -28,6 +28,25 @@ then
   #verbose pear install Net_IDNA2
   #verbose pear install Mail_mime
 
+  echo_magenta "Installation de COMPOSER"
+  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  php -r "if (hash_file('sha384', 'composer-setup.php') != 'e5325b19b381bfd88ce90a5ddb7823406b2a38cff6bb704b0acc289a09c8128d4a8ce2bbafcd1fcbdc38666422fe2806') unlink('composer-setup.php'); echo PHP_EOL;"
+  php composer-setup.php --install-dir /etc
+  php -r "unlink('composer-setup.php');"
+
+  echo_magenta "Installation de ROUNDCUBE (et ses dépendances)"
+  chown -R debian:debian /srv/webmail
+  cd /srv/webmail
+  wget https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
+  tar xfz roundcubemail-1.4.8-complete.tar.gz
+  rm roundcubemail-1.4.8-complete.tar.gz
+
+  #sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
+
+  #echo_magenta "Installation du module SABREDAV OPTIMUS"
+  #cp -R /installer/cloud/optimus /srv/cloud/vendor/optimus
+  #sed -e 's/%DOMAIN%/'$DOMAIN'/g' /installer/cloud/server.php > /srv/cloud/server.php
+
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
 fi
