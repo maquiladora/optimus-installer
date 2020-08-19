@@ -33,7 +33,7 @@ tput cup 26 3; echo_green "x. Quit"
 
 tput cup 28 3; echo_green "z. AUTOINSTALL"
 
-tput cup 28 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
+tput cup 30 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
 
