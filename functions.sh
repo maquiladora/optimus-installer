@@ -110,7 +110,6 @@ require()
       if [[ $AUTOGENERATE_PASSWORDS =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
-        echo_cyan $valeur
       fi
     fi
 
@@ -120,7 +119,6 @@ require()
       if [[ $AUTOGENERATE_AES_KEY =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
-        echo_cyan $valeur
       fi
     fi
 
