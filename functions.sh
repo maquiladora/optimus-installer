@@ -133,8 +133,6 @@ require()
       read valeur
     fi
 
-    if [ $variable == 'DOMAIN' ]; then echo $valeur > /etc/hostname; fi
-
     update_conf $variable $valeur
   fi
 )
