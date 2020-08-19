@@ -116,8 +116,8 @@ require()
 
     if [ $type ] && [ $type == 'aeskey' ]
     then
-      if [ ! $AUTOGENERATE_AESKEY ]; then echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_AESKEY; fi
-      if [[ $AUTOGENERATE_AESKEY =~ ^[YyOo]$ ]]
+      if [ ! $AUTOGENERATE_AES_KEY ]; then echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_AES_KEY; fi
+      if [[ $AUTOGENERATE_AES_KEY =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
         echo_cyan $valeur
