@@ -2,7 +2,7 @@
 source /etc/allspark/functions.sh
 require MAILSERVER_MARIADB_USER
 require MAILSERVER_MARIADB_PASSWORD password
-source /etc/allspark/config.sh
+source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DU SERVEUR MAIL ===="
@@ -126,17 +126,17 @@ then
 fi
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
 
-  if ! grep -q "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" /etc/dkim/KeyTable
+  if [ ! -f /etc/dkim/KeyTable ] || ! grep -q "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" /etc/dkim/KeyTable
   then
     echo "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" >> /etc/dkim/KeyTable
   fi
 
-  if ! grep -q "*@$DOMAIN mail._domainkey.$DOMAIN" /etc/dkim/SigningTable
+  if [ ! -f /etc/dkim/SigningTable ] || ! grep -q "*@$DOMAIN mail._domainkey.$DOMAIN" /etc/dkim/SigningTable
   then
     echo "*@$DOMAIN mail._domainkey.$DOMAIN" >> /etc/dkim/SigningTable
   fi
 
-  if ! grep -q "$DOMAIN" /etc/dkim/TrustedHosts
+  if [ ! -f /etc/dkim/TrustedHosts ] || ! grep -q "$DOMAIN" /etc/dkim/TrustedHosts
   then
     echo "$DOMAIN" >> /etc/dkim/TrustedHosts
   fi

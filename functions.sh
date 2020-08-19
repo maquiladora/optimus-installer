@@ -97,9 +97,8 @@ require()
 
     if [ $type ] && [ $type == 'uuid' ]
     then
-      echo_green "Souhaitez vous générer l'identifiant unique $variable automatiquement ?"
-      read -p "(o)ui / (n)on ? " -n 1 -e generate_uuid
-      if [[ $generate_uuid =~ ^[YyOo]$ ]]
+      if [ ! $AUTOGENERATE_UUID ]; then echo_green "Souhaitez vous générer l'identifiant unique $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_UUID; fi
+      if [[ $AUTOGENERATE_UUID =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
       fi
@@ -107,9 +106,8 @@ require()
 
     if [ $type ] && [ $type == 'password' ]
     then
-      echo_green "Souhaitez vous générer le mot de passe $variable automatiquement ?"
-      read -p "(o)ui / (n)on ? " -n 1 -e generate_pwd
-      if [[ $generate_pwd =~ ^[YyOo]$ ]]
+      if [ ! $AUTOGENERATE_PASSWORDS ]; then echo_green "Souhaitez vous générer le mot de passe $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_PASSWORDS; fi
+      if [[ $AUTOGENERATE_PASSWORDS =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
         echo_cyan $valeur
@@ -118,9 +116,8 @@ require()
 
     if [ $type ] && [ $type == 'aeskey' ]
     then
-      echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"
-      read -p "(o)ui / (n)on ? " -n 1 -e generate_aes
-      if [[ $generate_aes =~ ^[YyOo]$ ]]
+      if [ ! $AUTOGENERATE_AESKEY ]; then echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_AESKEY; fi
+      if [[ $AUTOGENERATE_AESKEY =~ ^[YyOo]$ ]]
       then
         valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
         echo_cyan $valeur
