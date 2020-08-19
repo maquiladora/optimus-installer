@@ -8,7 +8,7 @@ then
   FREESPACE=$(/usr/sbin/sfdisk --list-free --quiet /dev/$DISKPART_DISK_TO_PART | grep -v "Size" |  awk '{print $NF}')
   FIRSTSECTOR=$(/usr/sbin/sfdisk --list-free --quiet /dev/$DISKPART_DISK_TO_PART | grep -v "Size" |  awk '{print $1}')
 
-  if [ $FREESPACE -gt 0 ]
+  if [ -z "$FREESPACE" ]
   then
     if [ ! $DISKPART_USE_FREESPACE ]; then echo_green "Souhaitez vous utiliser les $FREESPACE non partitionnés de $DISKPART_DISK_TO_PART"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_USE_FREESPACE; fi
     if [[ $DISKPART_USE_FREESPACE =~ ^[Yy]$ ]]
