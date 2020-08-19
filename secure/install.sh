@@ -146,7 +146,7 @@ then
     echo 'AuthenticationMethods  publickey,keyboard-interactive' >> /etc/ssh/sshd_config
   fi
 
-  google-authenticator --time-based --force --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=$DOMAIN
+  google-authenticator --time-based --force --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN
 
   if [ -d "/home/debian" ]
   then
