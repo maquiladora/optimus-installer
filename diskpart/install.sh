@@ -14,7 +14,7 @@ then
   echo_red "IL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES"
   echo
 
-  if [ ! $DISKPART_USE_FREESPACE ]; then echo_green "Souhaitez vous utiliser l'espace non partitionné de $FREESPACE"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_USE_FREESPACE; fi
+  if [ $FREESPACE &gt 0 ] && [ ! $DISKPART_USE_FREESPACE ]; then echo_green "Souhaitez vous utiliser l'espace non partitionné de $FREESPACE"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_USE_FREESPACE; fi
   if [[ $DISKPART_USE_FREESPACE =~ ^[Yy]$ ]]
   then
     echo $FIRSTSECTOR | /usr/sbin/sfdisk /dev/$PART_TO_ENCRYPT --append --force
