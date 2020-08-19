@@ -149,6 +149,7 @@ then
   fi
 
   google-authenticator --time-based --force --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN
+  update_conf SECURE_GOOGLEAUTH_KEY (cat /root/.google_authenticator | head -1)
 
   if [ -d "/home/debian" ]
   then
