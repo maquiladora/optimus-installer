@@ -133,7 +133,7 @@ if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'ac
 if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
 then
 
-  verbose apt-get -qq -y install libpam-google-authenticator
+  verbose apt-get -qq -y install libpam-google-authenticator qrencode
 
   if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
   then
