@@ -14,8 +14,11 @@ then
   verbose apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
   verbose apt-get -qq install curl
 
-  echo_magenta "Démontage de la partition"
-  verbose umount /srv
+  if mountpoint -q /srv
+  then
+    echo_magenta "Démontage de la partition"
+    verbose umount /srv
+  fi
 
   echo_magenta "Création d'une clé de chiffrement..."
   mkdir /root/tmpramfs
