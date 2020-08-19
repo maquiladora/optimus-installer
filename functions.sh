@@ -41,17 +41,20 @@ fi
 source /root/.allspark
 
 
-if [ -z $PART_TO_ENCRYPT ]
+if [ -z $DISKPART_DISK_TO_PART ]
 then
   if [ -e /dev/nvme0n1 ]
   then
-    export PART_TO_ENCRYPT=nvme0n1
+    export DISKPART_DISK_TO_PART=nvme0n1
+    export PART_TO_ENCRYPT=nvme0n1p2
   else
     if [ -e /dev/sda ]
     then
+      export DISKPART_DISK_TO_PART=sda
       export PART_TO_ENCRYPT=sda2
     fi
   fi
+  update_conf DISKPART_DISK_TO_PART $DISKPART_DISK_TO_PART
   update_conf PART_TO_ENCRYPT $PART_TO_ENCRYPT
 fi
 
