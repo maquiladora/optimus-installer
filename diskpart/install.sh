@@ -51,7 +51,6 @@ then
       fi
     fi
   fi
-fi
 else
   echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT existe déjà"
   echo_red "APPUYER SUR [ENTREE] POUR CONTINUER"
