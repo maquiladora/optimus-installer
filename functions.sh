@@ -79,7 +79,7 @@ update_conf()
 (
   if grep -q "$1=" /root/.allspark
   then
-    verbose sed -i "s/$1=/$1=$2/g" /root/.allspark
+    verbose sed -i "/export $1=/c export $1=$2" /root/.allspark
   else
     echo "export $1=$2"  >> /root/.allspark
   fi

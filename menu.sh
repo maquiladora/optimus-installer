@@ -205,6 +205,7 @@ case "$y" in
     #source /etc/allspark/zonedns/install.sh
     source /etc/allspark/letsencrypt/install.sh
     #source /etc/allspark/backup/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
   	;;
 
 esac
