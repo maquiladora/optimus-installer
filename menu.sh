@@ -31,6 +31,8 @@ tput cup 24 3; echo_green "u. Update Installer"
 tput cup 25 3; echo_green "v. Reboot server"
 tput cup 26 3; echo_green "x. Quit"
 
+tput cup 28 3; echo_green "z. AUTOINSTALL"
+
 tput cup 28 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
@@ -182,5 +184,28 @@ case "$y" in
       clear
       exit 1
       ;;
+
+  z)
+  	tput reset
+  	clear
+    source /etc/allspark/upgrade/install.sh
+  	source /etc/allspark/diskpart/install.sh
+    source /etc/allspark/crypt-setup/install.sh
+    source /etc/allspark/decrypt/install.sh
+    source /etc/allspark/secure/install.sh
+    source /etc/allspark/apache/install.sh
+    source /etc/allspark/www/install.sh
+    source /etc/allspark/php/install.sh
+    source /etc/allspark/mariadb/install.sh
+    source /etc/allspark/mailserver/install.sh
+    #source /etc/allspark/webmail/install.sh
+    source /etc/allspark/cloud/install.sh
+    source /etc/allspark/api/install.sh
+    #source /etc/allspark/optimus/install.sh
+    #source /etc/allspark/zonedns/install.sh
+    source /etc/allspark/letsencrypt/install.sh
+    #source /etc/allspark/backup/install.sh
+  	;;
+
 esac
 done
