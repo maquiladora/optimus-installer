@@ -59,6 +59,7 @@ then
     echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
     echo_magenta "Nouveau mot de passe root : "
     echo_cyan $newrootpass
+    update_conf SECURE_ROOTPASS $newrootpass
   else
     passwd root
   fi
@@ -76,6 +77,7 @@ then
     echo -e "$newdebianpass\n$newdebianpass" | passwd debian &> /dev/null
     echo_magenta "Nouveau mot de passe de l'utilisateur DEBIAN : ";
     echo_cyan $newdebianpass
+    update_conf SECURE_DEBIANPASS $newdebianpass
   else
     passwd debian
   fi
