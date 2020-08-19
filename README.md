@@ -108,7 +108,7 @@ Une fois connecté au terminal, voici la commande à taper pour installer les sc
 
 <pre>
   <code>
-     bash <(wget -qO- https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh);sudo /etc/allspark/menu.sh
+     bash <(wget -qO- https://raw.githubusercontent.com/MetallianFR68/optimus-installer/vest/install.sh); sudo /etc/allspark/menu.sh
   </code>
 </pre>
 
