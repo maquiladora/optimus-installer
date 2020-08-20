@@ -3,6 +3,9 @@ source /etc/allspark/functions.sh
 require DOMAIN
 source /root/.allspark
 
+echo
+echo_green "==== INSTALLATION DES CERTIFICATS SSL LETSENCRYPT ===="
+
 if [ ! -f /etc/letsencrypt/live/demoptimus.fr/fullchain.pem ]
 then
   if [ ! $LETSENCRYPT_AREYOUSURE ]; then echo_green "Souhaitez vous installer les certificats SSL ?"; read -p "(o)ui / (n)on ? " -n 1 -e LETSENCRYPT_AREYOUSURE; fi
