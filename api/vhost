@@ -1,9 +1,16 @@
 <VirtualHost *:80>
-  ServerAdmin postmaster@%DOMAIN%
+  ServerAdmin prime@%DOMAIN%
   ServerName api.%DOMAIN%
-  DirectoryIndex index.html
+  DirectoryIndex index.php index.html
   DocumentRoot /srv/api
   LogLevel warn
   ErrorLog /var/log/apache2/api-error.log
   CustomLog /var/log/apache2/api-access.log combined
+
+  <Directory /srv/api/>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+
 </VirtualHost>

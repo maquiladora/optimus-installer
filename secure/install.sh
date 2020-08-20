@@ -52,17 +52,9 @@ echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
 if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEROOTPASS; fi
 if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
 then
-  if [ ! $SECURE_GENERATEROOTPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEROOTPASS; fi
-  if [[ $SECURE_GENERATEROOTPASS =~ ^[YyOo]$ ]]
-  then
-    newrootpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    echo -e "$newrootpass\n$newrootpass" | passwd root &> /dev/null
-    echo_magenta "Nouveau mot de passe root : "
-    echo_cyan $newrootpass
-    update_conf SECURE_ROOTPASS $newrootpass
-  else
-    passwd root
-  fi
+  require SECURE_ROOT_PASSWORD
+  source /root/.allspark
+  echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
 fi
 
 echo
@@ -70,17 +62,9 @@ echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
 if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilisateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
 if [[ $SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
 then
-  if [ ! $SECURE_GENERATEDEBIANPASS ]; then echo_green "Voulez vous générer un mot de passe automatiquement ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_GENERATEDEBIANPASS; fi
-  if [[ $SECURE_GENERATEDEBIANPASS =~ ^[YyOo]$ ]]
-  then
-    newdebianpass=$(</dev/urandom tr -dc A-Za-z0-9 | head -c${1:-32})
-    echo -e "$newdebianpass\n$newdebianpass" | passwd debian &> /dev/null
-    echo_magenta "Nouveau mot de passe de l'utilisateur DEBIAN : ";
-    echo_cyan $newdebianpass
-    update_conf SECURE_DEBIANPASS $newdebianpass
-  else
-    passwd debian
-  fi
+  require SECURE_DEBIAN_PASSWORD
+  source /root/.allspark
+  echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
 fi
 
 

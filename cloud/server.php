@@ -62,7 +62,7 @@ $server->addPlugin(new Sabre\CardDAV\VCFExportPlugin());
 $aclPlugin = new Sabre\DAVACL\Plugin();
 $aclPlugin->allowAccessToNodesWithoutACL = false;
 $aclPlugin->hideNodesFromListings = true;
-$aclPlugin->adminPrincipals[] = 'principals/postmaster@%DOMAIN%';
+$aclPlugin->adminPrincipals[] = 'principals/prime@%DOMAIN%';
 $server->addPlugin($aclPlugin);
 
 $server->exec();

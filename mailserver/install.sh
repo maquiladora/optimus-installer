@@ -1,5 +1,6 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
+require DOMAIN
 require MAILSERVER_MARIADB_USER
 require MAILSERVER_MARIADB_PASSWORD password
 source /root/.allspark
@@ -39,7 +40,7 @@ then
     fi
   done
 
-  echo_magenta "Création de la boite mail initiale postmaster@$DOMAIN"
+  echo_magenta "Création de la boite mail initiale prime@$DOMAIN"
   verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes VALUES (NULL, '1', '$MAILSERVER_POSTMASTER_MAILBOX_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD','$AES_KEY'), '0', '1', null, null, null, null, null);"
   verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
 

@@ -11,7 +11,7 @@ MSGID=$6
 DATE=$7
 
 cat -v << EOF | /usr/sbin/sendmail -t -i
-From: postmaster@$DOMAIN
+From: prime@$DOMAIN
 To: $RECIPIENT
 Subject: ***VIRUS*** $SUBJECT
 

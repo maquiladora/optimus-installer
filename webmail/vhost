@@ -1,7 +1,7 @@
 <VirtualHost *:80>
-  ServerAdmin postmaster@%DOMAIN%
+  ServerAdmin prime@%DOMAIN%
   ServerName webmail.%DOMAIN%
-  DirectoryIndex index.php
+  DirectoryIndex index.php index.html
   DocumentRoot /srv/webmail/public_html
   LogLevel warn
   ErrorLog /var/log/apache2/webmail-error.log

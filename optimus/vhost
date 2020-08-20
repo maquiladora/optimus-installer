@@ -1,9 +1,16 @@
 <VirtualHost *:80>
-  ServerAdmin postmaster@%DOMAIN%
+  ServerAdmin prime@%DOMAIN%
   ServerName optimus.%DOMAIN%
-  DirectoryIndex index.html
+  DirectoryIndex index.php index.html
   DocumentRoot /srv/optimus
   LogLevel warn
   ErrorLog /var/log/apache2/optimus-error.log
   CustomLog /var/log/apache2/optimus-access.log combined
+
+  <Directory /srv/optimus/>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+
 </VirtualHost>

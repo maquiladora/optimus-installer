@@ -19,12 +19,12 @@ then
       if [ -d "/srv/optimus" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d optimus.$DOMAIN"; fi
       if [ -d "/srv/files/partage@$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d partage.$DOMAIN"; fi
 
-      verbose certbot run -n --apache --agree-tos --email postmaster@$DOMAIN $DOMAINS_TO_INSTALL
+      verbose certbot run -n --apache --agree-tos --email prime@$DOMAIN $DOMAINS_TO_INSTALL
 
       if [ -d "/srv/mailboxes" ]
       then
         verbose systemctl stop apache2
-        verbose certbot certonly -n --standalone --agree-tos --email postmaster@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
+        verbose certbot certonly -n --standalone --agree-tos --email prime@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
       fi
 
       echo_magenta "Ouverture du port 443 dans le firewall"

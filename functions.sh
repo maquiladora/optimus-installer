@@ -92,42 +92,26 @@ require()
   type=${2}
   valeur=
 
-  if [ -z ${!variable} ]
+  if [ $type ] && [ $type == 'uuid' ] && [ ${!variable} == 'auto' ]
   then
-
-    if [ $type ] && [ $type == 'uuid' ]
-    then
-      if [ ! $AUTOGENERATE_UUID ]; then echo_green "Souhaitez vous générer l'identifiant unique $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_UUID; fi
-      if [[ $AUTOGENERATE_UUID =~ ^[YyOo]$ ]]
-      then
-        valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
-      fi
-    fi
-
-    if [ $type ] && [ $type == 'password' ]
-    then
-      if [ ! $AUTOGENERATE_PASSWORDS ]; then echo_green "Souhaitez vous générer le mot de passe $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_PASSWORDS; fi
-      if [[ $AUTOGENERATE_PASSWORDS =~ ^[YyOo]$ ]]
-      then
-        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
-      fi
-    fi
-
-    if [ $type ] && [ $type == 'aeskey' ]
-    then
-      if [ ! $AUTOGENERATE_AES_KEY ]; then echo_green "Souhaitez vous générer la clé AES $variable automatiquement ?"; read -p "(o)ui / (n)on ? " -n 1 -e AUTOGENERATE_AES_KEY; fi
-      if [[ $AUTOGENERATE_AES_KEY =~ ^[YyOo]$ ]]
-      then
-        valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
-      fi
-    fi
-
-    if [ -z $valeur ]
-    then
-      echo_green "Merci de renseigner la variable $variable :"
-      read valeur
-    fi
-
-    update_conf $variable $valeur
+    valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
   fi
+
+  if [ $type ] && [ $type == 'password' ] && [ ${!variable} == 'auto' ]
+  then
+    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
+  fi
+
+  if [ $type ] && [ $type == 'aeskey' ] && [ ${!variable} == 'auto' ]
+  then
+    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
+  fi
+
+  if [ -z ${!variable} ] && [ -z $valeur ]
+  then
+    echo_green "Merci de renseigner la variable $variable :"
+    read valeur
+  fi
+
+  update_conf $variable $valeur
 )

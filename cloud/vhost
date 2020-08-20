@@ -1,7 +1,7 @@
 <VirtualHost *:80>
-  ServerAdmin postmaster@%DOMAIN%
+  ServerAdmin prime@%DOMAIN%
   ServerName cloud.%DOMAIN%
-  DirectoryIndex index.html
+  DirectoryIndex index.php index.html
   DocumentRoot /srv/cloud
   LogLevel warn
   ErrorLog /var/log/apache2/cloud-error.log
@@ -13,4 +13,11 @@
   php_flag always_populate_raw_post_data off
   php_flag magic_quotes_gpc off
   php_flag mbstring.func_overload off
+
+  <Directory /srv/cloud/>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+
 </VirtualHost>

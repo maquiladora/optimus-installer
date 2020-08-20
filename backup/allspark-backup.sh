@@ -18,8 +18,8 @@ ENDSSH
 
 rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats -e "ssh -p 7822 -i /root/private.pem" 'debian@$DOMAIN:/srv/increments' '/srv/increments' | tee rsync.log
 
-echo "From: postmaster@$DOMAIN" >> email.txt;
-echo "To: postmaster@$DOMAIN" >> email.txt;
+echo "From: prime@$DOMAIN" >> email.txt;
+echo "To: prime@$DOMAIN" >> email.txt;
 cat rsync.log >> email.txt;
 /usr/sbin/sendmail -t < email.txt;
 
