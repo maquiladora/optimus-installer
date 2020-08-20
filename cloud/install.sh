@@ -20,9 +20,9 @@ then
   echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
   echo_magenta "Installation de COMPOSER"
-  /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
-  /sbin/mkswap /var/swap.1
-  /sbin/swapon /var/swap.1
+  verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+  verbose /sbin/mkswap /var/swap.1
+  verbose /sbin/swapon /var/swap.1
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   php -r "if (hash_file('sha384', 'composer-setup.php') != '$(wget -q -O - https://composer.github.io/installer.sig)') unlink('composer-setup.php'); echo PHP_EOL;"
   php composer-setup.php --install-dir /etc
@@ -31,7 +31,7 @@ then
   chown -R debian:debian /srv/cloud
   cd /srv/cloud
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
-  /sbin/swapoff /var/swap.1
+  verbose /sbin/swapoff /var/swap.1
 
   echo_magenta "Installation du module SABREDAV OPTIMUS"
   cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
