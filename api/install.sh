@@ -17,11 +17,6 @@ then
   if [ ! -f "/srv/api/index.html" ]; then echo "API" > /srv/api/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
 
-  if ! grep -q "<Directory /srv/api/>" /etc/apache2/apache2.conf
-  then
-    printf "<Directory /srv/api/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
-  fi
-
   verbose systemctl restart apache2
   echo_magenta "L'espace d'hébergement api.$DOMAIN a été installé avec succès !"
 fi

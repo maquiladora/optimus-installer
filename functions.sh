@@ -107,7 +107,7 @@ require()
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
   fi
 
-  if [ -z ${!variable} ] && [ -z $valeur ]
+  if [ -z ${!variable} ]
   then
     echo_green "Merci de renseigner la variable $variable :"
     read valeur
