@@ -148,7 +148,7 @@ then
 
     verbose systemctl restart sshd
     echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
 
   else
     verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
@@ -158,7 +158,7 @@ then
   fi
 else
   echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
-  qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+  qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
 fi
 
 echo
