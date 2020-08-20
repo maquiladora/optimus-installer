@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 echo_red()(echo -e "\e[31m${1}\e[0m")
 echo_green()(echo -e "\e[32m${1}\e[0m")
 echo_yellow()(echo -e "\e[33m${1}\e[0m")
@@ -39,25 +37,6 @@ then
 fi
 
 source /root/.allspark
-
-
-if [ -z $DISKPART_DISK_TO_PART ]
-then
-  if [ -e /dev/nvme0n1 ]
-  then
-    export DISKPART_DISK_TO_PART=nvme0n1
-    export PART_TO_ENCRYPT=nvme0n1p2
-  else
-    if [ -e /dev/sda ]
-    then
-      export DISKPART_DISK_TO_PART=sda
-      export PART_TO_ENCRYPT=sda2
-    fi
-  fi
-  update_conf DISKPART_DISK_TO_PART $DISKPART_DISK_TO_PART
-  update_conf PART_TO_ENCRYPT $PART_TO_ENCRYPT
-fi
-
 
 
 verbose()
