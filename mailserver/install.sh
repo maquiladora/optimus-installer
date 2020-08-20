@@ -144,7 +144,7 @@ fi
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendkim.sock/SOCKET="inet:8891:localhost"/g' /etc/default/opendkim
 
   echo_magenta "Installation d'OPENDMARC"
-  verbose apt-get install opendmarc
+  apt-get install opendmarc
   envsubst '${DOMAIN}' < /etc/allspark/mailserver/opendmarc/opendmarc.conf > /etc/opendmarc.conf
   sudo mkdir -p /etc/opendmarc/
   sudo mkdir -p /var/spool/postfix/opendmarc
