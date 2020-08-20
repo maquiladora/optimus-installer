@@ -35,7 +35,7 @@ then
 
   echo_magenta "Installation du module SABREDAV OPTIMUS"
   cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
-  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /srv/cloud/server.php
+  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
