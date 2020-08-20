@@ -21,6 +21,7 @@ then
 
   echo_magenta "Installation de COMPOSER"
   verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+  verbose chmod 600 /var/swap.1
   verbose /sbin/mkswap /var/swap.1
   verbose /sbin/swapon /var/swap.1
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
