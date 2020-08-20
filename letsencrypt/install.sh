@@ -5,7 +5,7 @@ source /root/.allspark
 
 if [ ! -f /etc/letsencrypt/live/demoptimus.fr/fullchain.pem ]
 then
-  if [ ! $LETSENCRYPT_AREYOUSURE ]; then echo_green "Souhaitez vous installer les certificats SSL HTTPS ?"; read -p "(o)ui / (n)on ? " -n 1 -e LETSENCRYPT_AREYOUSURE; fi
+  if [ ! $LETSENCRYPT_AREYOUSURE ]; then echo_green "Souhaitez vous installer les certificats SSL ?"; read -p "(o)ui / (n)on ? " -n 1 -e LETSENCRYPT_AREYOUSURE; fi
   if [[ $LETSENCRYPT_AREYOUSURE =~ ^[YyOo]$ ]]
   then
 
@@ -36,4 +36,6 @@ then
       verbose systemctl restart opendkim
 
   fi
+else
+  echo_magenta "Les certificats SSL ont déjà été générés !"
 fi
