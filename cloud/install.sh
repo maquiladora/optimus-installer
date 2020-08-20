@@ -55,7 +55,7 @@ then
 
   echo_magenta "Création de l'utilisateur MARIADB"
   verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON cloud.* TO '$CLOUD_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$CLOUD_MARIADB_PASSWORD';"
-  verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$CLOUD_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$CLOUD_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$CLOUD_MARIADB_USER'@'localhost' IDENTIFIED BY '$CLOUD_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES"
 
   echo_magenta "Redémarrage des services"
