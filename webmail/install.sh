@@ -31,14 +31,15 @@ then
   verbose chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Installation de COMPOSER"
-  /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
-  /sbin/mkswap /var/swap.1
-  /sbin/swapon /var/swap.1
+  verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 >& /dev/null
+  verbose chmod 600 /var/swap.1
+  verbose /sbin/mkswap /var/swap.1
+  verbose /sbin/swapon /var/swap.1
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
   php -r "if (hash_file('sha384', 'composer-setup.php') != '$(wget -q -O - https://composer.github.io/installer.sig)') unlink('composer-setup.php'); echo PHP_EOL;"
   php composer-setup.php --install-dir /etc
   php -r "unlink('composer-setup.php');"
-  /sbin/swapoff /var/swap.1
+  verbose /sbin/swapoff /var/swap.1
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE roundcubemail CHARACTER SET utf8 COLLATE utf8_general_ci;"

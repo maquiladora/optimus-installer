@@ -23,7 +23,7 @@ then
       if [ -d "/srv/files/partage@$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d partage.$DOMAIN"; fi
 
       echo_magenta "Installation des certificats pour les sous domaines web"
-      verbose certbot run -n --apache --agree-tos --email prime@$DOMAIN $DOMAINS_TO_INSTALL
+      verbose certbot run -n --apache --redirect --agree-tos --email prime@$DOMAIN $DOMAINS_TO_INSTALL
 
       if [ -d "/srv/mailboxes" ]
       then
