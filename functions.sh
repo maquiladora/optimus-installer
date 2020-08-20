@@ -86,5 +86,8 @@ require()
     read valeur
   fi
 
-  update_conf $variable $valeur
+  if [ -z $valeur ]
+  then
+    update_conf $variable $valeur
+  fi
 )
