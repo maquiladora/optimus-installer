@@ -1,6 +1,8 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
 require DOMAIN
+require CLOUD_MARIADB_USER
+require CLOUD_MARIADB_PASSWORD password
 source /root/.allspark
 
 echo
@@ -15,12 +17,7 @@ then
   if [ ! -f "/srv/cloud/index.html" ]; then echo "cloud" > /srv/cloud/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
 
-  if ! grep -q "<Directory /srv/cloud/>" /etc/apache2/apache2.conf
-  then
-    printf "<Directory /srv/cloud/>\n\tOptions Indexes FollowSymLinks\n\tAllowOverride None\n\tRequire all granted\n</Directory>\n\n" >> /etc/apache2/apache2.conf
-  fi
-
-    echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
+  echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
   echo_magenta "Installation de COMPOSER"
   /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
@@ -38,7 +35,7 @@ then
 
   echo_magenta "Installation du module SABREDAV OPTIMUS"
   cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
-  sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/server.php > /srv/cloud/server.php
+  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /srv/cloud/server.php
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi

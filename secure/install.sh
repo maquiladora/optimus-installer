@@ -53,7 +53,7 @@ echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
 if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEROOTPASS; fi
 if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
 then
-  require SECURE_ROOT_PASSWORD
+  require SECURE_ROOT_PASSWORD password
   source /root/.allspark
   echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
   echo_magenta "Le mot de passe de l'utilisateur root a été modifié avec succès"
@@ -64,7 +64,7 @@ echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
 if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilisateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
 if [[ $SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
 then
-  require SECURE_DEBIAN_PASSWORD
+  require SECURE_DEBIAN_PASSWORD password
   source /root/.allspark
   echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
   echo_magenta "Le mot de passe de l'utilisateur debian a été modifié avec succès"

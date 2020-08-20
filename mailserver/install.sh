@@ -3,6 +3,8 @@ source /etc/allspark/functions.sh
 require DOMAIN
 require MAILSERVER_MARIADB_USER
 require MAILSERVER_MARIADB_PASSWORD password
+require MAILSERVER_POSTMASTER_MAILBOX_USER
+require MAILSERVER_POSTMASTER_MAILBOX_PASSWORD password
 source /root/.allspark
 
 echo
