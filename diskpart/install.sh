@@ -3,7 +3,7 @@ source /etc/allspark/functions.sh
 require DISKPART_DISK_TO_PART
 source /root/.allspark
 
-if [ -e /dev/$DISKPART_DISK_TO_PART ]
+if [ -e /dev/$DISKPART_DISK_TO_PART ] && [ ! -e /dev/$PART_TO_ENCRYPT ]
 then
   FREESPACE=$(/usr/sbin/sfdisk --list-free --quiet /dev/$DISKPART_DISK_TO_PART | grep -v "Size" |  awk '{print $NF}')
   FIRSTSECTOR=$(/usr/sbin/sfdisk --list-free --quiet /dev/$DISKPART_DISK_TO_PART | grep -v "Size" |  awk '{print $1}')
