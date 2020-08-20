@@ -147,7 +147,7 @@ then
     fi
 
     verbose systemctl restart sshd
-    echo_magenta "L'accès SSH du serveur est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
+    echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 
   else
@@ -157,7 +157,7 @@ then
     echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
   fi
 else
-  echo_magenta "L'accès SSH du serveur est sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
+  echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
   qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 fi
 
