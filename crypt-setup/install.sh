@@ -60,7 +60,7 @@ else
     echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT n'existe pas"
   fi
 
-  if [ ! -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
+  if [ -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
   then
     echo_red "Opération impossible : la partition est déjà crypté"
   fi
