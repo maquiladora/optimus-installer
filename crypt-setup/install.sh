@@ -4,7 +4,7 @@ require PART_TO_ENCRYPT
 require UUID uuid
 source /root/.allspark
 
-if lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT
+if [ lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT ] && [ ! -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
 then
 
   echo_green "==== CHIFFREMENT DU DISQUE ===="
