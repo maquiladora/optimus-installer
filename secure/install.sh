@@ -3,6 +3,7 @@ source /etc/allspark/functions.sh
 require DOMAIN
 source /root/.allspark
 
+echo
 echo_green "==== MISE A JOUR DU SYSTEME ===="
 if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_UPDATE; fi
 if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
@@ -55,6 +56,7 @@ then
   require SECURE_ROOT_PASSWORD
   source /root/.allspark
   echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
+  echo_magenta "Le mot de passe de l'utilisateur root a été modifié avec succès"
 fi
 
 echo
@@ -65,6 +67,7 @@ then
   require SECURE_DEBIAN_PASSWORD
   source /root/.allspark
   echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
+  echo_magenta "Le mot de passe de l'utilsiateur debian a été modifié avec succès"
 fi
 
 
@@ -112,43 +115,47 @@ else
   echo_magenta "L'accès SSH est désormais autorisé pour l'utilisateur root"
 fi
 
-
-if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ACTIVATEGOOGLEAUTH; fi
-if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
+if [ -f /root/.google_authenticator ]
 then
-
-  verbose apt-get -qq -y install libpam-google-authenticator qrencode
-
-  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
+  if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ACTIVATEGOOGLEAUTH; fi
+  if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
   then
-    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+
+    verbose apt-get -qq -y install libpam-google-authenticator qrencode
+
+    if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
+    then
+      echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+    fi
+    verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+
+    verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
+
+    if ! grep -q "AuthenticationMethods  publickey,keyboard-interactive" /etc/ssh/sshd_config
+    then
+      echo 'AuthenticationMethods  publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+    fi
+
+    google-authenticator --time-based --force --quiet --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN --issuer=ALLSPARK
+    update_conf SECURE_GOOGLEAUTH_KEY $(cat /root/.google_authenticator | head -1)
+
+    if [ -d "/home/debian" ]
+    then
+      verbose cp /root/.google_authenticator /home/debian/.google_authenticator
+      verbose chown debian:debian /home/debian/.google_authenticator
+    fi
+
+    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+
+    verbose systemctl restart sshd
+    echo_magenta "L'accès SSH du serveur est désormais sécurisé par un code 2FA GOOGLE AUTHENTICATOR"
+
+  else
+    verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+    verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
+    verbose systemctl restart sshd
+    echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
   fi
-  verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-
-  verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
-
-  if ! grep -q "AuthenticationMethods  publickey,keyboard-interactive" /etc/ssh/sshd_config
-  then
-    echo 'AuthenticationMethods  publickey,keyboard-interactive' >> /etc/ssh/sshd_config
-  fi
-
-  google-authenticator --time-based --force --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN --issuer=ALLSPARK
-  update_conf SECURE_GOOGLEAUTH_KEY $(cat /root/.google_authenticator | head -1)
-
-  if [ -d "/home/debian" ]
-  then
-    verbose cp /root/.google_authenticator /home/debian/.google_authenticator
-    verbose chown debian:debian /home/debian/.google_authenticator
-  fi
-
-  verbose systemctl restart sshd
-  echo_magenta "L'accès SSH du serveur est désormais sécurisé par un code 2FA GOOGLE AUTHENTICATOR"
-
-else
-  verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
-  verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
-  verbose systemctl restart sshd
-  echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
 fi
 
 echo
