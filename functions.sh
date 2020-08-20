@@ -90,24 +90,18 @@ require()
 (
   variable=${1}
   type=${2}
-  valeur=
+  valeur=${3}
 
   if [ $type ] && [ $type == 'uuid' ] && [ ${!variable} == 'auto' ]
   then
     valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
-  fi
-
-  if [ $type ] && [ $type == 'password' ] && [ ${!variable} == 'auto' ]
+  elif [ $type ] && [ $type == 'password' ] && [ ${!variable} == 'auto' ]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
-  fi
-
-  if [ $type ] && [ $type == 'aeskey' ] && [ ${!variable} == 'auto' ]
+  elif [ $type ] && [ $type == 'aeskey' ] && [ ${!variable} == 'auto' ]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
-  fi
-
-  if [ -z ${!variable} ]
+  elif [ -z ${!variable} ]
   then
     echo_green "Merci de renseigner la variable $variable :"
     read valeur
