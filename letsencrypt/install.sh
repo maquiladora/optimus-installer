@@ -19,10 +19,12 @@ then
       if [ -d "/srv/optimus" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d optimus.$DOMAIN"; fi
       if [ -d "/srv/files/partage@$DOMAIN" ]; then DOMAINS_TO_INSTALL="${DOMAINS_TO_INSTALL} -d partage.$DOMAIN"; fi
 
+      echo_magenta "Installation des certificats pour les sous domaines web"
       verbose certbot run -n --apache --agree-tos --email prime@$DOMAIN $DOMAINS_TO_INSTALL
 
       if [ -d "/srv/mailboxes" ]
       then
+        echo_magenta "Extension du certificat à mail.$DOMAIN"
         verbose systemctl stop apache2
         verbose certbot certonly -n --standalone --agree-tos --email prime@$DOMAIN --expand $DOMAINS_TO_INSTALL -d mail.$DOMAIN
       fi
@@ -30,6 +32,7 @@ then
       echo_magenta "Ouverture du port 443 dans le firewall"
       if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 443; fi
 
+      echo_magenta "Redémarrage des services"
       verbose systemctl restart apache2
       verbose systemctl restart postfix
       verbose systemctl restart dovecot

@@ -30,11 +30,11 @@ then
   php -r "if (hash_file('sha384', 'composer-setup.php') != '$(wget -q -O - https://composer.github.io/installer.sig)') unlink('composer-setup.php'); echo PHP_EOL;"
   php composer-setup.php --install-dir /etc
   php -r "unlink('composer-setup.php');"
-
   echo_magenta "Installation de SABREDAV (et ses dépendances)"
   chown -R debian:debian /srv/cloud
   cd /srv/cloud
   sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
+  /sbin/swapoff /var/swap.1
 
   echo_magenta "Installation du module SABREDAV OPTIMUS"
   cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
