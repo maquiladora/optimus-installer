@@ -203,9 +203,12 @@ case "$y" in
     source /etc/allspark/api/install.sh
     #source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
-    source /etc/allspark/zonedns/install.sh
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     read -p "Appuyez sur [ENTREE] pour continuer..."
+    clear
+    source /etc/allspark/zonedns/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    clear
     source /etc/allspark/letsencrypt/install.sh
   	;;
 
