@@ -20,7 +20,7 @@ then
   echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
   echo_magenta "Installation de COMPOSER"
-  verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+  verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 >& /dev/null
   verbose chmod 600 /var/swap.1
   verbose /sbin/mkswap /var/swap.1
   verbose /sbin/swapon /var/swap.1
