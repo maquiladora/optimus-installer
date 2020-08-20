@@ -55,5 +55,13 @@ then
   rmdir /root/tmpramfs
 
 else
-  echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT n'existe pas"
+  if lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT
+  then
+    echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT n'existe pas"
+  fi
+
+  if [ ! -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
+  then
+    echo_red "Opération impossible : la partition est déjà crypté"
+  fi
 fi
