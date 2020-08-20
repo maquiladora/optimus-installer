@@ -115,7 +115,8 @@ else
   echo_magenta "L'accès SSH est désormais autorisé pour l'utilisateur root"
 fi
 
-if [ -f /root/.google_authenticator ]
+
+if [ ! -f /root/.google_authenticator ]
 then
   if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ACTIVATEGOOGLEAUTH; fi
   if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
@@ -145,10 +146,9 @@ then
       verbose chown debian:debian /home/debian/.google_authenticator
     fi
 
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
-
     verbose systemctl restart sshd
-    echo_magenta "L'accès SSH du serveur est désormais sécurisé par un code 2FA GOOGLE AUTHENTICATOR"
+    echo_magenta "L'accès SSH du serveur est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
+    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 
   else
     verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
@@ -156,6 +156,9 @@ then
     verbose systemctl restart sshd
     echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
   fi
+else
+  echo_magenta "L'accès SSH du serveur est sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
+  qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 fi
 
 echo
