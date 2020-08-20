@@ -62,6 +62,6 @@ else
 
   if [ -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
   then
-    echo_red "Opération impossible : la partition est déjà crypté"
+    echo_red "Opération impossible : la partition est déjà cryptée"
   fi
 fi
