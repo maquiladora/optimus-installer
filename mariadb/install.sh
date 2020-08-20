@@ -25,7 +25,7 @@ then
   echo_magenta "Démarrage du service..."
   verbose systemctl start mariadb
 
-  echo_magenta "Installation de la base de donnée 'users'"
+  echo_magenta "Installation de la base de données 'users'"
   for file in /etc/allspark/mariadb/*.sql
   do
     file="${file:22:-4}"
