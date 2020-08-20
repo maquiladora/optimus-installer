@@ -67,7 +67,7 @@ then
   require SECURE_DEBIAN_PASSWORD
   source /root/.allspark
   echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
-  echo_magenta "Le mot de passe de l'utilsiateur debian a été modifié avec succès"
+  echo_magenta "Le mot de passe de l'utilisateur debian a été modifié avec succès"
 fi
 
 
