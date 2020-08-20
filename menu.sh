@@ -1,5 +1,7 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
+require PART_TO_ENCRYPT
+source /root/.allspark
 
 while : ; do
 
