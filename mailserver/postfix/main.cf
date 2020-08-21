@@ -78,3 +78,10 @@ smtpd_tls_CAfile    = /etc/letsencrypt/live/$DOMAIN/chain.pem
 smtpd_tls_received_header = yes
 smtpd_tls_session_cache_timeout = 3600s
 tls_random_source = dev:/dev/urandom
+
+#OTHERS
+header_checks = regexp:/etc/postfix/unsubscribe.cf
+2bounce_notice_recipient = prime@$DOMAIN
+bounce_notice_recipient = prime@$DOMAIN
+delay_notice_recipient = prime@$DOMAIN
+error_notice_recipient = prime@$DOMAIN

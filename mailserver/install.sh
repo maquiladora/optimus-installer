@@ -72,6 +72,7 @@ then
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/postfix/transport.cf > /etc/postfix/transport.cf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/postfix/virtual_domains.cf > /etc/postfix/virtual_domains.cf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/postfix/smtpd.conf > /etc/postfix/sasl/smtpd.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/postfix/unsubscribe.cf > /etc/postfix/unsubscribe.cf
 
   echo_magenta "Installation des paquets de DOVECOT"
   verbose apt-get -qq -y install dovecot-imapd dovecot-mysql dovecot-sieve dovecot-managesieved
