@@ -36,7 +36,7 @@ then
   echo_magenta "Installation des dépendances et plugins"
   cd /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
-  composer install
+  sudo -u debian composer install
 
   chown -R www-data:www-data /srv/webmail
 
