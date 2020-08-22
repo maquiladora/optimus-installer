@@ -45,12 +45,12 @@ then
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
+  verbose mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
 
   echo_magenta "Creation de l'utilisateur MARIADB"
   verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON roundcube.* TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES;"
-  mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
