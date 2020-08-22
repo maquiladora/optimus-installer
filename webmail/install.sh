@@ -1,6 +1,9 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
 require DOMAIN
+require MAILSERVER_MARIADB_USER
+require MAILSERVER_MARIADB_PASSWORD password
+require WEBMAIL_DES_KEY deskey
 source /root/.allspark
 
 echo
@@ -15,7 +18,7 @@ then
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
-  apt-get -qq -y install php-ldap php-intl
+  verbose apt-get -qq -y install php-ldap php-intl
   #verbose pear install Net_SMTP
   #verbose pear install Auth_SASL
   #verbose pear install Net_IDNA2
@@ -24,7 +27,8 @@ then
   echo_magenta "Installation de ROUNDCUBE"
   cd /srv/webmail
   verbose git clone --depth=1 https://github.com/roundcube/roundcubemail .
-  chown -R www-data:www-data /srv/webmail
+  envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
+
 
   echo_magenta "Installation de COMPOSER"
   apt-get -qq -y install composer
@@ -33,6 +37,8 @@ then
   cd /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
   composer install
+
+  chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE roundcubemail CHARACTER SET utf8 COLLATE utf8_general_ci;"

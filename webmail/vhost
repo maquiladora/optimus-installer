@@ -2,7 +2,7 @@
   ServerAdmin prime@%DOMAIN%
   ServerName webmail.%DOMAIN%
   DirectoryIndex index.php index.html
-  DocumentRoot /srv/webmail/public_html
+  DocumentRoot /srv/webmail
   LogLevel warn
   ErrorLog /var/log/apache2/webmail-error.log
   CustomLog /var/log/apache2/webmail-access.log combined

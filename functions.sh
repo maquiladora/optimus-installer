@@ -80,6 +80,9 @@ require()
   elif [ $type ] && [ $type = "aeskey" ] && [ "${!variable}" = "auto" ]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
+  elif [ $type ] && [ $type = "deskey" ] && [ "${!variable}" = "auto" ]
+  then
+    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
   elif [ -z ${!variable} ]
   then
     echo_green "Merci de renseigner la variable $variable :"
