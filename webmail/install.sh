@@ -24,11 +24,15 @@ then
   #verbose pear install Net_IDNA2
   #verbose pear install Mail_mime
 
+  echo_magenta "Recherche de la version la plus récente de roundcube"
+  $latest=$(curl --silent "https://api.github.com/repos/roundcube/roundcubemail/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  echo_magenta $latest
+
   echo_magenta "Installation de ROUNDCUBE"
   cd /srv/webmail
-  wget -q https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
-  tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
-  verbose rm roundcubemail-1.4.8-complete.tar.gz
+  wget -q https://github.com/roundcube/roundcubemail/releases/download/$latest/roundcubemail-$latest-complete.tar.gz
+  tar xfz roundcubemail-$latest-complete.tar.gz --strip 1
+  verbose rm roundcubemail-$latest-complete.tar.gz
   verbose chown -R www-data:www-data /srv/webmail
   envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
 
@@ -45,7 +49,7 @@ then
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
-  verbose mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
+  mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
 
   echo_magenta "Creation de l'utilisateur MARIADB"
   verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON roundcube.* TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
