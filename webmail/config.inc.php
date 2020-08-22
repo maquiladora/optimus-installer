@@ -81,8 +81,22 @@ $config['mime_magic'] = null;
 // PLUGINS
 // ----------------------------------
 // List of active plugins (in plugins/ directory)
-$config['plugins'] = array('carddav','acl', 'autologin', 'jqueryui', 'compose_newwindow', 'contextmenu', 'contextmenu_folder', 'hotkeys', 'enigma', 'logout_redirect', 'markasjunk2', 'newmail_notifier', 'persistent_login', 'sauserprefs', 'sieverules', 'subscriptions_option', 'thunderbird_labels', 'vacation_sieve');
+$config['plugins'] = array(
+'acl',
+'jqueryui',
+'enigma',
+'newmail_notifier',
+'subscriptions_option',
 
+"contextmenu",
+"sauserprefs",
+"swipe",
+"thunderbird_labels",
+"keyboard_shortcuts",
+"fail2ban",
+"advanced_search",
+"chbox",
+"singleuserautologin");
 // ----------------------------------
 // USER INTERFACE
 // ----------------------------------
