@@ -15,6 +15,7 @@ then
   echo_magenta "Création de l'espace d'hébergement cloud.$DOMAIN..."
   mkdir -p /srv/cloud
   if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
+  chown -R www-data:www-data /srv/cloud;
 
   echo_magenta "Installation du module SABREDAV ALLSPARK"
   cp /etc/allspark/cloud/composer.json /srv/cloud/composer.json
@@ -23,14 +24,15 @@ then
   envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Création des dossiers et configuration des autorisations"
-  chown -R www-data:www-data /srv/cloud;
   mkdir -p /srv/files
   chown -R www-data:www-data /srv/files
 
   echo_magenta "Installation de SABREDAV (et ses dépendances)"
   apt-get -qq -y install composer
   cd /srv/cloud
+  chown -R debian:debian /srv/cloud
   sudo -u debian composer install
+  chown -R www-data:www-data /srv/cloud
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
