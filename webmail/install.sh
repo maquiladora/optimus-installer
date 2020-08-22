@@ -41,7 +41,7 @@ then
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
-  verbose mariadb -u root -e "CREATE DATABASE roundcubemail CHARACTER SET utf8 COLLATE utf8_general_ci;"
+  verbose mariadb -u root -e "CREATE DATABASE roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
   echo_magenta "Creation de l'utilisateur MARIADB"
   verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON roundcube.* TO '$MAILSERVER_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$MAILSERVER_MARIADB_PASSWORD';"
