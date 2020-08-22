@@ -51,8 +51,7 @@ then
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Modification de la configuration des plugins"
-  envsubst '${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /srv/webmail/plugins/sauserprefs/config.inc.php > /srv/webmail/config/config.inc.php
-  sed -i "s#mysql://username:password@localhost/database/#mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@localhost/mailserver#g"
+  sed -i "s#mysql://username:password@localhost/database/#mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@localhost/mailserver#g" /srv/webmail/config/config.inc.php
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
