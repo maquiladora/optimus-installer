@@ -43,6 +43,7 @@ if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install fail2ban
   cp /etc/allspark/secure/jail.local /etc/fail2ban/jail.local
+  cp /etc/allspark/secure/postfix-sasl.conf /etc/fail2ban/filter.d/postfix-sasl.conf
   systemctl restart fail2ban
   echo_magenta "FAIL2BAN a été installé avec succès"
 else
