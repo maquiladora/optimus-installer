@@ -6,7 +6,7 @@
 // format is db_provider://user:password@host/database
 // For examples see http://pear.php.net/manual/en/package.database.mdb2.intro-dsn.php
 // currently supported db_providers: mysql, mysqli, pgsql, sqlite, mssql or sqlsrv
-$config['db_dsnw'] = 'mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@localhost/roundcube';
+$config['db_dsnw'] = 'mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@127.0.0.1/roundcube';
 
 // Log sent messages to <log_dir>/sendmail or to syslog
 $config['smtp_log'] = false;
