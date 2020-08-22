@@ -158,7 +158,7 @@ fi
   echo "localhost" > /etc/opendmarc/ignore.hosts
   echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendmarc
-  verbose systemctl enable opendmarc
+  verbose systemctl enable opendmarc -q
 
 
   echo_magenta "Redémarrage des services"

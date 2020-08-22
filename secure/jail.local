@@ -21,21 +21,11 @@ bantime = 3600
 [postfix]
 enabled  = true
 port = smtp,ssmtp,submission
-filter = postfix['mode=aggressive]
+filter = postfix[mode=aggressive]
 logpath = /var/log/mail.log
 maxretry = 8
 finetime = 1800
 bantime = 86400
-
-
-[postfix-sasl]
-enabled = true
-port = smtp,ssmtp,imap2,imap3,imaps,pop3,pop3s,submission
-filter = postfix[mode=auth]
-logpath = /var/log/mail.log
-maxretry = 8
-finetime = 1800
-bantime = 3600
 
 
 [roundcube-auth]
