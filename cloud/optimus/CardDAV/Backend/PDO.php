@@ -1,6 +1,6 @@
 <?php
 
-namespace Optimus\CardDAV\Backend;
+namespace Allspark\CardDAV\Backend;
 
 use Sabre\CardDAV;
 use Sabre\DAV;

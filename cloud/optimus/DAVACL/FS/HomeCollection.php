@@ -1,5 +1,5 @@
 <?php
-namespace Optimus\DAVACL\FS;
+namespace Allspark\DAVACL\FS;
 
 class HomeCollection extends \Sabre\DAVACL\FS\HomeCollection
 {

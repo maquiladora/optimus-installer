@@ -1,6 +1,6 @@
 <?php
 
-namespace Optimus\DAVACL\PrincipalBackend;
+namespace Allspark\DAVACL\PrincipalBackend;
 
 use Sabre\DAV;
 use Sabre\DAV\MkCol;
@@ -24,14 +24,14 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
      *
      * @var string
      */
-    public $tableName = 'users';
+    public $tableName = 'users.users';
 
     /**
      * PDO table name for 'group members'
      *
      * @var string
      */
-    public $groupMembersTableName = 'groupmembers';
+    public $groupMembersTableName = 'cloud.groupmembers';
 
     /**
      * pdo
@@ -51,7 +51,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
          * This property can be used to display the users' real name.
          */
         '{DAV:}displayname' => [
-            'dbField' => 'lastname',
+            'dbField' => 'email',
         ],
 
         /**
@@ -119,14 +119,14 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
             $principals[] = $principal;
 
         }
-				
+
 				//print_r($principals);
 
         return $principals;
 
     }
-    
-    
+
+
 
     /**
      * Returns a specific principal, specified by it's path.
@@ -136,7 +136,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
      * @param string $path
      * @return array
      */
-    
+
 
 		function getPrincipalByPath($path) {
 
@@ -253,7 +253,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
         foreach ($searchProperties as $property => $value) {
             switch ($property) {
                 case '{DAV:}displayname' :
-                    $column = "lastname";
+                    $column = "email";
                     break;
                 case '{http://sabredav.org/ns}email-address' :
                     $column = "email";
@@ -314,12 +314,12 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
                 $query = 'SELECT CONCAT("principals/",email) as uri FROM ' . $this->tableName . ' WHERE lower(email)=lower(?)';
                 $stmt = $this->pdo->prepare($query);
                 $stmt->execute([ $value ]);
-            
+
                 while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                     // Checking if the principal is in the prefix
                     list($rowPrefix) = URLUtil::splitPath($row['uri']);
                     if ($rowPrefix !== $principalPrefix) continue;
-                    
+
                     $uri = $row['uri'];
                     break; //Stop on first match
                 }
@@ -362,24 +362,24 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
     function getGroupMembership($principal) {
 
         static $result;
-       
+
         if ($result == null)
         {
-        
-        
+
+
         $principal = $this->getPrincipalByPath($principal);
         if (!$principal) throw new DAV\Exception('Principal not found');
 
         $stmt = $this->pdo->prepare('SELECT CONCAT("principals/",principals.email) as uri FROM ' . $this->groupMembersTableName . ' AS groupmembers LEFT JOIN ' . $this->tableName . ' AS principals ON groupmembers.principal_id = principals.id WHERE groupmembers.member_id = ?');
         $stmt->execute([$principal['id']]);
-				
+
 				$result = [];
-				
-        
+
+
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $result[] = $row['uri'];
         }
-      	
+
       	$result[] = $principal['uri'];
       	}
       	 return $result;
@@ -437,6 +437,6 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
      * @param MkCol $mkCol
      * @return void
      */
-    
+
 
 }

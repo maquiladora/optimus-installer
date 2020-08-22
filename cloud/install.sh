@@ -19,6 +19,11 @@ then
 
   echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
+  echo_magenta "Installation du module SABREDAV ALLSPARK"
+  cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
+  cp /etc/allspark/cloud/composer.json /srv/cloud/composer.json
+  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
+
   echo_magenta "Installation de COMPOSER"
   verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 >& /dev/null
   verbose chmod 600 /var/swap.1
@@ -31,12 +36,8 @@ then
   echo_magenta "Installation de SABREDAV (et ses dépendances)"
   chown -R debian:debian /srv/cloud
   cd /srv/cloud
-  sudo -u debian /etc/composer.phar require sabre/dav ~3.2.0
+  sudo -u debian /etc/composer.phar install
   verbose /sbin/swapoff /var/swap.1
-
-  echo_magenta "Installation du module SABREDAV OPTIMUS"
-  cp -R /etc/allspark/cloud/optimus /srv/cloud/vendor/optimus
-  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
