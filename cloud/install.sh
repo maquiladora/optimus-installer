@@ -20,8 +20,9 @@ then
   echo_magenta "L'espace d'hébergement cloud.$DOMAIN a été installé avec succès !"
 
   echo_magenta "Installation du module SABREDAV ALLSPARK"
-  cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
   cp /etc/allspark/cloud/composer.json /srv/cloud/composer.json
+  cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
+  envsubst '${AES_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
   envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Installation de COMPOSER"
