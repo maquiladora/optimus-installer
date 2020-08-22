@@ -35,9 +35,9 @@ then
 
   echo_magenta "Installation des dépendances et plugins"
   cd /srv/webmail
+  chown debian:debian /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
   sudo -u debian composer install
-
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
