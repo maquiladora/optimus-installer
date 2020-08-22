@@ -42,6 +42,8 @@ if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous installer FAIL2BA
 if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install fail2ban
+  cp /etc/allspark/secure/jail.local /etc/fail2ban/jail.local
+  systemctl restart fail2ban
   echo_magenta "FAIL2BAN a été installé avec succès"
 else
   verbose apt-get -qq remove fail2ban

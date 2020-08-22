@@ -34,6 +34,8 @@ then
   tar xfz roundcubemail-$latest-complete.tar.gz --strip 1
   verbose rm roundcubemail-$latest-complete.tar.gz
   verbose chown -R www-data:www-data /srv/webmail
+  mkdir -p /var/log/roundcube
+  chown www-data:www-data /var/log/roundcube
   envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
 
 

@@ -1,0 +1,58 @@
+[sshd]
+enabled = true
+port = ssh,sftp,7822
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 8
+finetime = 1800
+bantime = 3600
+
+
+[dovecot]
+enabled = true
+port = pop3,pop3s,imap,imaps
+filter = dovecot
+logpath = /var/log/mail.log
+maxretry = 8
+finetime = 1800
+bantime = 3600
+
+
+[postfix]
+enabled  = true
+port = smtp,ssmtp
+filter = postfix
+logpath = /var/log/mail.log
+maxretry = 8
+finetime = 1800
+bantime = 3600
+
+
+[sasl]
+enabled = true
+port = smtp,ssmtp,imap2,imap3,imaps,pop3,pop3s
+filter = sasl
+logpath = /var/log/mail.log
+maxretry = 8
+finetime = 1800
+bantime = 3600
+
+
+[roundcube-auth]
+enabled = true
+port = 80,443
+filter = roundcube-auth
+logpath = /var/log/roundcube/errors.log
+maxretry  = 8
+finetime = 1800
+bantime = 3600
+
+
+[sabredav]
+enabled  = true
+filter = apache-auth
+action = iptables-multiport[name=auth, port="http,https"]
+logpath = /var/log/fail2ban.log
+maxretry = 8
+finetime = 1800
+bantime = 3600

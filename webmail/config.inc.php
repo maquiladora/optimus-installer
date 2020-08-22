@@ -54,7 +54,7 @@ $config['skin_logo'] = '';
 
 // use this folder to store log files (must be writeable for apache user)
 // This is used by the 'file' log driver.
-$config['log_dir'] = 'logs/';
+$config['log_dir'] = '/var/log/roundcube/';
 
 // use this folder to store temp files (must be writeable for apache user)
 $config['temp_dir'] = 'temp/';
@@ -99,7 +99,6 @@ $config['plugins'] = array(
 "hotkeys",
 "fail2ban",
 "advanced_search",
-"chbox",
 "singleuserautologin");
 // ----------------------------------
 // USER INTERFACE
