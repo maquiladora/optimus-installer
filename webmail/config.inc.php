@@ -96,7 +96,7 @@ $config['plugins'] = array(
 "sauserprefs",
 "swipe",
 "thunderbird_labels",
-"keyboard_shortcuts",
+"hotkeys",
 "fail2ban",
 "advanced_search",
 "chbox",
