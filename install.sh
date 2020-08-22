@@ -7,9 +7,11 @@ sudo rm -R /etc/allspark
 sudo mkdir /etc/allspark
 sudo git clone -b vest https://github.com/MetallianFR68/optimus-installer /etc/allspark
 
-if ! grep -q "sudo /etc/allspark/menu.sh" ~/.bashrc
+sudo timedatectl set-timezone Europe/Paris
+
+if ! grep -q "sudo /etc/allspark/menu.sh" /root/.bashrc
 then
-  echo "sudo /etc/allspark/menu.sh" >> ~/.bashrc
+  sudo echo "sudo /etc/allspark/menu.sh" >> /root/.bashrc
 fi
 
 sudo chmod +x /etc/allspark/menu.sh

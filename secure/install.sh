@@ -122,7 +122,7 @@ then
   if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
   then
 
-    verbose apt-get -qq -y install libpam-google-authenticator qrencode
+    verbose apt-get -qq -y install libpam-google-authenticator qrencode ntp
 
     if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
     then
