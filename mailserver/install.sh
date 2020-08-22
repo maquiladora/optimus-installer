@@ -81,6 +81,7 @@ then
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/dovecot/dovecot.conf > /etc/dovecot/dovecot.conf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/dovecot/dovecot-sql.conf > /etc/dovecot/dovecot-sql.conf
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/dovecot/dovecot-dict-sql.conf > /etc/dovecot/dovecot-dict-sql.conf
+  envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/dovecot/quota_warning.sh > /etc/dovecot/quota_warning.sh
   touch /var/log/dovecot.log
   chmod +666 /var/log/dovecot.log
   touch /var/log/dovecot-info.log
