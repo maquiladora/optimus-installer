@@ -43,7 +43,7 @@ if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
 then
   verbose apt-get -qq install fail2ban
   cp /etc/allspark/secure/jail.local /etc/fail2ban/jail.local
-  sed -i 's/mdpr-ddos = (?:lost connection after(?! DATA) [A-Z]+/mdpr-ddos = (?:lost connection after(?! DATA) [A-Z]+|disconnect(?= from \S+(?: \S+=\d+)* auth=0/(?:[1-9]|\d\d+)))/g'
+  sed -i 's/mdpr-ddos = lost connection after(?! DATA) [A-Z]+/mdpr-ddos = (?:lost connection after(?! DATA) [A-Z]+|disconnect(?= from \S+(?: \S+=\d+)* auth=0/(?:[1-9]|\d\d+)))/g'
   systemctl restart fail2ban
   echo_magenta "FAIL2BAN a été installé avec succès"
 else

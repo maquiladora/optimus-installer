@@ -153,7 +153,7 @@ fi
   sudo mkdir -p /var/spool/postfix/opendmarc
   sudo chown opendmarc:opendmarc /var/spool/postfix/opendmarc -R
   sudo chmod 750 /var/spool/postfix/opendmarc/ -R
-  sudo adduser postfix opendmarc
+  sudo adduser -q postfix opendmarc
   echo "localhost" > /etc/opendmarc/ignore.hosts
   echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendmarc
