@@ -104,8 +104,8 @@ $config['plugins'] = array(
 $config['swipe_actions'] = array(
     'messagelist' => array(
         'left' => 'move',
-        'right' => 'delete ',
-        'down' => 'checkmail '
+        'right' => 'delete',
+        'down' => 'checkmail'
     ),
     'contactlist' => array(
         'left' => 'none',
