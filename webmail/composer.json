@@ -29,7 +29,6 @@
         "texxasrulez/keyboard_shortcuts":"~2.6",
         "texxasrulez/fail2ban":"~1.4",
         "texxasrulez/advanced_search":"~3.4",
-        "roundcube/chbox":"dev-master",
         "radiorabe/singleuserautologin":"dev-master"
     },
     "require-dev": {
