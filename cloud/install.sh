@@ -14,7 +14,6 @@ then
 
   echo_magenta "Création de l'espace d'hébergement cloud.$DOMAIN..."
   mkdir -p /srv/cloud
-  if [ ! -f "/srv/cloud/index.html" ]; then echo "cloud" > /srv/cloud/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/cloud.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/cloud/vhost > /etc/apache2/sites-enabled/cloud.conf; fi
 
   echo_magenta "Installation du module SABREDAV ALLSPARK"
@@ -23,27 +22,15 @@ then
   envsubst '${AES_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
   envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
-  echo_magenta "Création d'un SWAP temporaire"
-  verbose /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024 >& /dev/null
-  verbose chmod 600 /var/swap.1
-  verbose /sbin/mkswap /var/swap.1
-  verbose /sbin/swapon /var/swap.1
-  echo_magenta "Installation de COMPOSER"
-  php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-  php -r "if (hash_file('sha384', 'composer-setup.php') != '$(wget -q -O - https://composer.github.io/installer.sig)') unlink('composer-setup.php'); echo PHP_EOL;"
-  php composer-setup.php --install-dir /etc
-  php -r "unlink('composer-setup.php');"
-
-  echo_magenta "Création des dossiers et configuration des authorisations"
+  echo_magenta "Création des dossiers et configuration des autorisations"
   chown -R www-data:www-data /srv/cloud;
   mkdir -p /srv/files
   chown -R www-data:www-data /srv/files
 
   echo_magenta "Installation de SABREDAV (et ses dépendances)"
+  apt-get -qq -y install composer
   cd /srv/cloud
-  sudo -u debian /etc/composer.phar install
-  echo_magenta "Suppresion du SWAP temporaire"
-  verbose /sbin/swapoff /var/swap.1
+  sudo -u debian composer install
 
   echo_magenta "Installation des bases de données MARIADB"
   if [ -f "/srv/databases/CLOUD_DB_VERSION" ]; then db_version=$(cat /srv/databases/CLOUD_DB_VERSION); fi
