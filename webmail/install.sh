@@ -15,7 +15,7 @@ then
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
-  #verbose apt-get install php-ldap php-intl
+  apt-get -qq -y install php-ldap php-intl
   #verbose pear install Net_SMTP
   #verbose pear install Auth_SASL
   #verbose pear install Net_IDNA2
@@ -23,7 +23,7 @@ then
 
   echo_magenta "Installation de ROUNDCUBE"
   cd /srv/webmail
-  git clone --depth=1 https://github.com/roundcube/roundcubemail .
+  verbose git clone --depth=1 https://github.com/roundcube/roundcubemail .
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Installation de COMPOSER"
