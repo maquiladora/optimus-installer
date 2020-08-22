@@ -46,7 +46,7 @@ $config['smtp_pass'] = '%p';
 
 // provide an URL where a user can get support for this Roundcube installation
 // PLEASE DO NOT LINK TO THE ROUNDCUBE.NET WEBSITE HERE!
-$config['support_url'] = 'http://www.cybertron.fr/';
+$config['support_url'] = 'https://forum.cybertron.fr/';
 
 // replace Roundcube logo with this image
 // specify an URL relative to the document root of this Roundcube installation
@@ -100,6 +100,20 @@ $config['plugins'] = array(
 "fail2ban",
 "advanced_search",
 "singleuserautologin");
+
+$config['swipe_actions'] = array(
+    'messagelist' => array(
+        'left' => 'move',
+        'right' => 'delete ',
+        'down' => 'checkmail '
+    ),
+    'contactlist' => array(
+        'left' => 'none',
+        'right' => 'none',
+        'down' => 'none'
+    )
+);
+
 // ----------------------------------
 // USER INTERFACE
 // ----------------------------------
