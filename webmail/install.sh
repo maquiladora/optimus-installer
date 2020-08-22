@@ -25,7 +25,7 @@ then
   #verbose pear install Mail_mime
 
   echo_magenta "Recherche de la version la plus récente de roundcube"
-  $latest=$(curl --silent "https://api.github.com/repos/roundcube/roundcubemail/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+  latest=$(curl --silent "https://api.github.com/repos/roundcube/roundcubemail/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
   echo_magenta $latest
 
   echo_magenta "Installation de ROUNDCUBE"
