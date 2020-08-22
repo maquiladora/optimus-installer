@@ -26,7 +26,10 @@ then
 
   echo_magenta "Installation de ROUNDCUBE"
   cd /srv/webmail
-  verbose git clone --depth=1 https://github.com/roundcube/roundcubemail .
+  wget -q https://github.com/roundcube/roundcubemail/releases/download/1.4.8/roundcubemail-1.4.8-complete.tar.gz
+  tar xfz roundcubemail-1.4.8-complete.tar.gz --strip 1
+  verbose rm roundcubemail-1.4.8-complete.tar.gz
+  verbose chown -R www-data:www-data /srv/webmail
   envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
 
 
