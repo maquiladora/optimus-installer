@@ -27,7 +27,7 @@ then
   chown -R www-data:www-data /srv/files
 
   echo_magenta "Installation de SABREDAV (et ses dépendances)"
-  apt-get -qq -y install composer
+  verbose apt-get -qq -y install composer
   cd /srv/cloud
   chown -R debian:debian /srv/cloud
   sudo -u debian composer install
