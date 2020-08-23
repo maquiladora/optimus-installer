@@ -72,18 +72,94 @@ require()
   question=${3}
   valeur=${4}
 
-  if [ $type ] && [ $type = "uuid" ] && [[ "${!variable}" = "auto" ]]
+  if [ $type ] && [ $type = "uuid" ]
   then
-    valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
-  elif [ $type ] && [ $type = "password" ] && [ "${!variable}" = "auto" ]
+    if [[ "${!variable}" = "auto" ]]
+    then
+      valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
+    elif [ -z ${!variable} ]
+    then
+      echo_green "Voulez vous générer $variable automatiquement ?"
+      while [ -z "$valeur" ]
+      do
+        read -p "(o)ui / (n)on ? " -n 1 -e valeur
+        if [[ $valeur =~ ^[YyOo]$ ]]
+        then
+          valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
+        elif [[ $valeur =~ ^[nN]$ ]]
+        then
+          read valeur
+        else
+          echo_red "Réponse invalide"
+        fi
+      done
+    fi
+  elif [ $type ] && [ $type = "password" ]
   then
-    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
-  elif [ $type ] && [ $type = "aeskey" ] && [ "${!variable}" = "auto" ]
+    if [[ "${!variable}" = "auto" ]]
+    then
+      valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
+    elif [ -z ${!variable} ]
+    then
+      echo_green "Voulez vous générer $variable automatiquement ?"
+      while [ -z "$valeur" ]
+      do
+        read -p "(o)ui / (n)on ? " -n 1 -e valeur
+        if [[ $valeur =~ ^[YyOo]$ ]]
+        then
+          valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
+        elif [[ $valeur =~ ^[nN]$ ]]
+        then
+          read valeur
+        else
+          echo_red "Réponse invalide"
+        fi
+      done
+    fi
+  elif [ $type ] && [ $type = "aeskey" ]
   then
-    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
-  elif [ $type ] && [ $type = "deskey" ] && [ "${!variable}" = "auto" ]
+    if [[ "${!variable}" = "auto" ]]
+    then
+      valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
+    elif [ -z ${!variable} ]
+    then
+      echo_green "Voulez vous générer $variable automatiquement ?"
+      while [ -z "$valeur" ]
+      do
+        read -p "(o)ui / (n)on ? " -n 1 -e valeur
+        if [[ $valeur =~ ^[YyOo]$ ]]
+        then
+          valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
+        elif [[ $valeur =~ ^[nN]$ ]]
+        then
+          read valeur
+        else
+          echo_red "Réponse invalide"
+        fi
+      done
+    fi
+  elif [ $type ] && [ $type = "deskey" ]
   then
-    valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
+    if [[ "${!variable}" = "auto" ]]
+    then
+      valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
+    elif [ -z ${!variable} ]
+    then
+      echo_green "Voulez vous générer $variable automatiquement ?"
+      while [ -z "$valeur" ]
+      do
+        read -p "(o)ui / (n)on ? " -n 1 -e valeur
+        if [[ $valeur =~ ^[YyOo]$ ]]
+        then
+          valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
+        elif [[ $valeur =~ ^[nN]$ ]]
+        then
+          read valeur
+        else
+          echo_red "Réponse invalide"
+        fi
+      done
+    fi
   elif [ -z ${!variable} ]
   then
     echo_green "$question"
