@@ -1,15 +1,15 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN string
+require DOMAIN string "Veuillez indiquer votre nom de domaine :"
 echo_red $DOMAIN
 require MODULE_WWW yesno "Souhaitez vous installer l'espace d'hébèrgement www.$DOMAIN ?"
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
-
 if [[ $MODULE_WWW =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
+
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
 
   if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
