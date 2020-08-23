@@ -14,12 +14,14 @@ then
   then
     if [ -e /dev/nvme0n1 ]
     then
-      export DISKPART_DISK_TO_PART=nvme0n1
-      export PART_TO_ENCRYPT=nvme0n1p2
+      update_conf DISKPART_DISK_TO_PART nvme0n1
+      update_conf PART_TO_ENCRYPT nvme0n1p2
+      source /root/.allspark
     elif [ -e /dev/sda ]
     then
-      export DISKPART_DISK_TO_PART=sda
-      export PART_TO_ENCRYPT=sda2
+      update_conf DISKPART_DISK_TO_PART sda
+      update_conf PART_TO_ENCRYPT sda2
+      source /root/.allspark
     else
       require DISKPART_DISK_TO_PART string "Veuillez indiquer sur quel disque se trouve la partition à partitionner :";
       require PART_TO_ENCRYPT string "Veuillez indiquer le nom de la nouvelle partition a créér :";
@@ -34,8 +36,9 @@ then
 
     if [ ! -z "$FREESPACE" ]
     then
-      if [ ! $DISKPART_USE_FREESPACE ]; then echo_green "Souhaitez vous utiliser les $FREESPACE non partitionnés de $DISKPART_DISK_TO_PART"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_USE_FREESPACE; fi
-      if [[ $DISKPART_USE_FREESPACE =~ ^[Yy]$ ]]
+      require DISKPART_USE_FREESPACE yesno "Souhaitez vous utiliser les $FREESPACE non partitionnés de $DISKPART_DISK_TO_PART";
+      source /root/.allspark
+      if [ $DISKPART_USE_FREESPACE = "Y" ]
       then
         echo $FIRSTSECTOR | /usr/sbin/sfdisk /dev/$PART_TO_ENCRYPT --append --force
         /usr/sbin/mkfs.ext4 /dev/$PART_TO_ENCRYPT
@@ -48,8 +51,9 @@ then
       echo_red "IL N'EST RECOMMANDE DE LA LANCER QUE SUR UN SYSTEME VIERGE DE TOUTES DONNEES"
       echo
 
-      if [ ! $DISKPART_RESIZE_PARTITION_AREYOUSURE ]; then echo_green "Souhaitez vous redimensionner le disque $DISKPART_DISK_TO_PART ?"; read -p "(o)ui / (n)on ? " -n 1 -e DISKPART_RESIZE_PARTITION_AREYOUSURE; fi
-      if [[ $DISKPART_RESIZE_PARTITION_AREYOUSURE =~ ^[YyOo]$ ]]
+      require DISKPART_RESIZE_PARTITION yesno "Souhaitez vous redimensionner le disque $DISKPART_DISK_TO_PART ?";
+      source /root/.allspark
+      if [ $DISKPART_RESIZE_PARTITION = "Y" ]
       then
         echo_magenta "Mise en place des scripts de partitionnement..."
         verbose cp /etc/allspark/diskpart/resizefs_hook /etc/initramfs-tools/hooks/resizefs_hook
