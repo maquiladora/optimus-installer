@@ -4,7 +4,7 @@ port = ssh,sftp,7822
 filter = sshd
 logpath = /var/log/auth.log
 maxretry = 8
-finetime = 1800
+findtime = 1800
 bantime = 3600
 
 
@@ -14,7 +14,7 @@ port = pop3,pop3s,imap,imaps
 filter = dovecot
 logpath = /var/log/mail.log
 maxretry = 8
-finetime = 1800
+findtime = 1800
 bantime = 3600
 
 
@@ -24,7 +24,7 @@ port = smtp,ssmtp,submission
 filter = postfix[mode=aggressive]
 logpath = /var/log/mail.log
 maxretry = 8
-finetime = 1800
+findtime = 1800
 bantime = 86400
 
 
@@ -34,7 +34,7 @@ port = 80,443
 filter = roundcube-auth
 logpath = /var/log/roundcube/errors.log
 maxretry  = 8
-finetime = 1800
+findtime = 1800
 bantime = 3600
 
 
@@ -44,5 +44,5 @@ filter = apache-auth
 action = iptables-multiport[name=auth, port="http,https"]
 logpath = /var/log/fail2ban.log
 maxretry = 8
-finetime = 1800
+findtime = 1800
 bantime = 3600

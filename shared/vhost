@@ -8,7 +8,7 @@
   CustomLog /var/log/apache2/shared-access.log combined
 
   <Directory /srv/shared/>
-    Options FollowSymLinks
+    Options +FollowSymLinks
     AllowOverride None
     Require all granted
   </Directory>
