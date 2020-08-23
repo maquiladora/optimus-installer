@@ -72,16 +72,16 @@ require()
   question=${3}
   valeur=${4}
 
-  if [ $type ] && [ $type = "uuid" ] && [ "${!variable}" = "auto" ]
+  if [ $type ] && [ $type = "uuid" ] && [[ "${!variable}" == "auto" ]]
   then
     valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
-  elif [ $type ] && [ $type = "password" ] && [ "${!variable}" = "auto" ]
+  elif [ $type ] && [ $type = "password" ] && [[ "${!variable}" == "auto" ]]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
-  elif [ $type ] && [ $type = "aeskey" ] && [ "${!variable}" = "auto" ]
+  elif [ $type ] && [ $type = "aeskey" ] && [[ "${!variable}" == "auto" ]]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
-  elif [ $type ] && [ $type = "deskey" ] && [ "${!variable}" = "auto" ]
+  elif [ $type ] && [ $type = "deskey" ] && [[ "${!variable}" == "auto" ]]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
   elif [ -z ${!variable} ]
