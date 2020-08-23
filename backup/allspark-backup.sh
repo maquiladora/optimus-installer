@@ -3,7 +3,11 @@ clear
 
 # mysqldump --all-databases --ignore-database roundcube | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
 
-mysql -N -e 'show databases' | while read dbname; do mysqldump --complete-insert --routines --triggers --single-transaction "$dbname" > "$dbname".sql; done | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
+mysql -N -e 'show databases' | while read dbname; do mysqldump --complete-insert --routines --triggers --single-transaction "$dbname" > "/srv/db-backup/$dbname".sql; done
+gzip /srv/db-backup/*.sql /srv/db-backup/`date +%Y-%m-%d.sql.gz`
+rm /srv/db-backup/*.sql
+
+exit 0
 
 # rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats --backup --backup-dir=debian@$BACKUP_SERVER:/srv/increments/`date +%Y-%m-%d--%Hh%M` --exclude '/srv/increments' -e "ssh -p 22 -i /root/private.pem" '/srv/' 'debian@$BACKUP_SERVER:/srv/' | tee rsync.log
 
