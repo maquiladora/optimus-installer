@@ -30,8 +30,8 @@ then
   verbose apt-get -qq -y install composer
   cd /srv/cloud
   chown -R debian:debian /srv/cloud
-  sudo -u debian composer install
-  sudo -u debian composer update
+  sudo -u debian composer install --no-interaction --no-dev
+  sudo -u debian composer update --no-interaction --no-dev
   chown -R www-data:www-data /srv/cloud
 
   echo_magenta "Installation des bases de données MARIADB"

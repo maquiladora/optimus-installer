@@ -41,8 +41,8 @@ then
   cd /srv/webmail
   chown -R debian:debian /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
-  sudo -u debian composer install --no-interaction
-  sudo -u debian composer update --no-interaction
+  sudo -u debian composer install --no-interaction --no-dev
+  sudo -u debian composer update --no-interaction  --no-dev
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Modification de la configuration des plugins"
