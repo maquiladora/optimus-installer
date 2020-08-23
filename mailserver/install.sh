@@ -6,7 +6,7 @@ if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string 
 if [ -z $MAILSERVER_MARIADB_PASSWORD ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
 if [ -z $MAILSERVER_POSTMASTER_MAILBOX_USER ]; then require MAILSERVER_POSTMASTER_MAILBOX_USER string "Veuillez renseigner l'adresse mail de l'administrateur mail :"; source /root/.allspark; fi
 if [ -z $MAILSERVER_POSTMASTER_MAILBOX_PASSWORD ]; then require MAILSERVER_POSTMASTER_MAILBOX_PASSWORD password "Veuillez renseigner le mot de passe de la boite mail de l'administrateur mail :"; source /root/.allspark; fi
-if [ -z $AES_KEY ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
+if [ -z $AES_KEY ]; then require AES_KEY "aeskey" "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
 
