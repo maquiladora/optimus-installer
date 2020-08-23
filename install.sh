@@ -14,4 +14,9 @@ then
   sudo echo "sudo /etc/allspark/menu.sh" >> /root/.bashrc
 fi
 
+if ! grep -q "sudo /etc/allspark/menu.sh" /home/debian/.bashrc
+then
+  sudo echo "sudo /etc/allspark/menu.sh" >> /home/debian/.bashrc
+fi
+
 sudo chmod +x /etc/allspark/menu.sh

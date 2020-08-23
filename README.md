@@ -75,7 +75,7 @@ Ensuite répondez comme suit aux questions posées :
 * Set up users and Passwords : debian
 * Choose an password for the new users : Choisissez un mot de passe de 10 caractères minimum mélangeant chiffres, minuscules, majuscules et caractères spéciaux et surtout ne l'oubliez pas !
 * Partition Disk : Manual -> /dev/nvme0n1 -> Yes -> pri/log -> Create a new partition -> 20 GB -> Primary -> Beginning -> Bootable flag : on -> Done setting up the partition -> Finish partitioning and write changes to disk -> No -> Yes
-* Software selection : Uniquement "SSH Server" et "standard system utilites"
+* Software selection : Uniquement "SSH Server" et "standard system utilities"
 * Configure the package manager : France -> deb.debian.org -> Continue -> No
 * Install the GRUB boot loader : Yes -> /dev/nvme0n1
 * Finish the installation : Retirez la clé USB puis "continue"
