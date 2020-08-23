@@ -7,7 +7,7 @@ if [ -z $MAILSERVER_MARIADB_PASSWORD ]; then require MAILSERVER_MARIADB_PASSWORD
 if [ -z $DES_KEY ]; then require DES_KEY deskey "Veuillez renseigner une clé de chiffrement DES de 24 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_UPGRADE =~ ^[YyOo]$ ]]
+if [ $MODULE_WEBMAIL = "Y" ]
 then
   echo
   echo_green "==== INSTALLATION DU WEBMAIL ===="

@@ -3,7 +3,7 @@ source /etc/allspark/functions.sh
 if [ -z $MODULE_UPGRADE ]; then require MODULE_UPGRADE yesno "Voulez vous mettre à jour le système -> update/upgrade/dist-upgrade ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_UPGRADE =~ ^[YyOo]$ ]]
+if [ $MODULE_UPGRADE = "Y" ]
 then
   echo_green "==== MISE A JOUR DU SYSTEME ===="
 

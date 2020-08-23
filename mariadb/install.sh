@@ -7,7 +7,7 @@ if [ -z $MARIADB_ADMIN_PASSWORD ]; then require MARIADB_ADMIN_PASSWORD password 
 if [ -z $AES_KEY ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_MARIADB =~ ^[YyOo]$ ]]
+if [ $MODULE_MARIADB = "Y" ]
 then
 
   echo

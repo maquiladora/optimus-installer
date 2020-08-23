@@ -6,7 +6,7 @@ if [ -z $CLOUD_MARIADB_USER ]; then require CLOUD_MARIADB_USER string "Veuillez 
 if [ -z $CLOUD_MARIADB_PASSWORD ]; then require CLOUD_MARIADB_PASSWORD password "Voulez renseigner le mot de passe de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_CLOUD =~ ^[YyOo]$ ]]
+if [ $MODULE_CLOUD = "Y" ]
 then
   echo
   echo_green "==== INSTALLATION DU CLOUD SABREDAV (WEBDAV) ===="

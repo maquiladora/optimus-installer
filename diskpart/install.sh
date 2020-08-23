@@ -4,7 +4,7 @@ if [ -z $MODULE_DISKPART ]; then require MODULE_DISKPART yesno "Voulez-vous cré
 source /root/.allspark
 
 
-if [[ $MODULE_DISKPART =~ ^[YyOo]$ ]]
+if [ $MODULE_DISKPART = "Y" ]
 then
 
   echo

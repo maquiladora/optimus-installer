@@ -10,7 +10,7 @@ if [ -z $AES_KEY ]; then require AES_KEY aeskey "Veuillez renseigner une clé de
 source /root/.allspark
 
 
-if [[ $MODULE_MAILSERVER =~ ^[YyOo]$ ]]
+if [ $MODULE_MAILSERVER = "Y" ]
 then
 
   echo

@@ -4,7 +4,7 @@ if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de do
 if [ -z $MODULE_WWW ]; then require MODULE_WWW  yesno "Souhaitez vous installer l'espace d'hébèrgement www.$DOMAIN ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_WWW =~ ^[YyOo]$ ]]
+if [ $MODULE_WWW = "Y" ]
 then
   echo
   echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="

@@ -5,7 +5,7 @@ if [ -z $PART_TO_ENCRYPT ]; then require PART_TO_ENCRYPT string "Veuillez indiqu
 if [ -z $UUID ]; then require UUID uuid "Veuillez choisir et renseigner un identifiant unique de 16 caractères [A-Z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_DECRYPT =~ ^[YyOo]$ ]]
+if [ $MODULE_DECRYPT = "Y" ]
 then
 
   echo

@@ -3,7 +3,7 @@ source /etc/allspark/functions.sh
 if [ -z $MODULE_PHP ]; then require MODULE_PHP yesno "Voulez-vous installer PHP ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_PHP =~ ^[YyOo]$ ]]
+if [ $MODULE_PHP = "Y" ]
 then
 
   echo

@@ -1,6 +1,6 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
 source /root/.allspark
 
 echo

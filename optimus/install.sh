@@ -4,7 +4,7 @@ if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de do
 if [ -z $MODULE_OPTIMUS ]; then require MODULE_OPTIMUS yesno "Voulez-vous installer le client OPTIMUS ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_OPTIMUS =~ ^[YyOo]$ ]]
+if [ $MODULE_OPTIMUS = "Y" ]
 then
 
   echo

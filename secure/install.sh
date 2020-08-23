@@ -6,13 +6,13 @@ if [ -z $MODULE_SECURE_ENABLEFW ]; then require MODULE_SECURE_ENABLEFW yesno "Vo
 if [ -z $MODULE_SECURE_FAIL2BAN ]; then require MODULE_SECURE_FAIL2BAN yesno "Voulez vous installer FAIL2BAN ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_CHANGEROOTPASS ]; then require MODULE_SECURE_CHANGEROOTPASS yesno "Voulez vous modifier le mot de passe root ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_CHANGEDEBIANPASS ]; then require MODULE_SECURE_CHANGEDEBIANPASS yesno "Voulez vous modifier le mot de passe de l'utilisateur 'debian' ?"; source /root/.allspark; fi
-if [ -z $MODULE_SECURE_SSH_REPLACEDEFAULTPORT ]; then require MODULE_SECURE_SSHREPLACEDEFAULTPORT yesno "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; source /root/.allspark; fi
-if [ -z $MODULE_SECURE_SSH_DISABLEROOTACCESS ]; then require MODULE_SECURE_SSHDISABLEROOTACCESS yesno "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; source /root/.allspark; fi
-if [ -z $MODULE_SECURE_SSH_2FA ]; then require MODULE_SECURE_ACTIVATEGOOGLEAUTH yesno "Voulez vous protéger l'accès SSH avec une authentification 2 à deux facteurs (authenticator) ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_REPLACEDEFAULTPORT ]; then require MODULE_SECURE_SSH_REPLACEDEFAULTPORT yesno "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_DISABLEROOTACCESS ]; then require MODULE_SECURE_SSH_DISABLEROOTACCESS yesno "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_2FA ]; then require MODULE_SECURE_SSH_2FA yesno "Voulez vous protéger l'accès SSH avec une authentification 2 à deux facteurs (authenticator) ?"; source /root/.allspark; fi
 source /root/.allspark
 
 
-if [[ $MODULE_SECURE_UPDATE =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_UPDATE = "Y" ]
 then
   echo
   echo_green "==== MISE A JOUR DU SYSTEME ===="
@@ -21,11 +21,10 @@ then
   apt-get -qq upgrade
 fi
 
-
-if [[ $MODULE_SECURE_ENABLEFW =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_ENABLEFW = "Y" ]
 then
   echo
-  echo_green "==== FIREWALL ===="
+  echo_green "==== PARE FEU ===="
   echo_magenta "Installation des paquets requis"
   verbose apt-get -qq install ufw
   echo_magenta "Ouverture du port SSH"
@@ -39,7 +38,7 @@ then
   verbose /sbin/ufw --force enable
 else
   echo
-  echo_green "==== FIREWALL ===="
+  echo_green "==== PARE FEU ===="
   if [ $(which /sbin/ufw) ]
   then
     echo_magenta "Désactivation du firewall"
@@ -47,8 +46,7 @@ else
   fi
 fi
 
-
-if [[ $MODULE_SECURE_FAIL2BAN =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_FAIL2BAN = "Y" ]
 then
   echo
   echo_green "==== FAIL2BAN ===="
@@ -67,8 +65,7 @@ else
   verbose apt-get -qq remove fail2ban
 fi
 
-
-if [[ $MODULE_SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_CHANGEROOTPASS = "Y" ]
 then
   echo
   echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
@@ -78,8 +75,7 @@ then
   echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
 fi
 
-
-if [[ $MODULE_SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_CHANGEDEBIANPASS = "Y" ]
 then
   echo
   echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
@@ -90,11 +86,10 @@ then
 fi
 
 
-
-if [[ $MODULE_SECURE_SSH_REPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_SSH_REPLACEDEFAULTPORT = "Y" ]
 then
   echo
-  echo_green "==== SERVEUR SSH ===="
+  echo_green "==== PORT DU SERVEUR SSH ===="
   echo_magenta "Remplacement du port 22 par le port 7822"
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
   echo_magenta "Ouverture du port 7822 et fermeture du port 22"
@@ -107,7 +102,7 @@ then
   verbose systemctl restart ssh
 else
   echo
-  echo_green "==== SERVEUR SSH ===="
+  echo_green "==== PORT DU SERVEUR SSH ===="
   echo_magenta "Remplacement du port 7822 par le port 22"
   verbose sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
   echo_magenta "Ouverture du port 22 et fermeture du port 7822"
@@ -120,8 +115,7 @@ else
   verbose systemctl restart ssh
 fi
 
-
-if [[ $MODULE_SECURE_SSH_DISABLEROOTACCESS =~ ^[YyOo]$ ]]
+if [ $MODULE_SECURE_SSH_DISABLEROOTACCESS = "Y" ]
 then
   echo
   echo_green "==== ACCESS SSH DE L'UTILISATEUR ROOT ===="
@@ -144,59 +138,59 @@ else
 fi
 
 
+if [ $MODULE_SECURE_SSH2FA = "Y" ]
+then
+  echo
+  echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
+
+  echo_magenta "Installation des paquets requis"
+  verbose apt-get -qq -y install libpam-google-authenticator qrencode ntp
+
+  echo_magenta "Activation de l'authentification à deux niveaux"
+  if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
+  then
+    echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
+  fi
+  verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+
+  verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
+
+  if ! grep -q "AuthenticationMethods publickey,keyboard-interactive" /etc/ssh/sshd_config
+  then
+    echo 'AuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+  fi
+
+  echo_magenta "Génération des clés d'accès"
+  google-authenticator --time-based --force --quiet --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN --issuer=ALLSPARK
+  update_conf SECURE_GOOGLEAUTH_KEY $(cat /root/.google_authenticator | head -1)
+
+  echo_magenta "Copie des codes d'accès dans les paramètres de l'utilisateur 'debian'"
+  if [ -d "/home/debian" ]
+  then
+    verbose cp /root/.google_authenticator /home/debian/.google_authenticator
+    verbose chown debian:debian /home/debian/.google_authenticator
+  fi
+
+  echo_magenta "Redémarrage des services"
+  verbose systemctl restart sshd
+
+else
+
+  echo
+  echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
+  echo_magenta "Désactivation de l'authentification à deux niveaux"
+  verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
+  verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
+  verbose rm /root/.google_authenticator
+  verbose rm /home/debian/.google_authenticator
+  echo_magenta "Redémarrage des services"
+  verbose systemctl restart sshd
+
+fi
+
+
 if [ ! -f /root/.google_authenticator ]
 then
-  if [[ $MODULE_SECURE_SSH2FA =~ ^[YyOo]$ ]]
-  then
-    echo
-    echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
-
-    echo_magenta "Installation des paquets requis"
-    verbose apt-get -qq -y install libpam-google-authenticator qrencode ntp
-
-    echo_magenta "Activation de l'authentification à deux niveaux"
-    if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
-    then
-      echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
-    fi
-    verbose sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-
-    verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
-
-    if ! grep -q "AuthenticationMethods publickey,keyboard-interactive" /etc/ssh/sshd_config
-    then
-      echo 'AuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
-    fi
-
-    echo_magenta "Génération des clés d'accès"
-    google-authenticator --time-based --force --quiet --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN --issuer=ALLSPARK
-    update_conf SECURE_GOOGLEAUTH_KEY $(cat /root/.google_authenticator | head -1)
-
-    echo_magenta "Copie des codes d'accès dans les paramètres de l'utilisateur 'debian'"
-    if [ -d "/home/debian" ]
-    then
-      verbose cp /root/.google_authenticator /home/debian/.google_authenticator
-      verbose chown debian:debian /home/debian/.google_authenticator
-    fi
-
-    echo_magenta "Redémarrage des services"
-    verbose systemctl restart sshd
-
-    echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
-
-  else
-    echo
-    echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
-    echo_magenta "Désactivation de l'authentification à deux niveaux"
-    verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
-    verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
-    echo_magenta "Redémarrage des services"
-    verbose systemctl restart sshd
-  fi
-else
   echo_magenta "L'accès SSH est sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
   qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
 fi
-
-echo

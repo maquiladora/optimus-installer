@@ -1,10 +1,10 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
-if [ -z $MODULE_LETSENCRYPT ]; then require MODULE_LETSENCRYPT yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
+if [ -z $MODULE_LETSENCRYPT ]; then require MODULE_LETSENCRYPT yesno "Voulez-vous générer des certificats SSL pour sécuriser les communications ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_LETSENCRYPT =~ ^[YyOo]$ ]]
+if [ $MODULE_LETSENCRYPT = "Y" ]
 then
 
   echo
