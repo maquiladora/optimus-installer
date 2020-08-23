@@ -4,7 +4,7 @@ clear
 # mysqldump --all-databases --ignore-database roundcube | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
 
 mysql -N -e 'show databases' | while read dbname; do mysqldump --complete-insert --routines --triggers --single-transaction "$dbname" > "/srv/db-backup/$dbname".sql; done
-zip /srv/db-backup/`date +%Y-%m-%d.sql.gz` /srv/db-backup/*.sql
+zip /srv/db-backup/`date +%Y-%m-%d.zip` /srv/db-backup/*.sql
 rm /srv/db-backup/*.sql
 
 exit 0
