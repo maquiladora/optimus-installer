@@ -90,7 +90,15 @@ require()
     echo_green "$question"
     if [ $type == "yesno" ]
     then
-      read -p "(o)ui / (n)on ? " -n 1 -e valeur
+      while [ -z "$groupname" ]
+      do
+        read -p "(o)ui / (n)on ? " -n 1 -e valeur
+        case "$valeur" in
+        y|Y|o|O) valeur="Y" ;;
+        n|N) valeur="N" ;;
+        *) echo "Réponse invalide" ;;
+        esac
+      done
     else
       read valeur
     fi
