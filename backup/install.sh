@@ -10,7 +10,7 @@ then
   echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
 
   echo_magenta "Installation des paquets requis"
-  verbose apt-get -qq install rsync-backup sendmail tar
+  verbose apt-get -qq install rdiff-backup sendmail tar
 
   echo_magenta "Envoi de la clé publique au serveur distant"
   ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
