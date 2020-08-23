@@ -1,7 +1,8 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require MODULE_WWW yesno
 require DOMAIN string
+echo_red $DOMAIN
+require MODULE_WWW yesno "Souhaitez vous installer l'espace d'hébèrgement www.$DOMAIN ?"
 source /root/.allspark
 
 echo
