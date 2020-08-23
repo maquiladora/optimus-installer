@@ -4,7 +4,7 @@ namespace Allspark\DAVACL\PrincipalBackend;
 
 use Sabre\DAV;
 use Sabre\DAV\MkCol;
-use Sabre\HTTP\URLUtil;
+use Sabre\Uri;
 
 /**
  * PDO principal backend
