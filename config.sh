@@ -3,12 +3,10 @@
 #export VERBOSE=2 #STDOUT pas affiché. STDERR en rouge
 #export VERBOSE=3 #STDOUT et STDERR pas affiché (mode silencieux)
 export VERBOSE=2
-
 export DOMAIN=
 export AES_KEY=auto
 export WEBMAIL_DES_KEY=auto
 export UUID=auto
-
 export LAST_UPGRADE=
 
 export MODULE_APACHE=
@@ -37,9 +35,10 @@ export MODULE_WEBMAIL=
 export MODULE_WWW=
 
 export DISKPART_DISK_TO_PART=
+export PART_TO_ENCRYPT=
 export DISKPART_USE_FREESPACE=
 export DISKPART_RESIZE_PARTITION=
-export PART_TO_ENCRYPT=
+
 
 export SECURE_GOOGLEAUTH_KEY=
 export SECURE_ROOT_PASSWORD=auto
