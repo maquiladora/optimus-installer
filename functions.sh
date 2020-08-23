@@ -70,7 +70,8 @@ require()
   variable=${1}
   type=${2}
   question=${3}
-  valeur=${4}
+  default=${4}
+  valeur=${5}
 
 
   if [ $type ] && [ $type = "uuid" ] && [ "${!variable}" = "auto" ]
@@ -111,6 +112,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    printf -v "$variable" '%s' $valeur
+    export "${!variable}"="$valeur"
   fi
 )
