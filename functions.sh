@@ -111,6 +111,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    declare $variable=$valeur
+    printf -v "$variable" '%s' $valeur
   fi
 )
