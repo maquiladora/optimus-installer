@@ -97,6 +97,7 @@ require()
         then
           valeur="Y"
         elif [[ $valeur =~ ^[nN]$ ]]
+        then
           valeur="N"
         else
           echo_red "Réponse invalide"
