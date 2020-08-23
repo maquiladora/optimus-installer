@@ -1,29 +1,22 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
+if [ -z $MODULE_BACKUP ]; then require MODULE_BACKUP yesno "Voulez-vous installer le module de sauvegarde ?"; source /root/.allspark; fi
+if [ -z $BACKUP_SERVER ]; then require MODULE_BACKUP string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
+source /root/.allspark
 
-echo_magenta "Installation de RSYNC en cours..."
-verbose apt-get -qq install rsync sendmail
-
-echo_magenta "Test d'un require"
-require HOPLA password
-require TEST
-require DOMAIN
-
-echo "HOPLA=$HOPLA"
-echo "TEST=$TEST"
-echo "DOMAIN=$DOMAIN"
-echo "BACKUP_AREYOUSURE=$BACKUP_AREYOUSURE"
-
-echo
-echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
-if [ ! $BACKUP_AREYOUSURE ]; then echo_green "Souhaitez vous mettre en place les sauvegardes incrémentielles ?"; read -p "(o)ui / (n)on ? " -n 1 -e BACKUP_AREYOUSURE; fi
-if [[ $BACKUP_AREYOUSURE =~ ^[YyOo]$ ]]
+if [ $MODULE_BACKUP = "F" ]
 then
-  verbose apt-get install rsync tar
-  ssh-keygen -y -f /root/private.pem | ssh debian@192.168.0.9 "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+  echo
+  echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
+
+  echo_magenta "Installation des paquets requis"
+  verbose apt-get -qq install rsync-backup sendmail tar
+
+  echo_magenta "Envoi de la clé publique au serveur distant"
+  ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
   verbose mkdir -p /srv/db-backup
   verbose mkdir -p /srv/increments
-  envsubst '${DOMAIN}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.php
+  envsubst '${DOMAIN}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.sh
   cp /etc/allspark/backup/allspark-backup.timer /etc/systemd/system/allspark-backup.timer
   cp /etc/allspark/backup/allspark-backup.service /etc/systemd/system/allspark-backup.service
   systemctl enable allspark-backup.timer

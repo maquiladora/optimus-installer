@@ -79,7 +79,7 @@ require()
       valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
     elif [ -z ${!variable} ]
     then
-      echo_green "Voulez vous générer $variable automatiquement ?"
+      echo_green "Voulez-vous générer $variable automatiquement ?"
       while [ -z "$valeur" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
@@ -88,6 +88,7 @@ require()
           valeur=$(</dev/urandom tr -dc A-Z0-9 | head -c 16)
         elif [[ $valeur =~ ^[nN]$ ]]
         then
+          echo_green "Veuillez renseigner $variable :"
           read valeur
         else
           echo_red "Réponse invalide"
@@ -101,7 +102,7 @@ require()
       valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
     elif [ -z ${!variable} ]
     then
-      echo_green "Voulez vous générer $variable automatiquement ?"
+      echo_green "Voulez-vous générer $variable automatiquement ?"
       while [ -z "$valeur" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
@@ -110,6 +111,7 @@ require()
           valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 32)
         elif [[ $valeur =~ ^[nN]$ ]]
         then
+          echo_green "Veuillez renseigner $variable :"
           read valeur
         else
           echo_red "Réponse invalide"
@@ -123,7 +125,7 @@ require()
       valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
     elif [ -z ${!variable} ]
     then
-      echo_green "Voulez vous générer $variable automatiquement ?"
+      echo_green "Voulez-vous générer $variable automatiquement ?"
       while [ -z "$valeur" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
@@ -132,6 +134,7 @@ require()
           valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 16)
         elif [[ $valeur =~ ^[nN]$ ]]
         then
+          echo_green "Veuillez renseigner $variable :"
           read valeur
         else
           echo_red "Réponse invalide"
@@ -145,7 +148,7 @@ require()
       valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
     elif [ -z ${!variable} ]
     then
-      echo_green "Voulez vous générer $variable automatiquement ?"
+      echo_green "Voulez-vous générer $variable automatiquement ?"
       while [ -z "$valeur" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
@@ -154,6 +157,7 @@ require()
           valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
         elif [[ $valeur =~ ^[nN]$ ]]
         then
+          echo_green "Veuillez renseigner $variable :"
           read valeur
         else
           echo_red "Réponse invalide"
