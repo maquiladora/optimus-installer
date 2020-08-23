@@ -90,7 +90,7 @@ require()
     echo_green "$question"
     if [ $type == "yesno" ]
     then
-      while [ -z "$groupname" ]
+      while [ -z "$valeur" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
         if [[ $valeur =~ ^[YyOo]$ ]]
