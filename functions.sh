@@ -84,7 +84,7 @@ require()
   elif [ $type ] && [ $type = "deskey" ] && [ "${!variable}" = "auto" ]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
-  elif [ -z ${!variable} ] && [ $AUTOINSTALL != "Y" ]
+  elif [ -z ${!variable} ]
   then
     echo_green "$question"
     if [ $type = "yesno" ]
