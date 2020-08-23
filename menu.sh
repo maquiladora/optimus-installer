@@ -62,7 +62,7 @@ case "$y" in
   c)
   	tput reset
   	clear
-  	source /etc/allspark/crypt-setup/install.sh
+  	source /etc/allspark/crypt/install.sh
   	read -p "Appuyez sur [ENTREE] pour continuer..."
   	;;
 
@@ -195,8 +195,8 @@ case "$y" in
     clear
     source /etc/allspark/upgrade/install.sh
   	source /etc/allspark/diskpart/install.sh
-    source /etc/allspark/crypt-setup/install.sh
-    source /etc/allspark/decrypt/install.sh
+    source /etc/allspark/crypt/install.sh
+    #source /etc/allspark/decrypt/install.sh
     source /etc/allspark/secure/install.sh
     source /etc/allspark/apache/install.sh
     source /etc/allspark/www/install.sh
@@ -248,8 +248,8 @@ case "$y" in
     source /root/.allspark
     source /etc/allspark/upgrade/install.sh
   	source /etc/allspark/diskpart/install.sh
-    source /etc/allspark/crypt-setup/install.sh
-    source /etc/allspark/decrypt/install.sh
+    source /etc/allspark/crypt/install.sh
+    #source /etc/allspark/decrypt/install.sh
     source /etc/allspark/secure/install.sh
     source /etc/allspark/apache/install.sh
     source /etc/allspark/www/install.sh

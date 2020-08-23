@@ -17,11 +17,7 @@ then
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
-  verbose apt-get -qq -y install php-ldap php-intl
-  #verbose pear install Net_SMTP
-  #verbose pear install Auth_SASL
-  #verbose pear install Net_IDNA2
-  #verbose pear install Mail_mime
+  verbose apt-get -qq -y install php-ldap php-intl curl
 
   echo_magenta "Recherche de la version la plus récente de roundcube"
   latest=$(curl --silent "https://api.github.com/repos/roundcube/roundcubemail/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
