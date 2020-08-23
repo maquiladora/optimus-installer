@@ -84,4 +84,6 @@
 		Require all denied
 	</Directory>
 
+RewriteEngine On
+
 </VirtualHost>

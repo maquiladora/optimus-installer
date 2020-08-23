@@ -8,7 +8,7 @@
   CustomLog /var/log/apache2/cloud-access.log combined
 
   RewriteEngine On
-  RewriteRule ^/(.*)$ /server.php [L]
+  RewriteRule ^/(.*)$ /server.php
 
   php_flag output_buffering off
   php_flag always_populate_raw_post_data off
