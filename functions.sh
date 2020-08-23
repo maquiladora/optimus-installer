@@ -110,6 +110,5 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    source /root/.allspark
   fi
 )

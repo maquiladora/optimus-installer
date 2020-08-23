@@ -1,8 +1,8 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN string "Veuillez indiquer votre nom de domaine :"
+if [ -z $DOMAIN]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
 echo_red $DOMAIN
-require MODULE_WWW yesno "Souhaitez vous installer l'espace d'hébèrgement www.$DOMAIN ?"
+if [ -z $MODULE_WWW]; then require MODULE_WWW  yesno "Souhaitez vous installer l'espace d'hébèrgement www.$DOMAIN ?"; source /root/.allspark; fi
 source /root/.allspark
 
 if [[ $MODULE_WWW =~ ^[YyOo]$ ]]
