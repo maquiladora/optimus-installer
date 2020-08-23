@@ -71,7 +71,7 @@ transport_maps = mysql:/etc/postfix/transport.cf
 
 #TLS
 smtpd_use_tls = yes
-smtpd_tls_auth_only = yes
+smtpd_tls_auth_only = no
 smtpd_tls_cert_file = /etc/letsencrypt/live/$DOMAIN/fullchain.pem
 smtpd_tls_key_file = /etc/letsencrypt/live/$DOMAIN/privkey.pem
 smtpd_tls_CAfile    = /etc/letsencrypt/live/$DOMAIN/chain.pem

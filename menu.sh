@@ -258,6 +258,7 @@ case "$y" in
     source /etc/allspark/api/install.sh
     source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
+    clear
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
     clear
