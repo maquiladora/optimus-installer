@@ -29,7 +29,7 @@ tput cup 18 3; if [ -d "/srv/shared" ]; then echo_green "n. Installer l'espace d
 tput cup 19 3; if [ -d "/srv/optimus" ]; then echo_green "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
 tput cup 20 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "p. Configuration de la zone DNS"; else echo_red "p. Configuration de la zone DNS"; fi
 tput cup 21 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
-tput cup 22 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts de sauvegardes"; else echo_red "r. Installer les scripts de sauvegardes"; fi
+tput cup 22 3; if [ -f "/srv/allspark-backup.sh" ]; then echo_green "r. Installer les scripts de sauvegarde"; else echo_red "r. Installer les scripts de sauvegarde"; fi
 
 tput cup 24 3; echo_green "t. Edit config"
 tput cup 25 3; echo_green "u. Update Installer"
