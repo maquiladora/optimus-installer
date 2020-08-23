@@ -76,7 +76,7 @@ then
       fi
     fi
   else
-    echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT existe déjà"
+    echo_green "La partition /dev/$PART_TO_ENCRYPT existe déjà"
   fi
 
 fi
