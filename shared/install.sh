@@ -13,6 +13,7 @@ then
   if [ ! -d "/srv/shared" ]; then verbose mkdir /srv/shared; fi
   if [ ! -f "/srv/shared/index.html" ]; then touch /srv/shared/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/shared.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/shared/vhost > /etc/apache2/sites-enabled/shared.conf; fi
+  chown -R www-data:www-data /srv/shared
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2

@@ -1,7 +1,6 @@
 <VirtualHost *:80>
   ServerAdmin prime@%DOMAIN%
   ServerName partage.%DOMAIN%
-  ServerAlias %DOMAIN%
   DirectoryIndex index.php index.html
   DocumentRoot /srv/shared
   LogLevel warn
