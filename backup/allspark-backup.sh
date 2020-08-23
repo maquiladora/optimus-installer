@@ -7,7 +7,7 @@ rsync --recursive --delete --copy-links --perms --owner --group --times --compre
 
 if [ $? -eq 0 ]; then echo "Subject: CONQUEST : BACKUP SUCCESSFULL" > email.txt; else echo "Subject: CONQUEST : BACKUP ERROR" > email.txt; fi;
 
-ssh -i /root/private.pem debian@192.168.0.9 <<'ENDSSH'
+ssh -i /root/private.pem debian@$BACKUP_SERVER <<'ENDSSH'
 cd /srv/increments
 for dir in */
 do
