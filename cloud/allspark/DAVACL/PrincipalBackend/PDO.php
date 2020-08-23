@@ -105,7 +105,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
         while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
 
             // Checking if the principal is in the prefix
-            list($rowPrefix) = URLUtil::splitPath($row['uri']);
+            list($rowPrefix) = Uri\split($row['uri']);
             if ($rowPrefix !== $prefixPath) continue;
 
             $principal = [
@@ -274,7 +274,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
 
             // Checking if the principal is in the prefix
-            list($rowPrefix) = URLUtil::splitPath($row['uri']);
+            list($rowPrefix) = Uri\split($row['uri']);
             if ($rowPrefix !== $prefixPath) continue;
 
             $principals[] = $row['uri'];
@@ -317,7 +317,7 @@ class PDO extends \Sabre\DAVACL\PrincipalBackend\AbstractBackend {
 
                 while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
                     // Checking if the principal is in the prefix
-                    list($rowPrefix) = URLUtil::splitPath($row['uri']);
+                    list($rowPrefix) = Uri\split($row['uri']);
                     if ($rowPrefix !== $principalPrefix) continue;
 
                     $uri = $row['uri'];
