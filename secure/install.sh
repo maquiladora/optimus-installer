@@ -1,6 +1,5 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_UPDATE ]; then require MODULE_SECURE_UPDATE yesno "Voulez vous mettre à jour le système -> update/upgrade ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_ENABLEFW ]; then require MODULE_SECURE_ENABLEFW yesno "Voulez vous installer le pare-feu UFW ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_FAIL2BAN ]; then require MODULE_SECURE_FAIL2BAN yesno "Voulez vous installer FAIL2BAN ?"; source /root/.allspark; fi
@@ -143,10 +142,12 @@ then
   echo
   echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
 
+  if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+
   echo_magenta "Installation des paquets requis"
   verbose apt-get -qq -y install libpam-google-authenticator qrencode ntp
 
-  echo_magenta "Activation de l'authentification à deux niveaux"
+  echo_magenta "Activation de l'authentification à deux facteurs"
   if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
   then
     echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
@@ -178,7 +179,7 @@ else
 
   echo
   echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
-  echo_magenta "Désactivation de l'authentification à deux niveaux"
+  echo_magenta "Désactivation de l'authentification à deux facteurs"
   verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
   verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
   verbose rm /root/.google_authenticator

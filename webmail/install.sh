@@ -35,7 +35,7 @@ then
 
 
   echo_magenta "Installation de COMPOSER"
-  apt-get -qq -y install composer
+  verbose apt-get -qq -y install composer
 
   echo_magenta "Installation des dépendances et plugins"
   cd /srv/webmail
