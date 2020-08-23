@@ -1,7 +1,7 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
 if [ -z $MODULE_BACKUP ]; then require MODULE_BACKUP yesno "Voulez-vous installer le module de sauvegarde ?"; source /root/.allspark; fi
-if [ -z $BACKUP_SERVER ]; then require MODULE_BACKUP string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
+if [ -z $BACKUP_SERVER ]; then require BACKUP_SERVER string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
 source /root/.allspark
 
 if [ $MODULE_BACKUP = "F" ]
