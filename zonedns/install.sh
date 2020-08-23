@@ -32,12 +32,12 @@ fi
 if [ -d /srv/mailboxes ]
 then
   echo
-  echo_magenta "Pensez à renseigner le reverse DNS de votre serveur : $DOMAIN"
+  echo_magenta "Pour le bon fonctionnement du serveur mail, il faut également renseigner le 'REVERSE DNS' de votre serveur : $DOMAIN"
 fi
 
 
 echo
-echo_magenta "Dans votre routeur, ces ports doivent être redirigés vers le serveur dont l'adresse locale est : $LOCAL_IP :"
+echo_magenta "Si vous hébergez vous même votre serveur, ces ports doivent être redirigés vers votre serveur dont l'adresse est : $LOCAL_IP :"
 echo ""
 if grep -q "Port 7822" /etc/ssh/sshd_config
 then
