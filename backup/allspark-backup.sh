@@ -1,11 +1,15 @@
 #!/bin/sh
 clear
 
-mysqldump --all-databases --ignore-database roundcube | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
+# mysqldump --all-databases --ignore-database roundcube | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
 
-rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats --backup --backup-dir=debian@$BACKUP_SERVER:/srv/increments/`date +%Y-%m-%d--%Hh%M` --exclude '/srv/increments' -e "ssh -p 22 -i /root/private.pem" '/srv/' 'debian@$BACKUP_SERVER:/srv/' | tee rsync.log
+mysql -N -e 'show databases' | while read dbname; do mysqldump --complete-insert --routines --triggers --single-transaction "$dbname" > "$dbname".sql; done | gzip > /srv/db-backup/`date +%Y-%m-%d.sql.gz`
+
+# rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats --backup --backup-dir=debian@$BACKUP_SERVER:/srv/increments/`date +%Y-%m-%d--%Hh%M` --exclude '/srv/increments' -e "ssh -p 22 -i /root/private.pem" '/srv/' 'debian@$BACKUP_SERVER:/srv/' | tee rsync.log
 
 if [ $? -eq 0 ]; then echo "Subject: CONQUEST : BACKUP SUCCESSFULL" > email.txt; else echo "Subject: CONQUEST : BACKUP ERROR" > email.txt; fi;
+
+exit 0;
 
 ssh -i /root/private.pem debian@$BACKUP_SERVER <<'ENDSSH'
 cd /srv/increments
