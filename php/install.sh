@@ -1,12 +1,13 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
+if [ -z $MODULE_PHP ]; then require MODULE_PHP yesno "Voulez-vous installer PHP ?"; source /root/.allspark; fi
+source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DE PHP ===="
-
-if [ ! $PHP_AREYOUSURE ]; then echo_green "Souhaitez vous installer PHP ?"; read -p "(o)ui / (n)on ? " -n 1 -e PHP_AREYOUSURE; fi
-if [[ $PHP_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_PHP =~ ^[YyOo]$ ]]
 then
+
+  echo
+  echo_green "==== INSTALLATION DE PHP ===="
 
   echo_magenta "Installation de PHP en cours..."
   verbose apt-get -qq install php php-mysql php-imap php-xmlrpc php-curl php-zip php-xml php-mbstring php-gd php-pear

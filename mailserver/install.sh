@@ -1,17 +1,20 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
-require MAILSERVER_MARIADB_USER
-require MAILSERVER_MARIADB_PASSWORD password
-require MAILSERVER_POSTMASTER_MAILBOX_USER
-require MAILSERVER_POSTMASTER_MAILBOX_PASSWORD password
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_MAILSERVER ]; then require MODULE_MAILSERVER yesno "Voulez-vous installer le serveur mail ?"; source /root/.allspark; fi
+if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_MARIADB_PASSWORD ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_POSTMASTER_MAILBOX_USER ]; then require MAILSERVER_POSTMASTER_MAILBOX_USER string "Veuillez renseigner l'adresse mail de l'administrateur mail :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_POSTMASTER_MAILBOX_PASSWORD ]; then require MAILSERVER_POSTMASTER_MAILBOX_PASSWORD password "Veuillez renseigner le mot de passe de la boite mail de l'administrateur mail :"; source /root/.allspark; fi
+if [ -z $AES_KEY ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DU SERVEUR MAIL ===="
-if [ ! $MAILSERVER_AREYOUSURE ]; then echo_green "Souhaitez vous installer le serveur mail ?"; read -p "(o)ui / (n)on ? " -n 1 -e MAILSERVER_AREYOUSURE; fi
-if [[ $MAILSERVER_AREYOUSURE =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_MAILSERVER =~ ^[YyOo]$ ]]
 then
+
+  echo
+  echo_green "==== INSTALLATION DU SERVEUR MAIL ===="
 
   echo_magenta "Création de l'utilisateur/groupe mailboxes"
   [ $(getent group mailboxes) ] || verbose groupadd mailboxes --gid 203
@@ -109,7 +112,6 @@ then
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/spamassassin/spamass-milter > /etc/default/spamass-milter
   verbose sa-update
 
-
   echo_magenta "Installation des paquets de CLAMAV"
   verbose apt-get -qq -y install clamav-milter
 
@@ -120,7 +122,6 @@ then
   verbose chown clamav:clamav /etc/clamav/virusaction.sh
   verbose chmod 755 /etc/clamav/virusaction.sh
 
-
   echo_magenta "Installation d'OPENDKIM"
   verbose apt-get -qq -y install opendkim opendkim-tools
   if [ ! -f /etc/dkim/keys/$DOMAIN/mail.private ]
@@ -128,7 +129,7 @@ then
     verbose mkdir -p /etc/dkim/keys/$DOMAIN
     verbose opendkim-genkey -D /etc/dkim/keys/$DOMAIN -d $DOMAIN -s mail
     verbose chown opendkim:opendkim -R /etc/dkim
-fi
+  fi
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/opendkim/opendkim.conf > /etc/opendkim.conf
 
   if [ ! -f /etc/dkim/KeyTable ] || ! grep -q "mail._domainkey.$DOMAIN $DOMAIN:mail:/etc/dkim/keys/$DOMAIN/mail.private" /etc/dkim/KeyTable
@@ -159,7 +160,6 @@ fi
   echo "10.0.0.0/24" >> /etc/opendmarc/ignore.hosts
   verbose sed -i 's/SOCKET=local:$RUNDIR\/opendmarc.sock/SOCKET="inet:8892@localhost"/g' /etc/default/opendmarc
   verbose systemctl enable opendmarc -q
-
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart clamav-daemon

@@ -3,7 +3,7 @@ source /etc/allspark/functions.sh
 if [ -z $MODULE_APACHE ]; then require MODULE_APACHE yesno "Souhaitez vous installer le serveur web apache ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_APACHE =~ ^[YyOo]$ ]]
+if [ $MODULE_APACHE = "Y" ]
 then
   echo
   echo_green "==== INSTALLATION DU SERVEUR WEB APACHE ===="

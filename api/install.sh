@@ -4,7 +4,7 @@ if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de do
 if [ -z $MODULE_API ]; then require MODULE_API yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
 source /root/.allspark
 
-if [[ $MODULE_API =~ ^[YyOo]$ ]]
+if [ $MODULE_API = "Y" ]
 then
   echo
   echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT API ===="

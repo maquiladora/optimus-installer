@@ -1,19 +1,18 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
-require MAILSERVER_MARIADB_USER
-require MAILSERVER_MARIADB_PASSWORD password
-require WEBMAIL_DES_KEY deskey
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_WEBMAIL ]; then require MODULE_WEBMAIL yesno "Voulez-vous installer le webmail ROUNDCUBE ?"; source /root/.allspark; fi
+if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_MARIADB_PASSWORD ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
+if [ -z $DES_KEY ]; then require DES_KEY deskey "Veuillez renseigner une clé de chiffrement DES de 24 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DU WEBMAIL ===="
-
-if [ ! $WEBMAIL_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement webmail.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e WEBMAIL_AREYOUSURE; fi
-if [[ $WEBMAIL_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_UPGRADE =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== INSTALLATION DU WEBMAIL ===="
 
-  echo_magenta "Création de l'espace d'hébergement webmail.$DOMAIN..."
+  echo_magenta "Création de l'espace d'hébergement webmail.$DOMAIN"
   mkdir -p /srv/webmail
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 

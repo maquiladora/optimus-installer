@@ -1,133 +1,160 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_UPDATE ]; then require MODULE_SECURE_UPDATE yesno "Voulez vous mettre à jour le système -> update/upgrade ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_ENABLEFW ]; then require MODULE_SECURE_ENABLEFW yesno "Voulez vous installer le pare-feu UFW ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_FAIL2BAN ]; then require MODULE_SECURE_FAIL2BAN yesno "Voulez vous installer FAIL2BAN ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_CHANGEROOTPASS ]; then require MODULE_SECURE_CHANGEROOTPASS yesno "Voulez vous modifier le mot de passe root ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_CHANGEDEBIANPASS ]; then require MODULE_SECURE_CHANGEDEBIANPASS yesno "Voulez vous modifier le mot de passe de l'utilisateur 'debian' ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_REPLACEDEFAULTPORT ]; then require MODULE_SECURE_SSHREPLACEDEFAULTPORT yesno "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_DISABLEROOTACCESS ]; then require MODULE_SECURE_SSHDISABLEROOTACCESS yesno "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; source /root/.allspark; fi
+if [ -z $MODULE_SECURE_SSH_2FA ]; then require MODULE_SECURE_ACTIVATEGOOGLEAUTH yesno "Voulez vous protéger l'accès SSH avec une authentification 2 à deux facteurs (authenticator) ?"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== MISE A JOUR DU SYSTEME ===="
-if [ ! $SECURE_UPDATE ]; then echo_green "Voulez vous mettre à jour le système -> update/upgrade ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_UPDATE; fi
-if [[ $SECURE_UPDATE =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_UPDATE =~ ^[YyOo]$ ]]
 then
-  echo_magenta "Téléchargement et installation des mises à jour..."
+  echo
+  echo_green "==== MISE A JOUR DU SYSTEME ===="
+  echo_magenta "Téléchargement et installation des mises à jour"
   apt-get -qq update
   apt-get -qq upgrade
-  echo_magenta "Mises à jour effectuées avec succès !"
 fi
 
-echo
-echo_green "==== FIREWALL ===="
-if [ ! $SECURE_ENABLEFW ]; then echo_green "Voulez vous activer le firewall ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ENABLEFW; fi
-if [[ $SECURE_ENABLEFW =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_ENABLEFW =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== FIREWALL ===="
+  echo_magenta "Installation des paquets requis"
   verbose apt-get -qq install ufw
+  echo_magenta "Ouverture du port SSH"
   if grep -q "Port 7822" /etc/ssh/sshd_config
   then
     verbose /sbin/ufw allow 7822
   else
     verbose /sbin/ufw allow 22
   fi
+  echo_magenta "Activation du pare feu"
   verbose /sbin/ufw --force enable
-  echo_magenta "Le Firewall a été activé avec succès !"
 else
+  echo
+  echo_green "==== FIREWALL ===="
   if [ $(which /sbin/ufw) ]
   then
+    echo_magenta "Désactivation du firewall"
     verbose /sbin/ufw --force disable
-    echo_magenta "Le Firewall a été désactivé"
   fi
 fi
 
-echo
-echo_green "==== FAIL2BAN ===="
-if [ ! $SECURE_INSTALLFAIL2BAN ]; then echo_green "Voulez vous installer FAIL2BAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_INSTALLFAIL2BAN; fi
-if [[ $SECURE_INSTALLFAIL2BAN =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_FAIL2BAN =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== FAIL2BAN ===="
+  echo_magenta "Installation des paquets requis"
   verbose apt-get -qq install fail2ban
+  echo_magenta "Installation des prisons locales"
   cp /etc/allspark/secure/jail.local /etc/fail2ban/jail.local
   #commit suggéré sur fail2ban mais pas encore implémenté
   sed -i '/mdpr-ddos = lost connection after(?! DATA)/c\mdpr-ddos = (?:lost connection after(?! DATA) [A-Z]+|disconnect(?= from \S+(?: \S+=\d+)* auth=0/(?:[1-9]|\d\d+)))' /etc/fail2ban/filter.d/postfix.conf
+  echo_magenta "Redémarrage des services"
   systemctl restart fail2ban
-  echo_magenta "FAIL2BAN a été installé avec succès"
 else
+  echo
+  echo_green "==== FAIL2BAN ===="
+  echo_magenta "Désinstallation des paquets"
   verbose apt-get -qq remove fail2ban
-  echo_magenta "FAIL2BAN a été desinstallé avec succès"
 fi
 
-echo
-echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
-if [ ! $SECURE_CHANGEROOTPASS ]; then echo_green "Voulez vous modifier le mot de passe root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEROOTPASS; fi
-if [[ $SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_CHANGEROOTPASS =~ ^[YyOo]$ ]]
 then
-  require SECURE_ROOT_PASSWORD password
+  echo
+  echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
+  echo_magenta "modification du mot de passe root"
+  require SECURE_ROOT_PASSWORD password "Veuillez renseigner le nouveau mot de passe root :"
   source /root/.allspark
   echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
-  echo_magenta "Le mot de passe de l'utilisateur root a été modifié avec succès"
 fi
 
-echo
-echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
-if [ ! $SECURE_CHANGEDEBIANPASS ]; then echo_green "Voulez vous modifier le mot de passe de l'utilisateur DEBIAN ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_CHANGEDEBIANPASS; fi
-if [[ $SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_CHANGEDEBIANPASS =~ ^[YyOo]$ ]]
 then
-  require SECURE_DEBIAN_PASSWORD password
+  echo
+  echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
+  echo_magenta "modification du mot de passe de l'utilisateur 'debian'"
+  require SECURE_DEBIAN_PASSWORD password "Veuillez renseigner le nouveau mot de passe pour l'utilisateur 'debian':"
   source /root/.allspark
   echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
-  echo_magenta "Le mot de passe de l'utilisateur debian a été modifié avec succès"
 fi
 
 
-echo
-echo_green "==== SERVEUR SSH ===="
-if [ ! $SECURE_SSHREPLACEDEFAULTPORT ]; then echo_green "Voulez vous remplacer le port de connexion SSH par le port 7822 ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHREPLACEDEFAULTPORT; fi
-if [[ $SECURE_SSHREPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
+
+if [[ $MODULE_SECURE_SSH_REPLACEDEFAULTPORT =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== SERVEUR SSH ===="
+  echo_magenta "Remplacement du port 22 par le port 7822"
   verbose sed -i 's/#Port 22/Port 7822/g' /etc/ssh/sshd_config
+  echo_magenta "Ouverture du port 7822 et fermeture du port 22"
   if [ $(which /sbin/ufw) ]
   then
     verbose /sbin/ufw allow 7822
     verbose /sbin/ufw deny 22
   fi
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart ssh
-  echo_magenta "Le serveur SSH écoute désormais sur le port 7822"
 else
+  echo
+  echo_green "==== SERVEUR SSH ===="
+  echo_magenta "Remplacement du port 7822 par le port 22"
   verbose sed -i 's/Port 7822/#Port 22/g' /etc/ssh/sshd_config
+  echo_magenta "Ouverture du port 22 et fermeture du port 7822"
   if [ $(which /sbin/ufw) ]
   then
     verbose /sbin/ufw deny 7822
     verbose /sbin/ufw allow 22
-    echo_magenta "Le serveur SSH écoute désormais sur le port par défaut 22"
   fi
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart ssh
 fi
 
 
-if [ ! $SECURE_SSHDISABLEROOTACCESS ]; then echo_green "Voulez vous interdire l'accès SSH à l'utilisateur root ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_SSHDISABLEROOTACCESS; fi
-if [[ $SECURE_SSHDISABLEROOTACCESS =~ ^[YyOo]$ ]]
+if [[ $MODULE_SECURE_SSH_DISABLEROOTACCESS =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== ACCESS SSH DE L'UTILISATEUR ROOT ===="
   if [ $(getent passwd debian) ]
   then
+    echo_magenta "Désactivation de l'accès SSH de l'utilisateur root"
     verbose sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
     verbose sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/g' /etc/ssh/sshd_config
+    echo_magenta "Redémarrage des services"
     verbose systemctl restart ssh
-    echo_magenta "L'accès SSH est désormais interdit à l'utilisateur root"
   else
     echo_red "L'accès SSH de l'utilisateur root ne peut pas être désactivé si l'utilisateur debian n'existe pas"
   fi
 else
+  echo_magenta "Résactivation de l'accès SSH de l'utilisateur root"
   verbose sed -i 's/PermitRootLogin no/PermitRootLogin yes/g' /etc/ssh/sshd_config
   verbose sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart ssh
-  echo_magenta "L'accès SSH est désormais autorisé pour l'utilisateur root"
 fi
 
 
 if [ ! -f /root/.google_authenticator ]
 then
-  if [ ! $SECURE_ACTIVATEGOOGLEAUTH ]; then echo_green "Voulez vous protéger l'accès SSH avec GOOGLE AUTHENTICATOR ?"; read -n 1 -p "(o)ui / (n)on ? " -e SECURE_ACTIVATEGOOGLEAUTH; fi
-  if [[ $SECURE_ACTIVATEGOOGLEAUTH =~ ^[YyOo]$ ]]
+  if [[ $MODULE_SECURE_SSH2FA =~ ^[YyOo]$ ]]
   then
+    echo
+    echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
 
+    echo_magenta "Installation des paquets requis"
     verbose apt-get -qq -y install libpam-google-authenticator qrencode ntp
 
+    echo_magenta "Activation de l'authentification à deux niveaux"
     if ! grep -q "auth required pam_google_authenticator.so" /etc/pam.d/sshd
     then
       echo 'auth required pam_google_authenticator.so' >> /etc/pam.d/sshd
@@ -136,32 +163,39 @@ then
 
     verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
 
-    if ! grep -q "AuthenticationMethods  publickey,keyboard-interactive" /etc/ssh/sshd_config
+    if ! grep -q "AuthenticationMethods publickey,keyboard-interactive" /etc/ssh/sshd_config
     then
-      echo 'AuthenticationMethods  publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+      echo 'AuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
     fi
 
+    echo_magenta "Génération des clés d'accès"
     google-authenticator --time-based --force --quiet --disallow-reuse --window-size=3 --rate-limit=3 --rate-time=30 --emergency-codes=4 --label=debian@$DOMAIN --issuer=ALLSPARK
     update_conf SECURE_GOOGLEAUTH_KEY $(cat /root/.google_authenticator | head -1)
 
+    echo_magenta "Copie des codes d'accès dans les paramètres de l'utilisateur 'debian'"
     if [ -d "/home/debian" ]
     then
       verbose cp /root/.google_authenticator /home/debian/.google_authenticator
       verbose chown debian:debian /home/debian/.google_authenticator
     fi
 
+    echo_magenta "Redémarrage des services"
     verbose systemctl restart sshd
+
     echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
 
   else
+    echo
+    echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
+    echo_magenta "Désactivation de l'authentification à deux niveaux"
     verbose sed -i 's/ChallengeResponseAuthentication yes/ChallengeResponseAuthentication no/g' /etc/ssh/sshd_config
     verbose sed -i 's/#@include common-auth/@include common-auth/g' /etc/pam.d/sshd
+    echo_magenta "Redémarrage des services"
     verbose systemctl restart sshd
-    echo_magenta "L'accès SSH du serveur n'est désormais plus sécurisé par Google Authenticator"
   fi
 else
-  echo_magenta "L'accès SSH est désormais sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
+  echo_magenta "L'accès SSH est sécurisé par le code 2FA GOOGLE AUTHENTICATOR suivant :"
   qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=$(cat /root/.google_authenticator | head -1)&issuer=ALLSPARK"
 fi
 

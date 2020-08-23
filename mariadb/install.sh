@@ -1,19 +1,23 @@
+#!/bin/bash
 source /etc/allspark/functions.sh
-require MARIADB_ADMIN_USER
-require MARIADB_ADMIN_PASSWORD password
-require MARIADB_REMOTE_ROOT_PASSWORD password
-require AES_KEY aeskey
+if [ -z $MODULE_MARIADB ]; then require MODULE_MARIADB yesno "Voulez-vous installer le serveur de bases de données MARIADB"; source /root/.allspark; fi
+if [ -z $MODULE_MARIADB_REMOTE_ACCESS ]; then require MODULE_MARIADB_REMOTE_ACCESS yesno "Voulez-vous autoriser la connexion à distance à la base de données ?"; source /root/.allspark; fi
+if [ -z $MARIADB_ADMIN_USER ]; then require MARIADB_ADMIN_USER string "Veuillez renseigner le nom de l'administrateur MARIADB :"; source /root/.allspark; fi
+if [ -z $MARIADB_ADMIN_PASSWORD ]; then require MARIADB_ADMIN_PASSWORD password "Voulez renseigner le mot de passe de l'administrateur MARIADB :"; source /root/.allspark; fi
+if [ -z $AES_KEY ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DU SERVEUR DE BASES DE DONNEES MARIADB ===="
-if [ ! $MARIADB_AREYOUSURE ]; then echo_green "Souhaitez vous installer le serveur de bases de données MARIADB ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_AREYOUSURE; fi
-if [[ $MARIADB_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_MARIADB =~ ^[YyOo]$ ]]
 then
-  echo_magenta "Installation du serveur MARIADB..."
 
+  echo
+  echo_green "==== INSTALLATION DU SERVEUR DE BASES DE DONNEES MARIADB ===="
+
+  echo_magenta "Installation des paquets requis"
   verbose apt-get -qq -y install mariadb-server
   verbose systemctl stop mariadb
+
+  echo_magenta "Création des dossiers"
   if [ ! -d "/srv/databases" ]
   then
     verbose mv /var/lib/mysql /srv
@@ -22,7 +26,7 @@ then
   fi
   sleep 0.5
 
-  echo_magenta "Démarrage du service..."
+  echo_magenta "Démarrage du service"
   verbose systemctl start mariadb
 
   echo_magenta "Installation de la base de données 'users'"
@@ -41,18 +45,21 @@ then
 
   echo_magenta "Creation de l'utilisateur 'admin'"
   verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('1', '1', '$MARIADB_ADMIN_USER', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'), '$(date +"%F %T")', null, null, null);"
-fi
 
-echo
-echo_green "==== CONNEXION A DISTANCE A LA BASE DE DONNEES ===="
-if [ ! $MARIADB_REMOTEACCESS ]; then echo_green "Voulez-vous autoriser la connexion à distance ?"; read -p "(o)ui / (n)on ? " -n 1 -e MARIADB_REMOTEACCESS; fi
-if [[ $MARIADB_REMOTEACCESS =~ ^[YyOo]$ ]]
-then
-  if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3306; fi
-  sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
-  verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
-  echo_magenta "L'acès à distance a été ouvert pour l'utilisateur root@%"
-fi
+  if [[ $MODULE_MARIADB_REMOTE_ACCESS =~ ^[YyOo]$ ]]
+  then
+    echo_magenta "Activation de la connexion à distance sur le port 3306 pour l'utilisateur root"
+    if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 3306; fi
+    sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
+  else
+    echo_magenta "Désactication de la connexion à distance sur le port 3306 pour l'utilisateur root"
+    if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw deny 3306; fi
+    sed -i 's/0.0.0.0/127.0.0.1/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+    verbose mariadb -u root -e "DENY ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
+  fi
 
-echo_magenta "Redémarrage des services"
-verbose systemctl restart mariadb
+  echo_magenta "Redémarrage des services"
+  verbose systemctl restart mariadb
+
+fi

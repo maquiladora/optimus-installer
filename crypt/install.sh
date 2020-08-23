@@ -14,7 +14,7 @@ then
   if lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT && [ ! -e /dev/mapper/crypt${PART_TO_ENCRYPT} ]
   then
 
-    echo_magenta "Installation des paquets requis..."
+    echo_magenta "Installation des paquets requis"
     DEBIAN_FRONTEND=noninteractive apt-get -qq install keyboard-configuration &> /dev/null
     verbose apt-get -qq install cryptsetup cryptsetup-bin > /dev/null
     verbose apt-get -qq install curl
@@ -25,7 +25,7 @@ then
       verbose umount /srv
     fi
 
-    echo_magenta "Création d'une clé de chiffrement..."
+    echo_magenta "Création d'une clé de chiffrement"
     mkdir /root/tmpramfs
     mount ramfs /root/tmpramfs/ -t ramfs
     </dev/urandom tr -dc A-Za-z0-9 | head -c 256 > /root/tmpramfs/keyfile
@@ -60,7 +60,7 @@ then
     rmdir /root/tmpramfs
 
   else
-    
+
     if ! lsblk -o NAME -n /dev/$PART_TO_ENCRYPT 2>/dev/null | grep -q $PART_TO_ENCRYPT
     then
       echo_red "Opération impossible : la partition /dev/$PART_TO_ENCRYPT n'existe pas"
