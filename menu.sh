@@ -221,6 +221,10 @@ case "$y" in
   z)
   	tput reset
   	clear
+    update_conf VERBOSE 2
+    update_conf AES_KEY auto
+    update_conf WEBMAIL_DES_KEY auto
+    update_conf UUID auto
     update_conf MODULE_APACHE "Y"
     update_conf MODULE_API "Y"
     update_conf MODULE_BACKUP "Y"
@@ -245,6 +249,17 @@ case "$y" in
     update_conf MODULE_UPGRADE "Y"
     update_conf MODULE_WEBMAIL "Y"
     update_conf MODULE_WWW "Y"
+    update_conf SECURE_ROOT_PASSWORD auto
+    update_conf SECURE_DEBIAN_PASSWORD auto
+    update_conf MARIADB_ADMIN_USER "prime@$DOMAIN"
+    update_conf MARIADB_ADMIN_PASSWORD auto
+    update_conf MARIADB_REMOTE_ROOT_PASSWORD auto
+    update_conf CLOUD_MARIADB_USER cloud
+    update_conf CLOUD_MARIADB_PASSWORD auto
+    update_conf MAILSERVER_MARIADB_USER mailboxes
+    update_conf MAILSERVER_MARIADB_PASSWORD auto
+    update_conf MAILSERVER_POSTMASTER_USER "prime@$DOMAIN"
+    update_conf MAILSERVER_POSTMASTER_PASSWORD auto
     source /root/.allspark
     source /etc/allspark/upgrade/install.sh
   	source /etc/allspark/diskpart/install.sh

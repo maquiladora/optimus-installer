@@ -4,8 +4,8 @@ if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de do
 if [ -z $MODULE_MAILSERVER ]; then require MODULE_MAILSERVER yesno "Voulez-vous installer le serveur mail ?"; source /root/.allspark; fi
 if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
 if [ -z $MAILSERVER_MARIADB_PASSWORD ] || [ $MAILSERVER_MARIADB_PASSWORD = "auto" ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
-if [ -z $MAILSERVER_POSTMASTER_MAILBOX_USER ]; then require MAILSERVER_POSTMASTER_MAILBOX_USER string "Veuillez renseigner l'adresse mail de l'administrateur mail :"; source /root/.allspark; fi
-if [ -z $MAILSERVER_POSTMASTER_MAILBOX_PASSWORD ] || [ $MAILSERVER_POSTMASTER_MAILBOX_PASSWORD = "auto" ]; then require MAILSERVER_POSTMASTER_MAILBOX_PASSWORD password "Veuillez renseigner le mot de passe de la boite mail de l'administrateur mail :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_POSTMASTER_USER ]; then require MAILSERVER_POSTMASTER_USER string "Veuillez renseigner l'adresse mail de l'administrateur mail :"; source /root/.allspark; fi
+if [ -z $MAILSERVER_POSTMASTER_PASSWORD ] || [ $MAILSERVER_POSTMASTER_PASSWORD = "auto" ]; then require MAILSERVER_POSTMASTER_PASSWORD password "Veuillez renseigner le mot de passe de la boite mail de l'administrateur mail :"; source /root/.allspark; fi
 if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
@@ -46,7 +46,7 @@ then
   done
 
   echo_magenta "Création de la boite mail initiale prime@$DOMAIN"
-  verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes VALUES (NULL, '1', '$MAILSERVER_POSTMASTER_MAILBOX_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_MAILBOX_PASSWORD','$AES_KEY'), '0', '1', null, null, null, null, null);"
+  verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes VALUES (NULL, '1', '$MAILSERVER_POSTMASTER_USER', AES_ENCRYPT('$MAILSERVER_POSTMASTER_PASSWORD','$AES_KEY'), '0', '1', null, null, null, null, null);"
   verbose mariadb -u root -e "INSERT IGNORE INTO mailserver.mailboxes_domains VALUES (NULL, 1, '$DOMAIN');"
 
   echo_magenta "Ouverture des ports du Firewall"
