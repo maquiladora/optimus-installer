@@ -93,11 +93,14 @@ require()
       while [ -z "$groupname" ]
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
-        case "$valeur" in
-        ^[YyOo]$) valeur="Y" ;;
-        ^[nN]$) valeur="N" ;;
-        *) echo_red "Réponse invalide" ;;
-        esac
+        if [[ $valeur =~ ^[YyOo]$ ]]
+        then
+          valeur="Y"
+        elif [[ $valeur =~ ^[nN]$ ]]
+          valeur="N"
+        else
+          echo_red "Réponse invalide"
+        fi
       done
     else
       read valeur
@@ -107,6 +110,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    "${!variable}"=$valeur
+    declare ${!variable}=$valeur
   fi
 )
