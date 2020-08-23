@@ -4,7 +4,7 @@ if [ -z $MODULE_BACKUP ]; then require MODULE_BACKUP yesno "Voulez-vous installe
 if [ -z $BACKUP_SERVER ]; then require BACKUP_SERVER string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
 source /root/.allspark
 
-if [ $MODULE_BACKUP = "F" ]
+if [ $MODULE_BACKUP = "Y" ]
 then
   echo
   echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
