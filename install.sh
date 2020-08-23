@@ -1,6 +1,6 @@
 #!/bin/bash
 DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes update
-DEBIAN_FRONTEND=noninteractive sudo apt-get-qq --yes remove cryptsetup-initramfs
+DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes remove cryptsetup-initramfs
 DEBIAN_FRONTEND=noninteractive sudo apt-get -qq --yes install git unzip zip sudo
 
 sudo rm -R /etc/allspark
