@@ -1,7 +1,7 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
-if [ -z $MODULE_CLOUD ]; then require MODULE_CLOUD yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_CLOUD ]; then require MODULE_CLOUD yesno "Voulez-vous installer l'espace d'hébergement cloud.$DOMAIN ?"; source /root/.allspark; fi
 if [ -z $CLOUD_MARIADB_USER ]; then require CLOUD_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 if [ -z $CLOUD_MARIADB_PASSWORD ] || [ $CLOUD_MARIADB_PASSWORD = "auto" ]; then require CLOUD_MARIADB_PASSWORD password "Voulez renseigner le mot de passe de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 source /root/.allspark

@@ -10,11 +10,10 @@ then
   echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
 
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
-
   if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
   if [ ! -f "/srv/www/index.html" ]; then echo "WWW" > /srv/www/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/www/vhost > /etc/apache2/sites-enabled/www.conf; fi
 
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
-  echo_magenta "L'espace d'hébergement www.$DOMAIN a été installé avec succès !"
 fi

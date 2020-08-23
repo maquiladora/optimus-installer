@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+  ServerAdmin prime@%DOMAIN%
+  ServerName www.%DOMAIN%
+  ServerAlias %DOMAIN%
+  DirectoryIndex index.php index.html
+  DocumentRoot /srv/www
+  LogLevel warn
+  ErrorLog /var/log/apache2/www-error.log
+  CustomLog /var/log/apache2/www-access.log combined
+
+  <Directory /srv/shared/>
+    Options FollowSymLinks
+    AllowOverride None
+    Require all granted
+  </Directory>
+
+</VirtualHost>

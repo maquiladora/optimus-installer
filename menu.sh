@@ -25,20 +25,21 @@ tput cup 14 3; if [ -d "/srv/mailboxes" ]; then echo_green "j. Installer le serv
 tput cup 15 3; if [ -d "/srv/webmail" ]; then echo_green "k. Installer le webmail ROUNDCUBE"; else echo_red "k. Installer le webmail ROUNDCUBE"; fi
 tput cup 16 3; if [ -d "/srv/cloud" ]; then echo_green "l. Installer le serveur cloud SABREDAV (WEBDAV)"; else echo_red "l. Installer le serveur cloud SABREDAV (WEBDAV)"; fi
 tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de communication"; else echo_red "m. Installer l'api de communication"; fi
-tput cup 18 3; if [ -d "/srv/optimus" ]; then echo_green "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
-tput cup 19 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "o. Configuration de la zone DNS"; else echo_red "o. Configuration de la zone DNS"; fi
-tput cup 20 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
-tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts de sauvegardes"; else echo_red "r. Installer les scripts de sauvegardes"; fi
+tput cup 18 3; if [ -d "/srv/shared" ]; then echo_green "n. Installer l'espace de partage de fichiers"; else echo_red "n. Installer l'espace de partage de fichiers"; fi
+tput cup 19 3; if [ -d "/srv/optimus" ]; then echo_green "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
+tput cup 20 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "p. Configuration de la zone DNS"; else echo_red "p. Configuration de la zone DNS"; fi
+tput cup 21 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
+tput cup 22 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts de sauvegardes"; else echo_red "r. Installer les scripts de sauvegardes"; fi
 
-tput cup 23 3; echo_green "t. Edit config"
-tput cup 24 3; echo_green "u. Update Installer"
-tput cup 25 3; echo_green "v. Reboot server"
-tput cup 26 3; echo_green "x. Quit"
+tput cup 24 3; echo_green "t. Edit config"
+tput cup 25 3; echo_green "u. Update Installer"
+tput cup 26 3; echo_green "v. Reboot server"
+tput cup 27 3; echo_green "x. Quit"
 
-tput cup 28 3; echo_green "y. INSTALLATION GUIDEE"
-tput cup 29 3; echo_green "z. INSTALLATION AUTOMATISEE"
+tput cup 29 3; echo_green "y. INSTALLATION GUIDEE"
+tput cup 30 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
-tput cup 31 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
+tput cup 32 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
 
@@ -139,11 +140,18 @@ case "$y" in
   n)
     tput reset
     clear
-    source /etc/allspark/optimus/install.sh
+    source /etc/allspark/shared/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
   o)
+    tput reset
+    clear
+    source /etc/allspark/optimus/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  p)
     tput reset
     clear
     source /etc/allspark/zonedns/install.sh
@@ -206,6 +214,7 @@ case "$y" in
     source /etc/allspark/webmail/install.sh
     source /etc/allspark/cloud/install.sh
     source /etc/allspark/api/install.sh
+    source /etc/allspark/shared/install.sh
     source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
@@ -221,6 +230,7 @@ case "$y" in
   z)
   	tput reset
   	clear
+    if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; fi
     update_conf VERBOSE 2
     update_conf AES_KEY auto
     update_conf WEBMAIL_DES_KEY auto
@@ -229,6 +239,7 @@ case "$y" in
     update_conf MODULE_API "Y"
     update_conf MODULE_BACKUP "Y"
     update_conf MODULE_CLOUD "Y"
+    update_conf MODULE_SHARED "Y"
     update_conf MODULE_CRYPT "Y"
     update_conf MODULE_DECRYPT "Y"
     update_conf MODULE_DISKPART "Y"
@@ -246,6 +257,7 @@ case "$y" in
     update_conf MODULE_SECURE_SSH_REPLACEDEFAULTPORT "Y"
     update_conf MODULE_SECURE_SSH_DISABLEROOTACCESS "Y"
     update_conf MODULE_SECURE_SSH_2FA "Y"
+    update_conf MODULE_SHARED "Y"
     update_conf MODULE_UPGRADE "Y"
     update_conf MODULE_WEBMAIL "Y"
     update_conf MODULE_WWW "Y"
@@ -274,6 +286,7 @@ case "$y" in
     source /etc/allspark/webmail/install.sh
     source /etc/allspark/cloud/install.sh
     source /etc/allspark/api/install.sh
+    source /etc/allspark/shared/install.sh
     source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer ..."
