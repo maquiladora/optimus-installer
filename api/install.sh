@@ -1,22 +1,19 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_API ]; then require MODULE_API yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT API ===="
-
-if [ ! $DOMAIN ]; then echo_green "Merci d'indiquer votre nom de domaine"; read DOMAIN; fi
-
-if [ ! $API_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e API_AREYOUSURE; fi
-if [[ $API_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_API =~ ^[YyOo]$ ]]
 then
-  echo_magenta "Création de l'espace d'hébergement api.$DOMAIN..."
+  echo
+  echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT API ===="
 
+  echo_magenta "Création de l'espace d'hébergement api.$DOMAIN..."
   if [ ! -d "/srv/api" ]; then verbose mkdir /srv/api; fi
   if [ ! -f "/srv/api/index.html" ]; then echo "API" > /srv/api/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
 
+  echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
-  echo_magenta "L'espace d'hébergement api.$DOMAIN a été installé avec succès !"
 fi

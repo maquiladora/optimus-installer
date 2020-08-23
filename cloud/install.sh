@@ -1,16 +1,15 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
-require CLOUD_MARIADB_USER
-require CLOUD_MARIADB_PASSWORD password
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MODULE_CLOUD ]; then require MODULE_CLOUD yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
+if [ -z $CLOUD_MARIADB_USER ]; then require CLOUD_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
+if [ -z $CLOUD_MARIADB_PASSWORD ]; then require CLOUD_MARIADB_PASSWORD password "Voulez renseigner le mot de passe de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 source /root/.allspark
 
-echo
-echo_green "==== INSTALLATION DU CLOUD SABREDAV (WEBDAV) ===="
-
-if [ ! $CLOUD_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement cloud.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e CLOUD_AREYOUSURE; fi
-if [[ $CLOUD_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_CLOUD =~ ^[YyOo]$ ]]
 then
+  echo
+  echo_green "==== INSTALLATION DU CLOUD SABREDAV (WEBDAV) ===="
 
   echo_magenta "Création de l'espace d'hébergement cloud.$DOMAIN..."
   mkdir -p /srv/cloud

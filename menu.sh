@@ -32,9 +32,10 @@ tput cup 24 3; echo_green "u. Update Installer"
 tput cup 25 3; echo_green "v. Reboot server"
 tput cup 26 3; echo_green "x. Quit"
 
-tput cup 28 3; echo_green "z. AUTOINSTALL"
+tput cup 28 3; echo_green "y. INSTALLATION GUIDEE"
+tput cup 29 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
-tput cup 30 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
+tput cup 31 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
 
@@ -181,10 +182,16 @@ case "$y" in
     ;;
 
   x)
-      tput reset
-      clear
-      exit 1
-      ;;
+    tput reset
+    clear
+    exit 1
+    ;;
+
+  y)
+    tput reset
+    clear
+    exit 1
+    ;;
 
   z)
   	tput reset
@@ -199,16 +206,16 @@ case "$y" in
     source /etc/allspark/php/install.sh
     source /etc/allspark/mariadb/install.sh
     source /etc/allspark/mailserver/install.sh
-    #source /etc/allspark/webmail/install.sh
+    source /etc/allspark/webmail/install.sh
     source /etc/allspark/cloud/install.sh
     source /etc/allspark/api/install.sh
     #source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
-    read -p "Appuyez sur [ENTREE] pour continuer..."
+    read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
     clear
     source /etc/allspark/zonedns/install.sh
-    read -p "Appuyez sur [ENTREE] pour continuer..."
+    read -p "Appuyez sur [ENTREE] après avoir modifié votre enregistrement DNS, configuré le reverse DNS, puis ouvert les ports requis..."
     clear
     source /etc/allspark/letsencrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
