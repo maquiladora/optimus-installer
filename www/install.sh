@@ -1,13 +1,13 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
-require DOMAIN
+require MODULE_WWW yesno
+require DOMAIN string
 source /root/.allspark
 
 echo
 echo_green "==== INSTALLATION DE L'ESPACE D'HERGEMENT WWW ===="
 
-if [ ! $WWW_AREYOUSURE ]; then echo_green "Voulez-vous installer l'espace d'hébergement www.$DOMAIN ?"; read -p "(o)ui / (n)on ? " -n 1 -e WWW_AREYOUSURE; fi
-if [[ $WWW_AREYOUSURE =~ ^[YyOo]$ ]]
+if [[ $MODULE_WWW =~ ^[YyOo]$ ]]
 then
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
 

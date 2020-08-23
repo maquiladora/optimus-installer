@@ -69,7 +69,9 @@ require()
 (
   variable=${1}
   type=${2}
-  valeur=${3}
+  question=${3}
+  valeur=${4}
+
 
   if [ $type ] && [ $type = "uuid" ] && [ "${!variable}" = "auto" ]
   then
@@ -85,8 +87,13 @@ require()
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
   elif [ -z ${!variable} ]
   then
-    echo_green "Merci de renseigner la variable $variable :"
-    read valeur
+    echo_green $question
+    if [ $type == "yesno" ]
+    then
+      read -p "(o)ui / (n)on ? " -n 1 -e valeur
+    else
+      read valeur
+    fi
   fi
 
   if [ ! -z $valeur ]
