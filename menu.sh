@@ -271,6 +271,7 @@ case "$y" in
     clear
     source /etc/allspark/letsencrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour terminer l'installation..."
+    DOMAIN_TO_DNS=$( getent hosts $DOMAIN | awk '{ print $1 }' )
   	;;
 
 esac
