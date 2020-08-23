@@ -213,7 +213,6 @@ case "$y" in
     clear
     source /etc/allspark/letsencrypt/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
-  	;;
     ;;
 
   z)
