@@ -13,6 +13,7 @@ then
   if [ ! -d "/srv/api" ]; then verbose mkdir /srv/api; fi
   if [ ! -f "/srv/api/index.html" ]; then echo "API" > /srv/api/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
+  chown -R www-data:www-data /srv/api
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2

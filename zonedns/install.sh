@@ -18,6 +18,7 @@ if [ -d /srv/api ]; then echo "api 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/cloud ]; then echo "cloud 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/mailboxes ]; then echo "mail 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/optimus ]; then echo "optimus 10800 IN A $PUBLIC_IP"; fi
+if [ -d /srv/shared ]; then echo "partage 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/webmail ]; then echo "webmail 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/www ]; then echo "www 10800 IN A $PUBLIC_IP"; fi
 if [ -d /srv/mailboxes ]
