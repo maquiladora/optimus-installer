@@ -11,6 +11,7 @@ then
 
   echo_magenta "Création de l'espace d'hébergement partage.$DOMAIN"
   if [ ! -d "/srv/shared" ]; then verbose mkdir /srv/shared; fi
+  if [ ! -f "/srv/www/index.html" ]; touch /srv/shared/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/shared.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/shared/vhost > /etc/apache2/sites-enabled/shared.conf; fi
 
   echo_magenta "Redémarrage des services"
