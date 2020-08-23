@@ -258,15 +258,16 @@ case "$y" in
     source /etc/allspark/api/install.sh
     source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer ..."
     clear
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
-    read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
+    read -p "Appuyez sur [ENTREE] après avoir enregistré votre code 2FA ..."
     clear
     source /etc/allspark/zonedns/install.sh
     read -p "Appuyez sur [ENTREE] après avoir modifié votre enregistrement DNS, configuré le reverse DNS, puis ouvert les ports requis..."
     clear
     source /etc/allspark/letsencrypt/install.sh
-    read -p "Appuyez sur [ENTREE] pour continuer..."
+    read -p "Appuyez sur [ENTREE] pour terminer l'installation..."
   	;;
 
 esac
