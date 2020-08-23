@@ -87,7 +87,7 @@ require()
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
   elif [ -z ${!variable} ]
   then
-    echo_green $question
+    echo_green "$question"
     if [ $type == "yesno" ]
     then
       read -p "(o)ui / (n)on ? " -n 1 -e valeur
