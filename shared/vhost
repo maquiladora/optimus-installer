@@ -1,12 +1,12 @@
 <VirtualHost *:80>
   ServerAdmin prime@%DOMAIN%
-  ServerName www.%DOMAIN%
+  ServerName partage.%DOMAIN%
   ServerAlias %DOMAIN%
   DirectoryIndex index.php index.html
-  DocumentRoot /srv/www
+  DocumentRoot /srv/shared
   LogLevel warn
-  ErrorLog /var/log/apache2/www-error.log
-  CustomLog /var/log/apache2/www-access.log combined
+  ErrorLog /var/log/apache2/shared-error.log
+  CustomLog /var/log/apache2/shared-access.log combined
 
   <Directory /srv/shared/>
     Options FollowSymLinks
