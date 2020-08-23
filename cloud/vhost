@@ -9,10 +9,15 @@
 
   RewriteEngine On
   RewriteRule ^/(.*)$ /server.php [L]
+
   php_flag output_buffering off
   php_flag always_populate_raw_post_data off
   php_flag magic_quotes_gpc off
   php_flag mbstring.func_overload off
+
+  php_value upload_max_filesize 4G
+  php_value post_max_size 4G
+  php_value memory_limit 512M
 
   <Directory /srv/cloud/>
     Options FollowSymLinks
