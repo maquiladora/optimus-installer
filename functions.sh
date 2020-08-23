@@ -70,9 +70,7 @@ require()
   variable=${1}
   type=${2}
   question=${3}
-  default=${4}
-  valeur=${5}
-
+  valeur=${4}
 
   if [ $type ] && [ $type = "uuid" ] && [ "${!variable}" = "auto" ]
   then
@@ -86,10 +84,10 @@ require()
   elif [ $type ] && [ $type = "deskey" ] && [ "${!variable}" = "auto" ]
   then
     valeur=$(</dev/urandom tr -dc A-Za-z0-9 | head -c 24)
-  elif [ -z ${!variable} ]
+  elif [ -z ${!variable} ] && [ $AUTOINSTALL != "Y" ]
   then
     echo_green "$question"
-    if [ $type == "yesno" ]
+    if [ $type = "yesno" ]
     then
       while [ -z "$valeur" ]
       do
@@ -112,6 +110,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    export "${!variable}"="$valeur"
+    source /root/.allspark
   fi
 )
