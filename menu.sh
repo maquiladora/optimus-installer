@@ -26,7 +26,7 @@ tput cup 15 3; if [ -d "/srv/webmail" ]; then echo_green "k. Installer le webmai
 tput cup 16 3; if [ -d "/srv/cloud" ]; then echo_green "l. Installer le serveur cloud SABREDAV (WEBDAV)"; else echo_red "l. Installer le serveur cloud SABREDAV (WEBDAV)"; fi
 tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de communication"; else echo_red "m. Installer l'api de communication"; fi
 tput cup 18 3; if [ -d "/srv/optimus" ]; then echo_green "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "n. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
-tput cup 19 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "o. Configuration de la zone DNS ($DOMAIN_TO_DNS)"; else echo_red "o. Configuration de la zone DNS"; fi
+tput cup 19 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "o. Configuration de la zone DNS"; else echo_red "o. Configuration de la zone DNS"; fi
 tput cup 20 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
 tput cup 21 3; if [ -d "/etc/rsync" ]; then echo_green "r. Installer les scripts de sauvegardes"; else echo_red "r. Installer les scripts de sauvegardes"; fi
 
