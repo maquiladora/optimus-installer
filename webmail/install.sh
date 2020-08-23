@@ -3,8 +3,8 @@ source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_WEBMAIL ]; then require MODULE_WEBMAIL yesno "Voulez-vous installer le webmail ROUNDCUBE ?"; source /root/.allspark; fi
 if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
-if [ -z $MAILSERVER_MARIADB_PASSWORD ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
-if [ -z $WEBMAIL_DES_KEY ]; then require WEBMAIL_DES_KEY deskey "Veuillez renseigner une clé de chiffrement DES de 24 caractères [A-Za-z0-9]"; source /root/.allspark; fi
+if [ -z $MAILSERVER_MARIADB_PASSWORD ] || [ $MAILSERVER_MARIADB_PASSWORD = "auto" ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
+if [ -z $WEBMAIL_DES_KEY ] || [ $WEBMAIL_DES_KEY = "auto" ]; then require WEBMAIL_DES_KEY deskey "Veuillez renseigner une clé de chiffrement DES de 24 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
 if [ $MODULE_WEBMAIL = "Y" ]

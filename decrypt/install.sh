@@ -2,7 +2,7 @@
 source /etc/allspark/functions.sh
 if [ -z $MODULE_DECRYPT ]; then require MODULE_DECRYPT yesno "Voulez-vous chiffrer la partition qui stocke vos données ?"; source /root/.allspark; fi
 if [ -z $PART_TO_ENCRYPT ]; then require PART_TO_ENCRYPT string "Veuillez indiquer le nom de la partition à encrypter :"; source /root/.allspark; fi
-if [ -z $UUID ]; then require UUID uuid "Veuillez choisir et renseigner un identifiant unique de 16 caractères [A-Z0-9]"; source /root/.allspark; fi
+if [ -z $UUID ] || [ $UUID = "auto" ]; then require UUID uuid "Veuillez choisir et renseigner un identifiant unique de 16 caractères [A-Z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
 if [ $MODULE_DECRYPT = "Y" ]
