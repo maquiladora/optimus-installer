@@ -46,7 +46,7 @@ else
   echo "22   SSH"
 fi
 
-if [ -d /etc/www ]; echo "80   HTTP"; fi
+if [ -d /etc/www ]; then echo "80   HTTP"; fi
 
 if [ -d /srv/mailboxes ]
 then
