@@ -94,9 +94,9 @@ require()
       do
         read -p "(o)ui / (n)on ? " -n 1 -e valeur
         case "$valeur" in
-        y|Y|o|O) valeur="Y" ;;
-        n|N) valeur="N" ;;
-        *) echo "Réponse invalide" ;;
+        [yYoO]) valeur="Y" ;;
+        [nN]) valeur="N" ;;
+        *) echo_red "Réponse invalide" ;;
         esac
       done
     else
@@ -107,6 +107,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    export ${!variable}="$valeur"
+    ${!variable}=$valeur
   fi
 )
