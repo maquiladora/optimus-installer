@@ -99,6 +99,6 @@ require()
   if [ ! -z $valeur ]
   then
     update_conf $variable $valeur
-    export ${!variable}=$valeur
+    export ${!variable}="$valeur"
   fi
 )
