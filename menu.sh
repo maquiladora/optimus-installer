@@ -190,12 +190,6 @@ case "$y" in
   y)
     tput reset
     clear
-    exit 1
-    ;;
-
-  z)
-  	tput reset
-  	clear
     source /etc/allspark/upgrade/install.sh
   	source /etc/allspark/diskpart/install.sh
     source /etc/allspark/crypt-setup/install.sh
@@ -209,7 +203,61 @@ case "$y" in
     source /etc/allspark/webmail/install.sh
     source /etc/allspark/cloud/install.sh
     source /etc/allspark/api/install.sh
-    #source /etc/allspark/optimus/install.sh
+    source /etc/allspark/optimus/install.sh
+    #source /etc/allspark/backup/install.sh
+    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
+    clear
+    source /etc/allspark/zonedns/install.sh
+    read -p "Appuyez sur [ENTREE] après avoir modifié votre enregistrement DNS, configuré le reverse DNS, puis ouvert les ports requis..."
+    clear
+    source /etc/allspark/letsencrypt/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+  	;;
+    ;;
+
+  z)
+  	tput reset
+  	clear
+    update_conf MODULE_APACHE "Y"
+    update_conf MODULE_API "Y"
+    update_conf MODULE_BACKUP "Y"
+    update_conf MODULE_CLOUD "Y"
+    update_conf MODULE_CRYPT "Y"
+    update_conf MODULE_DECRYPT "Y"
+    update_conf MODULE_DISKPART "Y"
+    update_conf MODULE_LETSENCRYPT "Y"
+    update_conf MODULE_MAILSERVER "Y"
+    update_conf MODULE_MARIADB "Y"
+    update_conf MODULE_MARIADB_REMOTE_ACCESS "Y"
+    update_conf MODULE_OPTIMUS "Y"
+    update_conf MODULE_PHP "Y"
+    update_conf MODULE_SECURE_UPDATE "Y"
+    update_conf MODULE_SECURE_ENABLEFW "Y"
+    update_conf MODULE_SECURE_FAIL2BAN "Y"
+    update_conf MODULE_SECURE_CHANGEROOTPASS "Y"
+    update_conf MODULE_SECURE_CHANGEDEBIANPASS "Y"
+    update_conf MODULE_SECURE_SSH_REPLACEDEFAULTPORT "Y"
+    update_conf MODULE_SECURE_SSH_DISABLEROOTACCESS "Y"
+    update_conf MODULE_SECURE_SSH_2FA "Y"
+    update_conf MODULE_UPGRADE "Y"
+    update_conf MODULE_WEBMAIL "Y"
+    update_conf MODULE_WWW "Y"
+    source /root/.allspark
+    source /etc/allspark/upgrade/install.sh
+  	source /etc/allspark/diskpart/install.sh
+    source /etc/allspark/crypt-setup/install.sh
+    source /etc/allspark/decrypt/install.sh
+    source /etc/allspark/secure/install.sh
+    source /etc/allspark/apache/install.sh
+    source /etc/allspark/www/install.sh
+    source /etc/allspark/php/install.sh
+    source /etc/allspark/mariadb/install.sh
+    source /etc/allspark/mailserver/install.sh
+    source /etc/allspark/webmail/install.sh
+    source /etc/allspark/cloud/install.sh
+    source /etc/allspark/api/install.sh
+    source /etc/allspark/optimus/install.sh
     #source /etc/allspark/backup/install.sh
     qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
