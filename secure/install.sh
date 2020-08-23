@@ -138,7 +138,7 @@ else
 fi
 
 
-if [ $MODULE_SECURE_SSH2FA = "Y" ]
+if [ $MODULE_SECURE_SSH_2FA = "Y" ]
 then
   echo
   echo_green "==== SECURISATION DE L'ACCESS SSH AVEC UN CODE A DEUX FACTEURS ===="
