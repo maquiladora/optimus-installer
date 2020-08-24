@@ -31,13 +31,15 @@ tput cup 20 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "p. Config
 tput cup 21 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
 tput cup 22 3; if [ -f "/srv/allspark-backup.sh" ]; then echo_green "r. Installer les scripts de sauvegarde"; else echo_red "r. Installer les scripts de sauvegarde"; fi
 
-tput cup 24 3; echo_green "t. Edit config"
-tput cup 25 3; echo_green "u. Update Installer"
-tput cup 26 3; echo_green "v. Reboot server"
-tput cup 27 3; echo_green "x. Quit"
+tput cup 24 3; echo_green "s. Sauvegarder la configuration et les clés de chiffrement"
 
-tput cup 29 3; echo_green "y. INSTALLATION GUIDEE"
-tput cup 30 3; echo_green "z. INSTALLATION AUTOMATISEE"
+tput cup 26 3; echo_green "t. Editer la configuration"
+tput cup 27 3; echo_green "u. Mettre à jour AllSpark Installer"
+tput cup 28 3; echo_green "v. Redémarrer le serveur"
+tput cup 29 3; echo_green "x. Quitter"
+
+tput cup 31 3; echo_green "y. INSTALLATION GUIDEE"
+tput cup 33 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
 tput cup 32 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
@@ -169,6 +171,13 @@ case "$y" in
     tput reset
     clear
     source /etc/allspark/backup/install.sh
+    read -p "Appuyez sur [ENTREE] pour continuer..."
+    ;;
+
+  s)
+    tput reset
+    clear
+    source /etc/allspark/saveconfig/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer..."
     ;;
 
