@@ -8,7 +8,7 @@ source /root/.allspark
 if [ $MODULE_BACKUP = "Y" ]
 then
   echo
-  echo_green "==== SAUVEGARDE AUTOMATIQUE DES BASES DE DONNEES ===="
+  echo_green "==== SAUVEGARDE AUTOMATIQUE ===="
 
   echo_magenta "Installation des paquets requis"
   verbose apt-get -qq install rdiff-backup sendmail tar
