@@ -15,10 +15,19 @@ then
 
   echo_magenta "Envoi de la clé publique au serveur distant"
   ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+
+  echo_magenta "Installation des paquets requis sur le serveur distant"
+  ssh -i /root/private.pem debian@$BACKUP_SERVER sudo apt-get install -qq -y rdiff-backup
+  ssh -i /root/private.pem debian@$BACKUP_SERVER sudo chown debian:debian /srv
+
+  echo_magenta "Création des dossiers"
   verbose mkdir -p /srv/db-backup
-  verbose mkdir -p /srv/increments
+
+  echo_magenta "Installation du script de sauvegarde"
   envsubst '${DOMAIN} ${BACKUP_SERVER}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.sh
   chmod 744 /srv/allspark-backup.sh
+
+  echo_magenta "Création de la tâche automatique quotidienne"
   cp /etc/allspark/backup/allspark-backup.timer /etc/systemd/system/allspark-backup.timer
   cp /etc/allspark/backup/allspark-backup.service /etc/systemd/system/allspark-backup.service
   systemctl enable allspark-backup.timer

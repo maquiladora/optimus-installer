@@ -9,21 +9,11 @@ mysql -N -e 'show databases' | while read dbname; do if [ $dbname != 'informatio
 cd /srv/db-backup/
 zip `date +%Y-%m-%d.zip` *.sql >> /srv/email.txt
 
+echo
+echo "SERVER BACKUP" >> /srv/email.txt
+rdiff-backup -v 7 --remote-schema "ssh -i /root/private.pem %s rdiff-backup --server" /srv debian@$BACKUP_SERVER::/srv >> /srv/email.txt
+
 /usr/sbin/sendmail -t < /srv/email.txt
 
 rm /srv/db-backup/*.sql
 rm /srv/email.txt
-
-# rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats --backup --backup-dir=debian@$BACKUP_SERVER:/srv/increments/`date +%Y-%m-%d--%Hh%M` --exclude '/srv/increments' -e "ssh -p 22 -i /root/private.pem" '/srv/' 'debian@$BACKUP_SERVER:/srv/' | tee rsync.log
-
-
-#ssh -i /root/private.pem debian@$BACKUP_SERVER <<'ENDSSH'
-#cd /srv/increments
-#for dir in */
-#do
-#  base=$(basename "$dir")
-#  tar -czf "${base}.tar.gz" "$dir" --remove-files
-#done
-#ENDSSH
-
-#rsync --recursive --delete --copy-links --perms --owner --group --times --compress --verbose --progress --stats -e "ssh -p 7822 -i /root/private.pem" 'debian@$DOMAIN:/srv/increments' '/srv/increments' | tee rsync.log
