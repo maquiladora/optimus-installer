@@ -10,11 +10,7 @@ SUBJECT=$5
 MSGID=$6
 DATE=$7
 
-cat -v << EOF | /usr/sbin/sendmail -t -i
-From: prime@$DOMAIN
-To: $RECIPIENT
-Subject: ***VIRUS*** $SUBJECT
-
+cat -v << EOF | mail -s "***VIRUS*** $SUBJECT" $RECIPIENT -aFrom:prime@$DOMAIN
 Le courriel ci-dessous contenait un virus.
 Le message est mis en quarantaine.
 

@@ -113,7 +113,7 @@ then
   verbose sa-update
 
   echo_magenta "Installation des paquets de CLAMAV"
-  verbose apt-get -qq -y install clamav-milter
+  verbose apt-get -qq -y install clamav-milter mailutils
 
   echo_magenta "Modification des fichiers de configuration de CLAMAV"
   envsubst '${AES_KEY} ${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD}' < /etc/allspark/mailserver/clamav/clamav-milter.conf > /etc/clamav/clamav-milter.conf
