@@ -311,5 +311,6 @@ case "$y" in
     DOMAIN_TO_DNS=$( getent hosts $DOMAIN | awk '{ print $1 }' )
   	;;
 
+    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 esac
 done
