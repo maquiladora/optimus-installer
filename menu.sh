@@ -43,6 +43,8 @@ tput cup 33 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
 tput cup 32 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
+qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+
 read -n 1 y
 
 case "$y" in
@@ -310,7 +312,5 @@ case "$y" in
     read -p "Appuyez sur [ENTREE] pour terminer l'installation..."
     DOMAIN_TO_DNS=$( getent hosts $DOMAIN | awk '{ print $1 }' )
   	;;
-
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
 esac
 done
