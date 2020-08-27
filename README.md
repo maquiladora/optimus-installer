@@ -1,6 +1,8 @@
 # ALL SPARK INSTALLER
 
-Ce dépôt contient des scripts bash de notre conception permettant d'installer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).  
+Ce dépôt contient des scripts bash de notre conception permettant d'installer et configurer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).
+
+Nos serveurs ALLSPARK n'intègrent que des logiciels libres et opensource garantissant une gratuité totale, une sécurité maximale et une transparence absolue.
 
 Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.
 
@@ -83,21 +85,6 @@ Ensuite répondez comme suit aux questions posées :
 A l'issue de l'installation, si vous avez suivi ces instructions, le système consomme 20Go et le reste de l'espace disque est libre est non configuré. Cet espace libre sera monté sur /srv et servira à stocker les données. Il est recommandé de chiffrer cette partition /srv pour que les données soient inutilisables en cas de vol du NUC. Les scripts d'installation ALL SPARK réaliseront ces opérations à votre place.  
 
 
-
-# ORGANISATION DES DOSSIERS
-
-L'arborescence OPTIMUS est la suivante :
-* /srv/api contient l'api de communication
-* /srv/db-backup contient les sauvegardes quotidiennes de la base de données
-* /srv/cloud contient le serveur WEBDAV
-* /srv/databases contient les bases de données qui seront servies via MARIA DB
-* /srv/files contient les fichiers des utilisateurs, qui seront servis via WEBDAV
-* /srv/increments contient les sauvegardes incrémentielles quotidiennes du dossier /srv
-* /srv/mailboxes contient les boites mail des utilisateurs, qui seront servies via IMAP
-* /srv/webmail contient le client ROUNDCUBE
-* /srv/www contient un espace pour héberger votre site web
-
-
 # LANCEMENT DES SCRIPTS ALL SPARK
 
 Le plus simple pour contrôler un serveur DEBIAN est de s'y connecter avec le logiciel PUTTY : https://www.putty.org/
@@ -115,7 +102,30 @@ Une fois connecté au terminal, voici la commande à taper pour installer les sc
 Le menu ALL SPARK se lance alors sur votre machine et il suffit de suivre les directives qui apparaissent à l'écran.  
 
 
-# CHIFFREMENT DE VOS DONNEES
+# INSTALLATION MANUELLE OU AUTOMATIQUE
+
+ALLSPARK propose quatre méthodes d'installation. Vous pouvez :
+* soit installer manuellement les seuls modules dont vous avez besoin, en les sélectionnant dans la liste
+* soit installer tous les modules en mode manuel. Les scripts vous poseront alors un certain nombre de questions préalables (mots de passes, clés, confirmations)
+* soit installer tous les modules en mode automatique. Les scripts ne poseront alors que peu de questions et génèreront automatiquement les mots de passe.
+* soit provisionner une installation en modifiant directement le fichier de configuration /root/.allspark qui contient et mémorise tous les règlages
+
+
+# ORGANISATION DES DOSSIERS
+
+L'arborescence du serveur est la suivante :
+* /srv/api contient l'api de communication
+* /srv/db-backup contient les sauvegardes quotidiennes de la base de données
+* /srv/cloud contient le serveur WEBDAV
+* /srv/databases contient les bases de données qui seront servies via MARIA DB
+* /srv/files contient les fichiers des utilisateurs, qui seront servis via WEBDAV
+* /srv/increments contient les sauvegardes incrémentielles quotidiennes du dossier /srv
+* /srv/mailboxes contient les boites mail des utilisateurs, qui seront servies via IMAP
+* /srv/webmail contient le client ROUNDCUBE
+* /srv/www contient un espace pour héberger votre site web
+
+
+# CHIFFREMENT DES DONNEES
 
 Les scripts ALL SPARK intègrent une solution de chiffrement de vos données.
 Ils créent une partition disque indépendante montée sur /srv, chiffrée avec LUKS via une clé 4096 bits.
@@ -130,6 +140,14 @@ Il est donc recommandé de faire au minimum une sauvegarde de vos clés, par exe
 
 # SECURISATION DU SERVEUR
 
+Le script de sécurisation du serveur exécute les tâches suivantes :
+* mise à jour du système (apt-get update).
+* installation du pare-feu UFW et ouverture des seuls ports requis au fonctionnement du serveur.
+* changement du port SSH par défaut (22) pour le port 7822 pour réduire la surface des attaques.
+* modification du mot de passe des utilisateurs par défaut "root" et "debian".
+* installation de FAIL2BAN pour bannir les adresses IP qui tentent de bruteforcer le serveur après 8 tentatives.
+* désactivation du login SSH pour l'utilisateur root.
+* mise en place d'une authentification à deux facteurs pour le login SSH (QRCODE à scanner avec une application smartphone telle que 2FAS).
 
 
 # SERVEUR MAIL
@@ -152,6 +170,70 @@ Le serveur mail est composé des éléments suivants :
   <li>SENDER_BCC : envoi d'une copie des courriels envoyés depuis une adresse sur une seconde adresse</li>
 </ul>
 
-Il est ainsi possible de créer et gérer autant d'adresses mail que nécessaire sur le domaine dont vous êtes propriétaire.
+A l'installation, les scripts ne créent qu'une seule boite mail administrateur prime@votredomaine.
+Il est cependant possible de créer et gérer autant d'adresses mail que nécessaire sur le domaine dont vous êtes propriétaire.
 
-Les courriels peuvent être consultés via n'importe quel logiciel client (OUTLOOK, THUNDERBIRD, K9 MAIL sur ANDROID, IPHONE) ou via le webmail intégré au serveur.
+Les courriels peuvent être consultés via n'importe quel logiciel client (OUTLOOK, THUNDERBIRD, K9 MAIL sur ANDROID, IPHONE) avec les paramètres suivants :
+* type de serveur : IMAP
+* serveur entrant : mail.votredomaine
+* port : 143
+* sécurité : STARTTLS
+* méthode d'authentification : mot de passe normal
+
+Le serveur intègre également un webmail ROUNDCUBE compatible smartphone et agrémenté de quelques plugins utiles permettant de gérer vos règles de filtrage, votre antispam, le chiffrement de vos mails ainsi que vos messages d'absence.
+
+Pour l'envoi des mails, vous pouvez utiliser le serveur intégré avec les paramètres suivants :
+* type de serveur : SMTP
+* serveur sortant : mail.votredomaine
+* port : 587
+* sécurité : STARTTLS
+* méthode d'authentification : mot de passe normal
+Attention de bien configurer le reverse DNS de votre adresse IP sans quoi certains destinataires comme GMAIL ou YAHOO refuseront les mails que vous envoyez.
+Cette précaution prise, les serveurs ALLSPARK obtiennent normalement 10/10 sur mail-tester.com
+
+
+# SERVEUR CLOUD
+
+Les scripts allspark installent un serveur cloud SABREDAV.
+Cette solution permet d'accéder à vos fichiers de 3 manières :
+* via n'importe quel client supportant le protocole WEBDAV, tel que RAIDRIVE sous WINDOWS ou DAVFS sous Linux.
+* via le client WEBDAV intégré à nos logiciels (comme par exemple OPTIMUS AVOCATS)
+* par le web en vous connectant sur https://cloud.votredomaine
+
+Un sous serveur https://partage.votredomaine est également créé pour partager les fichiers que vous souhaitez avec vos clients, de manière sécurisée.
+
+
+# CONFIGURATION DE LA ZONE DNS
+
+Cette étape primordiale consiste à créer plusieurs sous domaines et à les relier à votre serveur.
+
+Les sous-domaines en question sont les suivants :
+* api.votredomaine
+* backup.votredomaine
+* cloud.votredomaine
+* mail.votredomaine
+* optimus.votredomaine
+* partage.votredomaine
+* webmail.votredomaine
+* www.votredomaine
+
+Lors de cette étape, il s'agit également d'ajouter dans la zone DNS les enregistrement requis pour authentifier vos mails sortants (SPF, DKIM et DMARC)
+
+Malheureusement cette étape ne peut pas être automatisée par les scripts ALLSPARK puisqu'elle nécessite de vous connecter auprès du registrar qui gère votre domaine et d'ajouter les enregistrements requis dans la zone DNS via l'interface de votre registrar. En revanche les scripts ALLSPARK génèrent le fichier de zone DNS qu'il vous suffit de copier puis de coller en mode texte chez votre registrat.
+
+
+# INSTALLATION DES CERTIFICATS SSL
+
+Une fois la zone DNS configurée, les scripts ALLSPARK génèrent et installent des certificats SSL gratuits via LETSENCRYPT.
+Ces certificats se renouvellent automatiquement tous les 90 jours.
+Avant de lancer cette étape, il faut vous assurer que les enregistrements DNS ont bien été propagés.
+Cela peut prendre entre 2 minutes et plusieurs heures selon les cas.
+
+
+
+# INSTALLATION DES SCRIPTS DE SAUVEGARDE EXTERNALISEE
+
+Nous recommandons de réaliser des sauvegardes externalisées pour pallier les risques de vol, destruction ou défaillance du serveur.
+Pour ce faire, nous proposons des scripts de sauvegarde qui permettent de dupliquer les données sur un serveur de secours, chaque jour à 2h du matin.
+Les sauvegardes se font via l'utilitaire RDIFF-BACKUP.
+La consultation et la restauration des sauvegardes sont facilitées par une interface web RDIFFWEB
