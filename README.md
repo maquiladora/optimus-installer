@@ -1,8 +1,8 @@
 # ALL SPARK INSTALLER
 
-Ce dépôt contient des scripts de notre conception permettant d'installer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).  
+Ce dépôt contient des scripts bash de notre conception permettant d'installer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).  
 
-Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.5.  
+Les scripts ont été conçus pour fonctionner sur une installation minimale Debian 10.
 
 Ils ont été testés sur deux types d'hébergement :
 * des serveurs VPS, si vous souhaitez confier l'hébergement à un professionnel (par exemple OVH)
@@ -92,7 +92,7 @@ L'arborescence OPTIMUS est la suivante :
 * /srv/cloud contient le serveur WEBDAV
 * /srv/databases contient les bases de données qui seront servies via MARIA DB
 * /srv/files contient les fichiers des utilisateurs, qui seront servis via WEBDAV
-* /srv/increments contient les sauvegardes incrémentielles quotidienne du dossier /srv
+* /srv/increments contient les sauvegardes incrémentielles quotidiennes du dossier /srv
 * /srv/mailboxes contient les boites mail des utilisateurs, qui seront servies via IMAP
 * /srv/webmail contient le client ROUNDCUBE
 * /srv/www contient un espace pour héberger votre site web
@@ -113,6 +113,23 @@ Une fois connecté au terminal, voici la commande à taper pour installer les sc
 </pre>
 
 Le menu ALL SPARK se lance alors sur votre machine et il suffit de suivre les directives qui apparaissent à l'écran.  
+
+
+# CHIFFREMENT DE VOS DONNEES
+
+Les scripts ALL SPARK intègrent une solution de chiffrement de vos données.
+Ils créent une partition disque indépendante montée sur /srv, chiffrée avec LUKS via une clé 4096 bits.
+Pour d'évidentes raisons de sécurité, la clé de déchiffrement n'est pas stockée sur la machine elle même.
+La clé est elle même chiffrée et stockée sur notre serveur decrypt.cybertron.fr
+La clé chiffrée n'est communiquée à votre serveur qu'après authentification sur notre serveur et confirmation de votre part
+Ainsi, si votre serveur est volé ou redémarré, personne ne pourra accéder à vos données sans votre accord préalable.
+De même, votre serveur peut être verrouillé en urgence par simple redémarrage à distance.
+A noter que l'association CYBERTRON ne dispose pas de votre clé mais uniquement d'une version chiffrée que seul votre serveur peut déchiffrer.
+Il est donc recommandé de faire au minimum une sauvegarde de vos clés, par exemple sur une clé USB (voir fonction de sauvegarde dans les scripts)
+
+
+# SECURISATION DU SERVEUR
+
 
 
 # SERVEUR MAIL

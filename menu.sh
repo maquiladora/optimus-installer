@@ -41,7 +41,7 @@ tput cup 29 3; echo_green "x. Quitter"
 tput cup 31 3; echo_green "y. INSTALLATION GUIDEE"
 tput cup 33 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
-tput cup 32 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
+tput cup 35 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
 
