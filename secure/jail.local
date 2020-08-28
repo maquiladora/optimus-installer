@@ -40,9 +40,10 @@ bantime = 3600
 
 [sabredav]
 enabled  = true
-filter = apache-auth
+filter =
+failregex = ^<HOST> - - \[[^\]]*\] "[^\"]+" 401\s
 action = iptables-multiport[name=auth, port="http,https"]
-logpath = /var/log/fail2ban.log
+logpath = /var/log/apache2/cloud-access.log
 maxretry = 8
 findtime = 1800
 bantime = 3600

@@ -1,6 +1,6 @@
 # ALL SPARK INSTALLER
 
-Ce dépôt contient des scripts bash de notre conception permettant d'installer et configurer très rapidement votre propore serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).
+Ce dépôt contient des scripts bash de notre conception permettant d'installer et configurer très rapidement votre propre serveur cloud "ALL SPARK". Ce serveur sécurisé sous Linux DEBIAN constitue la base de toutes les applications développées par notre association CYBERTRON. Il permet notamment de stocker et d'accéder à l'ensemble de vos données (fichiers, courriels, agendas, sauvegardes, bases de données) dans des formats ouverts. Le serveur ALL SPARK intègre également l'API de communication qui lui permet d'échanger avec d'autres applications (dont OPTIMUS AVOCATS).
 
 Nos serveurs ALLSPARK n'intègrent que des logiciels libres et opensource garantissant une gratuité totale, une sécurité maximale et une transparence absolue.
 
@@ -21,7 +21,7 @@ Il y a toutefois deux réserves à l'utilisation d'un VPS :
 
 Voici la démarche pour réserver un VPS, par exemple chez l'hébergeur OVH CLOUD :
 * Créez un compte sur https://www.ovh.com/auth/ ou connectez vous avec votre compte existant.
-* Remplissez les champs d'identification de votre cabinet
+* Remplissez les champs d'identification
 * Une fois l'inscription terminée, rendez vous ici pour réserver un VPS : https://www.ovh.com/fr/order/vps
 * Choisissez l'offre qui vous convient. Nous recommandons de démarrer avec l'offre VALUE qui intègre 40Go de stockage, sachant qu'on peut passer à une offre supérieure plus tard en cas de besoin.
 * Sur la page suivante : "Configurez votre VPS", renseignez les champs comme suit :
@@ -130,7 +130,7 @@ L'arborescence du serveur est la suivante :
 Les scripts ALL SPARK intègrent une solution de chiffrement de vos données.
 Ils créent une partition disque indépendante montée sur /srv, chiffrée avec LUKS via une clé 4096 bits.
 Pour d'évidentes raisons de sécurité, la clé de déchiffrement n'est pas stockée sur la machine elle même.
-La clé est elle même chiffrée et stockée sur notre serveur decrypt.cybertron.fr
+La clé est elle même chiffrée et stockée sur notre serveur decrypt.cybertron.fr.
 La clé chiffrée n'est communiquée à votre serveur qu'après authentification sur notre serveur et confirmation de votre part
 Ainsi, si votre serveur est volé ou redémarré, personne ne pourra accéder à vos données sans votre accord préalable.
 De même, votre serveur peut être verrouillé en urgence par simple redémarrage à distance.
