@@ -14,7 +14,7 @@ $config['enigma_debug'] = false;
 
 // REQUIRED! Keys directory for all users.
 // Must be writeable by PHP process, and not in the web server document root
-$config['enigma_pgp_homedir'] = '/srv/webmail-gpg';
+$config['enigma_pgp_homedir'] = '/srv/mailboxes/gpg-keys';
 
 // Location of gpg binary. By default it will be auto-detected.
 // This is also a way to force gpg2 use if there are both 1.x and 2.x on the system.

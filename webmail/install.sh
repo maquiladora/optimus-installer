@@ -47,8 +47,8 @@ then
 
   echo_magenta "Modification de la configuration des plugins"
   sed -i "s#mysql://username:password@localhost/database#mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@127.0.0.1/mailserver#g" /srv/webmail/plugins/sauserprefs/config.inc.php
-  mkdir -p /srv/webmail-gpg
-  chown www-data:www-data /srv/webmail-gpg
+  mkdir -p /srv/mailboxes/gpg-keys
+  chown www-data:www-data /srv/mailboxes/gpg-keys
   cp /etc/allspark/webmail/enigma/config.inc.php /srv/webmail/plugins/enigma/config.inc.php
   chown www-data:www-data /srv/webmail/plugins/enigma/config.inc.php
 
