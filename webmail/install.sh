@@ -17,7 +17,7 @@ then
   if [ ! -f "/etc/apache2/sites-enabled/webmail.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/webmail/vhost > /etc/apache2/sites-enabled/webmail.conf; fi
 
   echo_magenta "Installation des extensions PHP nécessaires"
-  verbose apt-get -qq -y install php-ldap php-intl curl
+  verbose apt-get -qq -y install gnupg php-ldap php-intl curl
 
   echo_magenta "Recherche de la version la plus récente de roundcube"
   latest=$(curl --silent "https://api.github.com/repos/roundcube/roundcubemail/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
@@ -47,6 +47,10 @@ then
 
   echo_magenta "Modification de la configuration des plugins"
   sed -i "s#mysql://username:password@localhost/database#mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@127.0.0.1/mailserver#g" /srv/webmail/plugins/sauserprefs/config.inc.php
+  mkdir -p /srv/webmail-gpg
+  chown www-data:www-data /srv/webmail-gpg
+  cp /etc/allspark/webmail/enigma/config.inc.php /srv/webmail/plugins/enigma/config.inc.php
+  chown www-data:www-data /srv/webmail/plugins/enigma/config.inc.php
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
