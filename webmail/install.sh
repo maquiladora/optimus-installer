@@ -45,13 +45,18 @@ then
   sudo -u debian composer update --no-interaction  --no-dev
   chown -R www-data:www-data /srv/webmail
 
-  echo_magenta "Modification de la configuration des plugins"
+  echo_magenta "Modification de la configuration du plugin SAUSERPREFS"
   sed -i "s#mysql://username:password@localhost/database#mysql://$MAILSERVER_MARIADB_USER:$MAILSERVER_MARIADB_PASSWORD@127.0.0.1/mailserver#g" /srv/webmail/plugins/sauserprefs/config.inc.php
+
+  echo_magenta "Modification de la configuration du plugin ENIGMA"
   mkdir -p /srv/mailboxes/gpg-keys
   chown www-data:www-data /srv/mailboxes/gpg-keys
   cp /etc/allspark/webmail/enigma/config.inc.php /srv/webmail/plugins/enigma/config.inc.php
   chown www-data:www-data /srv/webmail/plugins/enigma/config.inc.php
 
+  echo_magenta "Modification de la configuration du plugin CONTEXTMENU_FOLDER"
+  cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder//localization/fr_FR.inc
+  
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
   mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
