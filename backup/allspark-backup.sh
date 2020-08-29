@@ -11,4 +11,5 @@ echo "" >> /var/log/allspark-backup.log
 echo "SERVER BACKUP" >> /var/log/allspark-backup.log
 rdiff-backup -v 7 --remote-schema "ssh -i /root/private.pem %s rdiff-backup --server" /srv debian@$BACKUP_SERVER::/srv >> /var/log/allspark-backup.log
 
-mail -s "BACKUP REPORT" prime@demoptimus.fr -aFrom:prime@demoptimus.fr < /var/log/allspark-backup.log
+
+mail -s "BACKUP REPORT" prime@%DOMAIN -aFrom:prime@%DOMAIN < /var/log/allspark-backup.log
