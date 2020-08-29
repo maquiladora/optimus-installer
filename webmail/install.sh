@@ -41,8 +41,12 @@ then
   cd /srv/webmail
   chown -R debian:debian /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
+  sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+  sudo /sbin/mkswap /var/swap.1
+  sudo /sbin/swapon /var/swap.1
   sudo -u debian composer install --no-interaction --no-dev
   sudo -u debian composer update --no-interaction  --no-dev
+  sudo /sbin/swapoff /var/swap.1
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Modification de la configuration du plugin SAUSERPREFS"
@@ -56,7 +60,7 @@ then
 
   echo_magenta "Modification de la configuration du plugin CONTEXTMENU_FOLDER"
   cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder//localization/fr_FR.inc
-  
+
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"
   mariadb roundcube < /srv/webmail/SQL/mysql.initial.sql
