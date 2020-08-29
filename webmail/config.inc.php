@@ -99,7 +99,8 @@ $config['plugins'] = array(
 "hotkeys",
 "fail2ban",
 "advanced_search",
-"singleuserautologin");
+"singleuserautologin",
+"vacation");
 
 $config['swipe_actions'] = array(
     'messagelist' => array(
