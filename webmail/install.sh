@@ -41,13 +41,13 @@ then
   cd /srv/webmail
   chown -R debian:debian /srv/webmail
   cp /etc/allspark/webmail/composer.json /srv/webmail/composer.json
-  sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
-  chmod 600 /var/swap.1
-  sudo /sbin/mkswap /var/swap.1
-  sudo /sbin/swapon /var/swap.1
+  verbose sudo /bin/dd if=/dev/zero of=/var/swap.1 bs=1M count=1024
+  verbose chmod 600 /var/swap.1
+  verbose  sudo /sbin/mkswap /var/swap.1
+  verbose sudo /sbin/swapon /var/swap.1
   sudo -u debian composer install --no-interaction --no-dev
   sudo -u debian composer update --no-interaction  --no-dev
-  sudo /sbin/swapoff /var/swap.1
+  verbose sudo /sbin/swapoff /var/swap.1
   chown -R www-data:www-data /srv/webmail
 
   echo_magenta "Modification de la configuration du plugin SAUSERPREFS"
