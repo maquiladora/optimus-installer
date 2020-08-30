@@ -31,5 +31,5 @@ then
   cp /etc/allspark/backup/allspark-backup.timer /etc/systemd/system/allspark-backup.timer
   cp /etc/allspark/backup/allspark-backup.service /etc/systemd/system/allspark-backup.service
   systemctl enable allspark-backup.timer
-  #systemctl start allspark-backup.timer
+  systemctl start allspark-backup.timer
 fi

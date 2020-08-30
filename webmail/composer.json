@@ -30,8 +30,7 @@
         "texxasrulez/advanced_search":">=3.4",
         "radiorabe/singleuserautologin":"dev-master",
         "random-cuber/contextmenu_folder":">=1.3.6",
-        "random-cuber/hotkeys":">=1.2.26",
-        "bukowski/vacation":"dev-master"
+        "random-cuber/hotkeys":">=1.2.26"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.36 || ^5.7.21"
