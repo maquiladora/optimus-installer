@@ -4,7 +4,7 @@ $labels = array();
 
 // mail
 
-$labels['folder_contact'] = 'Contact folder';
+$labels['folder_contact'] = "Dossier Contact';
 
 $labels['folder_create'] = 'Créer un dossier';
 $labels['folder_delete'] = 'Supprimer un dossier';
@@ -14,7 +14,7 @@ $labels['folder_locate'] = 'Localiser un dossier';
 $labels['folder_purge'] = 'Purger le dossier';
 
 $labels['folder_read_this'] = 'Marquer le dossier comme lu';
-$labels['folder_read_tree'] = 'Folder tree read';
+$labels['folder_read_tree'] = 'Marquer le dossier et les sous dossiers comme lus';
 
 $labels['show_all'] = 'Afficher tout';
 $labels['show_active'] = 'Afficher actifs';
@@ -24,9 +24,9 @@ $labels['folder_select'] = 'Sélectionner le dossier';
 $labels['folder_unselect'] = 'Déselectionner le dossier';
 
 $labels['reset_selected'] = 'Réinitialiser la sélection';
-$labels['reset_transient'] = 'Reset transient';
+$labels['reset_transient'] = 'Réinitialiser les transitoires';
 
-$labels['status_title'] = 'Folder view...';
+$labels['status_title'] = 'Vue Dossier ...';
 
 $labels['folder_expand_all'] = 'Développer tout';
 $labels['folder_collapse_all'] = 'Réduire tout';
@@ -59,24 +59,24 @@ $labels['message_move'] = 'Déplacer vers...';
 
 // settings
 
-$labels['plugin_folder_menu'] = 'Plugin: Folder Menu';
+$labels['plugin_folder_menu'] = 'Plugin: Menu contextuel';
 
-$labels['activate_plugin'] = 'Activate plugin';
+$labels['activate_plugin'] = 'Activer le Plugin';
 
-$labels['enable_logging'] = 'Enable plugin logging';
-$labels['enable_refresh'] = 'Enable folder tree refresh';
-$labels['enable_folder_list_context_menu'] = 'Enable mailbox list context menu';
-$labels['enable_folder_list_control_menu'] = 'Enable mailbox list control menu';
-$labels['enable_message_list_context_menu'] = 'Enable message list context menu';
+$labels['enable_logging'] = 'Activer';
+$labels['enable_refresh'] = 'Activer le raffraichissement de la hiérarchie de dossiers';
+$labels['enable_folder_list_context_menu'] = 'Activer le menu contextuel pour les dossiers';
+$labels['enable_folder_list_control_menu'] = 'Activer le menu de contrôle des dossiers';
+$labels['enable_message_list_context_menu'] = 'Activer le menu contextuel pour les messages';
 
-$labels['feature_choice'] = 'Enable plugin features';
+$labels['feature_choice'] = 'Activer les fonctionnalités du plugin';
 
-$labels['filter_active'] = 'Filters in category "active"';
-$labels['filter_favorite'] = 'Filters in category "favorite"';
+$labels['filter_active'] = 'Filtres de la catégorie : "active"';
+$labels['filter_favorite'] = 'Filtres de la catégorie : "favorite"';
 
-$labels['predefined_list'] = 'Folders in "predefined" filter';
-$labels['contact_folder_format_list'] = 'Contact mailbox format templates';
+$labels['predefined_list'] = 'Dossiers dans la catégorie "Favoris"';
+$labels['contact_folder_format_list'] = 'Templates pour les contacts';
 
-$labels['transient_expire_mins'] = 'Transient folder expiration time (mins)';
+$labels['transient_expire_mins'] = 'Durée d\'expiration des dossiers transitoires (min)';
 
 ?>

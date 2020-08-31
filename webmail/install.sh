@@ -32,6 +32,7 @@ then
   mkdir -p /var/log/roundcube
   chown www-data:www-data /var/log/roundcube
   envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
+  cp /etc/allspark/webmail/logo.svg /srv/webmail/skins/elastic/images/logo.svg
 
 
   echo_magenta "Installation de COMPOSER"
@@ -61,6 +62,9 @@ then
 
   echo_magenta "Modification de la configuration du plugin CONTEXTMENU_FOLDER"
   cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder//localization/fr_FR.inc
+
+  echo_magenta "Modification de la configuration du plugin MANAGESIEVE"
+  cp /etc/allspark/webmail/managesieve/config.inc.php /srv/webmail/plugins/managesieve/config.inc.php
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"

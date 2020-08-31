@@ -131,11 +131,11 @@ Les scripts ALL SPARK intègrent une solution de chiffrement de vos données.
 Ils créent une partition disque indépendante montée sur /srv, chiffrée avec LUKS via une clé 4096 bits.
 Pour d'évidentes raisons de sécurité, la clé de déchiffrement n'est pas stockée sur la machine elle même.
 La clé est elle même chiffrée et stockée sur notre serveur decrypt.cybertron.fr.
-La clé chiffrée n'est communiquée à votre serveur qu'après authentification sur notre serveur et confirmation de votre part
+La clé chiffrée n'est communiquée à votre serveur qu'après authentification sur notre serveur et confirmation de votre part.
 Ainsi, si votre serveur est volé ou redémarré, personne ne pourra accéder à vos données sans votre accord préalable.
 De même, votre serveur peut être verrouillé en urgence par simple redémarrage à distance.
 A noter que l'association CYBERTRON ne dispose pas de votre clé mais uniquement d'une version chiffrée que seul votre serveur peut déchiffrer.
-Il est donc recommandé de faire au minimum une sauvegarde de vos clés, par exemple sur une clé USB (voir fonction de sauvegarde dans les scripts)
+Il est donc recommandé de faire au minimum une sauvegarde de vos clés, par exemple sur une clé USB (voir fonction de sauvegarde dans les scripts). 
 
 
 # SECURISATION DU SERVEUR
@@ -178,7 +178,7 @@ Les courriels peuvent être consultés via n'importe quel logiciel client (OUTLO
 * serveur entrant : mail.votredomaine
 * port : 143
 * sécurité : STARTTLS
-* méthode d'authentification : mot de passe normal
+* méthode d'authentification : mot de passe normal.
 
 Le serveur intègre également un webmail ROUNDCUBE compatible smartphone et agrémenté de quelques plugins utiles permettant de gérer vos règles de filtrage, votre antispam, le chiffrement de vos mails ainsi que vos messages d'absence.
 

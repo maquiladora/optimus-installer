@@ -68,7 +68,7 @@ $config['login_lc'] = false;
 // this key is used to encrypt the users imap password which is stored
 // in the session record (and the client cookie if remember password is enabled).
 // please provide a string of exactly 24 chars.
-$config['des_key'] = '$DESKEY';
+$config['des_key'] = '$WEBMAIL_DES_KEY';
 
 // use this name to compose page titles
 $config['product_name'] = 'ALLSPARK Webmail';
@@ -97,10 +97,8 @@ $config['plugins'] = array(
 "swipe",
 "thunderbird_labels",
 "hotkeys",
-"fail2ban",
 "advanced_search",
-"singleuserautologin",
-"vacation");
+"singleuserautologin");
 
 $config['swipe_actions'] = array(
     'messagelist' => array(
