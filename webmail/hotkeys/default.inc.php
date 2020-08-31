@@ -8,11 +8,11 @@ $config = array();
 // activate plugin features
 $config['plugin.hotkeys.activate_plugin'] = true;
 
-// plugin loggin for debug
+// plugin logging for debug
 $config['plugin.hotkeys.enable_logging'] = false;
 
 // plugin activation toolbar button
-$config['plugin.hotkeys.enable_button'] = true;
+$config['plugin.hotkeys.enable_button'] = false;
 
 // prevent default browser keys
 $config['plugin.hotkeys.enable_prevent'] = true;
@@ -71,30 +71,6 @@ $config['plugin.hotkeys.default_mapping_list'] = array(
                 'comment' => '',
                 'script' => '',
                 'key' => '',
-        ),
-        array( // TODO remove test entry
-                'profile' => 'user',
-                'context' => 'any',
-                'command' => 'test',
-                'comment' => 'test entry 1',
-                'script' => 'alert("test 1");',
-                'key' => 'ctrl+alt+1',
-        ),
-        array( // TODO remove test entry
-                'profile' => 'user',
-                'context' => 'any',
-                'command' => 'test',
-                'comment' => 'test entry 2',
-                'script' => 'alert("test 2");',
-                'key' => 'ctrl+alt+2',
-        ),
-        array( // TODO remove example
-                'profile' => 'user',
-                'context' => 'any',
-                'command' => 'reload',
-                'comment' => 'reload client from the server',
-                'script' => 'document.location.reload(true);',
-                'key' => 'alt+f1',
         ),
 );
 

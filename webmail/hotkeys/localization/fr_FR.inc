@@ -12,7 +12,7 @@ $labels['enable_prevent'] = 'Désactiver les touches par défaut du navigateur';
 $labels['plugin_hotkey'] = 'Touche pour ouvrir le menu';
 $labels['reset_to_default'] = 'Réinitialiser la configuration par défaut';
 
-$labels['button_text'] = 'Touches';
+$labels['button_text'] = 'Hotkeys';
 $labels['button_title'] = 'Configurer les raccourcis clavier';
 
 $labels['command_hotkeys'] = 'Commande Raccourcis Clavier';
