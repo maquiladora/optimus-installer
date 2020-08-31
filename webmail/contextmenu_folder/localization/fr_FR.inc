@@ -59,11 +59,11 @@ $labels['message_move'] = 'Déplacer vers...';
 
 // settings
 
-$labels['plugin_folder_menu'] = 'Plugin: Menu contextuel';
+$labels['plugin_folder_menu'] = 'Plugin: Menu contextuel des dossiers';
 
 $labels['activate_plugin'] = 'Activer le Plugin';
 
-$labels['enable_logging'] = 'Activer';
+$labels['enable_logging'] = 'Activer les logs';
 $labels['enable_refresh'] = 'Activer le rafraichissement des dossiers';
 $labels['enable_folder_list_context_menu'] = 'Activer le menu contextuel pour les dossiers';
 $labels['enable_folder_list_control_menu'] = 'Activer le menu de contrôle des dossiers';
@@ -77,5 +77,5 @@ $labels['filter_favorite'] = 'Filtres de la catégorie : "Favoris"';
 $labels['predefined_list'] = 'Dossiers dans la catégorie "Favoris"';
 $labels['contact_folder_format_list'] = 'Templates pour les contacts';
 
-$labels['transient_expire_mins'] = 'Durée d\'expiration des dossiers actifs (min)';
+$labels['transient_expire_mins'] = 'Durée d\'expiration des dossiers "Actifs" (min)';
 ?>

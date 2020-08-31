@@ -1,0 +1,164 @@
+[
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_rename",
+    "context": "mail_box",
+    "comment": "mailbox: rename currently selected",
+    "script": "top.rcmail.command(command);",
+    "key": "f2",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_locate",
+    "context": "mail_box",
+    "comment": "mailbox: select folder by quick search",
+    "script": "top.rcmail.command(command);",
+    "key": "f3",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.contact_folder_create",
+    "context": "mail_box",
+    "comment": "mailbox: create folder from message headers",
+    "script": "top.rcmail.command(command);",
+    "key": "f4",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.message_copy",
+    "context": "mail_box",
+    "comment": "mesage: copy selected by quick search",
+    "script": "top.rcmail.command(command);",
+    "key": "f5",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.message_move",
+    "context": "mail_box",
+    "comment": "mesage: move selected by quick search",
+    "script": "top.rcmail.command(command);",
+    "key": "f6",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_create",
+    "context": "mail_box",
+    "comment": "mailbox: create sub folder from current folder",
+    "script": "top.rcmail.command(command);",
+    "key": "f7",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_delete",
+    "context": "mail_box",
+    "comment": "mailbox: delete currently selected folder",
+    "script": "top.rcmail.command(command);",
+    "key": "f8",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_read_this",
+    "context": "mail_box",
+    "comment": "mailbox: mark read current folder",
+    "script": "top.rcmail.command(command);",
+    "key": "f9",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu.expandall",
+    "context": "mail_box",
+    "comment": "mailbox: expand all",
+    "script": "",
+    "key": "f10",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.show_all",
+    "context": "mail_box",
+    "comment": "mailbox: show all",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+1",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.show_active",
+    "context": "mail_box",
+    "comment": "mailbox: show active",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+2",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.show_favorite",
+    "context": "mail_box",
+    "comment": "mailbox: show favorite",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+3",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.reset_selected",
+    "context": "mail_box",
+    "comment": "mailbox: empty 'selected' collection",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+4",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.reset_transient",
+    "context": "mail_box",
+    "comment": "mailbox: empty 'transient' collection",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+5",
+    "source": "external"
+  }, 
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_select",
+    "context": "mail_box",
+    "comment": "mailbox: append into 'selected' collection",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+6",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "plugin.contextmenu_folder.folder_unselect",
+    "context": "mail_box",
+    "comment": "mailbox: remove from 'selected' collection",
+    "script": "top.rcmail.command(command);",
+    "key": "alt+7",
+    "source": "external"
+  },
+  {
+    "profile": "allspark",
+    "command": "compose",
+    "context": "mail_list",
+    "comment": "message: compose new",
+    "script": "",
+    "key": "alt+n",
+    "source": "internal"
+  },
+  {
+    "profile": "allspark",
+    "command": "savedraft",
+    "context": "mail_edit",
+    "comment": "compose: save mail draft",
+    "script": "",
+    "key": "ctrl+s",
+    "source": "internal"
+  }
+]

@@ -64,6 +64,11 @@ then
   echo_magenta "Modification de la configuration du plugin CONTEXTMENU_FOLDER"
   cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder/localization/fr_FR.inc
 
+  echo_magenta "Modification de la configuration du plugin HOTKEYS"
+  cp /etc/allspark/webmail/hotkeys/default.inc.php /srv/webmail/plugins/hotkeys/default.inc.php
+  cp /etc/allspark/webmail/hotkeys/hotkeys.json /srv/webmail/plugins/hotkeys/hotkeys.json
+  cp /etc/allspark/webmail/hotkeys/localization/fr_FR.inc /srv/webmail/plugins/hotkeys/localization/fr_FR.inc
+
   echo_magenta "Modification de la configuration du plugin MANAGESIEVE"
   cp /etc/allspark/webmail/managesieve/config.inc.php /srv/webmail/plugins/managesieve/config.inc.php
 
