@@ -33,6 +33,7 @@ then
   chown www-data:www-data /var/log/roundcube
   envsubst '${DOMAIN} ${MAILSERVER_MARIADB_USER} ${MAILSERVER_MARIADB_PASSWORD} ${WEBMAIL_DES_KEY}' < /etc/allspark/webmail/config.inc.php > /srv/webmail/config/config.inc.php
   cp /etc/allspark/webmail/logo.svg /srv/webmail/skins/elastic/images/logo.svg
+  cp /etc/allspark/webmail/favicon.ico /srv/webmail/skins/elastic/images/favicon.ico
 
 
   echo_magenta "Installation de COMPOSER"
