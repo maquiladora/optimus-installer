@@ -14,7 +14,7 @@ $labels['folder_locate'] = 'Localiser un dossier';
 $labels['folder_purge'] = 'Purger le dossier';
 
 $labels['folder_read_this'] = 'Marquer le dossier comme lu';
-$labels['folder_read_tree'] = 'Marquer le dossier et les sous dossiers comme lus';
+$labels['folder_read_tree'] = 'Marquer dossier + sous dossiers comme lus';
 
 $labels['show_all'] = 'Afficher tout';
 $labels['show_active'] = 'Afficher actifs';
@@ -64,7 +64,7 @@ $labels['plugin_folder_menu'] = 'Plugin: Menu contextuel';
 $labels['activate_plugin'] = 'Activer le Plugin';
 
 $labels['enable_logging'] = 'Activer';
-$labels['enable_refresh'] = 'Activer le rafraichissement de la hiérarchie des dossiers';
+$labels['enable_refresh'] = 'Activer le rafraichissement des dossiers';
 $labels['enable_folder_list_context_menu'] = 'Activer le menu contextuel pour les dossiers';
 $labels['enable_folder_list_control_menu'] = 'Activer le menu de contrôle des dossiers';
 $labels['enable_message_list_context_menu'] = 'Activer le menu contextuel pour les messages';
