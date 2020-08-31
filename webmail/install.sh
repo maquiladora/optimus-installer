@@ -62,7 +62,7 @@ then
   chown www-data:www-data /srv/webmail/plugins/enigma/config.inc.php
 
   echo_magenta "Modification de la configuration du plugin CONTEXTMENU_FOLDER"
-  cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder//localization/fr_FR.inc
+  cp /etc/allspark/webmail/contextmenu_folder/localization/fr_FR.inc /srv/webmail/plugins/contextmenu_folder/localization/fr_FR.inc
 
   echo_magenta "Modification de la configuration du plugin MANAGESIEVE"
   cp /etc/allspark/webmail/managesieve/config.inc.php /srv/webmail/plugins/managesieve/config.inc.php

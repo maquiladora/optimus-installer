@@ -4,7 +4,7 @@ $labels = array();
 
 // mail
 
-$labels['folder_contact'] = "Dossier Contact';
+$labels['folder_contact'] = 'Dossier Contact';
 
 $labels['folder_create'] = 'Créer un dossier';
 $labels['folder_delete'] = 'Supprimer un dossier';
@@ -18,13 +18,13 @@ $labels['folder_read_tree'] = 'Marquer le dossier et les sous dossiers comme lus
 
 $labels['show_all'] = 'Afficher tout';
 $labels['show_active'] = 'Afficher actifs';
-$labels['show_favorite'] = 'Afficher Favoris';
+$labels['show_favorite'] = 'Afficher favoris';
 
 $labels['folder_select'] = 'Sélectionner le dossier';
 $labels['folder_unselect'] = 'Déselectionner le dossier';
 
 $labels['reset_selected'] = 'Réinitialiser la sélection';
-$labels['reset_transient'] = 'Réinitialiser les transitoires';
+$labels['reset_transient'] = 'Réinitialiser les actifs';
 
 $labels['status_title'] = 'Vue Dossier ...';
 
@@ -64,19 +64,18 @@ $labels['plugin_folder_menu'] = 'Plugin: Menu contextuel';
 $labels['activate_plugin'] = 'Activer le Plugin';
 
 $labels['enable_logging'] = 'Activer';
-$labels['enable_refresh'] = 'Activer le raffraichissement de la hiérarchie de dossiers';
+$labels['enable_refresh'] = 'Activer le rafraichissement de la hiérarchie des dossiers';
 $labels['enable_folder_list_context_menu'] = 'Activer le menu contextuel pour les dossiers';
 $labels['enable_folder_list_control_menu'] = 'Activer le menu de contrôle des dossiers';
 $labels['enable_message_list_context_menu'] = 'Activer le menu contextuel pour les messages';
 
 $labels['feature_choice'] = 'Activer les fonctionnalités du plugin';
 
-$labels['filter_active'] = 'Filtres de la catégorie : "active"';
-$labels['filter_favorite'] = 'Filtres de la catégorie : "favorite"';
+$labels['filter_active'] = 'Filtres de la catégorie : "Actifs"';
+$labels['filter_favorite'] = 'Filtres de la catégorie : "Favoris"';
 
 $labels['predefined_list'] = 'Dossiers dans la catégorie "Favoris"';
 $labels['contact_folder_format_list'] = 'Templates pour les contacts';
 
-$labels['transient_expire_mins'] = 'Durée d\'expiration des dossiers transitoires (min)';
-
+$labels['transient_expire_mins'] = 'Durée d\'expiration des dossiers actifs (min)';
 ?>
