@@ -156,9 +156,9 @@ then
 
   verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
 
-  if ! grep -q "AuthenticationMethods publickey,keyboard-interactive" /etc/ssh/sshd_config
+  if ! grep -q "AuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive" /etc/ssh/sshd_config
   then
-    echo 'AuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+    echo 'AuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive' >> /etc/ssh/sshd_config
   fi
 
   echo_magenta "Génération des clés d'accès"
