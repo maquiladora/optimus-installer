@@ -3,6 +3,7 @@ source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_BACKUP ]; then require MODULE_BACKUP yesno "Voulez-vous installer le module de sauvegarde ?"; source /root/.allspark; fi
 if [ -z $BACKUP_SERVER ]; then require BACKUP_SERVER string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
+if [ -z $BACKUP_SERVER_SSHPORT ]; then require BACKUP_SERVER_SSHPORT string "Veuillez renseigner le port SSH du serveur de sauvegarde"; source /root/.allspark; fi
 source /root/.allspark
 
 if [ $MODULE_BACKUP = "Y" ]
@@ -11,20 +12,45 @@ then
   echo_green "==== SAUVEGARDE AUTOMATIQUE ===="
 
   echo_magenta "Installation des paquets requis"
-  verbose apt-get -qq install rdiff-backup mailutils
+  verbose apt-get -qq install rdiff-backup mailutils sshfs
 
   echo_magenta "Envoi de la clé publique au serveur distant"
-  ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+  if [ ! -f /root/private.pem ]
+  then
+    openssl genrsa -out /root/private.pem 4096 &> /dev/null
+    openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem &> /dev/null
+  fi
+  ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER -p $BACKUP_SERVER_SSHPORT "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
   echo_magenta "Installation des paquets requis sur le serveur distant"
-  ssh -i /root/private.pem debian@$BACKUP_SERVER sudo apt-get install -qq -y rdiff-backup
-  ssh -i /root/private.pem debian@$BACKUP_SERVER sudo chown debian:debian /srv
+  ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo apt-get install -qq -y rdiff-backup rdiff-backup-fs
 
-  echo_magenta "Création des dossiers"
+  echo_magenta "Installation des dossiers requis sur le serveur distant"
+  ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo mkdir /srv
+  ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo chown debian:debian /srv
+  ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo mkdir /backup
+  ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo chown debian:debian /backup
+
+  echo_magenta "Configuration de l'utilisateur debian sur le serveur distant"
+  usermod add -AG debian
+  if ! grep -q "debian ALL=(ALL) NOPASSWD: ALL" /etc/sudoers
+  then
+    echo 'debian ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+  fi
+
+
+
+
+  echo_magenta "Création des dossiers sur le serveur local"
   verbose mkdir -p /srv/db-backup
+  if [ -d /srv/files/ ]
+  then
+    verbose mkdir -p /srv/files/backup@$DOMAIN
+     sshfs debian@$BACKUP_SERVER:/backup /srv/files/backup@adaris.org -o IdentityFile=/root/private.pem -o sftp_server="/usr/bin/sudo /usr/lib/openssh/sftp-server" -o allow_other -p $BACKUP_SERVER_SSHPORT
+  fi
 
   echo_magenta "Installation du script de sauvegarde"
-  envsubst '${DOMAIN} ${BACKUP_SERVER}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.sh
+  envsubst '${DOMAIN} ${BACKUP_SERVER} ${BACKUP_SERVER_SSHPORT}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.sh
   chmod 744 /srv/allspark-backup.sh
 
   echo_magenta "Création de la tâche automatique quotidienne"
