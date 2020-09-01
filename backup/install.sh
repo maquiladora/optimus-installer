@@ -32,7 +32,7 @@ then
   ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT debian@$BACKUP_SERVER sudo chown debian:debian /backup
 
   echo_magenta "Configuration de l'utilisateur debian sur le serveur distant"
-  usermod add -AG debian
+  usermod add -aG debian
   if ! grep -q "debian ALL=(ALL) NOPASSWD: ALL" /etc/sudoers
   then
     echo 'debian ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers

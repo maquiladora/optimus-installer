@@ -36,12 +36,13 @@ tput cup 24 3; echo_green "s. Sauvegarder la configuration et les clés de chiff
 tput cup 26 3; echo_green "t. Editer la configuration"
 tput cup 27 3; echo_green "u. Mettre à jour AllSpark Installer"
 tput cup 28 3; echo_green "v. Redémarrer le serveur"
-tput cup 29 3; echo_green "x. Quitter"
+tput cup 29 3; echo_green "w. Afficher le QR CODE 2FA"
+tput cup 30 3; echo_green "x. Quitter"
 
-tput cup 31 3; echo_green "y. INSTALLATION GUIDEE"
-tput cup 32 3; echo_green "z. INSTALLATION AUTOMATISEE"
+tput cup 32 3; echo_green "y. INSTALLATION GUIDEE"
+tput cup 33 3; echo_green "z. INSTALLATION AUTOMATISEE"
 
-tput cup 34 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
+tput cup 35 3; echo -ne "\033[46;30m Select Option : \e[0m"; tput cup 25 21
 
 read -n 1 y
 
@@ -201,6 +202,12 @@ case "$y" in
     exit 1
     ;;
 
+  w)
+    tput reset
+    qrencode -t ansi "otpauth://totp/debian@$DOMAIN.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    exit 1
+    ;;
+
   x)
     tput reset
     clear
@@ -226,7 +233,7 @@ case "$y" in
     source /etc/allspark/shared/install.sh
     source /etc/allspark/optimus/install.sh
     source /etc/allspark/backup/install.sh
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    qrencode -t ansi "otpauth://totp/debian@$DOMAIN.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     read -p "Appuyez sur [ENTREE] après avoir enregistré votre code ..."
     clear
     source /etc/allspark/zonedns/install.sh
@@ -300,7 +307,7 @@ case "$y" in
     source /etc/allspark/backup/install.sh
     read -p "Appuyez sur [ENTREE] pour continuer ..."
     clear
-    qrencode -t ansi "otpauth://totp/debian@demoptimus.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    qrencode -t ansi "otpauth://totp/debian@$DOMAIN?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     read -p "Appuyez sur [ENTREE] après avoir enregistré votre code 2FA ..."
     clear
     source /etc/allspark/zonedns/install.sh
