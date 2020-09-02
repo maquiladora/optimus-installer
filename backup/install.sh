@@ -22,7 +22,7 @@ then
     openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem &> /dev/null
   fi
   ssh-keygen -f "/root/.ssh/known_hosts" -R "[$BACKUP_SERVER]:$BACKUP_SERVER_SSHPORT"
-  ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER -p $BACKUP_SERVER_SSHPORT "mkdir -p ~/.ssh && cat >> /home/debian/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+  ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER -o "StrictHostKeyChecking no" -p $BACKUP_SERVER_SSHPORT "mkdir -p ~/.ssh && cat >> /home/debian/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
 
   echo_magenta "Configuration du serveur distant"
