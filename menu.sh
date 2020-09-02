@@ -204,7 +204,7 @@ case "$y" in
 
   w)
     tput reset
-    qrencode -t ansi "otpauth://totp/debian@$DOMAIN.fr?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
+    qrencode -t ansi "otpauth://totp/debian@$DOMAIN?secret=${SECURE_GOOGLEAUTH_KEY}&issuer=ALLSPARK"
     exit 1
     ;;
 

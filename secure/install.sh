@@ -68,7 +68,7 @@ if [ $MODULE_SECURE_CHANGEROOTPASS = "Y" ]
 then
   echo
   echo_green "==== MODIFICATION DU MOT DE PASSE ROOT ===="
-  echo_magenta "modification du mot de passe root"
+  echo_magenta "Modification du mot de passe root"
   require SECURE_ROOT_PASSWORD password "Veuillez renseigner le nouveau mot de passe root :"
   source /root/.allspark
   echo -e "$SECURE_ROOT_PASSWORD\n$SECURE_ROOT_PASSWORD" | passwd root &> /dev/null
@@ -78,7 +78,7 @@ if [ $MODULE_SECURE_CHANGEDEBIANPASS = "Y" ]
 then
   echo
   echo_green "==== MODIFICATION DU MOT DE PASSE DE L'UTILISATEUR DEBIAN ===="
-  echo_magenta "modification du mot de passe de l'utilisateur 'debian'"
+  echo_magenta "Modification du mot de passe de l'utilisateur 'debian'"
   require SECURE_DEBIAN_PASSWORD password "Veuillez renseigner le nouveau mot de passe pour l'utilisateur 'debian':"
   source /root/.allspark
   echo -e "$SECURE_DEBIAN_PASSWORD\n$SECURE_DEBIAN_PASSWORD" | passwd debian &> /dev/null
@@ -156,9 +156,9 @@ then
 
   verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
 
-  if ! grep -q "AuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive" /etc/ssh/sshd_config
+  if ! grep -q "Match User debian/nAuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive" /etc/ssh/sshd_config
   then
-    echo 'AuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive' >> /etc/ssh/sshd_config
+    echo 'Match User debian/nAuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
   fi
 
   echo_magenta "Génération des clés d'accès"
