@@ -3,7 +3,7 @@ apt-get install -qq -y rdiff-backup rdiff-backup-fs
 
 #Création de l'utilisateur autobackup
 [ $(getent group autobackup) ] || groupadd autobackup --gid 204
-[ $(getent passwd autobackup) ] || useradd -g autobackup -s /bin/false --uid 204 autobackup
+[ $(getent passwd autobackup) ] || useradd -g autobackup --uid 204 autobackup
 
 #Communication de la clé publique à l'utilisateur autobackup
 mkdir -p /home/autobackup/.ssh

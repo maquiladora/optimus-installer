@@ -156,9 +156,9 @@ then
 
   verbose sed -i 's/@include common-auth/#@include common-auth/g' /etc/pam.d/sshd
 
-  if ! grep -q "Match User debian/nAuthenticationMethods publickey,keyboard-interactive password,keyboard-interactive" /etc/ssh/sshd_config
+  if ! grep -q "Match User debian" /etc/ssh/sshd_config
   then
-    echo 'Match User debian/nAuthenticationMethods publickey,keyboard-interactive' >> /etc/ssh/sshd_config
+    echo 'Match User debian\nAuthenticationMethods publickey,keyboard-interactive\n' >> /etc/ssh/sshd_config
   fi
 
   echo_magenta "Génération des clés d'accès"
