@@ -26,7 +26,7 @@ then
 
 
   echo_magenta "Configuration du serveur distant"
-  scp -P $BACKUP_SERVER_SSHPORT -i /root/private.pem /etc/allspark/backup/install_remote.sh autobackup@$BACKUP_SERVER:/home/autobackup/install_remote.sh
+  scp -P $BACKUP_SERVER_SSHPORT -i /root/private.pem /etc/allspark/backup/install_remote.sh debian@$BACKUP_SERVER:/home/autobackup/install_remote.sh
   ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo /home/autobackup/install_remote.sh
 
 
