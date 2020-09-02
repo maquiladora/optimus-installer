@@ -12,7 +12,7 @@ echo "SERVER BACKUP" >> /var/log/allspark-backup.log
 ssh-keygen -f "/home/debian/.ssh/known_hosts" -R "[$BACKUP_SERVER]:$BACKUP_SERVER_SSHPORT"
 rdiff-backup -v 6 --force --exclude /srv/databases --print-statistics --remote-schema "ssh -p$BACKUP_SERVER_SSHPORT -o 'StrictHostKeyChecking no' -i /home/debian/private.pem %s sudo rdiff-backup --server" /srv autobackup@$BACKUP_SERVER::/srv >> /var/log/allspark-backup.log
 
-ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo umount /backup &>> /var/log/allspark-backup.log
-ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo rdiff-backup-fs --full /backup /srv &>> /var/log/allspark-backup.log
+ssh -o 'StrictHostKeyChecking no' -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo umount /backup &>> /var/log/allspark-backup.log
+ssh -o 'StrictHostKeyChecking no' -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo rdiff-backup-fs --full /backup /srv &>> /var/log/allspark-backup.log
 
 mail -s "BACKUP REPORT" prime@%DOMAIN -aFrom:prime@%DOMAIN < /var/log/allspark-backup.log
