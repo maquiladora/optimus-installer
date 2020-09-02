@@ -36,7 +36,7 @@ then
   if [ -d /srv/files ]
   then
     verbose mkdir -p /srv/files/backup@$DOMAIN
-    sshfs autobackup@$BACKUP_SERVER:/backup /srv/files/backup@adaris.org -o IdentityFile=/root/private.pem -o sftp_server="/usr/bin/sudo /usr/lib/openssh/sftp-server" -o allow_other -p $BACKUP_SERVER_SSHPORT
+    sshfs autobackup@$BACKUP_SERVER:/backup /srv/files/backup@$DOMAIN -o IdentityFile=/root/private.pem -o sftp_server="/usr/bin/sudo /usr/lib/openssh/sftp-server" -o allow_other -p $BACKUP_SERVER_SSHPORT
   fi
 
 
