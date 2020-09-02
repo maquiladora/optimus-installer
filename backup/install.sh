@@ -27,6 +27,8 @@ then
   echo_magenta "Communiation de la clé publique à l'utilisateur debian"
   cp /root/private.pem /home/debian/private.pem
   cp /root/public.pem /home/debian/public.pem
+  chown debian:debian /home/debian/private.pem
+  chown debian:debian /home/debian/public.pem
 
   echo_magenta "Configuration du serveur distant"
   scp -P $BACKUP_SERVER_SSHPORT -i /root/private.pem /etc/allspark/backup/install_remote.sh debian@$BACKUP_SERVER:/home/debian/install_remote.sh
