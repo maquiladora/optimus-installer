@@ -24,6 +24,9 @@ then
   verbose ssh-keygen -f "/root/.ssh/known_hosts" -R "[$BACKUP_SERVER]:$BACKUP_SERVER_SSHPORT"
   verbose ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER -o "StrictHostKeyChecking no" -p $BACKUP_SERVER_SSHPORT "mkdir -p ~/.ssh && cat >> /home/debian/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
+  echo_magenta "Communiation de la clé publique à l'utilisateur debian"
+  cp /root/private.pem /home/debian/private.pem
+  cp /root/public.pem /home/debian/public.pem
 
   echo_magenta "Configuration du serveur distant"
   scp -P $BACKUP_SERVER_SSHPORT -i /root/private.pem /etc/allspark/backup/install_remote.sh debian@$BACKUP_SERVER:/home/debian/install_remote.sh
