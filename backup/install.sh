@@ -42,7 +42,7 @@ then
 
   echo_magenta "Installation du script de sauvegarde"
   envsubst '${DOMAIN} ${BACKUP_SERVER} ${BACKUP_SERVER_SSHPORT}' < /etc/allspark/backup/allspark-backup.sh > /srv/allspark-backup.sh
-  chmod 744 /srv/allspark-backup.sh
+  chmod 700 /srv/allspark-backup.sh
 
 
   echo_magenta "Création de la tâche automatique quotidienne"
