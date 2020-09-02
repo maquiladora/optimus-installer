@@ -9,7 +9,7 @@ rm /srv/db-backup/*.sql
 echo "" >> /var/log/allspark-backup.log
 
 echo "SERVER BACKUP" >> /var/log/allspark-backup.log
-rdiff-backup -v 6 --force --exclude /srv/databases --print-statistics --remote-schema "ssh -i /root/private.pem %s sudo rdiff-backup --server" /srv autobackup@$BACKUP_SERVER::/srv >> /var/log/allspark-backup.log
+rdiff-backup -v 6 -p$BACKUP_SERVER_SSHPORT --force --exclude /srv/databases --print-statistics --remote-schema "ssh -i /root/private.pem %s sudo rdiff-backup --server" /srv autobackup@$BACKUP_SERVER::/srv >> /var/log/allspark-backup.log
 
 ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo umount /backup &>> /var/log/allspark-backup.log
 ssh -i /root/private.pem -p $BACKUP_SERVER_SSHPORT autobackup@$BACKUP_SERVER sudo rdiff-backup-fs --full /backup /srv &>> /var/log/allspark-backup.log
