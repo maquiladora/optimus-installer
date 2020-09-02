@@ -2,6 +2,7 @@
 source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_BACKUP ]; then require MODULE_BACKUP yesno "Voulez-vous installer le module de sauvegarde ?"; source /root/.allspark; fi
+if [ -z $MARIADB_ADMIN_PASSWORD ] || [ $MARIADB_ADMIN_PASSWORD = "auto" ]; then require MARIADB_ADMIN_PASSWORD password "Veuillez renseigner le mot de passe de l'administrateur MARIADB :"; source /root/.allspark; fi
 if [ -z $BACKUP_SERVER ]; then require BACKUP_SERVER string "Veuillez renseigner l'adresse IP du serveur de sauvegarde"; source /root/.allspark; fi
 if [ -z $BACKUP_SERVER_SSHPORT ]; then require BACKUP_SERVER_SSHPORT string "Veuillez renseigner le port SSH du serveur de sauvegarde"; source /root/.allspark; fi
 source /root/.allspark
@@ -42,6 +43,9 @@ then
   then
     verbose mkdir -p /srv/files/backup@$DOMAIN
     sshfs autobackup@$BACKUP_SERVER:/backup /srv/files/backup@$DOMAIN -o IdentityFile=/root/private.pem -o sftp_server="/usr/bin/sudo /usr/lib/openssh/sftp-server" -o allow_other -p $BACKUP_SERVER_SSHPORT
+    verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('2', '1', 'backup@$DOMAIN', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'), '$(date +"%F %T")', null, null, null);"
+    verbose mariadb -u root -e "INSERT IGNORE INTO cloud.groupmembers VALUES ('1', '2', '1');"
+
   fi
 
 
