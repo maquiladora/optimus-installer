@@ -12,17 +12,16 @@ chown autobackup:autobackup /home/autobackup/.ssh/authorized_keys
 chmod 600 /home/autobackup/.ssh/authorized_keys
 
 #Ajout de l'utilisateur autobackup dans les sudoers
-usermod add -aG autobackup
 if ! grep -q "autobackup ALL=(ALL) NOPASSWD: ALL" /etc/sudoers
 then
   echo 'autobackup ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 fi
 
 #Création des dossiers
-mkdir -P /srv
+mkdir -p /srv
 chown autobackup:autobackup /srv
 
-mkdir -P /backup
+mkdir -p /backup
 chown autobackup:autobackup /backup
 
 #Création de l'utilisateur/groupe mailboxes pour reproduire la configuration du serveur principal
