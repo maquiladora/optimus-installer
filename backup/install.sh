@@ -21,7 +21,7 @@ then
     openssl genrsa -out /root/private.pem 4096 &> /dev/null
     openssl rsa -in /root/private.pem -outform PEM -pubout -out /root/public.pem &> /dev/null
   fi
-  verbose ssh-keygen -f "/root/.ssh/known_hosts" -R "[$BACKUP_SERVER]:$BACKUP_SERVER_SSHPORT"
+  #verbose ssh-keygen -f "/root/.ssh/known_hosts" -R "[$BACKUP_SERVER]:$BACKUP_SERVER_SSHPORT"
   verbose ssh-keygen -y -f /root/private.pem | ssh debian@$BACKUP_SERVER -o "StrictHostKeyChecking no" -p $BACKUP_SERVER_SSHPORT "mkdir -p ~/.ssh && cat >> /home/debian/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 
 
