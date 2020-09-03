@@ -45,7 +45,6 @@ then
     sshfs autobackup@$BACKUP_SERVER:/backup /srv/files/backup@$DOMAIN -o IdentityFile=/root/private.pem -o sftp_server="/usr/bin/sudo /usr/lib/openssh/sftp-server" -o allow_other -p $BACKUP_SERVER_SSHPORT
     verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('2', '1', 'backup@$DOMAIN', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'), '$(date +"%F %T")', null, null, null);"
     verbose mariadb -u root -e "INSERT IGNORE INTO cloud.groupmembers VALUES ('1', '2', '1');"
-
   fi
 
 
