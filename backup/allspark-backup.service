@@ -6,3 +6,4 @@ Description=Sauvegarde incrémentielle
 Type=simple
 ExecStart=/srv/allspark-backup.sh
 StandardError=journal
+WorkingDirectory=/srv
