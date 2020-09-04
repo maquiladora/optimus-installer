@@ -8,9 +8,11 @@
   CustomLog /var/log/apache2/api-access.log combined
 
   <Directory /srv/api/>
-    Options FollowSymLinks
-    AllowOverride None
-    Require all granted
+    Options +FollowSymLinks
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
   </Directory>
 
 </VirtualHost>

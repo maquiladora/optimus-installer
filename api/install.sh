@@ -1,6 +1,9 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de domaine :"; source /root/.allspark; fi
+if [ -z $MARIADB_ADMIN_USER ]; then require MARIADB_ADMIN_USER string "Veuillez renseigner le nom de l'administrateur MARIADB :"; source /root/.allspark; fi
+if [ -z $MARIADB_ADMIN_PASSWORD ] || [ $MARIADB_ADMIN_PASSWORD = "auto" ]; then require MARIADB_ADMIN_PASSWORD password "Veuillez renseigner le mot de passe de l'administrateur MARIADB :"; source /root/.allspark; fi
+if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 if [ -z $MODULE_API ]; then require MODULE_API yesno "Voulez-vous installer l'espace d'hébergement api.$DOMAIN ?"; source /root/.allspark; fi
 source /root/.allspark
 
@@ -11,9 +14,17 @@ then
 
   echo_magenta "Création de l'espace d'hébergement api.$DOMAIN..."
   if [ ! -d "/srv/api" ]; then verbose mkdir /srv/api; fi
-  if [ ! -f "/srv/api/index.html" ]; then echo "API" > /srv/api/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/api.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/api/vhost > /etc/apache2/sites-enabled/api.conf; fi
   chown -R www-data:www-data /srv/api
+
+  cd /srv/api
+  cp -R /etc/allspark/api/install/ /srv/api/
+  envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/database.php > /srv/api/database.php
+  envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/core.php > /srv/api/core.php
+
+  mkdir -p /srv/api/libs
+  cd /srv/api/libs
+  git clone https://github.com/firebase/php-jwt
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
