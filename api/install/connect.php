@@ -13,7 +13,7 @@ class Database
 
         try
         {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, openssl_encrypt($this->password,'AES-128-CBC',''$AES_KEY'));
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, openssl_encrypt($this->password,'AES-128-CBC','$AES_KEY'));
         }
         catch(PDOException $exception)
         {
