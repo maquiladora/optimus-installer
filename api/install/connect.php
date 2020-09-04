@@ -10,10 +10,10 @@ class Database
     public function getConnection()
     {
         $this->conn = null;
-        echo openssl_encrypt($this->password,'AES-128-CBC','$AES_KEY');
+        echo  echo mcrypt_encrypt(MCRYPT_RIJNDAEL_128, '1y6bnzuf6pFUEVUD', $this->password, MCRYPT_MODE_ECB);
         try
         {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, openssl_encrypt($this->password,'AES-128-CBC','$AES_KEY'));
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username,  mcrypt_encrypt(MCRYPT_RIJNDAEL_128, '1y6bnzuf6pFUEVUD', $this->password, MCRYPT_MODE_ECB));
         }
         catch(PDOException $exception)
         {
