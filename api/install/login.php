@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 // database connection will be here
 // files needed to connect to database
-include_once 'database.php';
+include_once 'connect.php';
 include_once 'user.php';
 
 // get database connection
