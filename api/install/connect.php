@@ -3,8 +3,8 @@ class Database
 {
     private $host = "localhost";
     private $db_name = "users";
-    private $username = "$MARIADB_ADMIN_USER";
-    private $password = "$MARIADB_ADMIN_PASSWORD";
+    private $username = "root";
+    private $password = "bk5WpMHKGZUwJ1ZJbsGz0e7jV4wsr4qe";
     public $conn;
 
     public function getConnection()
@@ -12,7 +12,7 @@ class Database
         $this->conn = null;
         try
         {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username,  'u8 rN3 Üí YFÉmö¦A Ö:Ë ¯ ­78  ^ù6. I   }~Ú 7Ï³i6');
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, this->password);
         }
         catch(PDOException $exception)
         {
