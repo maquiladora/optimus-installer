@@ -1,4 +1,5 @@
 <?php
+print_r($path);
 if ($path[1] == 'contacts')
 {
   print_r($path);
