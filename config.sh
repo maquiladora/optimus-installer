@@ -6,6 +6,7 @@ export VERBOSE=2
 export DOMAIN=
 export AES_KEY=
 export WEBMAIL_DES_KEY=
+export API_SHA_KEY=
 export UUID=
 export LAST_UPGRADE=
 export MODULE_APACHE=

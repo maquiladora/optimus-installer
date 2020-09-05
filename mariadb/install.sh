@@ -5,7 +5,7 @@ if [ -z $MODULE_MARIADB_REMOTE_ACCESS ]; then require MODULE_MARIADB_REMOTE_ACCE
 if [ -z $MARIADB_REMOTE_ROOT_PASSWORD ] || [ $MARIADB_REMOTE_ROOT_PASSWORD = "auto" ]; then require MARIADB_REMOTE_ROOT_PASSWORD password "Veuillez renseigner le mot de passe de connexion à distance de l'utilisateur 'root' :"; source /root/.allspark; fi
 if [ -z $MARIADB_ADMIN_USER ]; then require MARIADB_ADMIN_USER string "Veuillez renseigner le nom de l'administrateur MARIADB :"; source /root/.allspark; fi
 if [ -z $MARIADB_ADMIN_PASSWORD ] || [ $MARIADB_ADMIN_PASSWORD = "auto" ]; then require MARIADB_ADMIN_PASSWORD password "Veuillez renseigner le mot de passe de l'administrateur MARIADB :"; source /root/.allspark; fi
-if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 32 caractères [A-Za-z0-9]"; source /root/.allspark; fi
+if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
 if [ $MODULE_MARIADB = "Y" ]
