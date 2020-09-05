@@ -5,5 +5,5 @@ $path = explode('/',$url['path']);
 $modules = scandir('.');
 foreach ($modules as $module)
   if (is_dir($module) && substr($module,0,4) == 'api_')
-    echo include_once . '/index.php';
+    include_once $module . '/index.php';
 ?>
