@@ -1,9 +1,7 @@
 <?php
-print_r($path);
-if ($path[1] == 'contacts')
+if ($path[2] == 'contacts')
 {
-  print_r($path);
-  $contact['id'] = $path[2];
+  $contact['id'] = $path[3];
   include_once 'contact.php';
 }
 ?>
