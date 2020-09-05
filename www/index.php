@@ -21,7 +21,7 @@
         alert(ajax.responseText);
       }
     }
-    xhr.send("email="+email.value+"&password="+password.value);
+    xhr.send("email="+document.getElementById('email').value+"&password="+document.getElementById('password').value);
   }
 
   </script>
