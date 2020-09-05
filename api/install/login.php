@@ -32,7 +32,7 @@ include_once 'libs/php-jwt/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 // check if email exists and if password is correct
-if($email_exists)
+if($email_exists && password_verify(openssl_encrypt('W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM', 'aes-128-ecb', '$AES_KEY'),$user->password))
 {
     $token = array(
        "iss" => $iss,
@@ -50,6 +50,6 @@ if($email_exists)
 else
 {
    http_response_code(401);
-   echo json_encode(array("message" => "Login failed."));
+   echo json_encode(array("message" => "Login failed.", "jwt" => $user->password, "jwt" => openssl_encrypt('W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM', 'aes-128-ecb', '$AES_KEY')));
 }
 ?>
