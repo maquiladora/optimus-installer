@@ -262,3 +262,8 @@ class JWT
         return $data;
     }
 }
+
+class JWTException extends \InvalidArgumentException
+{
+    // ;)
+}
