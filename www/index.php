@@ -22,7 +22,7 @@
         alert(xhr.responseText);
       }
     }
-    var data = JSON.stringify({"email": "prime@demoptimus.fr", "password": "W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM"});
+    var data = "{\"email\":\"prime@demoptimus.fr\",\"password\":\"W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM\"}";
     xhr.send(data);
   }
 
