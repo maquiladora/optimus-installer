@@ -7,14 +7,15 @@
   ErrorLog /var/log/apache2/api-error.log
   CustomLog /var/log/apache2/api-access.log combined
 
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^index.php [L]
+
   <Directory /srv/api/>
     Options FollowSymLinks
     AllowOverride None
     Require all granted
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ index.php [L]
   </Directory>
 
 </VirtualHost>
