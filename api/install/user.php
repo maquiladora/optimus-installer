@@ -60,7 +60,7 @@ class User
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->id = $row['id'];
         $this->firstname = $row['status'];
-        $this->password = base64_encode($row['password']);
+        $this->password = $row['password'];
         return true;
     }
 
