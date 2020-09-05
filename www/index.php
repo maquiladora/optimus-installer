@@ -18,7 +18,7 @@
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
       {
-        alert(ajax.responseText);
+        alert(xhr.responseText);
       }
     }
     xhr.send("email="+document.getElementById('email').value+"&password="+document.getElementById('password').value);
