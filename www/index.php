@@ -13,7 +13,6 @@
   {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'https://api.$DOMAIN/allspark/login', true);
-    xhr.setRequestHeader('content-type', 'application/json');
     xhr.onreadystatechange = function()
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
