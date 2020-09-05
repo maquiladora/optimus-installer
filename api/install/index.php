@@ -1,3 +1,3 @@
 <?php
-echo 'api V1.0'
+print_(parse_url());
 ?>
