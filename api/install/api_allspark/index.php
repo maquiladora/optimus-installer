@@ -1,6 +1,6 @@
 <?php
-if ($path[1] == 'auth')
+if ($path[2] == 'auth')
   include_once 'auth.php';
-else if ($path[1] == 'login')
+else if ($path[2] == 'login')
   include_once 'login.php';
 ?>
