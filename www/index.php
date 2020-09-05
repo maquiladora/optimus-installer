@@ -1,12 +1,10 @@
 <html>
   <body>
-    <form>
     <label for="email">Email :</label><br><input id="email" name="email"/>
     <br/>
     <label for="password">Password :</label><br><input id="password" name="password"/>
     <br/>
     <input type="submit" onclick="login()"/>
-    </form>
   </body>
 
   <script>
