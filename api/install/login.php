@@ -32,7 +32,7 @@ include_once 'libs/php-jwt-master/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 // check if email exists and if password is correct
-if($email_exists && password_verify($data->password, $user->password))
+if($email_exists && password_verify($data->password, openssl_decrypt(base64_encode($user->password), 'aes-128-ecb', '$AES_KEY')))
 {
     $token = array(
        "iss" => $iss,
