@@ -46,10 +46,7 @@ class User
 
   function emailExists()
   {
-    $query = "SELECT id, status, password 
-            FROM " . $this->table_name . "
-            WHERE email = ?
-            LIMIT 0,1";
+    $query = "SELECT id, status, password FROM " . $this->table_name . " WHERE email = ? LIMIT 0,1";
 
     $stmt = $this->conn->prepare( $query );
     $this->email=htmlspecialchars(strip_tags($this->email));
@@ -63,7 +60,7 @@ class User
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->id = $row['id'];
         $this->firstname = $row['status'];
-        $this->password = $row['password'];
+        $this->password = base64_encode($row['password']);
         return true;
     }
 
