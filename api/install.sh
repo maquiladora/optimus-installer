@@ -24,10 +24,6 @@ then
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/core.php > /srv/api/core.php
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/login.php > /srv/api/login.php
 
-  mkdir -p /srv/api/libs
-  cd /srv/api/libs
-  git clone https://github.com/firebase/php-jwt
-
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
 fi
