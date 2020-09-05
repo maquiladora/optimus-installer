@@ -15,7 +15,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 $jwt=isset($data->token) ? $data->token : "";
 
-if(token)
+if($token)
 {
   try
   {
