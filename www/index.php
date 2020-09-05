@@ -23,11 +23,8 @@
         alert(xhr.responseText);
       }
     }
-    var formdata = new FormData();
-    formdata.append('email', 'prime@demoptimus.fr');
-    formdata.append('password', 'W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM');
-    alert(formdata);
-    xhr.send(formdata);
+    var data = JSON.stringify({"email": "prime@demoptimus.fr", "password": "W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM"});
+    xhr.send(data);
   }
 
   </script>
