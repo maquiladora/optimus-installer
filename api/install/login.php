@@ -1,12 +1,11 @@
 <?php
-date_default_timezone_set('Europe/Paris');
-
 header("Access-Control-Allow-Origin: http://localhost/rest-api-authentication-example/");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
+include_once 'config.php';
 include_once 'connect.php';
 include_once 'user.php';
 
@@ -25,7 +24,7 @@ if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') 
 {
     http_response_code(200);
 
-    $jwt = new JWT('$API_SHA_KEY', 'HS512', 3600, 10);
+    $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), 'aud' => 'http://$DOMAIN', 'scopes' => ['user'], 'iss' => 'http://$DOMAIN']);
 
     echo json_encode(array("message" => "Successful login", "token" => $token));
