@@ -6,9 +6,8 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Origin");
 http_response_code(200);
 echo file_get_contents('php://input');
-foreach (getallheaders() as $name => $value) {
-    echo "$name: $value\n";
-}
+echo $_POST['email'];
+echo json_decode(file_get_contents('php://input'));
 exit;
 include_once 'config.php';
 include_once 'connect.php';
