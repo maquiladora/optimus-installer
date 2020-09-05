@@ -31,17 +31,9 @@ use allspark\JWT\JWT;
 // check if email exists and if password is correct
 if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') == base64_encode($user->password))
 {
-    $token = array(
-       "iss" => $iss,
-       "aud" => $aud,
-       "iat" => $iat,
-       "nbf" => $nbf,
-       "data" => array("id" => $user->id, "email" => $user->email)
-    );
-
     http_response_code(200);
 
-    $jwt = new JWT('secret', 'HS512', 3600, 10);
+    $jwt = new JWT('abcdefghijklmnop', 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), 'aud' => 'http://$DOMAIN', 'scopes' => ['user'], 'iss' => 'http://$DOMAIN']);
 
     echo json_encode(array("message" => "Successful login", "jwt" => $token));
