@@ -1,7 +1,9 @@
 <html>
   <body>
     <label for="email">Email :</label><br><input name="email"/>
+    <br/>
     <label for="password">Password :</label><br><input name="password"/>
+    <br/>
     <input type="submit" onclick="login()"/>
   </body>
 
