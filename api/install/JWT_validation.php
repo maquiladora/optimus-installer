@@ -11,7 +11,7 @@ declare(strict_types=1);
  * Licensed under MIT license.
  */
 
-namespace Ahc\Jwt;
+namespace allspark\JWT;
 
 /**
  * JSON Web Token (JWT) implementation in PHP7.
