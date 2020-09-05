@@ -39,7 +39,7 @@ if($email_exists && password_verify(openssl_encrypt('W26b3RTE8mj4L3Su6GJBjz0qXtP
        "aud" => $aud,
        "iat" => $iat,
        "nbf" => $nbf,
-       "data" => array("id" => $user->id, "firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email)
+       "data" => array("id" => $user->id, "email" => $user->email)
     );
 
     http_response_code(200);
