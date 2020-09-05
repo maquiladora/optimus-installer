@@ -7,7 +7,6 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'config.php';
 
-include_once 'JWT_validation.php';
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
