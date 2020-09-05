@@ -25,14 +25,14 @@ $email_exists = $user->emailExists();
 
 // files for jwt will be here
 include_once 'core.php';
-include_once 'libs/php-jwt-master/src/BeforeValidException.php';
-include_once 'libs/php-jwt-master/src/ExpiredException.php';
-include_once 'libs/php-jwt-master/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt-master/src/JWT.php';
+include_once 'libs/php-jwt/src/BeforeValidException.php';
+include_once 'libs/php-jwt/src/ExpiredException.php';
+include_once 'libs/php-jwt/src/SignatureInvalidException.php';
+include_once 'libs/php-jwt/src/JWT.php';
 use \Firebase\JWT\JWT;
 
 // check if email exists and if password is correct
-if($email_exists && password_verify(openssl_encrypt('W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM', 'aes-128-ecb', '$AES_KEY'),$user->password))
+if($email_exists && password_verify(openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY'),$user->password))
 {
     $token = array(
        "iss" => $iss,
