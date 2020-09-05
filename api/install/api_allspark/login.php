@@ -5,6 +5,7 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Origin");
 http_response_code(200);
+echo file_get_contents('php://input');
 foreach (getallheaders() as $name => $value) {
     echo "$name: $value\n";
 }
