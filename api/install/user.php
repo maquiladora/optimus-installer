@@ -46,7 +46,7 @@ class User
 
   function emailExists()
   {
-    $query = "SELECT id, password
+    $query = "SELECT id, status, password 
             FROM " . $this->table_name . "
             WHERE email = ?
             LIMIT 0,1";
