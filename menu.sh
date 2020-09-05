@@ -250,6 +250,7 @@ case "$y" in
     update_conf VERBOSE 2
     update_conf AES_KEY auto
     update_conf WEBMAIL_DES_KEY auto
+    update_conf API_SHA_KEY auto
     update_conf UUID auto
     update_conf MODULE_APACHE "Y"
     update_conf MODULE_API "Y"
