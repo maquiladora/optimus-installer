@@ -1,3 +1,3 @@
 <?php
-print_(parse_url());
+print_r(parse_url());
 ?>
