@@ -20,20 +20,17 @@ class User
   {
     $query = "INSERT INTO " . $this->table_name . "
             SET
-                firstname = :firstname,
-                lastname = :lastname,
+                status = :status,
                 email = :email,
                 password = :password";
 
     $stmt = $this->conn->prepare($query);
 
-    $this->firstname=htmlspecialchars(strip_tags($this->firstname));
-    $this->lastname=htmlspecialchars(strip_tags($this->lastname));
+    $this->status=htmlspecialchars(strip_tags($this->lastname));
     $this->email=htmlspecialchars(strip_tags($this->email));
     $this->password=htmlspecialchars(strip_tags($this->password));
 
-    $stmt->bindParam(':firstname', $this->firstname);
-    $stmt->bindParam(':lastname', $this->lastname);
+    $stmt->bindParam(':status', $this->status);
     $stmt->bindParam(':email', $this->email);
 
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
@@ -49,7 +46,7 @@ class User
 
   function emailExists()
   {
-    $query = "SELECT id, firstname, lastname, password
+    $query = "SELECT id, password
             FROM " . $this->table_name . "
             WHERE email = ?
             LIMIT 0,1";
@@ -65,8 +62,7 @@ class User
     {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         $this->id = $row['id'];
-        $this->firstname = $row['firstname'];
-        $this->lastname = $row['lastname'];
+        $this->firstname = $row['status'];
         $this->password = $row['password'];
         return true;
     }
