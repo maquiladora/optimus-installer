@@ -10,7 +10,7 @@
   function login()
   {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", '/server', true);
+    xhr.open("POST", 'https://api.<?=$domain?>/allspark/login', true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function()
     {
