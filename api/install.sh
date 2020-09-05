@@ -21,6 +21,7 @@ then
   cp -R /etc/allspark/api/install/*.* /srv/api/
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/connect.php > /srv/api/connect.php
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/core.php > /srv/api/core.php
+  envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY}' < /etc/allspark/api/install/login.php > /srv/api/login.php
 
   mkdir -p /srv/api/libs
   cd /srv/api/libs
