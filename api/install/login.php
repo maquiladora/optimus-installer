@@ -25,6 +25,7 @@ $email_exists = $user->emailExists();
 
 // files for jwt will be here
 include_once 'JWT.php';
+include_once 'JWT_validation.php';
 use allspark\JWT\JWT;
 
 // check if email exists and if password is correct

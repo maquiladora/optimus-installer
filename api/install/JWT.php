@@ -6,7 +6,7 @@ namespace allspark\JWT;
 
 class JWT
 {
-    use ValidatesJWT;
+    use JWTvalidation;
 
     const ERROR_KEY_EMPTY        = 10;
     const ERROR_KEY_INVALID      = 12;
