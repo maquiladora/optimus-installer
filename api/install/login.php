@@ -50,6 +50,6 @@ if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') 
 else
 {
    http_response_code(401);
-   echo json_encode(array("message" => "Login failed.", "pass" => 'op->' . $user->password));
+   echo json_encode(array("message" => "Login failed.", "pass" => 'op->' . base64_encode($user->password)));
 }
 ?>
