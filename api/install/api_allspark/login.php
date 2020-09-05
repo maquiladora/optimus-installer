@@ -16,6 +16,9 @@ $data = json_decode(file_get_contents("php://input"));
 $user->email = $data->email;
 $email_exists = $user->emailExists();
 
+echo $user->password;
+http_response_code(200);
+
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
