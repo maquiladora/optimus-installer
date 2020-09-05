@@ -22,7 +22,6 @@ then
   cp -R /etc/allspark/api/install/. /srv/api/
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/api/install/config.php > /srv/api/config.php
   envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/api/install/connect.php > /srv/api/connect.php
-  envsubst '${MARIADB_ADMIN_USER} ${MARIADB_ADMIN_PASSWORD} ${DOMAIN} ${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/api/install/login.php > /srv/api/login.php
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2

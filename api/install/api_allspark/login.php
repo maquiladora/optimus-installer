@@ -5,8 +5,8 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once 'config.php';
-include_once 'connect.php';
+include_once '../config.php';
+include_once '../connect.php';
 include_once 'user.php';
 
 $database = new Database();
@@ -19,7 +19,7 @@ $email_exists = $user->emailExists();
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') == base64_encode($user->password))
+if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
 {
     http_response_code(200);
 
