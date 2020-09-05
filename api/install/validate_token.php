@@ -19,9 +19,9 @@ if($token)
 {
   try
   {
-      $payload = (new JWT($sha_key, 'HS512', 3600))->decode($token);
+      $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
       http_response_code(200);
-      echo json_encode(array("message" => "Access granted", "payload" => $payload->data));
+      //echo json_encode(array("message" => "Access granted", "payload" => $payload->data));
   }
   catch (Exception $e)
   {
