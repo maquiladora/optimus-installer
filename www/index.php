@@ -21,11 +21,10 @@
         alert(xhr.responseText);
       }
     }
-
     var data = new FormData();
     data.append('email', 'prime@demoptimus.fr');
     data.append('password', 'W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM');
-    xhr.send(data);
+    xhr.send(JSON.stringify(data));
   }
 
   </script>
