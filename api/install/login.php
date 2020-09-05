@@ -24,12 +24,8 @@ $user->email = $data->email;
 $email_exists = $user->emailExists();
 
 // files for jwt will be here
-include_once 'core.php';
-include_once 'libs/php-jwt/src/BeforeValidException.php';
-include_once 'libs/php-jwt/src/ExpiredException.php';
-include_once 'libs/php-jwt/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt/src/JWT.php';
-use \Firebase\JWT\JWT;
+include_once 'JWT.php';
+use allspark\JWT\JWT;
 
 // check if email exists and if password is correct
 if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') == base64_encode($user->password))
@@ -44,8 +40,10 @@ if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', '$AES_KEY') 
 
     http_response_code(200);
 
-    $jwt = JWT::encode($token, $key);
-    echo json_encode(array("message" => "Successful login", "jwt" => $jwt));
+    $jwt = new JWT('secret', 'HS512', 3600, 10);
+    $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), 'aud' => 'http://$DOMAIN', 'scopes' => ['user'], 'iss' => 'http://$DOMAIN']);
+
+    echo json_encode(array("message" => "Successful login", "jwt" => $token));
 }
 else
 {
