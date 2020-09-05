@@ -23,7 +23,7 @@ if($token)
       http_response_code(200);
       echo json_encode(array("message" => "Access granted", "payload" => $payload));
   }
-  catch (Exception $e)
+  catch (Throwable $e)
   {
       http_response_code(401);
       echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
