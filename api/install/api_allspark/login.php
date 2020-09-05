@@ -12,7 +12,7 @@ include_once 'api_allspark/user.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$user = new User($db);
+//$user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $user->email = $data->email;
