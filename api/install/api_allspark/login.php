@@ -1,5 +1,4 @@
 <?php
-http_response_code(200);
 header("Access-Control-Allow-Origin: https://www.demoptimus.fr");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -12,12 +11,8 @@ include_once 'api_allspark/user.php';
 
 $database = new Database();
 $db = $database->getConnection();
-//$user = new User($db);
+$user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
-
-http_response_code(200);
-echo openssl_encrypt($data->password, 'aes-128-ecb', $aes_key);
-exit;
 
 $user->email = $data->email;
 $email_exists = $user->emailExists();
