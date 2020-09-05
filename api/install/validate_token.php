@@ -21,12 +21,12 @@ if($token)
   {
       $payload = (new JWT($sha_key, 'HS512', 3600))->decode($token);
       http_response_code(200);
-      echo json_encode(array("message" => "Access granted","payload" => $payload->data));
+      echo json_encode(array("message" => "Access granted", "payload" => $payload->data));
   }
   catch (Exception $e)
   {
       http_response_code(401);
-      echo json_encode(array("message" => "Access denied","error" => $e->getMessage()));
+      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
   }
 }
 else
