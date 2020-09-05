@@ -4,6 +4,5 @@ $path = explode('/',$url['path']);
 
 $modules = scandir('.');
 foreach ($modules as $module)
-  if (substr($module,0,4) == 'api_')
     echo $module . '/index.php';
 ?>
