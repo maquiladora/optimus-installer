@@ -21,7 +21,11 @@
         alert(xhr.responseText);
       }
     }
-    xhr.send("email="+document.getElementById('email').value+"&password="+document.getElementById('password').value);
+
+    var data = new FormData();
+    data.append('email', 'prime@demoptimus.fr');
+    data.append('password', 'W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM');
+    xhr.send(data);
   }
 
   </script>
