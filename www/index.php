@@ -1,8 +1,8 @@
 <html>
   <body>
-    <label for="email">Email :</label><br><input name="email"/>
+    <label for="email">Email :</label><br><input id="email" name="email"/>
     <br/>
-    <label for="password">Password :</label><br><input name="password"/>
+    <label for="password">Password :</label><br><input id="password" name="password"/>
     <br/>
     <input type="submit" onclick="login()"/>
   </body>
