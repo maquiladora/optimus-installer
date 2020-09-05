@@ -4,10 +4,10 @@ class User
   private $conn;
   private $table_name = "users";
 
-  private $id;
-  private $status;
-  private $email;
-  private $password;
+  public $id;
+  public $status;
+  public $email;
+  public $password;
 
   public function __construct($db)
   {
