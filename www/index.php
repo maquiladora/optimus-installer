@@ -24,6 +24,7 @@
     var data = new FormData();
     data.append('email', 'prime@demoptimus.fr');
     data.append('password', 'W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM');
+    alert(JSON.stringify(data));
     xhr.send(JSON.stringify(data));
   }
 
