@@ -1,9 +1,9 @@
 <html>
   <body>
     <label for="email">Email :</label><br><input id="email" name="email"/>
-    <br/>
+    <br/><br/>
     <label for="password">Password :</label><br><input id="password" name="password"/>
-    <br/>
+    <br/><br/>
     <input type="submit" onclick="login()"/>
   </body>
 
@@ -19,6 +19,10 @@
     xhr.onreadystatechange = function()
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
+      {
+        alert(xhr.responseText);
+      }
+      else
       {
         alert(xhr.responseText);
       }
