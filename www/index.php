@@ -23,7 +23,7 @@
         alert(xhr.responseText);
       }
     }
-    var data = JSON.stringify({"email": "prime@demoptimus.fr", "password": "W26b3RTE8mj4L3Su6GJBjz0qXtPIcNaM"});
+    var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     xhr.send(data);
   }
 
