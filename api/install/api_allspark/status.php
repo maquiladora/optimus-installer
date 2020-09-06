@@ -23,8 +23,7 @@ function get_status($app)
 
 function get_version($app)
 {
-  exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+'0.102.4", $output);
-  return $output[0];
+  return system("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+'");
 }
 
 $status['apache']['status'] = get_status('apache2');
