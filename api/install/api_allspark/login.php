@@ -11,6 +11,8 @@ include_once 'api_allspark/user.php';
 foreach (getallheaders() as $name => $value) {
     echo "$name: $value\n";
 }
+http_response_code(200);
+exit;
 
 $database = new Database();
 $db = $database->getConnection();
