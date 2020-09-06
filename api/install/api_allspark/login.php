@@ -25,9 +25,10 @@ if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) =
     $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), "aud" => "http://$domain", "scopes" => ['user'], "iss" => "http://$domain"]);
     echo json_encode(array("message" => "Successful login", "token" => $token));
+    exit;
 }
-else {
-  http_response_code(401);
-  echo json_encode(array("message" => "Login failed"));
-}
+
+http_response_code(401);
+echo json_encode(array("message" => "Login failed"));
+
 ?>
