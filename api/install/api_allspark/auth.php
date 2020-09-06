@@ -1,4 +1,7 @@
 <?php
+include_once 'JWT.php';
+use allspark\JWT\JWT;
+
 if($token)
 {
   try
