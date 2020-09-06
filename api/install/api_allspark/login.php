@@ -21,8 +21,7 @@ use allspark\JWT\JWT;
 
 
 http_response_code(200);
-print_r($data);
-echo openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) . ' / ' . base64_encode($user->password);
+echo $email_exists;
 exit;
 
 if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
