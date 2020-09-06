@@ -19,11 +19,14 @@ $email_exists = $user->emailExists();
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
+
+http_response_code(200);
+echo (openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password));
+exit;
+
 if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
 {
     http_response_code(200);
-    echo $email_exists;
-    exit;
     $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), "aud" => "http://$domain", "scopes" => ['user'], "iss" => "http://$domain"]);
     echo json_encode(array("message" => "Successful login", "token" => $token));
