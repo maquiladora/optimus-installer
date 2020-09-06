@@ -22,9 +22,13 @@
       {
         alert(xhr.responseText);
       }
+      else if (this.readyState === XMLHttpRequest.DONE && this.status === 401)
+      {
+        alert('Accès refusé');
+      }
       else
       {
-        alert(xhr.responseText);
+        alert('Erreur');
       }
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
