@@ -22,7 +22,7 @@ function get_status($app)
 function get_version($app)
 {
   exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'", $output);
-  if ($output[0])
+  if ($output)
     return $output[0];
 }
 
