@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: " . $_SERVER['SERVER_NAME']);
+header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
