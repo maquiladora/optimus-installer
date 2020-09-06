@@ -8,5 +8,5 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
   die(http_response_code(200));
 
 http_response_code(200);
-echo json_encode(array("status" => $_SERVER['HTTP_X_REQUESTED_WITH']));
+echo json_encode(array("status" => $_SERVER['HTTP_AUTHORIZATION']));
 ?>
