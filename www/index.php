@@ -40,7 +40,22 @@
 
   function server_status()
   {
-    alert(get_cookie('token'));
+    var request = new XMLHttpRequest();
+    request.open("GET", 'https://api.$DOMAIN/allspark/status', true);
+    request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+    request.setRequestHeader('Authorization', 'Bearer ' + get_cookie('token'));
+    request.withCredentials = true;
+    request.onreadystatechange = function()
+    {
+      if (this.readyState === XMLHttpRequest.DONE)
+      {
+        if (this.status === 200 && request.responseText)
+          alert(request.responseText);
+        else if (request.responseText)
+          alert('Error ' + this.status + "\n" + request.responseText);
+      }
+    }
+    request.send();
   }
 
   function get_cookie(name)
