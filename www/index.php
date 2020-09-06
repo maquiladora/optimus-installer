@@ -20,10 +20,10 @@
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200 && xhr.responseText)
         alert(xhr.responseText);
-      else if (this.readyState === XMLHttpRequest.DONE && this.status === 401)
+      else if (this.status === 401)
         alert('Accès refusé');
       else if (xhr.responseText)
-        alert('Erreur' + this.status);
+        alert('Erreur ' + this.status + "\n" + xhr.responseText);
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     xhr.send(data);
