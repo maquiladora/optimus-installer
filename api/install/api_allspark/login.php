@@ -5,10 +5,7 @@ header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
-{
-  http_response_code(200);
-  exit;
-}
+  die(http_response_code(200));
 
 include_once 'config.php';
 include_once 'connect.php';
