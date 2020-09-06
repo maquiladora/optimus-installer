@@ -12,15 +12,15 @@ $database = new Database();
 $db = $database->getConnection();
 $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
-http_response_code(200);
-print_r($data);
-exit;
 
 $user->email = $data->email;
 $email_exists = $user->emailExists();
 
 include_once 'JWT.php';
 use allspark\JWT\JWT;
+
+http_response_code(200);
+print_r($data);
 
 if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
 {
