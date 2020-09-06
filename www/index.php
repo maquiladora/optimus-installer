@@ -24,7 +24,7 @@
       if (this.readyState === XMLHttpRequest.DONE)
       {
         if (this.status === 200 && request.responseText)
-          document.cookie = 'token='+JSON.parse(request.responseText).token+'; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN';
+          document.cookie = 'token='+JSON.parse(request.responseText).token+'; max-age=3600; domain=$DOMAIN';
         else if (request.responseText)
           alert('Error ' + this.status + "\n" + request.responseText);
       }
