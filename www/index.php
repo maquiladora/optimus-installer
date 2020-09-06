@@ -21,7 +21,7 @@
       if (this.readyState === XMLHttpRequest.DONE)
       {
         if (this.status === 200 && xhr.responseText)
-          alert(xhr.responseText);
+          document.cookie = 'token='+xhr.responseText+"; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN";
         else if (this.status === 401)
           alert('Accès refusé');
         else if (xhr.responseText)
