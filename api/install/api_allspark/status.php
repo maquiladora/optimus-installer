@@ -10,5 +10,5 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
 $token = substr(getallheaders()['Authorization'],7);
 include_once 'auth.php';
 
-echo $payload;
+print_r($payload);
 ?>
