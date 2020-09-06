@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+header("Access-Control-Allow-Origin: " . $_SERVER['SERVER_NAME']);
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -12,7 +12,7 @@ include_once 'auth.php';
 
 //APACHE
 
-function is_active($app)
+function get_status($app)
 {
   exec('systemctl status ' . $app, $output);
   foreach ($output as $line)
@@ -21,10 +21,15 @@ function is_active($app)
   return 'inactive';
 }
 
-$status['apache']['status'] = is_active('apache2');
-$status['apache2']['version'] = system("/usr/sbin/apache2 -version | grep -oP 'Server version: Apache/\K.*'");
-$status['mariadb']['status'] = is_active('mariadb');
-$status['postfix']['status'] = is_active('postfix');
+function get_version($app)
+{
+
+}
+
+$status['apache']['status'] = get_status('apache2');
+$status['apache']['version'] = get_version('apache2');
+$status['mariadb']['status'] = get_status('mariadb');
+$status['postfix']['status'] = get_status('postfix');
 
 echo json_encode($status);
 ?>
