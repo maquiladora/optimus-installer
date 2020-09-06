@@ -7,8 +7,10 @@ header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
   die(http_response_code(200));
 
-$token = substr(getallheaders()['Authorization'],7);
+$token = substr(getallheaders()['Authorization'],8);
 include_once 'auth.php';
 
-print_r($payload);
+//APACHE
+$apache_status = exec('systemctl status apache2');
+print_r($apache_status);
 ?>
