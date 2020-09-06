@@ -21,7 +21,7 @@ function get_status($app)
 
 function get_version($app)
 {
-  return shell_exec ("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'", $output);
+  return shell_exec ("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'");
 }
 
 $status['apache']['status'] = get_status('apache2');
