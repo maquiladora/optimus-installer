@@ -1,8 +1,10 @@
 <?php
 header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
-header("Access-Control-Allow-Methods: GET, HEAD, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+if ($_SERVER['REQUEST_METHOD'] == "Options") exit;
 
 include_once 'config.php';
 include_once 'connect.php';
