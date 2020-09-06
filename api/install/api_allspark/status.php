@@ -48,8 +48,8 @@ $status['certbot']['status'] = get_status('certbot');
 $status['certbot']['version'] = get_version('certbot');
 
 exec("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9-", $output);
-$status['certbot']['status'] = get_status('roundcube');
-$status['certbot']['version'] = $output[0];
+$status['roundcube']['status'] = get_status('roundcube');
+$status['roundcube']['version'] = $output[0];
 
 echo json_encode($status);
 ?>
