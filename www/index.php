@@ -23,7 +23,7 @@
       else if (this.readyState === XMLHttpRequest.DONE && this.status === 401)
         alert('Accès refusé');
       else if (xhr.responseText)
-        alert('Erreur');
+        alert('Erreur' + this.status);
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     xhr.send(data);
