@@ -13,7 +13,6 @@
   {
     var request = new XMLHttpRequest();
     request.open("POST", 'https://api.$DOMAIN/allspark/login', true);
-    request.setRequestHeader('Accept', 'application/json, text/plain, */*"');
     request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     request.withCredentials = true;
     request.onreadystatechange = function()
@@ -21,12 +20,7 @@
       if (this.readyState === XMLHttpRequest.DONE)
       {
         if (this.status === 200 && request.responseText)
-        {
-          answer = JSON.parse(request.responseText)
-          document.cookie = 'token='+answer.token+"; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN";
-        }
-        else if (this.status === 401)
-          alert('Accès refusé');
+          document.cookie = 'token='+JSON.parse(request.responseText).token+"; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN";
         else if (request.responseText)
           alert('Erreur ' + this.status + "\n" + request.responseText);
       }
