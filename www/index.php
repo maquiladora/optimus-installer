@@ -35,13 +35,13 @@
 
   function logout()
   {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
   }
 
   function server_status()
   {
     alert(document.cookies.get('token'));
-    
+
   }
 
   </script>
