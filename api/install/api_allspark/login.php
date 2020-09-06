@@ -4,11 +4,7 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-http_response_code(200);
-echo $_SERVER['REQUEST_METHOD'];
-exit;
-
-if ($_SERVER['REQUEST_METHOD'] == "options")
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
 {
   http_response_code(200);
   exit;
