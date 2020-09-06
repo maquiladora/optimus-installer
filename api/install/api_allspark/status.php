@@ -16,12 +16,13 @@ function is_active($app)
 {
   exec('systemctl status ' . $app, $output);
   foreach ($output as $line)
-    if (strpos($line, 'active (running)') !== false)
+    if (strpos($line, 'Active: active') !== false)
       return 'active';
   return 'inactive';
 }
 
 $status['apache']['status'] = is_active('apache2');
+$status['apache2']['version'] = system("/usr/sbin/apache2 -version | grep -oP 'Server version: \K.*'");
 $status['mariadb']['status'] = is_active('mariadb');
 $status['postfix']['status'] = is_active('postfix');
 
