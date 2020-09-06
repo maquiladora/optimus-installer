@@ -11,6 +11,6 @@ $token = substr(getallheaders()['Authorization'],7);
 include_once 'auth.php';
 
 //APACHE
-$apache_status = exec('systemctl status apache2');
+exec('systemctl status apache2', $apache_status);
 print_r($apache_status);
 ?>
