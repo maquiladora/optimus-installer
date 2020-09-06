@@ -33,5 +33,5 @@ $status['apache']['version'] = get_version('apache2');
 $status['mariadb']['status'] = get_status('mariadb');
 $status['postfix']['status'] = get_status('postfix');
 
-echo json_encode("Response" => $status);
+echo json_encode({"Response" => $status});
 ?>
