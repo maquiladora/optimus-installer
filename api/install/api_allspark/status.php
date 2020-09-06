@@ -22,7 +22,7 @@ function is_active($app)
 }
 
 $status['apache']['status'] = is_active('apache2');
-$status['apache2']['version'] = system("/usr/sbin/apache2 -version | grep -oP 'Server version: \K.*'");
+$status['apache2']['version'] = system("/usr/sbin/apache2 -version | grep -oP 'Server version: Apache/\K.*'");
 $status['mariadb']['status'] = is_active('mariadb');
 $status['postfix']['status'] = is_active('postfix');
 
