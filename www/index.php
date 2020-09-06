@@ -1,9 +1,3 @@
-<?php
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Accept, Origin");
-?>
 <html>
   <body>
     <label for="email">Email :</label><br><input id="email" name="email"/>
@@ -22,6 +16,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     xhr.setRequestHeader('Accept', 'application/json, text/plain, */*"');
     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+    xhr.withCredentials = true;
     xhr.onreadystatechange = function()
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
