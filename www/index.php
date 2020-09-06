@@ -14,9 +14,8 @@
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'https://api.$DOMAIN/allspark/login', true);
     xhr.setRequestHeader('Accept', 'application/json, text/plain, */*"');
-    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-    xhr.withCredentials = true;
+    xhr.withCredentials = false;
     xhr.onreadystatechange = function()
     {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
