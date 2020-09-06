@@ -28,20 +28,20 @@ function get_version($app)
 
 $status['apache']['status'] = get_status('apache2');
 $status['apache']['version'] = get_version('apache2');
-$status['apache']['status'] = get_status('php');
-$status['apache']['version'] = get_version('php');
-$status['apache']['status'] = get_status('mariadb');
-$status['apache']['version'] = get_version('mariadb');
-$status['apache']['status'] = get_status('postfix');
-$status['apache']['version'] = get_version('postfix');
-$status['apache']['status'] = get_status('dovecot-core');
-$status['apache']['version'] = get_version('dovecot-core');
-$status['apache']['status'] = get_status('spamassassin');
-$status['apache']['version'] = get_version('spamassassin');
-$status['apache']['status'] = get_status('clamav');
-$status['apache']['version'] = get_version('clamav');
-$status['apache']['status'] = get_status('rdiff-backup');
-$status['apache']['version'] = get_version('rdiff-backup');
+$status['php']['status'] = get_status('php');
+$status['php']['version'] = get_version('php');
+$status['mariadb']['status'] = get_status('mariadb');
+$status['mariadb']['version'] = get_version('mariadb');
+$status['postfix']['status'] = get_status('postfix');
+$status['postfix']['version'] = get_version('postfix');
+$status['dovecot-core']['status'] = get_status('dovecot-core');
+$status['dovecot-core']['version'] = get_version('dovecot-core');
+$status['spamassassin']['status'] = get_status('spamassassin');
+$status['spamassassin']['version'] = get_version('spamassassin');
+$status['clamav']['status'] = get_status('clamav');
+$status['clamav']['version'] = get_version('clamav');
+$status['rdiff-backup']['status'] = get_status('rdiff-backup');
+$status['rdiff-backup']['version'] = get_version('rdiff-backup');
 
 echo json_encode(array("message" => "", "response" => $status));
 ?>
