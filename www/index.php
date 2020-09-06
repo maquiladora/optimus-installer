@@ -26,7 +26,7 @@
       {
         alert('Accès refusé');
       }
-      else if (xhr.responseText)
+      else if (xhr.responseText!='')
       {
         alert('Erreur');
       }
