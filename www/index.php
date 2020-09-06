@@ -40,7 +40,7 @@
 
   function server_status()
   {
-    alert(document.cookies.get({url: $DOMAIN, name: "token"}));
+    alert(browser.cookies.get({url: $DOMAIN, name: "token"}));
   }
 
   </script>
