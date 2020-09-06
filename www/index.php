@@ -11,25 +11,28 @@
 
   function login()
   {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", 'https://api.$DOMAIN/allspark/login', true);
-    xhr.setRequestHeader('Accept', 'application/json, text/plain, */*"');
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-    xhr.withCredentials = true;
-    xhr.onreadystatechange = function()
+    var request = new XMLHttpRequest();
+    request.open("POST", 'https://api.$DOMAIN/allspark/login', true);
+    request.setRequestHeader('Accept', 'application/json, text/plain, */*"');
+    request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
+    request.withCredentials = true;
+    request.onreadystatechange = function()
     {
       if (this.readyState === XMLHttpRequest.DONE)
       {
-        if (this.status === 200 && xhr.responseText)
-          document.cookie = 'token='+JSON.parse(xhr.responseText).token+"; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN";
+        if (this.status === 200 && request.responseText)
+        {
+          answer = JSON.parse(request.responseText)
+          document.cookie = 'token='+answer.token+"; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN";
+        }
         else if (this.status === 401)
           alert('Accès refusé');
-        else if (xhr.responseText)
-          alert('Erreur ' + this.status + "\n" + xhr.responseText);
+        else if (request.responseText)
+          alert('Erreur ' + this.status + "\n" + request.responseText);
       }
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
-    xhr.send(data);
+    request.send(data);
   }
 
   </script>
