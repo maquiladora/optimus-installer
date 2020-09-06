@@ -20,6 +20,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'https://api.$DOMAIN/allspark/login', true);
     xhr.setRequestHeader('Accept', 'application/json, text/plain, */*"');
+    xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
     xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
     xhr.onreadystatechange = function()
     {
