@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: https://www.demoptimus.fr");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, HEAD, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
@@ -28,7 +28,7 @@ if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) =
 }
 else
 {
-   http_response_code(401);
+   //http_response_code(401);
    echo json_encode(array("message" => "Login failed"));
 }
 ?>
