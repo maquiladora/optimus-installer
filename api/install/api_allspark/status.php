@@ -10,8 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
 $token = substr(getallheaders()['Authorization'],7);
 include_once 'auth.php';
 
-//APACHE
-
 function get_status($app)
 {
   exec('systemctl status ' . $app, $output);
@@ -23,7 +21,8 @@ function get_status($app)
 
 function get_version($app)
 {
-  return system("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'");
+  exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'", $output);
+  return $output[0];
 }
 
 $status['apache']['status'] = get_status('apache2');
@@ -36,10 +35,10 @@ $status['postfix']['status'] = get_status('postfix');
 $status['postfix']['version'] = get_version('postfix');
 $status['dovecot-core']['status'] = get_status('dovecot-core');
 $status['dovecot-core']['version'] = get_version('dovecot-core');
-$status['spamassassin']['status'] = get_status('spamassassin');
-$status['spamassassin']['version'] = get_version('spamassassin');
-$status['clamav']['status'] = get_status('clamav');
-$status['clamav']['version'] = get_version('clamav');
+$status['spamass-milter']['status'] = get_status('spamass-milter');
+$status['spamass-milter']['version'] = get_version('spamass-milter');
+$status['clamav-milter']['status'] = get_status('clamav-milter');
+$status['clamav-milter']['version'] = get_version('clamav-milter');
 $status['rdiff-backup']['status'] = get_status('rdiff-backup');
 $status['rdiff-backup']['version'] = get_version('rdiff-backup');
 
