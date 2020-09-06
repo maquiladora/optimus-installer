@@ -23,8 +23,8 @@ function get_status($app)
 
 function get_version($app)
 {
-  return exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+'0.102.4", $output);
-  echo $output[0];
+  exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+'0.102.4", $output);
+  return $output[0];
 }
 
 $status['apache']['status'] = get_status('apache2');
@@ -32,5 +32,5 @@ $status['apache']['version'] = get_version('apache2');
 $status['mariadb']['status'] = get_status('mariadb');
 $status['postfix']['status'] = get_status('postfix');
 
-echo json_encode(array("message" => , "response" => $status));
+echo json_encode(array("message" => "", "response" => $status));
 ?>
