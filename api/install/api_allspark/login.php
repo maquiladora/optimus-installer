@@ -1,5 +1,5 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: demoptimus.fr");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Max-Age: 3600");
@@ -14,13 +14,13 @@ $db = $database->getConnection();
 $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
-$user->email = $data->eml;
+$user->email = $data->email;
 $email_exists = $user->emailExists();
 
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-if($email_exists && openssl_encrypt($data->pwd, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
+if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
 {
     http_response_code(200);
 
