@@ -26,7 +26,7 @@
         if (this.status === 200 && request.responseText)
           document.cookie = 'token='+JSON.parse(request.responseText).token+'; expires=Fri, 31 Dec 9999 23:59:59 GMT; domain=$DOMAIN';
         else if (request.responseText)
-          alert('Erreur ' + this.status + "\n" + request.responseText);
+          alert('Error ' + this.status + "\n" + request.responseText);
       }
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
@@ -40,8 +40,7 @@
 
   function server_status()
   {
-    alert(document.cookies.get('token'));
-
+    alert(document.cookies.get({url: $DOMAIN, name: "token"}));
   }
 
   </script>
