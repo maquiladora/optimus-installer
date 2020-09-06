@@ -47,9 +47,9 @@ $status['rdiff-backup']['version'] = get_version('rdiff-backup');
 $status['certbot']['status'] = get_status('certbot');
 $status['certbot']['version'] = get_version('certbot');
 
-exec("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9-", $output);
-$status['roundcube']['status'] = get_status('roundcube');
-$status['roundcube']['version'] = $output[0];
+
+$status['roundcube']['version'] = system("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9-");
+$status['sabredav']['version'] = system("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1");
 
 echo json_encode($status);
 ?>
