@@ -21,9 +21,7 @@ function get_status($app)
 
 function get_version($app)
 {
-  exec("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'", $output);
-  if ($output)
-    return $output[0];
+  return passthru("dpkg -s " . $app . " | grep '^Version:' | cut -c 10- | cut -f1 -d'-' | cut -f1 -d'+' | cut -f2 -d':'", $output);
 }
 
 $status['apache']['status'] = get_status('apache2');
@@ -48,8 +46,8 @@ $status['certbot']['status'] = get_status('certbot');
 $status['certbot']['version'] = get_version('certbot');
 
 
-$status['roundcube']['version'] = system("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9-");
-$status['sabredav']['version'] = system("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1");
+$status['roundcube']['version'] = passthru("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9-");
+$status['sabredav']['version'] = passthru("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1");
 
 echo json_encode($status);
 ?>
