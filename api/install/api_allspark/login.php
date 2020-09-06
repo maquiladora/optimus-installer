@@ -28,7 +28,7 @@ if($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) ==
 }
 else
 {
-   http_response_code(200);
+   http_response_code(401);
    echo json_encode(array("message" => "Login failed"));
 }
 ?>
