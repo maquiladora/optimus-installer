@@ -47,7 +47,7 @@ $status['certbot']['version'] = get_version('certbot');
 
 
 $status['roundcube']['version'] = shell_exec ("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9- | head -c -1");
-$status['sabredav']['version'] = shell_exec ("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1 | head -c -1 | cut -f2 -d' '");
+$status['sabredav']['version'] = shell_exec ("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1 | head -c -1 | cut -f1 -d' '");
 
 echo json_encode($status);
 ?>
