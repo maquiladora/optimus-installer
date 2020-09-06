@@ -8,7 +8,7 @@ include_once 'config.php';
 include_once 'connect.php';
 include_once 'api_allspark/user.php';
 
-echo $_SERVER['HTTP_ORIGIN'];
+
 foreach (getallheaders() as $name => $value) {
     echo "$name: $value\n";
 }
