@@ -4,7 +4,12 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-if ($_SERVER['REQUEST_METHOD'] == "options") exit;
+echo $_SERVER['REQUEST_METHOD'];
+if ($_SERVER['REQUEST_METHOD'] == "options")
+{
+  http_response_code(200);
+  exit;
+}
 
 include_once 'config.php';
 include_once 'connect.php';
