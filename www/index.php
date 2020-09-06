@@ -40,7 +40,19 @@
 
   function server_status()
   {
-    alert(browser.cookies.get({url: $DOMAIN, name: "token"}));
+    alert(get_cookie('token'));
+  }
+
+  function get_cookie(name)
+  {
+    var cookies = document.cookie.split(";");
+    for(var i = 0; i < cookies.length; i++)
+    {
+      var cookievalue = cookies[i].split("=");
+      if(name == cookievalue[0].trim())
+        return decodeURIComponent(cookievalue[1]);
+    }
+    return null;
   }
 
   </script>
