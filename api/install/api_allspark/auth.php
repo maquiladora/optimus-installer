@@ -3,7 +3,7 @@ include_once 'config.php';
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-echo getallheaders()['Authorization'];
+print_r(getallheaders());
 
 $token = $_COOKIE['token'];
 
