@@ -21,13 +21,8 @@
     request.withCredentials = true;
     request.onreadystatechange = function()
     {
-      if (this.readyState === XMLHttpRequest.DONE)
-      {
-        if (this.status === 200 && request.responseText)
-          document.cookie = 'token='+JSON.parse(request.responseText).token+'; max-age=3600; domain=$DOMAIN, HttpOnly';
-        else if (request.responseText)
-          alert('Error ' + this.status + "\n" + request.responseText);
-      }
+      if (this.readyState === XMLHttpRequest.DONE && this.status != 200 && request.responseText)
+        alert('Error ' + this.status + "\n" + request.responseText);
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     request.send(data);
