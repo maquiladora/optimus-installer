@@ -38,7 +38,6 @@
     var request = new XMLHttpRequest();
     request.open("GET", 'https://api.$DOMAIN/allspark/status', true);
     request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-    request.setRequestHeader('Authorization', 'Bearer ' + get_cookie('token'));
     request.withCredentials = true;
     request.onreadystatechange = function()
     {
