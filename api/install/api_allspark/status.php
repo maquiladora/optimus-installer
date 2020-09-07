@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
   die(http_response_code(200));
 
-$token = substr(getallheaders()['Authorization'],7);
+$token = $_COOKIE['token'];
 include_once 'auth.php';
 
 function get_status($app)
