@@ -3,12 +3,8 @@ header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVE
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
-if ($_SERVER['REQUEST_METHOD'] == "OPTIONS")
-  die(http_response_code(200));
-
-print_r($_COOKIE);
-$token = $_COOKIE['token'];
 include_once 'auth.php';
 
 function get_status($app)
@@ -45,10 +41,9 @@ $status['rdiff-backup']['status'] = get_status('rdiff-backup');
 $status['rdiff-backup']['version'] = get_version('rdiff-backup');
 $status['certbot']['status'] = get_status('certbot');
 $status['certbot']['version'] = get_version('certbot');
-
-
 $status['roundcube']['version'] = shell_exec ("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9- | head -c -1");
 $status['sabredav']['version'] = shell_exec ("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1 | cut -f1 -d' ' | head -c -1");
 
 echo json_encode($status);
+
 ?>
