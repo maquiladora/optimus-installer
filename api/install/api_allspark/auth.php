@@ -3,11 +3,11 @@ include_once 'config.php';
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-if($token)
+if($_COOKIE['token'])
 {
   try
   {
-      $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
+      $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($_COOKIE['token']);
   }
   catch (Throwable $e)
   {
