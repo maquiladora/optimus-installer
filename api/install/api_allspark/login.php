@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVE
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Max-Age: 5");
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'config.php';
@@ -26,16 +27,9 @@ if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) =
     $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), "aud" => "http://$domain", "scopes" => ['user'], "iss" => "http://$domain"]);
     preg_match("/[^\.\/]+\.[^\.\/]+$/", (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']), $matches);
-    $arr_cookie_options = array (
-                'expires' => time() +360,
-                'path' => '/',
-                'domain' => $matches[0], // leading dot for compatibility or use subdomain
-                'secure' => true,     // or false
-                'httponly' => true,    // or false
-                'samesite' => 'None' // None || Lax  || Strict
-                );
-    setcookie('token', $token, $arr_cookie_options);
-    echo json_encode(array("message" => "Successful login", "token" => $token));
+    $cookie_options = array ('expires' => time() +360, 'path' => '/', 'domain' => $matches[0], 'secure' => true, 'httponly' => true, 'samesite' => 'None');
+    setcookie('token', $token, $cookie_options);
+    echo json_encode(array("message" => "Successful login"));
 }
 else
 {
