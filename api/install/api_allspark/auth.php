@@ -14,7 +14,7 @@ if($token)
   catch (Throwable $e)
   {
       http_response_code(401);
-      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
+      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage(), "token" => $token));
       exit;
   }
 }
