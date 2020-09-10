@@ -3,10 +3,6 @@ header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVE
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Cookie, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-echo json_encode( getallheaders());
-echo json_encode($_COOKIE);
-exit;
-
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'auth.php';
