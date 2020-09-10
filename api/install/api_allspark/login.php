@@ -26,7 +26,15 @@ if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) =
     $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), "aud" => "http://$domain", "scopes" => ['user'], "iss" => "http://$domain"]);
     preg_match("/[^\.\/]+\.[^\.\/]+$/", (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']), $matches);
-    setcookie('token', $token, time()+3600, '/', $matches[0], true, true);
+    $arr_cookie_options = array (
+                'expires' => time() +360,
+                'path' => '/',
+                'domain' => $matches[0], // leading dot for compatibility or use subdomain
+                'secure' => true,     // or false
+                'httponly' => true,    // or false
+                'samesite' => 'None' // None || Lax  || Strict
+                );
+    setcookie('token', $token, $arr_cookie_options);
     echo json_encode(array("message" => "Successful login", "token" => $token));
 }
 else
