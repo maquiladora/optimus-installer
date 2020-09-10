@@ -9,7 +9,7 @@
       <br/><br/>
       <input type="submit" value="logout" onclick="logout()"/>
       <br/><br/>
-      <input type="submit" value="close" onclick="close()"/>
+      <input type="button" value="close" onclick="close()"/>
     </div>
   </body>
 
@@ -40,7 +40,7 @@
 
   function close()
   {
-alert('closs');
+    alert('close');
     window.parent.document.getElementById('iframe').parentNode.removeChild(window.parent.document.getElementById('iframe'))
   }
 
