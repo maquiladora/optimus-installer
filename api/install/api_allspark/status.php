@@ -4,6 +4,7 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
+echo (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']);
 print_r($_COOKIE);exit;
 include_once 'auth.php';
 
