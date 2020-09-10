@@ -1,5 +1,5 @@
 <?php
-print_r($_COOKIE);
+json_encode(print_r($_COOKIE));
 exit;
 header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
 header("Access-Control-Allow-Methods: GET, OPTIONS");
