@@ -6,6 +6,8 @@ header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'auth.php';
+echo $payload['email'];
+exit;
 
 function get_status($app)
 {
