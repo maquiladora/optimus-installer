@@ -4,8 +4,8 @@ include_once 'JWT.php';
 use allspark\JWT\JWT;
 
 $token = str_replace('Bearer ','', getallheaders()['Authorization'])?:$_COOKIE['token'];
-echo $token;
-if(strlen($token) > 0)
+
+if($token != null)
 {
   try
   {
