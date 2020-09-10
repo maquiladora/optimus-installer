@@ -3,8 +3,9 @@ header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVE
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 print_r($_COOKIE);
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
+
 include_once 'auth.php';
 
 function get_status($app)
