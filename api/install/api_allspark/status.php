@@ -4,7 +4,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
-echo print_r($_COOKIE);
+print_r($_COOKIE);
 include_once 'auth.php';
 
 function get_status($app)
