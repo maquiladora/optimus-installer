@@ -3,25 +3,25 @@ include_once 'config.php';
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-$token = str_replace('Bearer ','', getallheaders()['Authorization'])?:$_COOKIE['token'];
-
-if($token AND $token != 'null')
-{
-  try
-  {
-      $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
-  }
-  catch (Throwable $e)
-  {
-      http_response_code(401);
-      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
-      exit;
-  }
-}
+if (getallheaders()['Authorization'])
+  $token = str_replace('Bearer ','', getallheaders()['Authorization']);
+elseif ($_COOKIE['token'])
+  $token = $_COOKIE['token'];
 else
 {
   http_response_code(401);
   echo json_encode(array("message" => "Access denied"));
   exit;
+}
+
+try
+{
+    $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
+}
+catch (Throwable $e)
+{
+    http_response_code(401);
+    echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
+    exit;
 }
 ?>
