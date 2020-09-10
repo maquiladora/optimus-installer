@@ -5,6 +5,7 @@ header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 json_encode($_COOKIE);
+echo file_get_contents("php://input");
 exit;
 
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
