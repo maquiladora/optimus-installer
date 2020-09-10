@@ -5,12 +5,12 @@ use allspark\JWT\JWT;
 
 if (isset(getallheaders()['Authorization']))
   $token = str_replace('Bearer ','', getallheaders()['Authorization']);
-elseif ($_COOKIE['token'])
+elseif (isset()$_COOKIE['token']))
   $token = $_COOKIE['token'];
 else
 {
   http_response_code(401);
-  echo json_encode(array("message" => "Access denied"));
+  echo json_encode(array("message" => "Access denied", "error" => "No Token"));
   exit;
 }
 
