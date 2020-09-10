@@ -18,6 +18,7 @@ then
 
   echo_magenta "Installation du module SABREDAV ALLSPARK"
   cp /etc/allspark/cloud/composer.json /srv/cloud/composer.json
+  cp /etc/allspark/cloud/JWT.php /srv/cloud/JWT.php
   cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
   envsubst '${AES_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
   envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
