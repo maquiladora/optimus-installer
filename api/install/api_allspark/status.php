@@ -4,6 +4,7 @@ header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Max-Age: 5");
+echo $_SERVER['REQUEST_METHOD'] . "\n";
 print_r(getallheaders()) . "\n";
 
 echo (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']);
