@@ -5,9 +5,11 @@ header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Max-Age: 5");
 print_r(getallheaders()) . "\n";
-if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
+
 echo (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']);
-print_r($_COOKIE);exit;
+print_r($_COOKIE);
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
+exit;
 include_once 'auth.php';
 
 function get_status($app)
