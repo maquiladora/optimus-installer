@@ -4,6 +4,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Cookie, Content-Type, Accept, Access-Control-Allow-Headers, Access-Control-Expose-Headers, Authorization, X-Requested-With");
 header("Access-Control-Max-Age: 5");
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'auth.php';
 
