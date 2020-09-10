@@ -1,12 +1,14 @@
 <html>
   <body>
-    <label for="email">Email :</label><br><input id="email" name="email"/>
-    <br/><br/>
-    <label for="password">Password :</label><br><input id="password" name="password"/>
-    <br/><br/>
-    <input type="submit" value="login" onclick="login()"/>
-    <br/><br/>
-    <input type="submit" value="logout" onclick="logout()"/>
+    <div style="margin:auto">
+      <label for="email">Email :</label><br><input id="email" name="email"/>
+      <br/><br/>
+      <label for="password">Password :</label><br><input id="password" name="password"/>
+      <br/><br/>
+      <input type="submit" value="login" onclick="login()"/>
+      <br/><br/>
+      <input type="submit" value="logout" onclick="logout()"/>
+    </div>
   </body>
 
   <script>
