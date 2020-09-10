@@ -6,7 +6,7 @@ use allspark\JWT\JWT;
 $token = str_replace('Bearer ','', getallheaders()['Authorization'])?:$_COOKIE['token'];
 $token ='';
 
-if($token != 'null')
+if($token AND $token != 'null')
 {
   try
   {
