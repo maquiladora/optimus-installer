@@ -3,7 +3,7 @@ include_once 'config.php';
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-print_r($_COOKIE);
+$token = getallheaders()['Authorization']?:$_COOKIE['token'];
 
 if($token)
 {
@@ -14,7 +14,7 @@ if($token)
   catch (Throwable $e)
   {
       http_response_code(401);
-      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage(), "token" => $token));
+      echo json_encode(array("message" => "Access denied", "error" => $e->getMessage()));
       exit;
   }
 }
