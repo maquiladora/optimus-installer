@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type, Accept, Access-Control-Allow-Headers, Access-Control-Expose-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: Cookie, Content-Type, Accept, Access-Control-Allow-Headers, Access-Control-Expose-Headers, Authorization, X-Requested-With");
 header("Access-Control-Max-Age: 5");
 echo $_SERVER['REQUEST_METHOD'] . "\n";
 print_r(getallheaders()) . "\n";
