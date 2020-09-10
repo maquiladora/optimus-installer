@@ -4,14 +4,11 @@ include_once 'JWT.php';
 use allspark\JWT\JWT;
 
 $token = str_replace('Bearer ','', getallheaders()['Authorization'])?:$_COOKIE['token'];
-$token ='';
 
 if($token AND $token != 'null')
 {
   try
-  {
       $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
-  }
   catch (Throwable $e)
   {
       http_response_code(401);
