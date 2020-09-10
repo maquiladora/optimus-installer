@@ -8,6 +8,8 @@
       <input type="submit" value="login" onclick="login()"/>
       <br/><br/>
       <input type="submit" value="logout" onclick="logout()"/>
+      <br/><br/>
+      <input type="submit" value="close" onclick="close()"/>
     </div>
   </body>
 
@@ -25,7 +27,7 @@
         alert('Error ' + this.status + "\n" + request.responseText);
 
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        alert(request.responseText);
+        close();
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     request.send(data);
@@ -34,6 +36,11 @@
   function logout()
   {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
+  }
+
+  function close()
+  {
+    window.parent.body.removeChild(iframe);
   }
 
   </script>
