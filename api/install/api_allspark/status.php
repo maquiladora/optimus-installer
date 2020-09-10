@@ -1,8 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
-header("Access-Control-Allow-Methods: HEAD, POST, GET, OPTIONS");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+header("Access-Control-Allow-Headers: token, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 echo json_encode( getallheaders());
 echo json_encode($_COOKIE);
 echo json_encode($_SERVER);
