@@ -7,8 +7,6 @@
     <input type="submit" value="login" onclick="login()"/>
     <br/><br/>
     <input type="submit" value="logout" onclick="logout()"/>
-    <br/><br/>
-    <input type="submit" value="server_status" onclick="server_status()"/>
   </body>
 
   <script>
@@ -34,37 +32,6 @@
   function logout()
   {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
-  }
-
-  function server_status()
-  {
-    var request = new XMLHttpRequest();
-    request.open("GET", 'https://api.$DOMAIN/allspark/status', true);
-    request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-    request.withCredentials = true;
-    request.onreadystatechange = function()
-    {
-      if (this.readyState === XMLHttpRequest.DONE)
-      {
-        if (this.status === 200 && request.responseText)
-          alert(request.responseText);
-        else if (request.responseText)
-          alert('Error ' + this.status + "\n" + request.responseText);
-      }
-    }
-    request.send();
-  }
-
-  function get_cookie(name)
-  {
-    var cookies = document.cookie.split(";");
-    for(var i = 0; i < cookies.length; i++)
-    {
-      var cookievalue = cookies[i].split("=");
-      if(name == cookievalue[0].trim())
-        return decodeURIComponent(cookievalue[1]);
-    }
-    return null;
   }
 
   </script>
