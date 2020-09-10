@@ -1,6 +1,6 @@
 <html>
   <body>
-    <div style="margin:auto">
+    <div style="text-align:center">
       <label for="email">Email :</label><br><input id="email" name="email"/>
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" name="password"/>
