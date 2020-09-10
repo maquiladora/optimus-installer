@@ -1,6 +1,8 @@
 <?php
 
 namespace Allspark\DAV\Auth\Backend;
+include_once 'JWT.php';
+use allspark\JWT\JWT;
 
 class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 {
@@ -16,9 +18,6 @@ class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 	{
 		if ($_COOKIE['token'] AND $_COOKIE['token'] != 'null')
 		{
-			include_once 'JWT.php';
-			use allspark\JWT\JWT;
-
 			try
 			{
 			    $payload = (new JWT($API_SHA_KEY, 'HS512', 3600, 10))->decode($_COOKIE['token']);
