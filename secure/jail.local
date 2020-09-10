@@ -6,6 +6,10 @@ logpath = /var/log/auth.log
 maxretry = 8
 findtime = 1800
 bantime = 3600
+ignoreip =
+mta = postfix
+action = iptables-multiport[name=sshd, port="ssh,sftp,7822"]
+         sendmail-whois[name=sshd, dest=prime@$DOMAIN, sender=fail2ban@$DOMAIN]
 
 
 [dovecot]
@@ -16,6 +20,10 @@ logpath = /var/log/mail.log
 maxretry = 8
 findtime = 1800
 bantime = 3600
+ignoreip =
+mta = postfix
+action = iptables-multiport[name=dovecot, port="pop3,pop3s,imap,imaps"]
+         sendmail-whois[name=dovecot, dest=prime@$DOMAIN, sender=fail2ban@$DOMAIN]
 
 
 [postfix]
@@ -26,24 +34,36 @@ logpath = /var/log/mail.log
 maxretry = 8
 findtime = 1800
 bantime = 86400
+mta = postfix
+ignoreip =
+action = iptables-multiport[name=postfix, port="smtp,ssmtp,submission"]
+         sendmail-whois[name=postfix, dest=prime@$DOMAIN, sender=fail2ban@$DOMAIN]
 
 
 [roundcube-auth]
 enabled = true
-port = 80,443
+port = http,https
 filter = roundcube-auth
 logpath = /var/log/roundcube/errors.log
 maxretry  = 8
 findtime = 1800
 bantime = 3600
+mta = postfix
+ignoreip =
+action = iptables-multiport[name=roundcube-auth, port="http,https"]
+         sendmail-whois[name=roundcube-auth, dest=prime@$DOMAIN, sender=fail2ban@$DOMAIN]
 
 
 [sabredav]
 enabled  = true
 filter =
+port = http,https
 failregex = ^<HOST> - - \[[^\]]*\] "[^\"]+" 401\s
-action = iptables-multiport[name=auth, port="http,https"]
 logpath = /var/log/apache2/cloud-access.log
 maxretry = 8
 findtime = 1800
 bantime = 3600
+mta = postfix
+ignoreip =
+action = iptables-multiport[name=sabredav, port="http,https"]
+         sendmail-whois[name=sabredav, dest=prime@$DOMAIN, sender=fail2ban@$DOMAIN]

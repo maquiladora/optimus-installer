@@ -1,5 +1,6 @@
 #!/bin/bash
 source /etc/allspark/functions.sh
+if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_UPDATE ]; then require MODULE_SECURE_UPDATE yesno "Voulez vous mettre à jour le système -> update/upgrade ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_ENABLEFW ]; then require MODULE_SECURE_ENABLEFW yesno "Voulez vous installer le pare-feu UFW ?"; source /root/.allspark; fi
 if [ -z $MODULE_SECURE_FAIL2BAN ]; then require MODULE_SECURE_FAIL2BAN yesno "Voulez vous installer FAIL2BAN ?"; source /root/.allspark; fi
@@ -52,9 +53,10 @@ then
   echo_magenta "Installation des paquets requis"
   verbose apt-get -qq install fail2ban
   echo_magenta "Installation des prisons locales"
-  cp /etc/allspark/secure/jail.local /etc/fail2ban/jail.local
-  #commit suggéré sur fail2ban mais pas encore implémenté
+  envsubst '${DOMAIN}' < /etc/allspark/secure/jail.local > /etc/fail2ban/jail.local
+  #commit suggéré sur le github fail2ban mais pas encore implémenté
   sed -i '/mdpr-ddos = lost connection after(?! DATA)/c\mdpr-ddos = (?:lost connection after(?! DATA) [A-Z]+|disconnect(?= from \S+(?: \S+=\d+)* auth=0/(?:[1-9]|\d\d+)))' /etc/fail2ban/filter.d/postfix.conf
+  sed -i "s/example.com/$DOMAIN/g" /etc/hosts
   echo_magenta "Redémarrage des services"
   systemctl restart fail2ban
 else
