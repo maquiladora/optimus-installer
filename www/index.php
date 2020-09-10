@@ -9,7 +9,7 @@
       <br/><br/>
       <input type="submit" value="logout" onclick="logout()"/>
       <br/><br/>
-      <input type="button" value="close" onclick="close()"/>
+      <input type="button" value="close" onclick=" window.parent.document.getElementById('iframe').parentNode.removeChild(window.parent.document.getElementById('iframe'))"/>
     </div>
   </body>
 
@@ -36,12 +36,6 @@
   function logout()
   {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
-  }
-
-  function close()
-  {
-    alert('close');
-    window.parent.document.getElementById('iframe').parentNode.removeChild(window.parent.document.getElementById('iframe'))
   }
 
   </script>
