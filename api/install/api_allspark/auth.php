@@ -10,6 +10,7 @@ if($token AND $token != 'null')
   try
   {
       $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
+      echo $payload['email'];
   }
   catch (Throwable $e)
   {
