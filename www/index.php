@@ -40,7 +40,7 @@
 
   function close()
   {
-    window.parent.close_iframe();
+    window.parent.document.getElementById('iframe').parentNode.removeChild(window.parent.document.getElementById('iframe'))
   }
 
   </script>
