@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Allspark\DAV\Auth\Backend;
 
 use Sabre\DAV\Auth\Backend\BackendInterface;
+use Sabre\HTTP;
+use Sabre\HTTP\RequestInterface;
+use Sabre\HTTP\ResponseInterface;
 
 include_once 'JWT.php';
 use allspark\JWT\JWT;
@@ -11,7 +14,7 @@ use allspark\JWT\JWT;
 abstract class AbstractBearer implements BackendInterface
 {
 
-  public function check()
+  public function check(RequestInterface $request, ResponseInterface $response)
   {
     if (isset($_COOKIE['token']))
     {
@@ -22,9 +25,8 @@ abstract class AbstractBearer implements BackendInterface
       return [false, "Invalid Token"];
   }
 
-
-  public function challenge()
+  public function challenge(RequestInterface $request, ResponseInterface $response)
   {
-
+    
   }
 }
