@@ -22,17 +22,21 @@
 			credentials: "include",
       body: JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value})
 		})
-		.then(response => response.json())
 		.then(function(response)
 		{
-      if (response.ok)
+      if (response.status === 200)
       {
         parent.postMessage('logged','*');
         window.location.reload();
       }
       else
-        alert(JSON.stringify(response));
+        return response.json();
+
 		})
+    .then(function(response)
+    {
+      alert(response.message);
+    })
 		.catch(error => console.log("Erreur : " + error));
   }
 
