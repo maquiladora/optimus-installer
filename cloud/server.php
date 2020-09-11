@@ -36,7 +36,8 @@ $nodes = [
 $server = new Sabre\DAV\Server($nodes);
 //$server->setBaseUri('/');
 
-$server->addPlugin(array(new Sabre\DAV\Auth\Plugin($authBackend2), new Sabre\DAV\Auth\Plugin($authBackend)));
+$server->addPlugin(new Sabre\DAV\Auth\Plugin($authBackend2));
+$server->addPlugin(new Sabre\DAV\Auth\Plugin($authBackend));
 $server->addPlugin(new Sabre\DAV\Locks\Plugin($lockBackend));
 $server->addPlugin(new Sabre\DAV\PropertyStorage\Plugin($storageBackend));
 $server->addPlugin(new Sabre\DAV\Browser\Plugin());
