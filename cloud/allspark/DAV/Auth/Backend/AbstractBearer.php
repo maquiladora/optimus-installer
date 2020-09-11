@@ -22,13 +22,13 @@ abstract class AbstractBearer implements BackendInterface
 
     public function check(RequestInterface $request, ResponseInterface $response)
     {
-        //$auth = new HTTP\Auth\Bearer(
-            //$this->realm,
-            //$request,
-          //  $response
-        //);
+        $auth = new HTTP\Auth\Bearer(
+            $this->realm,
+            $request,
+            $response
+        );
 
-        //$bearerToken = $auth->getToken($request);
+        $bearerToken = $auth->getToken($request);
         //if (!$bearerToken) {
         //    return [false, "No 'Authorization: Bearer' header found. Either the client didn't send one, or the server is mis-configured"];
         //}
