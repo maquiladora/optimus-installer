@@ -16,8 +16,8 @@ function exception_error_handler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler("exception_error_handler");
 
-//$authBackend = new Allspark\DAV\Auth\Backend\JWT_PDO;
-//$authBackend->setRealm('ALLSPARK');
+$authBackend = new Allspark\DAV\Auth\Backend\JWT_PDO;
+$authBackend->setRealm('ALLSPARK');
 $authBackend2 = new Allspark\DAV\Auth\Backend\PDO($pdo);
 $authBackend2->setRealm('ALLSPARK');
 $principalBackend = new Allspark\DAVACL\PrincipalBackend\PDO($pdo);
@@ -37,7 +37,7 @@ $nodes = [
 $server = new Sabre\DAV\Server($nodes);
 //$server->setBaseUri('/');
 
-$server->addPlugin(new Sabre\DAV\Auth\Plugin($authBackend2));
+$server->addPlugin(new Sabre\DAV\Auth\Plugin($authBackend,$authBackend2));
 $server->addPlugin(new Sabre\DAV\Locks\Plugin($lockBackend));
 $server->addPlugin(new Sabre\DAV\PropertyStorage\Plugin($storageBackend));
 $server->addPlugin(new Sabre\DAV\Browser\Plugin());
