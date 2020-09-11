@@ -1,14 +1,14 @@
 <html>
   <body>
-    <form style="text-align:center">
-      <label for="email">Email :</label><br><input id="email" name="email" autofocus />
+    <div style="text-align:center">
+      <label for="email">Email :</label><br><input id="email" type="text" autofocus onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
-      <label for="password">Password :</label><br><input id="password" name="password"/>
+      <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
       <input type="submit" value="login" onclick="login()"/>
       <br/><br/>
       <input type="submit" value="logout" onclick="logout()"/>
-    </form>
+    </div>
   </body>
 
   <script>
