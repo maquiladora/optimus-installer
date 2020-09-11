@@ -37,8 +37,6 @@
       parent.postMessage('logged out','*');
   }
 
-  <?php if ($_GET['action']=='logout') echo "logout()"?>
-
   document.getElementById('email').focus();
 
   </script>
