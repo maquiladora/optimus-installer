@@ -1,13 +1,12 @@
 <html>
   <body>
-    <div style="text-align:center">
+    <div id="container" style="text-align:center">
       <label for="email">Email :</label><br><input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
       <input type="button" value="login" onclick="login()"/>
       <br/><br/>
-      <input type="button" value="logout" onclick="logout()"/>
     </div>
   </body>
 
@@ -59,7 +58,31 @@
 		.catch(error => console.log("Erreur : " + error));
   }
 
+  function logged()
+  {
+    fetch('https://api.$DOMAIN/allspark/logged',
+    {
+      headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+      method: 'POST',
+      credentials: "include"
+    })
+		.then(function(response)
+		{
+      if (response.status === 200)
+      {
+        document.getElementById('container').innerHTML='';
+        logout_button = document.createElement('input');
+        logout_button.type = 'button';
+        logout_button.value = 'logout';
+        logout_button.onclick = logout();
+        document.getElementById('container').appendChild(logout_button);
+      }
+		})
+		.catch(error => console.log("Erreur : " + error));
+  }
+
   document.getElementById('email').focus();
+  logged();
 
   </script>
 </html>
