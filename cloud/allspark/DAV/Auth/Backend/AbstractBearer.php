@@ -45,7 +45,7 @@ abstract class AbstractBearer implements BackendInterface
         }
         else
         {
-          $stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' .   $this->realm . '",":",imap_password)) FROM ' . $this->tableName . ' WHERE email = ?');
+          $stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' .   $this->realm . '",":",AES_DECRYPT(password,'$AES_KEY'))) FROM ' . $this->tableName . ' WHERE email = ?');
           $stmt->execute(['prime@demoptimus.fr']);
           return $stmt->fetchColumn() ?: null;
         }
