@@ -13,7 +13,7 @@ abstract class AbstractBearer implements BackendInterface
 
     //protected $realm = 'ALLSPARK';
 
-    //abstract protected function validateBearerToken($bearerToken);
+    abstract protected function validateBearerToken($bearerToken);
 
     public function setRealm($realm)
     {
