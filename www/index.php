@@ -33,7 +33,7 @@
 
   function logout()
   {
-    fetch('https://api.$DOMAIN/allspark/logout');
+    fetch('https://api.$DOMAIN/allspark/logout',{headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: 'GET', credentials: "include"});
   }
 
   document.getElementById('email').focus();
