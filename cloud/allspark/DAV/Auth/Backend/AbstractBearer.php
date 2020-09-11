@@ -23,11 +23,19 @@ abstract class AbstractBearer implements BackendInterface
 
     public function check(RequestInterface $request, ResponseInterface $response)
     {
-        $auth = new HTTP\Auth\Bearer(
-            $this->realm,
-            $request,
-            $response
-        );
+        $auth = new HTTP\Auth\Bearer($this->realm,$request,$response);
+
+        include_once 'JWT.php';
+        use allspark\JWT\JWT;
+
+        if (isset($_COOKIE['token']))
+        {
+          $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
+          return [true, $payload['user']->email];
+        }
+        else
+          return false;
+
 
         //$bearerToken = $auth->getCredentials($request);
         //echo $bearerToken;
@@ -40,7 +48,6 @@ abstract class AbstractBearer implements BackendInterface
         //}
 
         //return [true, $principalUrl];
-        return [true, "principals/prime2@demoptimus.fr"];
     }
 
     /**
