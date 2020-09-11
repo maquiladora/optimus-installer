@@ -1,20 +1,11 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS' AND (strpos($_SERVER['HTTP_USER_AGENT'],'davfs')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Microsoft-WebDAV')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Chrome')!=FALSE OR strpos($_SERVER['HTTP_USER_AGENT'],'Dictate')!=FALSE))
-{
-	header("Access-Control-Allow-Origin: https://optimus.optimus-avocats.fr");
-	header("Access-Control-Allow-Credentials: true");
-	header("Access-Control-Allow-Methods: OPTIONS,GET,HEAD,DELETE,PROPFIND,PUT,PROPPATCH,COPY,MOVE,REPORT,MKCOL,POST,LOCK,UNLOCK");
-	header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-  header('Access-Control-Max-Age: 3600');
-  exit;
-}
-else
-{
-	header("Access-Control-Allow-Origin: https://optimus.optimus-avocats.fr");
-	header("Access-Control-Allow-Credentials: true");
-	header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-}
-error_reporting(E_ALL);
+header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
+header("Access-Control-Allow-Methods: OPTIONS,GET,HEAD,DELETE,PROPFIND,PUT,PROPPATCH,COPY,MOVE,REPORT,MKCOL,POST,LOCK,UNLOCK");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Max-Age: 5");
+if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
+
 require('/srv/cloud/vendor/autoload.php');
 
 $pdo = new \PDO('mysql:dbname=cloud','$CLOUD_MARIADB_USER','$CLOUD_MARIADB_PASSWORD');
