@@ -33,7 +33,7 @@
 
   function logout()
   {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
+    fetch('https://api.$DOMAIN/allspark/logout','GET');
   }
 
   document.getElementById('email').focus();
