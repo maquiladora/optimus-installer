@@ -1,7 +1,7 @@
 <html>
   <body>
     <form style="text-align:center">
-      <label for="email">Email :</label><br><input id="email" name="email" autofocus/>
+      <label for="email">Email :</label><br><input id="email" name="email" autofocus />
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" name="password"/>
       <br/><br/>
