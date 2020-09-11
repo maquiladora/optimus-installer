@@ -33,38 +33,13 @@ abstract class AbstractBearer implements BackendInterface
 
     public function check(RequestInterface $request, ResponseInterface $response)
     {
-        //$auth = new HTTP\Auth\Bearer($this->realm,$request,$response);
-
-
-
-
         if (isset($_COOKIE['token']))
         {
           $payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
           return [true, "principals/".$payload['user']->email];
         }
         else
-        {
-          $stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' .   $this->realm . '",":",AES_DECRYPT(password,"$AES_KEY"))) FROM ' . $this->tableName . ' WHERE email = ?');
-          $stmt->execute(['prime@demoptimus.fr']);
-          return $stmt->fetchColumn() ?: null;
-        }
-
-
-        return [false, "Invalid Token"];
-
-
-        //$bearerToken = $auth->getCredentials($request);
-        //echo $bearerToken;
-        //if (!$bearerToken) {
-        //    return [false, "No 'Authorization: Bearer' header found. Either the client didn't send one, or the server is mis-configured"];
-        //}
-        //$principalUrl = $this->validateBearerToken($bearerToken);
-        //if (!$principalUrl) {
-        //    return [false, 'Bearer token was incorrect'];
-        //}
-
-        //return [true, $principalUrl];
+          return [false, "Invalid Token"];
     }
 
     /**
