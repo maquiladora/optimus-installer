@@ -30,13 +30,8 @@
         window.location.reload();
       }
       else
-        return response.json();
-
+        alert(response.json().message)
 		})
-    .then(function(response)
-    {
-      alert(response.message);
-    })
 		.catch(error => console.log("Erreur : " + error));
   }
 
