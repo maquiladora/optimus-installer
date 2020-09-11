@@ -8,7 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'config.php';
 
-setcookie('token', '', time() - 3600, '/', $domain);
+$cookie_options = array ('expires' => time() - 3600, 'path' => '/', 'domain' => $domain, 'secure' => true, 'httponly' => true, 'samesite' => 'None');
+setcookie('token', '', $cookie_options);
 http_response_code(200);
 echo json_encode(array("message" => "Cookie removed"));
 ?>
