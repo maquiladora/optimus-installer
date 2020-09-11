@@ -8,6 +8,9 @@ use Sabre\HTTP;
 use Sabre\HTTP\RequestInterface;
 use Sabre\HTTP\ResponseInterface;
 
+include_once 'JWT.php';
+use allspark\JWT\JWT;
+
 abstract class AbstractBearer implements BackendInterface
 {
 
@@ -25,8 +28,7 @@ abstract class AbstractBearer implements BackendInterface
     {
         $auth = new HTTP\Auth\Bearer($this->realm,$request,$response);
 
-        include_once 'JWT.php';
-        use allspark\JWT\JWT;
+
 
         if (isset($_COOKIE['token']))
         {
