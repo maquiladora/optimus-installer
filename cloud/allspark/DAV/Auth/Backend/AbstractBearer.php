@@ -13,15 +13,7 @@ use allspark\JWT\JWT;
 
 abstract class AbstractBearer implements BackendInterface
 {
-
-  protected $pdo;
-  public $tableName = 'users.users';
-
-  public function setRealm($realm)
-  {
-      $this->realm = $realm;
-  }
-
+  
   public function check(RequestInterface $request, ResponseInterface $response)
   {
     if (isset($_COOKIE['token']))

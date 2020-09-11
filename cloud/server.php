@@ -16,10 +16,9 @@ function exception_error_handler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler("exception_error_handler");
 
-$authBackend = new Allspark\DAV\Auth\Backend\JWT_PDO;
+$authBackend = new Allspark\DAV\Auth\Backend\PDO($pdo);
 $authBackend->setRealm('ALLSPARK');
-$authBackend2 = new Allspark\DAV\Auth\Backend\PDO($pdo);
-$authBackend2->setRealm('ALLSPARK');
+$authBackend2 = new Allspark\DAV\Auth\Backend\JWT_PDO;
 $principalBackend = new Allspark\DAVACL\PrincipalBackend\PDO($pdo);
 $caldavBackend = new Sabre\CalDAV\Backend\PDO($pdo);
 $carddavBackend   = new Allspark\CardDAV\Backend\PDO($pdo);
