@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Sabre\DAV\Auth\Backend;
+namespace Allspark\DAV\Auth\Backend;
 
 use Sabre\HTTP;
 use Sabre\HTTP\RequestInterface;
