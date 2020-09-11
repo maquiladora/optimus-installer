@@ -32,7 +32,7 @@ abstract class AbstractBearer implements BackendInterface
 
         if (isset($_COOKIE['token']))
         {
-          $payload = (new JWT($sha_key, 'HS512', 3600, 10))->decode($token);
+          $payload = (new JWT($API_SHA_KEY, 'HS512', 3600, 10))->decode($token);
           return [true, $payload['user']->email];
         }
         else
