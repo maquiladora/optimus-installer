@@ -25,7 +25,7 @@
         alert('Error ' + this.status + "\n" + request.responseText);
 
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        parent.postMessage('logged','*');
+        parent.postMessage('logged in','*');
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     request.send(data);
@@ -34,6 +34,7 @@
   function logout()
   {
     fetch('https://api.$DOMAIN/allspark/logout');
+      parent.postMessage('logged out','*');
   }
 
   document.getElementById('email').focus();
