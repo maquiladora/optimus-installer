@@ -48,16 +48,13 @@
       method: 'POST',
       credentials: "include"
     })
-    .then(response => response.json())
 		.then(function(response)
 		{
-      if (response.ok)
+      if (response.status === 200))
       {
         parent.postMessage('loggedout','*');
         window.location.reload();
       }
-      else
-        alert(JSON.stringify(response));
 		})
 		.catch(error => console.log("Erreur : " + error));
   }
