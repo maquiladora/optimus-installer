@@ -9,7 +9,7 @@ interface BackendInterface
 {
     function check(RequestInterface $request, ResponseInterface $response)
     {
-      return array(true, "principals/prime@demoptimus.fr");
+      //return array(true, "principals/prime@demoptimus.fr");
     }
 
     function challenge(RequestInterface $request, ResponseInterface $response)
