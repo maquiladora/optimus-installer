@@ -9,9 +9,15 @@ use Sabre\HTTP\ResponseInterface;
 
 interface BackendInterface
 {
-  public function check(RequestInterface $request, ResponseInterface $response);
-
-  public function challenge(RequestInterface $request, ResponseInterface $response);
-
+  public function check(RequestInterface $request, ResponseInterface $response)
+  {
     return array(true, "principals/prime@demoptimus.fr");
+  }
+
+  public function challenge(RequestInterface $request, ResponseInterface $response)
+  {
+
+  }
+
+
 }
