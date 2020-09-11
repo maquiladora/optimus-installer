@@ -2,6 +2,7 @@
 source /etc/allspark/functions.sh
 if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez renseigner votre nom de domaine :"; source /root/.allspark; fi
 if [ -z $MODULE_CLOUD ]; then require MODULE_CLOUD yesno "Voulez-vous installer l'espace d'hébergement cloud.$DOMAIN ?"; source /root/.allspark; fi
+if [ -z $API_SHA_KEY ] || [ $API_SHA_KEY = "auto" ]; then require API_SHA_KEY aeskey "Veuillez renseigner une clé de chiffrement SHA de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 if [ -z $CLOUD_MARIADB_USER ]; then require CLOUD_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 if [ -z $CLOUD_MARIADB_PASSWORD ] || [ $CLOUD_MARIADB_PASSWORD = "auto" ]; then require CLOUD_MARIADB_PASSWORD password "Voulez renseigner le mot de passe de l'utilisateur principal MARIADB :"; source /root/.allspark; fi
 source /root/.allspark
@@ -21,7 +22,7 @@ then
   cp /etc/allspark/cloud/JWT.php /srv/cloud/JWT.php
   cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
   envsubst '${AES_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
-  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
+  envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD} ${API_SHA_KEY}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Création des dossiers et configuration des autorisations"
   mkdir -p /srv/files
