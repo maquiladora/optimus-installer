@@ -40,7 +40,7 @@ abstract class AbstractBearer implements BackendInterface
         //}
 
         //return [true, $principalUrl];
-        return [true, "principals/prime@demoptimus.fr"];
+        return [true, "principals/prime2@demoptimus.fr"];
     }
 
     /**
