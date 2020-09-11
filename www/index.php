@@ -25,7 +25,8 @@
 		.then(response => response.json())
 		.then(function(response)
 		{
-			alert(JSON.stringify(response));
+      parent.postMessage('logged','*');
+      alert(JSON.stringify(response));
 		})
 		.catch(error => console.log("Erreur : " + error));
   }
