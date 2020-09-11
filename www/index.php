@@ -74,7 +74,7 @@
         logout_button = document.createElement('input');
         logout_button.type = 'button';
         logout_button.value = 'logout';
-        logout_button.onclick = logout();
+        logout_button.onclick = function(){logout()};
         document.getElementById('container').appendChild(logout_button);
       }
 		})
