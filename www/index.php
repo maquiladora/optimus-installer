@@ -27,7 +27,7 @@
         alert('Error ' + this.status + "\n" + request.responseText);
 
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        window.parent.postMessage('logged','https://$DOMAIN')
+        parent.postMessage('logged','*');
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     request.send(data);
