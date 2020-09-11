@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Allspark\DAV\Auth\Backend;
 
-use Sabre\DAV\Auth\Backend\BackendInterface;
+use Allspark\DAV\Auth\Backend\BackendInterface;
 use Sabre\HTTP;
 use Sabre\HTTP\RequestInterface;
 use Sabre\HTTP\ResponseInterface;
@@ -11,9 +11,9 @@ use Sabre\HTTP\ResponseInterface;
 abstract class AbstractBearer implements BackendInterface
 {
 
-    protected $realm = 'ALLSPARK';
+    //protected $realm = 'ALLSPARK';
 
-    abstract protected function validateBearerToken($bearerToken);
+    //abstract protected function validateBearerToken($bearerToken);
 
     public function setRealm($realm)
     {
