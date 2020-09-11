@@ -50,7 +50,7 @@
     })
 		.then(function(response)
 		{
-      if (response.status === 200))
+      if (response.status === 200)
       {
         parent.postMessage('loggedout','*');
         window.location.reload();
