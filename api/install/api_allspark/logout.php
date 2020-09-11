@@ -8,4 +8,5 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 setcookie("token", "", time() - 3600);
 http_response_code(200);
+echo json_encode(array("message" => "Cookie removed"));
 ?>

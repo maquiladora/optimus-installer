@@ -5,9 +5,9 @@
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
-      <input type="submit" value="login" onclick="login()"/>
+      <input type="button" value="login" onclick="login()"/>
       <br/><br/>
-      <input type="submit" value="logout" onclick="logout()"/>
+      <input type="button" value="logout" onclick="logout()"/>
     </div>
   </body>
 
