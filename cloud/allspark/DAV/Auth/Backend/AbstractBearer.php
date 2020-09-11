@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Allspark\DAV\Auth\Backend;
 
 use Sabre\DAV\Auth\Backend\BackendInterface;
-//use Sabre\HTTP;
-//use Sabre\HTTP\RequestInterface;
-//use Sabre\HTTP\ResponseInterface;
+use Sabre\HTTP;
+use Sabre\HTTP\RequestInterface;
+use Sabre\HTTP\ResponseInterface;
 
 include_once 'JWT.php';
 use allspark\JWT\JWT;
