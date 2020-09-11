@@ -30,7 +30,7 @@
         window.location.reload();
       }
       else
-        alert(response.json().message)
+        alert(response.json())
 		})
 		.catch(error => console.log("Erreur : " + error));
   }
