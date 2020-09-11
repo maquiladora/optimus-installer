@@ -26,7 +26,7 @@ abstract class AbstractBearer implements BackendInterface
 
     public function check(RequestInterface $request, ResponseInterface $response)
     {
-        $auth = new HTTP\Auth\Bearer($this->realm,$request,$response);
+        //$auth = new HTTP\Auth\Bearer($this->realm,$request,$response);
 
 
 
@@ -36,7 +36,7 @@ abstract class AbstractBearer implements BackendInterface
           return [true, "principals/".$payload['user']->email];
         }
         else
-          return false;
+          return [false, "Invalid Token"];
 
 
         //$bearerToken = $auth->getCredentials($request);
