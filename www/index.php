@@ -33,7 +33,7 @@
 
   function logout()
   {
-    fetch('https://api.$DOMAIN/allspark/logout','GET');
+    fetch('https://api.$DOMAIN/allspark/logout');
   }
 
   document.getElementById('email').focus();
