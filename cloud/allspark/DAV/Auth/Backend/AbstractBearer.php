@@ -17,30 +17,21 @@ abstract class AbstractBearer implements BackendInterface
   protected $pdo;
   public $tableName = 'users.users';
 
-  public function __construct(\PDO $pdo)
+  public function setRealm($realm)
+  {
+      $this->realm = $realm;
+  }
+
+  public function check(RequestInterface $request, ResponseInterface $response)
+  {
+    if (isset($_COOKIE['token']))
     {
-        $this->pdo = $pdo;
+      $payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
+      return [true, "principals/".$payload['user']->email];
     }
-    //protected $realm = 'ALLSPARK';
-
-    //abstract protected function validateBearerToken($bearerToken);
-
-    public function setRealm($realm)
-    {
-        $this->realm = $realm;
-    }
-
-
-    public function check(RequestInterface $request, ResponseInterface $response)
-    {
-        if (isset($_COOKIE['token']))
-        {
-          $payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
-          return [true, "principals/".$payload['user']->email];
-        }
-        else
-          return [false, "Invalid Token"];
-    }
+    else
+      return [false, "Invalid Token"];
+  }
 
     /**
      * This method is called when a user could not be authenticated, and
