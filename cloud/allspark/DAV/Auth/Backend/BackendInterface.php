@@ -1,10 +1,10 @@
 <?php
 
-use Sabre\DAV\Auth\Backend\BackendInterface;
+use Sabre\DAV\Auth\Backend;
 use Sabre\HTTP\RequestInterface;
 use Sabre\HTTP\ResponseInterface;
 
-class OAuth implements BackendInterface
+interface BackendInterface
 {
     function check(RequestInterface $request, ResponseInterface $response)
     {
