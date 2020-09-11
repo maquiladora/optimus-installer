@@ -14,6 +14,13 @@ use allspark\JWT\JWT;
 abstract class AbstractBearer implements BackendInterface
 {
 
+  protected $pdo;
+  public $tableName = 'users.users';
+
+  public function __construct(\PDO $pdo)
+    {
+        $this->pdo = $pdo;
+    }
     //protected $realm = 'ALLSPARK';
 
     //abstract protected function validateBearerToken($bearerToken);
@@ -30,13 +37,21 @@ abstract class AbstractBearer implements BackendInterface
 
 
 
+
         if (isset($_COOKIE['token']))
         {
           $payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
           return [true, "principals/".$payload['user']->email];
         }
         else
-          return [false, "Invalid Token"];
+        {
+          $stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' . $realm . '",":",imap_password)) FROM ' . $this->tableName . ' WHERE email = ?');
+          $stmt->execute(['prime@demoptimus.fr']);
+          return $stmt->fetchColumn() ?: null;
+        }
+
+
+        return [false, "Invalid Token"];
 
 
         //$bearerToken = $auth->getCredentials($request);
