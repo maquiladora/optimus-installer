@@ -25,7 +25,13 @@
 		.then(response => response.json())
 		.then(function(response)
 		{
-      parent.postMessage('logged','*');
+      if (response.ok)
+      {
+        parent.postMessage('logged','*');
+        window.location.reload();
+      }
+      else
+        alert(JSON.stringify(response));
 		})
 		.catch(error => console.log("Erreur : " + error));
   }
@@ -41,7 +47,13 @@
     .then(response => response.json())
 		.then(function(response)
 		{
-			alert(JSON.stringify(response));
+      if (response.ok)
+      {
+        parent.postMessage('loggedout','*');
+        window.location.reload();
+      }
+      else
+        alert(JSON.stringify(response));
 		})
 		.catch(error => console.log("Erreur : " + error));
   }
