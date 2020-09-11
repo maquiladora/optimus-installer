@@ -25,7 +25,6 @@ class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 					$username = $username['user']->email;
 					$stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' . $realm . '",":",AES_DECRYPT(password,"$AES_KEY"))) FROM ' . $this->tableName . ' WHERE email = ?');
 					$stmt->execute([$username]);
-					return true;
 					return $stmt->fetchColumn() ?: null;
 			}
 			catch (Throwable $e)
