@@ -15,20 +15,19 @@
 
   function login()
   {
-    var request = new XMLHttpRequest();
-    request.open("POST", 'https://api.$DOMAIN/allspark/login', true);
-    request.setRequestHeader('Content-Type', 'application/json;charset=utf-8');
-    request.withCredentials = true;
-    request.onreadystatechange = function()
-    {
-      if (this.readyState === XMLHttpRequest.DONE && this.status != 200 && request.responseText)
-        alert('Error ' + this.status + "\n" + request.responseText);
-
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        parent.postMessage('logged in','*');
-    }
-    var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
-    request.send(data);
+    fetch('https://api.$DOMAIN/allspark/login',
+		{
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
+			method: "POST",
+			credentials: "include",
+      body: JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value})
+		})
+		.then(response => response.json())
+		.then(function(response)
+		{
+			alert(JSON.stringify(response));
+		})
+		.catch(error => console.log("Erreur : " + error));
   }
 
   function logout()

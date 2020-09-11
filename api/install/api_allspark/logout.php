@@ -7,6 +7,5 @@ header("Access-Control-Max-Age: 5");
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 setcookie("token", "", time() - 3600);
-setcookie("hop", "la", time() - 3600);
 http_response_code(200);
 ?>
