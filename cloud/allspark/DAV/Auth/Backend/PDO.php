@@ -16,7 +16,7 @@ class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 
 	function getDigestHash($realm, $username)
 	{
-		if ($_COOKIE['token'] AND $_COOKIE['token'] != 'null')
+		if (isset($_COOKIE['token']))
 		{
 			try
 			{
@@ -24,6 +24,7 @@ class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 					$username = (array)$payload;
 					$username = $username['user']->email;
 					$stmt = $this->pdo->prepare('SELECT MD5(CONCAT(email,":","' . $realm . '",":",AES_DECRYPT(password,"$AES_KEY"))) FROM ' . $this->tableName . ' WHERE email = ?');
+echo 	'SELECT MD5(CONCAT(email,":","' . $realm . '",":",AES_DECRYPT(password,"$AES_KEY"))) FROM ' . $this->tableName . ' WHERE email = ?';
 					$stmt->execute([$username]);
 					return $stmt->fetchColumn() ?: null;
 			}
