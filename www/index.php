@@ -34,7 +34,6 @@
   function logout()
   {
     fetch('https://api.$DOMAIN/allspark/logout');
-      parent.postMessage('logged out','*');
   }
 
   document.getElementById('email').focus();
