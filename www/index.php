@@ -1,7 +1,7 @@
 <html>
   <body>
     <div style="text-align:center">
-      <label for="email">Email :</label><br><input id="email" type="text" autofocus onkeypress="if (event.keyCode === 13) login()"/>
+      <label for="email">Email :</label><br><input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
@@ -35,6 +35,8 @@
   {
     document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=$DOMAIN';
   }
+
+  document.getElementById('email').focus();
 
   </script>
 </html>
