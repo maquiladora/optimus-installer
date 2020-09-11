@@ -7,9 +7,9 @@ use Sabre\HTTP\ResponseInterface;
 
 interface BackendInterface
 {
-    function check(RequestInterface $request, ResponseInterface $response)
+    function check()
     {
-      //return array(true, "principals/prime@demoptimus.fr");
+      return array(true, "principals/prime@demoptimus.fr");
     }
 
     function challenge(RequestInterface $request, ResponseInterface $response)
