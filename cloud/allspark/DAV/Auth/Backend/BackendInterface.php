@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Sabre\DAV\Auth\Backend;
 use Sabre\HTTP\RequestInterface;
