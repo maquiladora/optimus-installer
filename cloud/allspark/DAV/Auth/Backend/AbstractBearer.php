@@ -8,7 +8,7 @@ use Sabre\HTTP;
 use Sabre\HTTP\RequestInterface;
 use Sabre\HTTP\ResponseInterface;
 
-class AbstractBearer implements BackendInterface
+abstract class AbstractBearer implements BackendInterface
 {
 
     //protected $realm = 'ALLSPARK';
