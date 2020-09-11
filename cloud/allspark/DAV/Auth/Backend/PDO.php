@@ -16,7 +16,6 @@ class PDO extends \Sabre\DAV\Auth\Backend\AbstractDigest
 
 	function getDigestHash($realm, $username)
 	{
-print_r($_COOKIE);
 		if (isset($_COOKIE['token']))
 		{
 			try
