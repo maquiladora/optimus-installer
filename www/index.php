@@ -27,7 +27,7 @@
         alert('Error ' + this.status + "\n" + request.responseText);
 
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200)
-        close();
+        window.postMessage('logged','https://v4.optimus-avocats.fr')
     }
     var data = JSON.stringify({"email": document.getElementById('email').value, "password": document.getElementById('password').value});
     request.send(data);
