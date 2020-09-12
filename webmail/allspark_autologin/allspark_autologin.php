@@ -20,22 +20,22 @@ class allspark_autologin extends rcube_plugin
 
   function authenticate($args)
   {
-error_reporting(E_ALL);
-    include_once 'plugins/allspark_autologin/JWT.php';
-    use allspark\JWT\JWT;
+    //include_once 'plugins/allspark_autologin/JWT.php';
+    //use allspark\JWT\JWT;
 
-    if (isset($_COOKIE['token']))
-    {
-    	$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
-    	$args['user'] = $payload['user']->email];
-    }
+    //if (isset($_COOKIE['token']))
+    //{
+    	//$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
+    	//$args['user'] = $payload['user']->email];
+    //}
+
+    $args['user'] = 'prime@demoptimus.fr';
 
     $rcmail	= rcmail::get_instance();
     $db	= $rcmail->get_dbh();
     $result	= $db->query("SELECT AES_DECRYPT(password,'$AES_KEY') as password FROM users.users WHERE email = '" . $args['user'] . "'");
     $data	= $db->fetch_assoc($result);
 
-    $args['user'] = $this->get_config('username');
     $args['pass'] = $data['password'];
     $args['cookiecheck'] = false;
     $args['valid'] = true;
