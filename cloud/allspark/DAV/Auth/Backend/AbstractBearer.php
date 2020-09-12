@@ -27,6 +27,7 @@ abstract class AbstractBearer implements BackendInterface
 
   public function challenge(RequestInterface $request, ResponseInterface $response)
   {
-    
+    $auth = new HTTP\Auth\Bearer($this->realm, $request, $response);
+    $auth->requireLogin();
   }
 }
