@@ -25,8 +25,8 @@ class allspark_autologin extends rcube_plugin
 
     if (isset($_COOKIE['token']))
     {
-    	$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
-    	$args['user'] = $payload['user']->email;
+    	//$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
+    	//$args['user'] = $payload['user']->email;
     }
 
     $rcmail	= rcmail::get_instance();
