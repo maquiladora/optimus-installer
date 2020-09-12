@@ -29,19 +29,7 @@ class JWT_PDO extends \Sabre\DAV\Auth\Backend\AbstractBearer
 
 	public function challenge(RequestInterface $request, ResponseInterface $response)
 	{
-		$auth = new HTTP\Auth\Digest(
-					 '',
-					 $request,
-					 $response
-			 );
-			 $auth->init();
-
-			 $oldStatus = $response->getStatus() ?: 200;
-			 $auth->requireLogin();
-
-			 // Preventing the digest utility from modifying the http status code,
-			 // this should be handled by the main plugin.
-			 $response->setStatus($oldStatus);
+			 $response->setStatus(200);
 	}
-	
+
 }
