@@ -23,11 +23,12 @@ class allspark_autologin extends rcube_plugin
     include_once 'plugins/allspark_autologin/JWT.php';
     use allspark\JWT\JWT;
 
-    //if (isset($_COOKIE['token']))
-    //{
+    if (isset($_COOKIE['token']))
+    {
     	//$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
     	//$args['user'] = $payload['user']->email;
-    //}
+      $args['user'] = 'prime@demoptimus.fr';
+    }
 
     $rcmail	= rcmail::get_instance();
     $db	= $rcmail->get_dbh();
