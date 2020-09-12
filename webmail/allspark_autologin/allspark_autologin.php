@@ -1,4 +1,7 @@
 <?php
+include_once 'JWT.php';
+use allspark\JWT\JWT;
+
 class allspark_autologin extends rcube_plugin
 {
   public $task = 'login';
@@ -20,9 +23,6 @@ class allspark_autologin extends rcube_plugin
 
   function authenticate($args)
   {
-    include_once 'JWT.php';
-    use allspark\JWT\JWT;
-
     //if (isset($_COOKIE['token']))
     //{
     	//$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
