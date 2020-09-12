@@ -20,6 +20,7 @@ class allspark_autologin extends rcube_plugin
 
   function authenticate($args)
   {
+error_reporting(E_ALL);
     include_once 'plugins/allspark_autologin/JWT.php';
     use allspark\JWT\JWT;
 
