@@ -1,14 +1,14 @@
 <html>
 
   <body>
-    <div style="display:flex;justify-content:center;align-items:center;flex-direction:column">
+    <div style="height:600px;display:flex;justify-content:center;align-items:center;flex-direction:column">
       <?='$DOMAIN'?><br/><br>
       <label for="email">Email :</label><br><input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
-      <br/><br/>
+      <br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
-      <br/><br/>
+      <br/>
       <input type="button" value="login" onclick="login()"/>
-      <br/><br/>
+      <br/>
     </div>
   </body>
 
