@@ -22,7 +22,7 @@ then
   cp /etc/allspark/cloud/JWT.php /srv/cloud/JWT.php
   cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
   envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
-  envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/JWT.php > /srv/cloud/allspark/DAV/Auth/Backend/JWT.php
+  envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/JWTCookie.php > /srv/cloud/allspark/DAV/Auth/Backend/JWTCookie.php
   envsubst '${DOMAIN} ${CLOUD_MARIADB_USER} ${CLOUD_MARIADB_PASSWORD} ${API_SHA_KEY}' < /etc/allspark/cloud/server.php > /srv/cloud/server.php
 
   echo_magenta "Création des dossiers et configuration des autorisations"

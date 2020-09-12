@@ -16,7 +16,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler("exception_error_handler");
 
-$authBackend = new Allspark\DAV\Auth\Backend\JWT;
+$authBackend = new Allspark\DAV\Auth\Backend\JWTCookie;
 $authBackend2 = new Allspark\DAV\Auth\Backend\PDO($pdo);
 $authBackend2->setRealm('ALLSPARK');
 $principalBackend = new Allspark\DAVACL\PrincipalBackend\PDO($pdo);
