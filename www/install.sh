@@ -12,7 +12,7 @@ then
   echo_magenta "Création de l'espace d'hébergement www.$DOMAIN..."
   if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
   envsubst '${DOMAIN}' < /etc/allspark/www/index.php > /srv/www/index.php
-  envsubst '${DOMAIN}' < /etc/allspark/www/menu.php > /srv/www/menu.php
+  envsubst '${DOMAIN}' < /etc/allspark/www/login.php > /srv/www/login.php
   if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/www/vhost > /etc/apache2/sites-enabled/www.conf; fi
   chown -R www-data:www-data /srv/www
 
