@@ -10,6 +10,12 @@ use allspark\JWT\JWT;
 
 class JWT_PDO extends \Sabre\DAV\Auth\Backend\AbstractBearer
 {
+
+	public function validateBearerToken($bearerToken)
+	{
+
+	}
+
 	public function check(RequestInterface $request, ResponseInterface $response)
 	{
 		if (isset($_COOKIE['token']))
@@ -37,4 +43,5 @@ class JWT_PDO extends \Sabre\DAV\Auth\Backend\AbstractBearer
 			 // this should be handled by the main plugin.
 			 $response->setStatus($oldStatus);
 	}
+	
 }
