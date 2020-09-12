@@ -1,4 +1,7 @@
 <?php
+use Sabre\HTTP;
+use Sabre\HTTP\RequestInterface;
+use Sabre\HTTP\ResponseInterface;
 
 namespace Allspark\DAV\Auth\Backend;
 
