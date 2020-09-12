@@ -8,7 +8,7 @@ use Sabre\HTTP\ResponseInterface;
 include_once 'JWT.php';
 use allspark\JWT\JWT;
 
-class JWT_PDO extends \Sabre\DAV\Auth\Backend\AbstractBearer
+class JWT extends \Sabre\DAV\Auth\Backend\AbstractBearer
 {
 
 	public function validateBearerToken($bearerToken)
