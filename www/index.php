@@ -1,5 +1,5 @@
 <?php
-  if (!isset($_COOKIE['token'])
+  if (!isset($_COOKIE['token']))
     include('login.php');
 ?>
 
