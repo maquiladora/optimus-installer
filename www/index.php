@@ -1,6 +1,7 @@
 <html>
   <body>
     <div id="container" style="text-align:center">
+      <?='$DOMAIN'?><br/><br>
       <label for="email">Email :</label><br><input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
       <br/><br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
