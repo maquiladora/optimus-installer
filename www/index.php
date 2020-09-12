@@ -6,7 +6,7 @@
 <html>
   <body>
 
-      <input type="button" style="position:fixed;top:5px;right:5px" value="login" onclick="logout()"/>
+      <input type="button" style="position:fixed;top:5px;right:5px" value="logout" onclick="logout()"/>
 
   </body>
 
