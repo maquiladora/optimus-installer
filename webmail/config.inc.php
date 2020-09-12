@@ -90,7 +90,6 @@ $config['plugins'] = array(
 'newmail_notifier',
 'subscriptions_option',
 'zipdownload',
-
 "contextmenu",
 "contextmenu_folder",
 "sauserprefs",
@@ -98,7 +97,7 @@ $config['plugins'] = array(
 "thunderbird_labels",
 "hotkeys",
 "advanced_search",
-"singleuserautologin");
+"allspark_autologin");
 
 $config['swipe_actions'] = array(
     'messagelist' => array(
