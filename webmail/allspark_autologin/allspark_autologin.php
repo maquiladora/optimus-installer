@@ -26,13 +26,13 @@ class allspark_autologin extends rcube_plugin
     if (isset($_COOKIE['token']))
     {
     	$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
-    	$args['user'] = $payload['user']->email];
+    	$args['user'] = $payload['user']->email;
     }
 
     $rcmail	= rcmail::get_instance();
     $db	= $rcmail->get_dbh();
-    $result	= $db->query("SELECT AES_DECRYPT(password,'$AES_KEY') as password FROM users.users WHERE email = '" . $args['user'] . "'");
-    $data	= $db->fetch_assoc($result);
+    $result = $db->query("SELECT AES_DECRYPT(password,'$AES_KEY') as password FROM users.users WHERE email = '" . $args['user'] . "'");
+    $data = $db->fetch_assoc($result);
 
     $args['pass'] = $data['password'];
     $args['cookiecheck'] = false;
