@@ -29,8 +29,6 @@ class allspark_autologin extends rcube_plugin
     	$args['user'] = $payload['user']->email];
     }
 
-    $args['user'] = 'prime@demoptimus.fr';
-
     $rcmail	= rcmail::get_instance();
     $db	= $rcmail->get_dbh();
     $result	= $db->query("SELECT AES_DECRYPT(password,'$AES_KEY') as password FROM users.users WHERE email = '" . $args['user'] . "'");
