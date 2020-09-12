@@ -16,7 +16,7 @@ function exception_error_handler($errno, $errstr, $errfile, $errline) {
 }
 set_error_handler("exception_error_handler");
 
-if (isset($_COOKIE['token'])
+if (isset($_COOKIE['token']))
 	$authBackend = new Allspark\DAV\Auth\Backend\JWTCookie;
 else
 {
