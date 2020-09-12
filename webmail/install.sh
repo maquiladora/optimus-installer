@@ -5,6 +5,7 @@ if [ -z $MODULE_WEBMAIL ]; then require MODULE_WEBMAIL yesno "Voulez-vous instal
 if [ -z $MAILSERVER_MARIADB_USER ]; then require MAILSERVER_MARIADB_USER string "Veuillez renseigner le nom de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
 if [ -z $MAILSERVER_MARIADB_PASSWORD ] || [ $MAILSERVER_MARIADB_PASSWORD = "auto" ]; then require MAILSERVER_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'utilisateur mail MARIADB :"; source /root/.allspark; fi
 if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
+if [ -z $API_SHA_KEY ] || [ $API_SHA_KEY = "auto" ]; then require API_SHA_KEY aeskey "Veuillez renseigner une clé de chiffrement SHA de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 if [ -z $WEBMAIL_DES_KEY ] || [ $WEBMAIL_DES_KEY = "auto" ]; then require WEBMAIL_DES_KEY deskey "Veuillez renseigner une clé de chiffrement DES de 24 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 source /root/.allspark
 
@@ -76,7 +77,7 @@ then
 
   echo_magenta "Modification de la configuration du plugin ALLSPARK_AUTOLOGIN"
   mkdir -p /srv/webmail/plugins/allspark_autologin
-  envsubst '${AES_KEY}' < /etc/allspark/webmail/allspark_autologin/allspark_autologin.php > /srv/webmail/plugins/allspark_autologin/allspark_autologin.php
+  envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/webmail/allspark_autologin/allspark_autologin.php > /srv/webmail/plugins/allspark_autologin/allspark_autologin.php
   cp /etc/allspark/webmail/allspark_autologin/JWT.php /srv/webmail/plugins/allspark_autologin/JWT.php
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
