@@ -1,9 +1,9 @@
 <?php
+namespace Allspark\DAV\Auth\Backend;
+
 use Sabre\HTTP;
 use Sabre\HTTP\RequestInterface;
 use Sabre\HTTP\ResponseInterface;
-
-namespace Allspark\DAV\Auth\Backend;
 
 include_once 'JWT.php';
 use allspark\JWT\JWT;
