@@ -29,7 +29,7 @@ class JWTCookie extends \Sabre\DAV\Auth\Backend\AbstractBearer
 
 	public function challenge(RequestInterface $request, ResponseInterface $response)
 	{
-			 $response->setStatus(200);
+			 $response->setStatus(401);
 	}
 
 }
