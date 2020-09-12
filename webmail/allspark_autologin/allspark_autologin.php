@@ -15,7 +15,7 @@ class allspark_autologin extends rcube_plugin
 
   function startup($args)
   {
-    if (empty($_SESSION['user_id']) && !empty($_GET['_autologin']))
+    if (empty($_SESSION['user_id']) && isset($_COOKIE['token']))
       $args['action'] = 'login';
 
     return $args;
@@ -27,7 +27,6 @@ class allspark_autologin extends rcube_plugin
     {
     	$payload = (new JWT('$API_SHA_KEY', 'HS512', 3600, 10))->decode($_COOKIE['token']);
     	$args['user'] = $payload['user']->email;
-      //$args['user'] = 'prime@demoptimus.fr';
     }
 
     $rcmail	= rcmail::get_instance();
