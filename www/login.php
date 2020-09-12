@@ -4,9 +4,7 @@
     <div style="height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column">
       <?='$DOMAIN'?><br/><br>
       <label for="email">Email :</label><br><input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
-      <br/>
       <label for="password">Password :</label><br><input id="password" type="password" onkeypress="if (event.keyCode === 13) login()"/>
-      <br/>
       <input type="button" value="login" onclick="login()"/>
       <br/>
     </div>
