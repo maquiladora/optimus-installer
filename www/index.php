@@ -7,7 +7,10 @@
   <body>
 
       <input type="button" style="position:fixed;top:5px;right:5px" value="logout" onclick="logout()"/>
-      <a href="https://webmail.adaris.org">WEBMAIL ROUNDCUBE</a>
+      <a href="https://webmail.demoptimus.fr">WEBMAIL ROUNDCUBE</a>
+      <br/>
+      <a href="https://cloud.demoptimus.fr">CLIENT WEBDAV HTTP</a>
+
 
   </body>
 
