@@ -6,7 +6,6 @@ function api_call(endpoint, method, data)
   domain = new URL(endpoint);
   domain = domain.hostname.split('.');
   domain = domain[domain.length-2] + '.' + domain[domain.length-1];
-  alert(domain);
 
   var fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
   if (method != 'GET')
