@@ -3,8 +3,8 @@ class Database
 {
     private $host = "localhost";
     private $db_name = "users";
-    private $username = "root";
-    private $password = "bk5WpMHKGZUwJ1ZJbsGz0e7jV4wsr4qe";
+    private $username = "$MARIADB_ADMIN_USER";
+    private $password = "$MARIADB_ADMIN_PASSWORD";
     public $conn;
 
     public function getConnection()
