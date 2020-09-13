@@ -19,16 +19,16 @@ tput cup 8  3; if lsblk -o MOUNTPOINT -n /dev/mapper/crypt$PART_TO_ENCRYPT 2>/de
 tput cup 9  3; if grep -q "Port 7822" /etc/ssh/sshd_config; then echo_green "e. Sécuriser le serveur"; else echo_red "e. Sécuriser le serveur"; fi
 tput cup 10 3; if ! dpkg -s apache2 2>&1 | grep "is not installed";	then echo_green "f. Installer le serveur web APACHE"; else echo_red "f. Installer le serveur web APACHE"; fi
 tput cup 11 3; if [ -d "/srv/www" ]; then echo_green "g. Installer l'espace d'hébergement www"; else echo_red "g. Installer l'espace d'hébergement www"; fi
-tput cup 12 3; if [ -d "/etc/php" ]; then echo_green "h. Installer PHP"; else echo_red "h. Installer PHP"; fi
-tput cup 13 3; if [ -d "/srv/databases" ]; then echo_green "i. Installer MARIADB"; else echo_red "i. Installer MARIADB"; fi
-tput cup 14 3; if [ -d "/srv/mailboxes" ]; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
+tput cup 12 3; if ! dpkg -s php 2>&1 | grep "is not installed"; then echo_green "h. Installer PHP"; else echo_red "h. Installer PHP"; fi
+tput cup 13 3; if ! dpkg -s mariadb-server 2>&1 | grep "is not installed"; then echo_green "i. Installer MARIADB"; else echo_red "i. Installer MARIADB"; fi
+tput cup 14 3; if ! dpkg -s dovecot-core 2>&1 | grep "is not installed";; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
 tput cup 15 3; if [ -d "/srv/webmail" ]; then echo_green "k. Installer le webmail ROUNDCUBE"; else echo_red "k. Installer le webmail ROUNDCUBE"; fi
 tput cup 16 3; if [ -d "/srv/cloud" ]; then echo_green "l. Installer le serveur cloud SABREDAV (WEBDAV)"; else echo_red "l. Installer le serveur cloud SABREDAV (WEBDAV)"; fi
 tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de communication"; else echo_red "m. Installer l'api de communication"; fi
 tput cup 18 3; if [ -d "/srv/shared" ]; then echo_green "n. Installer l'espace de partage de fichiers"; else echo_red "n. Installer l'espace de partage de fichiers"; fi
 tput cup 19 3; if [ -d "/srv/optimus" ]; then echo_green "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; else echo_red "o. Installer le client OPTIMUS-AVOCATS (facultatif)"; fi
 tput cup 20 3; if [[ $DOMAIN_TO_DNS == $PUBLIC_IP ]]; then echo_green "p. Configuration de la zone DNS"; else echo_red "p. Configuration de la zone DNS"; fi
-tput cup 21 3; if [ -d "/etc/letsencrypt" ]; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
+tput cup 21 3; if ! dpkg -s certbot 2>&1 | grep "is not installed"; then echo_green "q. Installer les certificats SSL"; else echo_red "q. Installer les certificats SSL"; fi
 tput cup 22 3; if [ -f "/srv/allspark-backup.sh" ]; then echo_green "r. Installer les scripts de sauvegarde"; else echo_red "r. Installer les scripts de sauvegarde"; fi
 
 tput cup 24 3; echo_green "s. Sauvegarder la configuration et les clés de chiffrement"
