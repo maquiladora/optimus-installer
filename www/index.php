@@ -14,7 +14,7 @@
       <br/>
       <a href="https://cloud.$DOMAIN" target="_blank">CLIENT WEBDAV BASIC</a>
       <br/>
-      <a href="https://optimus.$DOMAIN/modules/filexplorer" target="_blank">CLIENT WEBDAV JAVASCRIPT</a>
+      <a href="https://v4.optimus-avocats.fr/modules/filexplorer" target="_blank">CLIENT WEBDAV JAVASCRIPT</a>
       <br/>
       <a href="https://optimus.$DOMAIN" target="_blank">OPTIMUS (LOCAL)</a>
       <br/>
