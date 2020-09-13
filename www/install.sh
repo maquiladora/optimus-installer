@@ -13,6 +13,8 @@ then
   if [ ! -d "/srv/www" ]; then verbose mkdir /srv/www; fi
   envsubst '${DOMAIN}' < /etc/allspark/www/index.php > /srv/www/index.php
   envsubst '${DOMAIN}' < /etc/allspark/www/login.php > /srv/www/login.php
+  mkdir -p /srv/www/scripts
+  envsubst '${DOMAIN}' < /etc/allspark/www/scripts/api_call.js > /srv/www/scripts/api_call.js
   if [ ! -f "/etc/apache2/sites-enabled/www.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/www/vhost > /etc/apache2/sites-enabled/www.conf; fi
   chown -R www-data:www-data /srv/www
 
