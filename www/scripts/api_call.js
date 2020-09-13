@@ -10,7 +10,7 @@ function api_call(endpoint, method, data)
   var fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
   if (method != 'GET')
     fetch_options.push = {body: data};
-  return fetch(endpoint,fetch_options)
+  fetch(endpoint,fetch_options)
   .then(response => response.json())
   .then(function(response)
   {
@@ -19,10 +19,12 @@ function api_call(endpoint, method, data)
       login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
-    else
-      return response
+    else if (response.code === 200)
+      result = response;
   })
-  //.catch(error => console.log("Error : " + error));
+  .catch(error => console.log("Error : " + error));
+
+  return result;
 }
 
 function login_open(domain)
