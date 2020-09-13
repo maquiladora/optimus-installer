@@ -40,7 +40,7 @@ $status['services'][4]['version'] = get_version('dovecot-core');
 $status['services'][5]['name'] = 'SpamAssassin';
 $status['services'][5]['status'] = get_status('spamassassin');
 $status['services'][5]['version'] = get_version('spamassassin');
-$status['services'][6]['status'] = 'Spamassassin Milter';
+$status['services'][6]['name'] = 'Spamassassin Milter';
 $status['services'][6]['status'] = get_status('spamass-milter');
 $status['services'][6]['version'] = get_version('spamass-milter');
 $status['services'][7]['name'] = 'Clamav Milter';
@@ -56,6 +56,8 @@ $status['services'][10]['name'] = 'Roundcube Webmail';
 $status['services'][10]['version'] = shell_exec ("cat /srv/webmail/CHANGELOG | grep 'RELEASE' | head -1 | cut -c 9- | head -c -1");
 $status['services'][11]['name'] = 'SabreDAV';
 $status['services'][11]['version'] = shell_exec ("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1 | cut -f1 -d' ' | head -c -1");
+
+$status['cpu']['usage'] = shell_exec("top -n 1 -b | awk '/^%Cpu/{print $2}'");
 
 http_response_code(200);
 echo json_encode(array("code" => 200, "data" => $status));
