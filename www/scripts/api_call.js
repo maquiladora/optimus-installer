@@ -34,7 +34,7 @@ function login_open(domain)
   login_iframe.style.top = '0';
   login_iframe.style.width = '100%';
   login_iframe.style.height = '100%';
-  login_iframe.style.backdropFilter = 'blur(3px) opacity(0.5)';
+  login_iframe.style.backdropFilter = 'brightness(0.2) opacity(0.5)';
   login_iframe.src = "https://" + domain;
   document.body.appendChild(login_iframe);
 }
