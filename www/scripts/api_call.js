@@ -4,7 +4,7 @@ function api_call(endpoint, method, data)
     return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
 
   domain = new URL(endpoint);
-  domain = domaine.hostname.split('.');
+  domain = domain.hostname.split('.');
   domain = domain[domain.length-2] + '.' + domain[domain.length-1];
   alert(domain);
 
