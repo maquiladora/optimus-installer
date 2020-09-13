@@ -26,6 +26,7 @@
 			php_value session.gc_maxlifetime 21600
 			php_value session.gc_divisor 500
 			php_value session.gc_probability 1
+      php_admin_value open_basedir /srv/webmail/
 		</IfModule>
 
 		<IfModule mod_rewrite.c>

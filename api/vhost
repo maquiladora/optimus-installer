@@ -7,6 +7,10 @@
   ErrorLog /var/log/apache2/api-error.log
   CustomLog /var/log/apache2/api-access.log combined
 
+  <IfModule mod_php7.c>
+  php_admin_value open_basedir /srv/
+  </IfModule>
+
   <Directory /srv/api/>
     Options FollowSymLinks
     AllowOverride None

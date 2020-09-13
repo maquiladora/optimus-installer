@@ -8,6 +8,12 @@
   ErrorLog /var/log/apache2/www-error.log
   CustomLog /var/log/apache2/www-access.log combined
 
+
+  <IfModule mod_php7.c>
+  php_admin_value open_basedir /srv/www/
+  </IfModule>
+
+
   <Directory /srv/www/>
     Options FollowSymLinks
     AllowOverride None

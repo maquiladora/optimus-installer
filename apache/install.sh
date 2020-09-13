@@ -9,10 +9,13 @@ then
   echo_green "==== INSTALLATION DU SERVEUR WEB APACHE ===="
 
   echo_magenta "Installation des paquets"
-  verbose apt-get -qq install apache2
+  verbose apt-get -qq install apache2 apache2-mpm-itk
 
   echo_magenta "Activation du module rewrite"
   verbose a2enmod rewrite
+
+  echo_magenta "Activation du module mpm_itk"
+  verbose a2enmod mpm_itk
 
   echo_magenta "Ouverture du port 80 sur le firewall"
   if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw allow 80; fi

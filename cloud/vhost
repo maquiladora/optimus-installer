@@ -19,6 +19,10 @@
   php_value post_max_size 4G
   php_value memory_limit 512M
 
+  <IfModule mod_php7.c>
+  php_admin_value open_basedir /srv/cloud/
+  </IfModule>
+
   <Directory /srv/cloud/>
     Options FollowSymLinks
     AllowOverride None
