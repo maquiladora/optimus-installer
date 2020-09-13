@@ -1,4 +1,4 @@
-async function api_call(endpoint, method, data)
+function api_call(endpoint, method, data)
 {
   if (typeof login_iframe === 'object')
     return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
@@ -20,7 +20,7 @@ async function api_call(endpoint, method, data)
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
     else if (response.code === 200)
-      result = response;
+      result = resolve(response);
   })
   .catch(error => console.log("Error : " + error));
 
