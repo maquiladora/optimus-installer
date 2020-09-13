@@ -11,13 +11,6 @@ function api_call(endpoint, method, data)
   if (method != 'GET')
     fetch_options.push = {body: data};
   return fetch(endpoint,fetch_options)
-  .then(function(response)
-  {
-    if (response.ok)
-      console.log(response);
-    else
-      console.log(response.status + ':' + response.statusText);
-  })
   .then(response => response.json())
   .then(function(response)
   {
@@ -26,6 +19,8 @@ function api_call(endpoint, method, data)
       login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
+    else
+      console.log(response);
   })
   .catch(error => console.log("Error : " + error));
 }
