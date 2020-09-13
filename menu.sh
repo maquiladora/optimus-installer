@@ -21,7 +21,7 @@ tput cup 10 3; if ! dpkg -s apache2 2>&1 | grep "is not installed";	then echo_gr
 tput cup 11 3; if [ -d "/srv/www" ]; then echo_green "g. Installer l'espace d'hébergement www"; else echo_red "g. Installer l'espace d'hébergement www"; fi
 tput cup 12 3; if ! dpkg -s php 2>&1 | grep "is not installed"; then echo_green "h. Installer PHP"; else echo_red "h. Installer PHP"; fi
 tput cup 13 3; if ! dpkg -s mariadb-server 2>&1 | grep "is not installed"; then echo_green "i. Installer MARIADB"; else echo_red "i. Installer MARIADB"; fi
-tput cup 14 3; if ! dpkg -s dovecot-core 2>&1 | grep "is not installed";; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
+tput cup 14 3; if ! dpkg -s dovecot-core 2>&1 | grep "is not installed"; then echo_green "j. Installer le serveur mail"; else echo_red "j. Installer le serveur mail"; fi
 tput cup 15 3; if [ -d "/srv/webmail" ]; then echo_green "k. Installer le webmail ROUNDCUBE"; else echo_red "k. Installer le webmail ROUNDCUBE"; fi
 tput cup 16 3; if [ -d "/srv/cloud" ]; then echo_green "l. Installer le serveur cloud SABREDAV (WEBDAV)"; else echo_red "l. Installer le serveur cloud SABREDAV (WEBDAV)"; fi
 tput cup 17 3; if [ -d "/srv/api" ]; then echo_green "m. Installer l'api de communication"; else echo_red "m. Installer l'api de communication"; fi
