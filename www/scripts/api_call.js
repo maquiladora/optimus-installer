@@ -3,7 +3,7 @@ function api_call(endpoint, method, data)
   if (typeof login_iframe === 'object')
     return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
 
-  domain = domain.split('.');
+  domain = endpoint.split('.');
   domain = domain[domain.length-2] + '.' + domain[domain.length-1];
   alert(domain);
 
