@@ -1,4 +1,4 @@
-function api_call(endpoint, method, data)
+async function api_call(endpoint, method, data)
 {
   if (typeof login_iframe === 'object')
     return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
