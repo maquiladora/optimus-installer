@@ -22,7 +22,7 @@ function api_call(endpoint, method, data)
     else
       console.log(response);
   })
-  .catch(error => console.log("Error : " + error));
+  //.catch(error => console.log("Error : " + error));
 }
 
 function login_open(domain)
