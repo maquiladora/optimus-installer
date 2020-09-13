@@ -20,11 +20,9 @@ function api_call(endpoint, method, data)
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
     else if (response.code === 200)
-      result = resolve(response);
+      return response;
   })
   .catch(error => console.log("Error : " + error));
-
-  return result;
 }
 
 function login_open(domain)
