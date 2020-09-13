@@ -27,18 +27,6 @@ function api_call(endpoint, method, data)
 
 function login_open(domain)
 {
-  curtain = document.createElement('div');
-  curtain.style.position = 'fixed';
-  curtain.style.left = '0';
-  curtain.style.top = '0';
-  curtain.style.width = '100%';
-  curtain.style.height = '100%';
-  curtain.style.opacity = '0.5';
-  curtain.style.background = '#000000';
-  document.body.appendChild(curtain);
-
-  document.body.style.filter = 'blur(3px)';
-
   login_iframe = document.createElement('iframe');
   login_iframe.style.position = 'fixed';
   login_iframe.style.left = '0';
@@ -46,6 +34,7 @@ function login_open(domain)
   login_iframe.style.width = '100%';
   login_iframe.style.height = '100%';
   login_iframe.frameBorder=0;
+  login_iframe.style.backdropFilter = 'blur(3px)';
   login_iframe.src = "https://" + domain;
   document.body.appendChild(login_iframe);
 }
@@ -54,8 +43,6 @@ function login_close()
 {
   login_iframe.parentNode.removeChild(login_iframe);
   login_iframe = undefined;
-  document.body.removeChild(curtain);
-  document.getElementById('container').style.filter = 'blur(0px)';
 }
 
 var messageEventHandler = function(event)
