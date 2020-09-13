@@ -14,7 +14,7 @@ function api_call(endpoint, method, data)
   .then(function(response)
   {
     if (response.ok)
-      return response.json();
+      console.log(response);
     else
       console.log(response.status + ':' + response.statusText);
   })
