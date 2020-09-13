@@ -17,11 +17,11 @@ function api_call(endpoint, method, data)
   {
     if (response.message == 'Access denied' && response.error == 'No Token')
     {
-      login_open('$DOMAIN');
+      login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
     else
-      return JSON.stringify(response);
+      alert(response);
   })
   .catch(error => console.log("Error : " + error));
 }
