@@ -14,12 +14,12 @@ function api_call(endpoint, method, data)
   var fetch_response = fetch(endpoint,fetch_options)
   .then(function(response)
   {
-    if (response.json().message == 'Access denied' && response.json().error == 'No Token')
+    if (response.ok && response.json().message == 'Access denied' && response.json().error == 'No Token')
     {
       login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
-    else
+    else if (response.ok)
       return response.json();
   })
   .catch(error => console.log("Error : " + error));
