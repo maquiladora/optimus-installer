@@ -11,20 +11,26 @@ function api_call(endpoint, method, data)
   if (method != 'GET')
     fetch_options.push = {body: data};
 
-  var fetch_response = fetch(endpoint,fetch_options)
-  .then(function(response)
+  try
   {
-    if (response.ok && response.json().message == 'Access denied' && response.json().error == 'No Token')
-    {
-      login_open(domain);
-      return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
-    }
-    else if (response.ok)
-      return response.json();
-  })
-  .catch(error => console.log("Error : " + error));
+    let fetch_response = await fetch(endpoint,fetch_options);
+  }
+  catch (error)
+  {
+    console.log("Error : " + error)
+  }
 
-  return fetch_response;
+  return fetch_response.json());
+
+  //if (response.ok && response.json().message == 'Access denied' && response.json().error == 'No Token')
+  //{
+    //login_open(domain);
+    //return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
+  //}
+  //else if (response.ok)
+    //return response.json();
+
+  //return fetch_response;
 }
 
 function login_open(domain)
