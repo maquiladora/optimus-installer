@@ -58,6 +58,7 @@ $status['services'][11]['name'] = 'SabreDAV';
 $status['services'][11]['version'] = shell_exec ("cat /srv/cloud/vendor/sabre/dav/CHANGELOG.md | head -4 | tail -1 | cut -f1 -d' ' | head -c -1");
 
 $status['cpu']['usage'] = shell_exec("top -n 1 -b | awk '/^%Cpu/{print $2}'");
+$status['cpu']['usage'] = '24%';
 
 http_response_code(200);
 echo json_encode(array("code" => 200, "data" => $status));
