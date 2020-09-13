@@ -19,7 +19,7 @@ function api_call(endpoint, method, data)
       login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
-    else
+    else if (response.ok)
       json = response;
   })
   .catch(error => console.log("Error : " + error));
