@@ -35,8 +35,8 @@ function login_open(domain)
   curtain.style.height = '100%';
   curtain.style.opacity = '0.5';
   curtain.style.background = '#000000';
+  curtain.style.filter = 'blur(3px)';
   document.body.appendChild(curtain);
-  document.getElementById('container').style.filter = 'blur(3px)';
   login_iframe = document.createElement('iframe');
   login_iframe.style.position = 'fixed';
   login_iframe.style.left = '0';
