@@ -16,7 +16,7 @@ function api_call(endpoint, method, data)
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
     else
-      return response;
+      return JSON.stringify(response);
   })
   .catch(error => console.log("Error : " + error));
 }
