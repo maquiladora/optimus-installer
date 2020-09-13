@@ -20,7 +20,7 @@ function api_call(endpoint, method, data)
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
     }
     else
-      return JSON.stringify(response);
+      return response.json();
   })
   .catch(error => console.log("Error : " + error));
 
