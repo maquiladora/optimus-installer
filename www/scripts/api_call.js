@@ -1,26 +1,29 @@
-function api_call(endpoint, method, data)
+function api_call(endpoint, method, data, return_function)
 {
   if (typeof login_iframe === 'object')
-    return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
+    return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "', '" + return_function + "')",500);
 
   domain = new URL(endpoint);
   domain = domain.hostname.split('.');
   domain = domain[domain.length-2] + '.' + domain[domain.length-1];
 
-  var fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
+  fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
   if (method != 'GET')
     fetch_options.push = {body: data};
+
   fetch(endpoint,fetch_options)
   .then(response => response.json())
   .then(function(response)
   {
-    if (response.message == 'Access denied' && response.error == 'No Token')
+    if (response.code === 401 && response.message == 'Access denied' && response.error == 'No Token')
     {
       login_open(domain);
-      return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
+      setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "', '" + return_function + "')",500);
+      return false;
     }
-    else if (response.code === 200)
-      return response;
+    if (window[return_function])
+      window[return_function](response);
+    return true;
   })
   .catch(error => console.log("Error : " + error));
 }
