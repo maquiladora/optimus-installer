@@ -10,11 +10,11 @@ function api_call(endpoint, method, data)
   var fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
   if (method != 'GET')
     fetch_options.push = {body: data};
+
   var fetch_response = fetch(endpoint,fetch_options)
-  .then(response => response.json())
   .then(function(response)
   {
-    if (response.message == 'Access denied' && response.error == 'No Token')
+    if (response.json().message == 'Access denied' && response.json().error == 'No Token')
     {
       login_open(domain);
       return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
