@@ -28,12 +28,14 @@ function api_call(endpoint, method, data)
 function login_open(domain)
 {
   login_iframe = document.createElement('iframe');
+  login_iframe.frameBorder=0;
   login_iframe.style.position = 'fixed';
   login_iframe.style.left = '0';
   login_iframe.style.top = '0';
   login_iframe.style.width = '100%';
   login_iframe.style.height = '100%';
-  login_iframe.frameBorder=0;
+  login_iframe.style.background = '#404040';
+  login_iframe.style.opacity = '0.5';
   login_iframe.style.backdropFilter = 'blur(3px)';
   login_iframe.src = "https://" + domain;
   document.body.appendChild(login_iframe);
