@@ -19,7 +19,7 @@ then
 
   echo_magenta "Installation du module SABREDAV ALLSPARK"
   cp /etc/allspark/cloud/composer.json /srv/cloud/composer.json
-  cp /etc/allspark/cloud/JWT.php /srv/cloud/JWT.php
+  cp /etc/allspark/api/JWT.php /srv/cloud/JWT.php
   cp -R /etc/allspark/cloud/allspark /srv/cloud/allspark
   envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/PDO.php > /srv/cloud/allspark/DAV/Auth/Backend/PDO.php
   envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/cloud/allspark/DAV/Auth/Backend/JWTCookie.php > /srv/cloud/allspark/DAV/Auth/Backend/JWTCookie.php
