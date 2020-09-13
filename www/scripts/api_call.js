@@ -2,13 +2,11 @@ function api_call(endpoint, method, data)
 {
   if (typeof login_iframe === 'object')
     return setTimeout("api_call('" + endpoint + "', '" + method + "', '" + data + "')",500);
-  fetch(endpoint,
-  {
-    headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-    method: method,
-    credentials: "include",
-    body: data
-  })
+
+  var fetch_options = {headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, method: method, credentials: "include"};
+  if (method == 'GET')
+    fetch_options.push = {body: data};
+  fetch(endpoint,fetch_options)
   .then(response => response.json())
   .then(function(response)
   {
