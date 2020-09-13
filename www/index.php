@@ -6,11 +6,17 @@
 <html>
   <body>
 
-      <input type="button" style="position:fixed;top:5px;right:5px" value="logout" onclick="logout()"/>
-      <a href="https://webmail.demoptimus.fr" target="_blank">WEBMAIL ROUNDCUBE</a>
-      <br/>
-      <a href="https://cloud.demoptimus.fr" target="_blank">CLIENT WEBDAV HTTP</a>
+    <div id="container" style="height:80vh;display:flex;justify-content:center;align-items:center;flex-direction:column">
 
+      <input type="button" style="position:fixed;top:5px;right:5px" value="logout" onclick="logout()"/>
+
+      <a href="https://webmail.$DOMAIN" target="_blank">WEBMAIL ROUNDCUBE</a>
+      <a href="https://cloud.$DOMAIN" target="_blank">CLIENT WEBDAV BASIC</a>
+      <a href="https://optimus.$DOMAIN/modules/filexplorer" target="_blank">CLIENT WEBDAV JAVASCRIPT</a>
+      <a href="https://optimus.$DOMAIN" target="_blank">OPTIMUS (LOCAL)</a>
+      <a href="https://v4.optimus-avocats.fr" target="_blank">>OPTIMUS (DISTANT)</a>
+
+    </div>
 
   </body>
 
