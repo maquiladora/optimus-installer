@@ -11,5 +11,5 @@ include_once 'config.php';
 $cookie_options = array ('expires' => time() - 3600, 'path' => '/', 'domain' => $domain, 'secure' => true, 'httponly' => true, 'samesite' => 'None');
 setcookie('token', '', $cookie_options);
 http_response_code(200);
-echo json_encode(array("message" => "Cookie removed"));
+echo json_encode(array("code" => 200, "message" => "Cookie removed"));
 ?>

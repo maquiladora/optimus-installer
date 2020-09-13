@@ -23,16 +23,16 @@ use allspark\JWT\JWT;
 
 if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) == base64_encode($user->password))
 {
-    http_response_code(200);
     $jwt = new JWT($sha_key, 'HS512', 3600, 10);
     $token = $jwt->encode(["user" => array("id" => $user->id, "email" => $user->email), "aud" => "http://$domain", "scopes" => ['user'], "iss" => "http://$domain"]);
     $cookie_options = array ('expires' => time() + 3600, 'path' => '/', 'domain' => $domain, 'secure' => true, 'httponly' => true, 'samesite' => 'None');
     setcookie('token', $token, $cookie_options);
-    echo json_encode(array("message" => "Successful login"));
+    http_response_code(200);
+    echo json_encode(array("code" => 200, "message" => "Successful login"));
 }
 else
 {
    http_response_code(401);
-   echo json_encode(array("message" => "Login failed"));
+   echo json_encode(array("code" => 401, "message" => "Login failed"));
 }
 ?>

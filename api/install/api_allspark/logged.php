@@ -7,4 +7,7 @@ header("Access-Control-Max-Age: 5");
 if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'auth.php';
+
+http_response_code(200)
+echo json_encode(array("code" => 200, "message" => "Successful login"));
 ?>
