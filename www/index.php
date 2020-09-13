@@ -18,7 +18,7 @@
       <br/>
       <a href="https://optimus.$DOMAIN" target="_blank">OPTIMUS (LOCAL)</a>
       <br/>
-      <a href="https://v4.optimus-avocats.fr" target="_blank">>OPTIMUS (DISTANT)</a>
+      <a href="https://v4.optimus-avocats.fr" target="_blank">OPTIMUS (DISTANT)</a>
 
     </div>
 
