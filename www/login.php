@@ -1,7 +1,7 @@
 <html>
 
   <body>
-    <div style="height:100vh;display:flex;justify-content:center;align-items:center;flex-direction:column">
+    <div style="height:80vh;display:flex;justify-content:center;align-items:center;flex-direction:column">
       <?='$DOMAIN'?><br/><br>
       <label for="email">Email :</label>
       <input id="email" type="text" onkeypress="if (event.keyCode === 13) login()"/>
