@@ -43,7 +43,7 @@ function login_open(domain)
   login_iframe.style.height = '100%';
   login_iframe.frameBorder=0;
   login_iframe.src = "https://" + domain;
-  document.body.appendChild(iframe);
+  document.body.appendChild(login_iframe);
 }
 
 function login_close()
