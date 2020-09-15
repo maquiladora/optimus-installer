@@ -283,6 +283,8 @@ case "$y" in
     update_conf MARIADB_ADMIN_USER "prime@$DOMAIN"
     update_conf MARIADB_ADMIN_PASSWORD auto
     update_conf MARIADB_REMOTE_ROOT_PASSWORD auto
+    update_conf OPTIMUS_MARIADB_USER "optimus"
+    update_conf OPTIMUS_MARIADB_PASSWORD auto
     update_conf CLOUD_MARIADB_USER cloud
     update_conf CLOUD_MARIADB_PASSWORD auto
     update_conf MAILSERVER_MARIADB_USER mailboxes
