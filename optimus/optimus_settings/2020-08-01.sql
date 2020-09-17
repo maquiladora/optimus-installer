@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `apps` (
   `module` varchar(16) NOT NULL,
   `app` varchar(16) NOT NULL,
   `link` varchar(255) NOT NULL,
-  `position` smallint(6) NOT NULL,
+  `position` smallint(6) unsigned NOT NULL,
   PRIMARY KEY (`module`,`app`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 INSERT INTO `apps` VALUES ('user','dossiers','modules/dossiers/index.php',100);

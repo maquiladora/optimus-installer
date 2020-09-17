@@ -78,7 +78,7 @@ then
   echo_magenta "Modification de la configuration du plugin ALLSPARK_AUTOLOGIN"
   mkdir -p /srv/webmail/plugins/allspark_autologin
   envsubst '${AES_KEY} ${API_SHA_KEY}' < /etc/allspark/webmail/allspark_autologin/allspark_autologin.php > /srv/webmail/plugins/allspark_autologin/allspark_autologin.php
-  cp /etc/allspark/api/JWT.php /srv/webmail/plugins/allspark_autologin/JWT.php
+  cp /etc/allspark/api/install/JWT.php /srv/webmail/plugins/allspark_autologin/JWT.php
 
   echo_magenta "Creation des bases de données ROUNDCUBE"
   verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS roundcube CHARACTER SET utf8 COLLATE utf8_general_ci;"

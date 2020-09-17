@@ -9,7 +9,7 @@ then
   echo_green "==== INSTALLATION DU SERVEUR WEB APACHE ===="
 
   echo_magenta "Installation des paquets"
-  verbose apt-get -qq install apache2 apache2-mpm-itk
+  verbose apt-get -qq install apache2
 
   echo_magenta "Activation du module rewrite"
   verbose a2enmod rewrite
