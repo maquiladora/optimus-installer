@@ -32,7 +32,7 @@ then
   for file in /etc/allspark/optimus/optimus_settings/*.sql
   do
     file="${file:39:-4}"
-    if [[ $file > $MARIADB_DB_VERSION ]]
+    if [[ $file > $OPTIMUS_DB_VERSION ]]
     then
       echo_magenta "--> $file.sql exécuté"
       mariadb < /etc/allspark/optimus/optimus_settings/$file.sql
@@ -49,7 +49,7 @@ then
   for file in /etc/allspark/optimus/optimus_user/*.sql
   do
     file="${file:35:-4}"
-    if [[ $file > $MARIADB_DB_VERSION ]]
+    if [[ $file > $OPTIMUS_DB_CLIENT_VERSION ]]
     then
       echo_magenta "--> $file.sql exécuté"
       mariadb < /etc/allspark/optimus/optimus_user/$file.sql
@@ -66,7 +66,7 @@ then
   for file in /etc/allspark/optimus/optimus_structure/*.sql
   do
     file="${file:40:-4}"
-    if [[ $file > $MARIADB_DB_VERSION ]]
+    if [[ $file > $OPTIMUS_DB_STRUCTURE_VERSION ]]
     then
       echo_magenta "--> $file.sql exécuté"
       mariadb < /etc/allspark/optimus/optimus_structure/$file.sql
