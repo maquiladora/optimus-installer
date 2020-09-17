@@ -45,7 +45,7 @@ then
   done
 
   echo_magenta "Creation de l'utilisateur 'admin'"
-  verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('1', '1', '$MARIADB_ADMIN_USER', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'), '$(date +"%F %T")', null, null, null);"
+  verbose mariadb -u root -e "INSERT IGNORE INTO users.users VALUES ('1', '1', '$MARIADB_ADMIN_USER', AES_ENCRYPT('$MARIADB_ADMIN_PASSWORD','$AES_KEY'));"
   verbose mariadb -u root -e "ALTER TABLE users.users AUTO_INCREMENT = 9;"
 
 

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `bilans` (
 
 
 CREATE TABLE IF NOT EXISTS `compta_affectations` (
-  `id` int(11) NOT NULL,
+  `id` int(11) unsigned NOT NULL,
   `regle` int(11) DEFAULT NULL,
   `poste` varchar(255) DEFAULT NULL,
   `modifier` varchar(32) DEFAULT NULL,
@@ -34,7 +34,7 @@ INSERT INTO `compta_affectations` VALUES (15,10,'64630000','now','EPARGNE RETRAI
 
 
 CREATE TABLE IF NOT EXISTS `compta_comptes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `banque` varchar(255) DEFAULT NULL,
   `code_banque` char(5) DEFAULT NULL,
   `code_agence` char(5) DEFAULT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `compta_comptes` (
 
 
 CREATE TABLE IF NOT EXISTS `compta_depenses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `operation` int(11) NOT NULL DEFAULT 0,
   `date` date DEFAULT NULL,
   `montant` decimal(10,2) NOT NULL DEFAULT 0.00,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `compta_depenses` (
 
 
 CREATE TABLE IF NOT EXISTS `compta_operations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `date` date DEFAULT NULL,
   `montant` decimal(10,2) DEFAULT 0.00,
   `description` varchar(255) DEFAULT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `compta_plan` (
   `id` varchar(8) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
-  `pcg` tinyint(1) NOT NULL DEFAULT 0,
+  `case2035` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 INSERT INTO `compta_plan` VALUES ('00000000','Opérations en cours d\'affectation','Toutes les opérations dont le numéro de compte n\'a pas encore été renseigné',0);
@@ -214,7 +214,7 @@ INSERT INTO `compta_plan` VALUES ('64700000','Tickets Restaurants','Tickets Rest
 
 
 CREATE TABLE IF NOT EXISTS `compta_recettes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `operation` int(11) NOT NULL,
   `facture` int(11) NOT NULL,
   `date` date DEFAULT NULL,
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `compta_recettes` (
 
 
 CREATE TABLE IF NOT EXISTS `compta_regles` (
-  `id` tinyint(4) NOT NULL,
+  `id` tinyint(4) unsigned NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `libelle_valeur` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -242,15 +242,16 @@ INSERT INTO `compta_regles` VALUES (10,'Epargne Retraite','ADIS');
 
 
 CREATE TABLE IF NOT EXISTS `factures` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `numero` varchar(255) DEFAULT NULL,
-  `client` int(11) NOT NULL DEFAULT 0,
-  `dossier` int(11) NOT NULL DEFAULT 0,
-  `intervention` int(11) NOT NULL DEFAULT 0,
+  `db` varchar(16) NOT NULL DEFAULT 'vest',
+  `client` int(11) unsigned NOT NULL DEFAULT 0,
+  `dossier` int(11) unsigned NOT NULL DEFAULT 0,
+  `intervention` int(11) unsigned NOT NULL DEFAULT 0,
   `date` date DEFAULT NULL,
-  `language` tinyint(4) NOT NULL DEFAULT 2,
-  `template` tinyint(4) NOT NULL DEFAULT 1,
-  `tva` tinyint(4) NOT NULL DEFAULT 6,
+  `language` tinyint(4) unsigned NOT NULL DEFAULT 2,
+  `template` tinyint(4) unsigned NOT NULL DEFAULT 1,
+  `tva` tinyint(4) unsigned NOT NULL DEFAULT 6,
   `amount` decimal(10,2) NOT NULL DEFAULT 0.00,
   `provision` tinyint(1) NOT NULL DEFAULT 0,
   `reminder1` date DEFAULT NULL,
@@ -259,73 +260,33 @@ CREATE TABLE IF NOT EXISTS `factures` (
   `reminder4` date DEFAULT NULL,
   `reminder5` date DEFAULT NULL,
   `notes` text DEFAULT NULL,
-  `db` varchar(16) NOT NULL DEFAULT 'vest',
   `irrecouvrable` tinyint(1) NOT NULL DEFAULT 0,
   `total` decimal(10,2) NOT NULL DEFAULT 0.00,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE IF NOT EXISTS `factures_paiements` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `facture` int(11) NOT NULL DEFAULT 0,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `facture` int(11) unsigned NOT NULL DEFAULT 0,
   `date` date DEFAULT NULL,
   `amount` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `payment_method` tinyint(4) NOT NULL DEFAULT 0,
+  `payment_method` tinyint(4) unsigned NOT NULL DEFAULT 0,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE IF NOT EXISTS `factures_templates` (
-  `id` tinyint(11) NOT NULL AUTO_INCREMENT,
+  `id` tinyint(11) unsigned NOT NULL AUTO_INCREMENT,
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 INSERT INTO `factures_templates` VALUES (1,'DEFAUT');
 
 
-CREATE DATABASE IF NOT EXISTS `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `status` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `type` smallint(6) unsigned NOT NULL DEFAULT 10,
-  `firstname` varchar(32) DEFAULT NULL,
-  `lastname` varchar(32) DEFAULT NULL,
-  `email` varchar(64) DEFAULT NULL,
-  `initials` varchar(3) NOT NULL DEFAULT 'XXX',
-  `color` varchar(6) DEFAULT NULL,
-  `db` varchar(16) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE IF NOT EXISTS `infos` (
+  `id` varchar(32) NOT NULL DEFAULT '',
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-
-
-CREATE DATABASE IF NOT EXISTS `users_rights` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user` tinyint(4) unsigned NOT NULL DEFAULT 0,
-  `db` varchar(16) NOT NULL DEFAULT '',
-  `app` varchar(16) NOT NULL DEFAULT '',
-  `write_access` tinyint(1) NOT NULL DEFAULT 0,
-  `settings` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-
-
-CREATE DATABASE IF NOT EXISTS `users_structures` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user` int(11) DEFAULT NULL,
-  `structure` varchar(16) DEFAULT NULL,
-  `entree` date DEFAULT NULL,
-  `sortie` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-
-
-CREATE DATABASE IF NOT EXISTS `users_types` (
-  `id` tinyint(4) NOT NULL DEFAULT 0,
-  `value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `users_types` VALUES (0,'Admin');
-INSERT INTO `users_types` VALUES (10,'Associé');
-INSERT INTO `users_types` VALUES (20,'Collaborateur');
-INSERT INTO `users_types` VALUES (100,'Client');

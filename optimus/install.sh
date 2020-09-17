@@ -24,24 +24,57 @@ then
 
   echo_magenta "Creation de l'utilisateur MARIADB"
   verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus.* TO '$OPTIMUS_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$OPTIMUS_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES;"
 
-  echo_magenta "Creation des bases de données 'optimus'"
-  verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS optimus CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
-  echo_magenta "Installation de la base de données 'users'"
-  for file in /etc/allspark/optimus/*.sql
+  echo_magenta "Installation de la base de données 'optimus_settings'"
+  for file in /etc/allspark/optimus/optimus_settings/*.sql
   do
-    file="${file:22:-4}"
+    file="${file:39:-4}"
     if [[ $file > $MARIADB_DB_VERSION ]]
     then
       echo_magenta "--> $file.sql exécuté"
-      mariadb < /etc/allspark/optimus/$file.sql
+      mariadb < /etc/allspark/optimus/optimus_settings/$file.sql
       update_conf OPTIMUS_DB_VERSION $file
     else
       echo_magenta "--> $file.sql ignoré"
     fi
   done
+
+
+  echo_magenta "Installation de la base de données 'optimus_user_1'"
+  verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS optimus_user_1 CHARACTER SET utf8 COLLATE utf8_general_ci;"
+  verbose mariadb -u root -e "USE optimus_user_1;"
+  for file in /etc/allspark/optimus/optimus_user/*.sql
+  do
+    file="${file:35:-4}"
+    if [[ $file > $MARIADB_DB_VERSION ]]
+    then
+      echo_magenta "--> $file.sql exécuté"
+      mariadb < /etc/allspark/optimus/optimus_user/$file.sql
+    else
+      echo_magenta "--> $file.sql ignoré"
+    fi
+  done
+  verbose mariadb -u root -e "INSERT INTO optimus_user_1.structures VALUES ('1','1','$DOMAIN','2020-01-01','');"
+
+
+  echo_magenta "Installation de la base de données 'optimus_structure_1'"
+  verbose mariadb -u root -e "CREATE DATABASE IF NOT EXISTS optimus_user_1 CHARACTER SET utf8 COLLATE utf8_general_ci;"
+  verbose mariadb -u root -e "USE optimus_structure_1;"
+  for file in /etc/allspark/optimus/optimus_structure/*.sql
+  do
+    file="${file:40:-4}"
+    if [[ $file > $MARIADB_DB_VERSION ]]
+    then
+      echo_magenta "--> $file.sql exécuté"
+      mariadb < /etc/allspark/optimus/optimus_structure/$file.sql
+    else
+      echo_magenta "--> $file.sql ignoré"
+    fi
+  done
+
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2
