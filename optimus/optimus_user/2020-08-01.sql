@@ -151,11 +151,11 @@ CREATE TABLE IF NOT EXISTS `infos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
 
-CREATE DATABASE IF NOT EXISTS `structures` (
+CREATE TABLE IF NOT EXISTS `structures` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `structure` int(11) unsigned DEFAULT NULL,
   `server` varchar(128) DEFAULT NULL,
   `entree` date DEFAULT NULL,
   `sortie` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
