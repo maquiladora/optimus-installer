@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `optimus_user_1` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `optimus_user_1`;
+
 CREATE TABLE IF NOT EXISTS `agendas` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `nom` varchar(32) DEFAULT NULL,

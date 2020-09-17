@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `optimus_structure_1` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `optimus_structure_1`;
+
 CREATE TABLE IF NOT EXISTS `bilans` (
   `id` varchar(2) NOT NULL,
   `exercice` year(4) NOT NULL,
