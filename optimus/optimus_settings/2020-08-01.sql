@@ -442,7 +442,6 @@ CREATE TABLE IF NOT EXISTS `contacts_types` (
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_types` VALUES (0,'');
 INSERT INTO `contacts_types` VALUES (10,'Homme');
 INSERT INTO `contacts_types` VALUES (20,'Femme');
 INSERT INTO `contacts_types` VALUES (30,'Personne Morale');
@@ -465,7 +464,6 @@ CREATE TABLE IF NOT EXISTS `countries` (
   `canvas` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `countries` VALUES (0,'','','',0,'','','',0,0,0,0,0,NULL);
 INSERT INTO `countries` VALUES (1,'Afghanistan','Asia','Southern and Central Asia',4,'AF','AFG','af',0,1,0,0,0,'[[6390,2329],[6416,2300],[6416,2283],[6390,2278],[6382,2227],[6403,2151],[6437,2164],[6526,2087],[6548,2096],[6582,2100],[6624,2100],[6667,2057],[6679,2062],[6679,2074],[6688,2074],[6684,2100],[6692,2117],[6726,2096],[6764,2091],[6781,2100],[6773,2104],[6756,2113],[6726,2108],[6692,2121],[6679,2134],[6692,2164],[6671,2185],[6675,2193],[6667,2202],[6641,2202],[6654,2223],[6633,2232],[6624,2266],[6611,2274],[6594,2270],[6560,2287],[6543,2295],[6543,2325],[6480,2342],[6433,2342]]');
 INSERT INTO `countries` VALUES (2,'Aland Islands','Europe','Nordic Countries',248,'AX','ALA','ax',0,0,0,0,0,'[[5251,1256],[5236,1262],[5256,1273]]');
 INSERT INTO `countries` VALUES (3,'Albania','Europe','Southern Europe',8,'AL','ALB','al',0,1,0,0,0,'[[5251,1921],[5268,1943],[5264,1968],[5276,1981],[5276,1989],[5255,2023],[5234,1998],[5238,1947],[5230,1947]]');
@@ -776,7 +774,6 @@ CREATE TABLE IF NOT EXISTS `dossiers_domaines` (
   `value` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `dossiers_domaines` VALUES (0,'Non renseigné');
 INSERT INTO `dossiers_domaines` VALUES (10,'Droit des Personnes');
 INSERT INTO `dossiers_domaines` VALUES (20,'Droit Pénal');
 INSERT INTO `dossiers_domaines` VALUES (30,'Droit Immobilier');
