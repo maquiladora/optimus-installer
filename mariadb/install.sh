@@ -56,7 +56,7 @@ then
     sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     verbose mariadb -u root -e "GRANT ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
   else
-    echo_magenta "Désactication de la connexion à distance sur le port 3306 pour l'utilisateur root"
+    echo_magenta "Désactivation de la connexion à distance sur le port 3306 pour l'utilisateur root"
     if [ $(which /sbin/ufw) ]; then verbose /sbin/ufw deny 3306; fi
     sed -i 's/0.0.0.0/127.0.0.1/g' /etc/mysql/mariadb.conf.d/50-server.cnf
     verbose mariadb -u root -e "DENY ALL ON *.* to 'root'@'%' IDENTIFIED BY '$MARIADB_REMOTE_ROOT_PASSWORD' WITH GRANT OPTION;"
