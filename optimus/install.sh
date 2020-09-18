@@ -57,7 +57,7 @@ then
       echo_magenta "--> $file.sql ignoré"
     fi
   done
-  verbose mariadb -u root -e "INSERT INTO optimus_user_1.structures VALUES ('1','1','$DOMAIN','2020-01-01',NULL);"
+  verbose mariadb -u root -e "INSERT IGNORE INTO optimus_user_1.structures VALUES ('1','1','$DOMAIN','2020-01-01',NULL);"
 
 
   echo_magenta "Installation de la base de données 'optimus_structure_1'"
