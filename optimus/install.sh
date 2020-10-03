@@ -4,6 +4,8 @@ if [ -z $DOMAIN ]; then require DOMAIN string "Veuillez indiquer votre nom de do
 if [ -z $MODULE_OPTIMUS ]; then require MODULE_OPTIMUS yesno "Voulez-vous installer le client OPTIMUS ?"; source /root/.allspark; fi
 if [ -z $OPTIMUS_MARIADB_USER ]; then require OPTIMUS_MARIADB_USER string "Veuillez renseigner le nom de l'administrateur MARIADB pour OPTIMUS :"; source /root/.allspark; fi
 if [ -z $OPTIMUS_MARIADB_PASSWORD ] || [ $OPTIMUS_MARIADB_PASSWORD = "auto" ]; then require OPTIMUS_MARIADB_PASSWORD password "Veuillez renseigner le mot de passe de l'administrateur MARIADB pour OPTIMUS :"; source /root/.allspark; fi
+if [ -z $AES_KEY ] || [ $AES_KEY = "auto" ]; then require AES_KEY aeskey "Veuillez renseigner une clé de chiffrement AES de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
+if [ -z $API_SHA_KEY ] || [ $API_SHA_KEY = "auto" ]; then require API_SHA_KEY aeskey "Veuillez renseigner une clé de chiffrement SHA de 16 caractères [A-Za-z0-9]"; source /root/.allspark; fi
 
 source /root/.allspark
 
@@ -27,10 +29,12 @@ then
 
   echo_magenta "Installation du client OPTIMUS"
   git clone https://github.com/MetallianFR68/optimus-avocats /srv/optimus
-  envsubst '${AES_KEY} ${DOMAIN} ${OPTIMUS_MARIADB_USER} ${OPTIMUS_MARIADB_PASSWORD}' < /etc/allspark/optimus/config.custom.php > /srv/optimus/config.custom.php
+  envsubst '${AES_KEY} ${SHA_KEY} ${DOMAIN} ${OPTIMUS_MARIADB_USER} ${OPTIMUS_MARIADB_PASSWORD}' < /etc/allspark/optimus/config.custom.php > /srv/optimus/config.custom.php
 
   echo_magenta "Creation de l'utilisateur MARIADB"
-  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus.* TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus_user_1.* TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus_structure_1.* TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus_settings.* TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES;"
 
