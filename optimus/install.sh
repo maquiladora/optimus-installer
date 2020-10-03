@@ -30,8 +30,8 @@ then
   envsubst '${AES_KEY} ${DOMAIN} ${OPTIMUS_MARIADB_USER} ${OPTIMUS_MARIADB_PASSWORD}' < /etc/allspark/optimus/config.custom.php > /srv/optimus/config.custom.php
 
   echo_magenta "Creation de l'utilisateur MARIADB"
-  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus.* TO '$OPTIMUS_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
-  verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$OPTIMUS_MARIADB_USER'@'127.0.0.1' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT, INSERT, UPDATE, DELETE ON optimus.* TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
+  verbose mariadb -u root -e "GRANT SELECT ON users.users TO '$OPTIMUS_MARIADB_USER'@'localhost' IDENTIFIED BY '$OPTIMUS_MARIADB_PASSWORD';"
   verbose mariadb -u root -e "FLUSH PRIVILEGES;"
 
 
