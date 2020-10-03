@@ -13,9 +13,16 @@ then
   echo
   echo_green "==== INSTALLATION D'OPTIMUS AVOCATS ===="
 
+  #if [ ! -f "/srv/optimus/config.custom.php" ]
+  #then
+    #echo_magenta "Sauvegarde de la configration personnalisée"
+    #cp /srv/optimus/config.custom.php /root/.allspark/config.custom.php
+  #fi
+
   echo_magenta "Création de l'espace d'hébergement optimus.$DOMAIN"
-  if [ ! -d "/srv/optimus" ]; then verbose mkdir /srv/optimus; fi
-  if [ ! -f "/srv/optimus/index.html" ]; then echo "optimus" > /srv/optimus/index.html; fi
+  rm -R /srv/optimus
+  verbose mkdir /srv/optimus
+  #if [ ! -f "/srv/optimus/index.html" ]; then echo "optimus" > /srv/optimus/index.html; fi
   if [ ! -f "/etc/apache2/sites-enabled/optimus.conf" ]; then sed -e 's/%DOMAIN%/'$DOMAIN'/g' /etc/allspark/optimus/vhost > /etc/apache2/sites-enabled/optimus.conf; fi
 
   echo_magenta "Installation du client OPTIMUS"
