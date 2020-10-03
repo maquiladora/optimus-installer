@@ -1,5 +1,5 @@
 <?php
 $mysql_server = 'localhost';
-$mysql_user = 'optimus';
-$mysql_password = 'democabinet';
+$mysql_user = $OPTIMUS_MARIADB_USER;
+$mysql_password = $OPTIMUS_MARIADB_PASSWORD;
 ?>
