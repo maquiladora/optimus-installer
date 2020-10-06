@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS `optimus_settings` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `optimus` CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `optimus_settings`;
 
 
