@@ -428,7 +428,6 @@ CREATE TABLE IF NOT EXISTS `contacts_titles` (
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_titles` VALUES (0,'');
 INSERT INTO `contacts_titles` VALUES (10,'Madame');
 INSERT INTO `contacts_titles` VALUES (20,'Mademoiselle');
 INSERT INTO `contacts_titles` VALUES (30,'Monsieur');
