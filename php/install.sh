@@ -10,7 +10,7 @@ then
   echo_green "==== INSTALLATION DE PHP ===="
 
   echo_magenta "Installation de PHP en cours..."
-  verbose apt-get -qq install php php-mysql php-imap php-xmlrpc php-curl php-zip php-xml php-mbstring php-gd php-pear
+  verbose apt-get -qq install php php-mysql php-imap php-xmlrpc php-curl php-zip php-xml php-mbstring php-gd php-pear php-soap
 
   echo_magenta "Redémarrage des services"
   verbose systemctl restart apache2

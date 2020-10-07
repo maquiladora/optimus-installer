@@ -14,7 +14,6 @@ then
 
   echo
   echo_green "==== INSTALLATION D'OPTIMUS AVOCATS ===="
-
   #if [ ! -f "/srv/optimus/config.custom.php" ]
   #then
     #echo_magenta "Sauvegarde de la configration personnalisée"
