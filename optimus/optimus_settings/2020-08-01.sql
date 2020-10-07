@@ -414,7 +414,6 @@ CREATE TABLE IF NOT EXISTS `contacts_marital_statuses` (
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_marital_statuses` VALUES (0,'');
 INSERT INTO `contacts_marital_statuses` VALUES (10,'Célibataire');
 INSERT INTO `contacts_marital_statuses` VALUES (20,'En Concubinage');
 INSERT INTO `contacts_marital_statuses` VALUES (30,'PACSé(e)');
