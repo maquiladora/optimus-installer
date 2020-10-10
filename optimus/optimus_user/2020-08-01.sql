@@ -69,12 +69,12 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE IF NOT EXISTS `contacts_to_dossiers` (
+CREATE TABLE IF NOT EXISTS `dossiers_intervenants` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contact` int(11) unsigned NOT NULL,
   `dossier` int(11) unsigned NOT NULL,
-  `fonction` tinyint(4) unsigned NOT NULL,
-  `link` int(11) unsigned NOT NULL,
+  `contact` int(11) unsigned NOT NULL,
+  `qualite` smallint(5) unsigned NOT NULL,
+  `lien` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 

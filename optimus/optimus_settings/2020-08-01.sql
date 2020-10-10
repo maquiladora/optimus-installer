@@ -35,18 +35,6 @@ INSERT INTO `cities` VALUES ('GONDREXANGE','57142','MOSELLE','57253'),('GORZE','
   ','68200','HAUT RHIN','68224'),('METZ','57070','MOSELLE','57463'),('','','','0'),('PARIS 16EME ARRONDISSEMENT','75116','PARIS','75116'),('AIX EN PROVENCE','13100','BOUCHES DU RHONE','13001'),('AIX EN PROVENCE','13080','BOUCHES DU RHONE','13001'),('AIX EN PROVENCE','13290','BOUCHES DU RHONE','13001'),('AIX EN PROVENCE','13540','BOUCHES DU RHONE','13001'),('ANGERS','49100','MAINE ET LOIRE','49007'),('VILLENEUVE D ASCQ','59493','NORD','59009'),('VILLENEUVE D ASCQ','59650','NORD','59009'),('MARNE LA VALLEE','77200','SEINE ET MARNE','77535'),('PARIS LA DEFENSE','92400','HAUTS DE SEINE','92027');
 
 
-CREATE TABLE IF NOT EXISTS `contacts_fonctions` (
-  `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
-  `value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_fonctions` VALUES (1,'Client');
-INSERT INTO `contacts_fonctions` VALUES (2,'Adversaire');
-INSERT INTO `contacts_fonctions` VALUES (3,'Avocat');
-INSERT INTO `contacts_fonctions` VALUES (4,'Juridiction');
-INSERT INTO `contacts_fonctions` VALUES (5,'Notaire');
-
-
 CREATE TABLE IF NOT EXISTS `company_types_lvl1` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `value` varchar(512) DEFAULT NULL,
@@ -379,20 +367,12 @@ CREATE TABLE IF NOT EXISTS `contacts_categories` (
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_categories` VALUES (0,'');
-INSERT INTO `contacts_categories` VALUES (10,'Amis');
-INSERT INTO `contacts_categories` VALUES (20,'Famille');
-INSERT INTO `contacts_categories` VALUES (30,'Collaborateurs');
-INSERT INTO `contacts_categories` VALUES (40,'Clients');
-INSERT INTO `contacts_categories` VALUES (50,'Avocats');
+INSERT INTO `contacts_categories` VALUES (30,'Avocats');
+INSERT INTO `contacts_categories` VALUES (50,'Juridictions');
 INSERT INTO `contacts_categories` VALUES (60,'Huissiers');
-INSERT INTO `contacts_categories` VALUES (70,'Juridictions');
-INSERT INTO `contacts_categories` VALUES (80,'Administrations');
-INSERT INTO `contacts_categories` VALUES (90,'Adversaires');
-INSERT INTO `contacts_categories` VALUES (100,'Registrar');
-INSERT INTO `contacts_categories` VALUES (110,'Notaires');
-INSERT INTO `contacts_categories` VALUES (120,'Administrateur Judiciaire');
-INSERT INTO `contacts_categories` VALUES (130,'Mandataire Judiciaire');
+INSERT INTO `contacts_categories` VALUES (70,'Notaires');
+INSERT INTO `contacts_categories` VALUES (110,'Administrateur Judiciaire');
+INSERT INTO `contacts_categories` VALUES (120,'Mandataire Judiciaire');
 
 
 CREATE TABLE IF NOT EXISTS `contacts_company_representatives` (
@@ -400,7 +380,6 @@ CREATE TABLE IF NOT EXISTS `contacts_company_representatives` (
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
-INSERT INTO `contacts_company_representatives` VALUES (0,'');
 INSERT INTO `contacts_company_representatives` VALUES (10,'Gérant');
 INSERT INTO `contacts_company_representatives` VALUES (20,'Directeur');
 INSERT INTO `contacts_company_representatives` VALUES (30,'Président');
@@ -868,6 +847,42 @@ INSERT INTO `dossiers_sousdomaines` VALUES (20,80,'Contentieux Internationaux');
 INSERT INTO `dossiers_sousdomaines` VALUES (30,80,'Contrats Internationaux');
 INSERT INTO `dossiers_sousdomaines` VALUES (10,85,'Recouvrements Civils');
 INSERT INTO `dossiers_sousdomaines` VALUES (20,85,'Recouvrements Commerciaux');
+
+
+CREATE TABLE IF NOT EXISTS `intervenants_qualites` (
+  `id` tinyint(4) unsigned NOT NULL AUTO_INCREMENT,
+  `value` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `intervenants_qualites` VALUES (10,'Client');
+INSERT INTO `intervenants_qualites` VALUES (20,'Adversaire');
+INSERT INTO `intervenants_qualites` VALUES (21,'Demandeur');
+INSERT INTO `intervenants_qualites` VALUES (22,'Défendeur');
+INSERT INTO `intervenants_qualites` VALUES (23,'Intervenant volontaire');
+INSERT INTO `intervenants_qualites` VALUES (24,'Intervenant forcé');
+INSERT INTO `intervenants_qualites` VALUES (25,'Appelant');
+INSERT INTO `intervenants_qualites` VALUES (26,'Intimé');
+INSERT INTO `intervenants_qualites` VALUES (27,'Appelé en déclaration de jugement commun');
+INSERT INTO `intervenants_qualites` VALUES (30,'Avocat');
+INSERT INTO `intervenants_qualites` VALUES (35,'Avocat Plaidant');
+INSERT INTO `intervenants_qualites` VALUES (40,'Avocat Postulant');
+INSERT INTO `intervenants_qualites` VALUES (50,'Juridiction');
+INSERT INTO `intervenants_qualites` VALUES (60,'Huissier');
+INSERT INTO `intervenants_qualites` VALUES (70,'Notaire');
+INSERT INTO `intervenants_qualites` VALUES (80,'Expert Amiable');
+INSERT INTO `intervenants_qualites` VALUES (90,'Expert Judiciaire');
+INSERT INTO `intervenants_qualites` VALUES (100,'Apporteur d\'affaire');
+INSERT INTO `intervenants_qualites` VALUES (110,'Administrateur Judiciaire');
+INSERT INTO `intervenants_qualites` VALUES (115,'Mandataire Judiciaire');
+INSERT INTO `intervenants_qualites` VALUES (120,'Liquidateur Judiciaire');
+INSERT INTO `intervenants_qualites` VALUES (130,'Curateur');
+INSERT INTO `intervenants_qualites` VALUES (140,'Tuteur');
+INSERT INTO `intervenants_qualites` VALUES (150,'Représentant légal - Gérant');
+INSERT INTO `intervenants_qualites` VALUES (160,'Représentant légal - Président');
+INSERT INTO `intervenants_qualites` VALUES (170,'Représentant légal - Directeur Général');
+INSERT INTO `intervenants_qualites` VALUES (180,'Associé');
+INSERT INTO `intervenants_qualites` VALUES (190,'Enfant');
+INSERT INTO `intervenants_qualites` VALUES (250,'Autre');
 
 
 CREATE TABLE IF NOT EXISTS `juridictions` (
