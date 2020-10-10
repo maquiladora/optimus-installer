@@ -181,3 +181,5 @@ $config['default_font'] = '';
 // lifetime of message cache
 // possible units: s, m, h, d, w
 $config['message_cache_lifetime'] = '10d';
+
+$config['x_frame_options'] = 'allow-from:optimus.$DOMAIN';
