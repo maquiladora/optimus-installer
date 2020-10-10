@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `interventions_diligences` (
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
 
-CREATE TABLE IF NOT EXISTS `infos` (
+CREATE TABLE IF NOT EXISTS `settings` (
   `id` varchar(32) NOT NULL DEFAULT '',
   `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
