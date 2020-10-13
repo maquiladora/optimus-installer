@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `company_capital` varchar(255) DEFAULT NULL,
   `rcs` varchar(255) DEFAULT NULL,
   `siret` varchar(255) DEFAULT NULL,
-  `company_registration_city` varchar(255) NOT NULL DEFAULT '0',
+  `company_registration_city` smallint(5) unsigned NOT NULL DEFAULT '0',
   `company_representative` tinyint(4) unsigned NOT NULL DEFAULT 0,
   `address` varchar(255) DEFAULT NULL,
   `zipcode` varchar(255) DEFAULT NULL,
