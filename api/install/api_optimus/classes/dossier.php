@@ -17,7 +17,7 @@ class dossier
 
   function create()
   {
-    $query = "INSERT INTO " . $this->table_name . "SET id = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
+    $query = "INSERT INTO " . $this->table_name . " SET id = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
     $stmt = $this->conn->prepare($query);
 
     $this->id=htmlspecialchars(strip_tags('500'));
@@ -32,7 +32,7 @@ class dossier
 
     if($stmt->execute())
     {
-        $this->conn->errorInfo();
+        return $this->conn->errorInfo();
         return true;
     }
 
