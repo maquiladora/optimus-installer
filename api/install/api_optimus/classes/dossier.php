@@ -17,6 +17,7 @@ class dossier
 
   function create()
   {
+    $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $this->nom = time();
     $this->numero = date('y') . '/' . str_pad(intval(substr($last_numero['numero'],3))+1, 4, "0", STR_PAD_LEFT);
     $this->date_ouverture = date('Y-m-d');
@@ -26,9 +27,9 @@ class dossier
 
     //CREATION DU DOSSIER IMAP
     mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
+    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions','==DOSSIERS== ' . $this->nom, FILE_APPEND);
 
     //INSERT DANS LA BASE DE DONNEE
-    $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
 
     $stmt->bindParam(':nom', $this->nom);
