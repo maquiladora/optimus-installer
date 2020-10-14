@@ -27,10 +27,9 @@ class dossier
     @mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0750);
 
     //CREATION DU DOSSIER IMAP
-    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==', 0770);
-    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
-    @chown('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
-    @chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
+    mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
+    chown('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
+    chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
     file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
 
     //INSERT DANS LA BASE DE DONNEE
