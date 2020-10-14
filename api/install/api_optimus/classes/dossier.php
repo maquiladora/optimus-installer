@@ -73,8 +73,8 @@ class dossier
     $dossier_delete = $this->conn->query("DELETE FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
     $intervenants_delete = $this->conn->query("DELETE FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = '" . $data->id . "'");
 
-    @rmdir('/srv/files/' . $data->db . '/==DOSSIERS==/' . $dossier['nom']);
-    @rmdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8"));
+    rmdir('/srv/files/' . $data->db . '/==DOSSIERS==/' . $dossier['nom']);
+    rmdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8"));
     $subscriptions = file_get_contents('/srv/mailboxes/' . $data->db . '/subscriptions');
     $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8") . "\n", '', $subscriptions);
     @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions', $subscriptions);
