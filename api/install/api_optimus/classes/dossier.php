@@ -72,7 +72,7 @@ class dossier
       return "Ce dossier ne peut pas être supprimé car des factures le concernant ont été émises";
 
     $dossier_delete = $this->conn->query("DELETE FROM `" . $data->db . "`." . $this->table_name . " WHERE id = '" . $data->id . "'");
-    //$intervenants_delete = $this->conn->query("DELETE FROM " . $this->table_name . " WHERE dossier = '" . $data->id . "'");
+    $intervenants_delete = $this->conn->query("DELETE FROM `" . $data->db . "`." . $this->table_name . ".dossiers_intervenants WHERE dossier = '" . $data->id . "'");
 
     @rmdir('/srv/files/' . $data->db . '/==DOSSIERS==/' . $dossier['nom']);
     @rmdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8"));
