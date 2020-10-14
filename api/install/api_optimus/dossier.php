@@ -16,6 +16,7 @@ $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
+print_r($data);
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
 {
