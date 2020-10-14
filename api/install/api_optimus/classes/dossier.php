@@ -22,21 +22,17 @@ class dossier
     $this->numero = date('y') . '/' . str_pad(intval(substr($last_numero['numero'],3))+1, 4, "0", STR_PAD_LEFT);
     $this->date_ouverture = date('Y-m-d');
 
-    //CREATION DU DOSSIER INFORMATIQUE
     @mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==', 0750);
     @mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0750);
 
-    //CREATION DU DOSSIER IMAP
     umask(0);
-    mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
-    chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
-    mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 0770);
-    chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 'mailboxes');
-    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
+    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
+    @chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
+    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 0770);
+    @chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 'mailboxes');
+    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
 
-    //INSERT DANS LA BASE DE DONNEE
     $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
-
     $stmt->bindParam(':nom', $this->nom);
     $stmt->bindParam(':numero', $this->numero);
     $stmt->bindParam(':date_ouverture', $this->date_ouverture);
@@ -47,6 +43,16 @@ class dossier
     }
     else
       return $stmt->errorInfo()[2];
+  }
+
+
+  function rename()
+  {
+    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = 641")->fetch();
+    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = 'new_name' WHERE id = 641")->fetch();
+    @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/new_name');
+    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/new_name');
+    return true;
   }
 }
 ?>
