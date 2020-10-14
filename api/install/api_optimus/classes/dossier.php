@@ -32,6 +32,7 @@ class dossier
 
     if($stmt->execute())
     {
+        $this->conn->errorInfo();
         return true;
     }
 
