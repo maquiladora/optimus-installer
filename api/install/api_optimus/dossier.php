@@ -15,15 +15,15 @@ $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
 
-$result = $dossier->create()
+$result = $dossier->create();
 if ($result)
 {
-  http_response_code(200);
-  echo json_encode(array("code" => 200, "data" => $result));
+  http_response_code(201);
+  echo json_encode(array("code" => 201, "data" => $result));
 }
 else
 {
-  http_response_code(200);
+  http_response_code(400);
   echo json_encode(array("code" => 400, "message" => $result));
 }
 
