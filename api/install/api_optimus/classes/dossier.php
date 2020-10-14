@@ -48,10 +48,10 @@ class dossier
 
   function rename()
   {
-    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = 641")->fetch();
-    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = 'new_name' WHERE id = 641")->fetch();
+    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = 642")->fetch();
+    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = 'new_name' WHERE id = 642")->fetch();
     @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/new_name');
-    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/new_name');
+    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/new_name');
     return true;
   }
 }
