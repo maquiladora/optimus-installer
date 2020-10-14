@@ -33,8 +33,8 @@ class dossier
     mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 0770);
     chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 'mailboxes');
     file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
-    set_cookie('roundcube_sessauth','',time() - 3600,"webmail.demoptimus.fr");
-    set_cookie('roundcube_sessid','',time() - 3600,"webmail.demoptimus.fr");
+    setcookie('roundcube_sessauth','',time() - 3600,"webmail.demoptimus.fr");
+    setcookie('roundcube_sessid','',time() - 3600,"webmail.demoptimus.fr");
 
     //INSERT DANS LA BASE DE DONNEE
     $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
