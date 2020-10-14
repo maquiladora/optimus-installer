@@ -24,7 +24,7 @@ class dossier
 
     //CREATION DU DOSSIER INFORMATIQUE
     mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
-    chmod('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,770);
+    chmod('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
     chown('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
     chgrp('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
 
