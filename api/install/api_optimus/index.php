@@ -6,8 +6,8 @@ if ($path[2] == 'contact')
 }
 else if ($path[2] == 'dossier')
 {
-  if ($path[3])
-    $dossier['id'] = $path[3];
+  //if ($path[3])
+    //$dossier['id'] = $path[3];
   include_once 'dossier.php';
 }
 
