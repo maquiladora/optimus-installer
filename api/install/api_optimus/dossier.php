@@ -18,51 +18,14 @@ $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-{
   $result = $dossier->create($data);
-  if ($result)
-  {
-    http_response_code(201);
-    echo json_encode(array("code" => 201, "data" => $result));
-  }
-  else
-  {
-    http_response_code(400);
-    echo json_encode(array("code" => 400, "message" => $result));
-  }
-}
 
 if ($_SERVER['REQUEST_METHOD']=='MOVE')
-{
   $result = $dossier->rename($data);
-  if ($result)
-  {
-    http_response_code(200);
-    echo json_encode(array("code" => 200, "data" => $result));
-  }
-  else
-  {
-    http_response_code(400);
-    echo json_encode(array("code" => 400, "message" => $result));
-  }
-}
 
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-{
   $result = $dossier->delete($data);
-  if ($result != true)
-  {
-    http_response_code(400);
-    echo json_encode(array("code" => 400, "message" => $result));
-  }
-  else
-  {
-    http_response_code(200);
-    echo json_encode(array("code" => 200, "data" => $result));
-  }
-}
 
-
-
-
+http_response_code($result['code']);
+echo json_encode($result);
 ?>
