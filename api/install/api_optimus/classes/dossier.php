@@ -44,5 +44,6 @@ class dossier
     {
       return $e->getMessage();
     }
+  }
 }
 ?>
