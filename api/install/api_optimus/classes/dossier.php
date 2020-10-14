@@ -19,7 +19,8 @@ class dossier
   {
     $query = "INSERT INTO " . $this->table_name . " SET id = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
     $stmt = $this->conn->prepare($query);
-
+    return $this->conn->errorInfo();
+    
     $this->id=htmlspecialchars(strip_tags('500'));
     $this->nom=htmlspecialchars(strip_tags('testapi'));
     $this->numero=htmlspecialchars(strip_tags('20/030'));
@@ -35,7 +36,7 @@ class dossier
         return true;
     }
 
-    return $this->conn->errorInfo();
+
     return false;
   }
 }
