@@ -17,7 +17,7 @@ class dossier
 
   function create()
   {
-    $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('Y') . "/%' ORDER BY id DESC LIMIT 1");
+    $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('Y') . "/%' ORDER BY id DESC LIMIT 1", PDO::FETCH_ASSOC);
     return $last_numero;
 
     $query = "INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
