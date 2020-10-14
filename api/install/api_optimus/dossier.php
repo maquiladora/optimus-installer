@@ -15,8 +15,17 @@ $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
 
-$result = $dossier->create();
+if ($dossier->create())
+{
+  http_response_code(200);
+  echo json_encode(array("code" => 200, "data" => $result));
+}
+else
+{
+  http_response_code(200);
+  echo json_encode(array("code" => 400, "message" => $result));
+}
 
-http_response_code(200);
-echo json_encode(array("code" => 200, "data" => $result));
+
+
 ?>
