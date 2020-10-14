@@ -17,9 +17,10 @@ class dossier
 
   function create()
   {
-    $query = "INSERT INTO " . $this->table_name . " SET i = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
+    $query = "INSERT INTO " . $this->table_name . " SET d = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
 
-
+    try
+    {
       $stmt = $this->conn->prepare($query);
 
       $this->id=htmlspecialchars(strip_tags('500'));
@@ -32,19 +33,17 @@ class dossier
       $stmt->bindParam(':numero', $this->numero);
       $stmt->bindParam(':date_ouverture', $this->date_ouverture);
 
-      try
+      if($stmt->execute())
       {
-        if($stmt->execute())
-        {
-            return true;
-            return $this->conn->errorInfo();
-        }
-        return false;
+          return true;
+          return $this->conn->errorInfo();
       }
-      catch(Exception $e)
-      {
-        return $e->getMessage();
-      }
+      return false;
+    }
+    catch(Exception $e)
+    {
+      return $e->getMessage();
+    }
   }
 }
 ?>
