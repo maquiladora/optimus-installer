@@ -41,7 +41,7 @@ class dossier
     $stmt->bindParam(':numero', $this->numero);
     $stmt->bindParam(':date_ouverture', $this->date_ouverture);
     if($stmt->execute())
-      return $this->conn->lastInsertId();
+      return $this;
     else
       return $stmt->errorInfo()[2];
   }
