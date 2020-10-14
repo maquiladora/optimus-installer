@@ -17,7 +17,7 @@ class dossier
 
   function create()
   {
-    $query = "INSERT INTO " . $this->table_name . " SET id = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
+    $query = "INSERT INTO " . $this->table_name . " SET i = :id, nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
 
 
       $stmt = $this->conn->prepare($query);
