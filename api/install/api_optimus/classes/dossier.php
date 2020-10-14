@@ -27,7 +27,7 @@ class dossier
 
     //CREATION DU DOSSIER IMAP
     mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
-    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions','==DOSSIERS==\t' . $this->nom . '\r\n', FILE_APPEND);
+    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==\t" . $this->nom . "\r\n", FILE_APPEND);
 
     //INSERT DANS LA BASE DE DONNEE
     $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
