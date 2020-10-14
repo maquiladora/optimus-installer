@@ -43,7 +43,7 @@ class dossier
     if($stmt->execute())
     {
       $this->id = $this->conn->lastInsertId();
-      return this;
+      return $this;
     }
     else
       return $stmt->errorInfo()[2];
