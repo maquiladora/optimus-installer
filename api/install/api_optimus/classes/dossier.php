@@ -2,7 +2,7 @@
 class dossier
 {
   private $conn;
-  private $table_name = "optimus_user_1.dossiers";
+  private $table_name = "dossiers";
 
   public $id;
   public $nom;
@@ -17,22 +17,22 @@ class dossier
 
   function create($data)
   {
-    $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
+    $last_numero = $this->conn->query("SELECT numero FROM `" . $data->db . "`." . $this->table_name . " WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $this->nom = time();
     $this->numero = date('y') . '/' . str_pad(intval(substr($last_numero['numero'],3))+1, 4, "0", STR_PAD_LEFT);
     $this->date_ouverture = date('Y-m-d');
 
-    @mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==', 0750);
-    @mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0750);
+    @mkdir('/srv/files/' . $data->db . '/==DOSSIERS==', 0750);
+    @mkdir('/srv/files/' . $data->db . '/==DOSSIERS==/'.$this->nom, 0750);
 
     umask(0);
-    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
-    @chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 'mailboxes');
-    @mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 0770);
-    @chgrp('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom.'/tmp', 'mailboxes');
-    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
+    @mkdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/'.$this->nom, 0770);
+    @chgrp('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/'.$this->nom, 'mailboxes');
+    @mkdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/'.$this->nom.'/tmp', 0770);
+    @chgrp('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/'.$this->nom.'/tmp', 'mailboxes');
+    @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
 
-    $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
+    $stmt = $this->conn->prepare("INSERT INTO `" . $data->db . "`." . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
     $stmt->bindParam(':nom', $this->nom);
     $stmt->bindParam(':numero', $this->numero);
     $stmt->bindParam(':date_ouverture', $this->date_ouverture);
@@ -48,22 +48,22 @@ class dossier
 
   function rename($data)
   {
-    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
-    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
-    @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $data->new_name);
-    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"));
-    $subscriptions = file_get_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions');
+    $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`." . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
+    $new_name = $this->conn->query("UPDATE `" . $data->db . "`." . $this->table_name . " SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
+    @rename('/srv/files/' . $data->db . '/==DOSSIERS==/' . $old_name['nom'], '/srv/files/' . $data->db . '/==DOSSIERS==/' . $data->new_name);
+    @rename('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"));
+    $subscriptions = file_get_contents('/srv/mailboxes/' . $data->db . '/subscriptions');
     $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"), $subscriptions);
-    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
+    @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions', $subscriptions);
     return array("code" => 200);
   }
 
 
   function delete($data)
   {
-    $dossier = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
+    $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`." . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
 
-    $interventions_exists = $this->conn->query("SELECT id FROM optimus_user_1.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
+    $interventions_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
     if ($interventions_exists > 0)
       return "Ce dossier ne peut pas être supprimé car il contient des fiches d'intervention";
 
@@ -71,14 +71,14 @@ class dossier
     if ($factures_exists > 0)
       return "Ce dossier ne peut pas être supprimé car des factures le concernant ont été émises";
 
-    $dossier_delete = $this->conn->query("DELETE FROM " . $this->table_name . " WHERE id = '" . $data->id . "'");
+    $dossier_delete = $this->conn->query("DELETE FROM `" . $data->db . "`." . $this->table_name . " WHERE id = '" . $data->id . "'");
     //$intervenants_delete = $this->conn->query("DELETE FROM " . $this->table_name . " WHERE dossier = '" . $data->id . "'");
 
-    @rmdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $dossier['nom']);
-    @rmdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8"));
-    $subscriptions = file_get_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions');
+    @rmdir('/srv/files/' . $data->db . '/==DOSSIERS==/' . $dossier['nom']);
+    @rmdir('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8"));
+    $subscriptions = file_get_contents('/srv/mailboxes/' . $data->db . '/subscriptions');
     $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($dossier['nom'], "UTF7-IMAP","UTF-8") . "\n", '', $subscriptions);
-    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
+    @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions', $subscriptions);
     return array("code" => 200);
   }
 }
