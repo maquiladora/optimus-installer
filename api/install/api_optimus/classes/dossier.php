@@ -36,7 +36,7 @@ class dossier
         return true;
     }
 
-    return $stmt->errorInfo();
+    return $stmt->errorInfo()[2];
 
 
     return false;
