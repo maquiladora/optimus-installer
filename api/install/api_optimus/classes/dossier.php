@@ -53,8 +53,8 @@ class dossier
     @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $data->new_name);
     @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom'], '/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"));
     $subscriptions = file_get_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions');
-    $subscriptions = str_replace('==DOSSIERS==/' . $old_name['nom'], '==DOSSIERS==/' . $data->new_name, $subscriptions);
-    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', imap_utf7_encode($subscriptions));
+    $subscriptions = str_replace('==DOSSIERS==/' . $old_name['nom'], '==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"), $subscriptions);
+    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
     return true;
   }
 }
