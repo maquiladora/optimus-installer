@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'config.php';
 include_once 'connect.php';
+include_once 'api_allspark/auth.php';
 include_once 'api_optimus/classes/dossier.php';
 
 $database = new Database();
