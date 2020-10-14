@@ -47,6 +47,21 @@ if ($_SERVER['REQUEST_METHOD']=='MOVE')
   }
 }
 
+if ($_SERVER['REQUEST_METHOD']=='DELETE')
+{
+  $result = $dossier->delete($data);
+  if ($result != true)
+  {
+    http_response_code(400);
+    echo json_encode(array("code" => 400, "message" => $result));
+  }
+  else
+  {
+    http_response_code(200);
+    echo json_encode(array("code" => 200, "data" => $result));
+  }
+}
+
 
 
 

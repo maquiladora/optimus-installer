@@ -57,5 +57,20 @@ class dossier
     @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
     return true;
   }
+
+
+  function delete($data)
+  {
+    $interventions_exists = $this->conn->query("SELECT id FROM optimus_user_1.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
+    if ($interventions_exists > 0)
+      return "Ce dossier ne peut pas être supprimé car il contient des fiches d'intervention";
+
+    @rmdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom']);
+    @rmdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"));
+    $subscriptions = file_get_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions');
+    $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8") . "\n", '', $subscriptions);
+    @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
+    return true;
+  }
 }
 ?>
