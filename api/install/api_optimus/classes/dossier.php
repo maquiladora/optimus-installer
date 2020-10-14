@@ -24,10 +24,12 @@ class dossier
 
     //CREATION DU DOSSIER INFORMATIQUE
     mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
+    chown('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
+    chgrp('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
 
     //CREATION DU DOSSIER IMAP
     mkdir('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
-    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"\n==DOSSIERS==/" . $this->nom, FILE_APPEND);
+    file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions',"==DOSSIERS==/" . $this->nom . "\n", FILE_APPEND);
 
     //INSERT DANS LA BASE DE DONNEE
     $stmt = $this->conn->prepare("INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture");
