@@ -23,8 +23,7 @@ class dossier
     $this->date_ouverture = date('Y-m-d');
 
     //CREATION DU DOSSIER INFORMATIQUE
-    mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom);
-    chmod('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
+    mkdir('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom, 0770);
     chown('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
     chgrp('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$this->nom,'mailboxes');
 
