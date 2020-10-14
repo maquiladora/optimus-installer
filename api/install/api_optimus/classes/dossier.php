@@ -17,13 +17,17 @@ class dossier
 
   function create()
   {
+    $last_numero_query = "SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('Y') . "/%'";
+    $stmt = $this->conn->execute($last_numero_query);
+    $last_numero = $stmt->fetchAll();
+
     $query = "INSERT INTO " . $this->table_name . " SET nom = :nom, numero = :numero, date_ouverture = :date_ouverture";
 
     $stmt = $this->conn->prepare($query);
 
-    $this->nom=htmlspecialchars(strip_tags('testapi'));
-    $this->numero=htmlspecialchars(strip_tags('20/030'));
-    $this->date_ouverture=htmlspecialchars(strip_tags('2020-10-14'));
+    $this->nom = time();
+    $this->numero = date('Y') . '/' . str_pad(substr($last_numero['numero'],3)+1, 4, "0", STR_PAD_LEFT);
+    $this->date_ouverture = date('Y-m-d');
 
     $stmt->bindParam(':nom', $this->nom);
     $stmt->bindParam(':numero', $this->numero);
