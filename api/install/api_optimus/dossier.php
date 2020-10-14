@@ -15,6 +15,7 @@ include_once 'api_optimus/classes/dossier.php';
 $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
+$data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
 {

@@ -48,12 +48,12 @@ class dossier
 
   function rename()
   {
-    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = '" . $_POST['id'] . "'")->fetch();
-    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = '" . $_POST['new_name'] . "' WHERE id = '" . $_POST['id'] . "'")->fetch();
-    @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $_POST['new_name']);
-    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/'.$old_name['nom'], '/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . $_POST['new_name']);
+    $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
+    $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
+    @rename('/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom'], '/srv/files/prime@demoptimus.fr/==DOSSIERS==/' . $data->new_name);
+    @rename('/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . $old_name['nom'], '/srv/mailboxes/prime@demoptimus.fr/==DOSSIERS==/' . $data->new_name);
     $subscriptions = file_get_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions');
-    $subscriptions = str_replace('==DOSSIERS==/'.$old_name['nom'], '==DOSSIERS==/'. $_POST['new_name'], $subscriptions);
+    $subscriptions = str_replace('==DOSSIERS==/' . $old_name['nom'], '==DOSSIERS==/' . $data->new_name, $subscriptions);
     @file_put_contents('/srv/mailboxes/prime@demoptimus.fr/subscriptions', $subscriptions);
     return true;
   }
