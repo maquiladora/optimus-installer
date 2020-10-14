@@ -15,7 +15,7 @@ class dossier
   }
 
 
-  function create()
+  function create($data)
   {
     $last_numero = $this->conn->query("SELECT numero FROM " . $this->table_name . " WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $this->nom = time();
@@ -46,7 +46,7 @@ class dossier
   }
 
 
-  function rename()
+  function rename($data)
   {
     $old_name = $this->conn->query("SELECT nom FROM " . $this->table_name . " WHERE id = '" . $data->id . "'")->fetch();
     $new_name = $this->conn->query("UPDATE " . $this->table_name . " SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();

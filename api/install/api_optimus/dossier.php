@@ -16,11 +16,10 @@ $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
-print_r($data);
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
 {
-  $result = $dossier->create();
+  $result = $dossier->create($data);
   if ($result)
   {
     http_response_code(201);
@@ -35,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD']=='PUT')
 
 if ($_SERVER['REQUEST_METHOD']=='MOVE')
 {
-  $result = $dossier->rename();
+  $result = $dossier->rename($data);
   if ($result)
   {
     http_response_code(200);
