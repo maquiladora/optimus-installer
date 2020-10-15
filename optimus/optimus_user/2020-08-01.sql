@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS `authorizations` (
   `resource` varchar(128) DEFAULT NULL,
   `read` bit NOT NULL DEFAULT 0,
   `write` bit NOT NULL DEFAULT 0,
+  `create` bit NOT NULL DEFAULT 0,
+  `delete` bit NOT NULL DEFAULT 0,
   PRIMARY KEY (`email`,`resource`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
