@@ -16,6 +16,9 @@ class dossier
 
   function create($data)
   {
+    preg_match("/^[a-z0-9_@.]+$/",$data->db) OR return array("code" => 400, "message" => "Invalid database");
+    in_array('dossiers.*', $user['write']) OR return array("code" => 400, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce module");
+
     $last_numero = $this->conn->query("SELECT numero FROM `" . $data->db . "`.dossiers WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $this->nom = 'DOSSIER ' . time();
     $this->numero = date('y') . '/' . str_pad(intval(substr($last_numero['numero'],3))+1, 4, "0", STR_PAD_LEFT);
