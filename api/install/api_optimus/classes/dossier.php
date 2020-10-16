@@ -16,7 +16,7 @@ class dossier
 
   function create($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
 
     $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `create` = 1");
     $authorize->bindParam(':email', $payload['user']->email);
@@ -55,9 +55,9 @@ class dossier
 
   function rename($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Identifiant invalide");
-    if (!preg_match("/^[a-z0-9_-\s]+$/",$data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+    if (!preg_match("/^[A-Za-z0-9_-@\s]+$/", $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
     $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1");
     $authorize->bindParam(':email', $payload['user']->email);
@@ -78,8 +78,8 @@ class dossier
 
   function delete($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
     $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
     $authorize->bindParam(':email', $payload['user']->email);
