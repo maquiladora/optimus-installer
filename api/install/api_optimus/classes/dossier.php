@@ -73,7 +73,7 @@ class dossier
 
     $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
     $stmt->bindParam(':email', $payload['user']->email);
-    //$stmt->execute();
+    $stmt->execute();
     if ($stmt->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
