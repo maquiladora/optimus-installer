@@ -17,7 +17,11 @@ class dossier
   function create($data)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
-    if (!in_array('dossiers.*', $user['write'])) return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce module");
+
+    $stmt = $this->conn->prepare("SELECT create FROM `" . $data->db . "`.authorizations WHERE email = ? AND resource = 'dossiers.*' AND 'create' = 1");
+    $stmt->bindParam(1, $payload->user->email);
+    if ($stmt->execute()->rowCount() == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $last_numero = $this->conn->query("SELECT numero FROM `" . $data->db . "`.dossiers WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
     $this->nom = 'DOSSIER ' . time();
