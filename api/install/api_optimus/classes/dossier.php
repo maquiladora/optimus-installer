@@ -18,8 +18,8 @@ class dossier
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
-    $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id)->fetch();
-    return array("code" => 200, "data" => array($dossier));
+    $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id)->fetch(PDO::FETCH_ASSOC);
+    return array("code" => 200, "data" => $dossier);
   }
 
 
