@@ -18,7 +18,11 @@ $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
+{
+  $data->db = $_GET['db'];
+  $data->id = $_GET['id'];
   $result = $dossier->list($data,$payload);
+}
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
   $result = $dossier->create($data,$payload);
