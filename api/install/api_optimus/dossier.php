@@ -18,13 +18,13 @@ $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-  $result = $dossier->create($data);
+  $result = $dossier->create($data,$payload);
 
 if ($_SERVER['REQUEST_METHOD']=='MOVE')
-  $result = $dossier->rename($data);
+  $result = $dossier->rename($data,$payload);
 
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-  $result = $dossier->delete($data);
+  $result = $dossier->delete($data,$payload);
 
 http_response_code($result['code']);
 echo json_encode($result);

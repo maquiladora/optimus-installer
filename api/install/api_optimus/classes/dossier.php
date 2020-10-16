@@ -14,7 +14,7 @@ class dossier
   }
 
 
-  function create($data)
+  function create($data,$payload)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
 
