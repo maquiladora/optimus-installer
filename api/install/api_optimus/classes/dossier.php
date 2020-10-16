@@ -16,12 +16,12 @@ class dossier
 
   function create($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
+    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
 
-    $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `create` = 1");
-    $stmt->bindParam(':email', $payload['user']->email);
-    $stmt->execute();
-    if ($stmt->rowCount() == 0)
+    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `create` = 1");
+    $authorize->bindParam(':email', $payload['user']->email);
+    $authorize->execute();
+    if ($authorize->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $last_numero = $this->conn->query("SELECT numero FROM `" . $data->db . "`.dossiers WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
@@ -55,6 +55,16 @@ class dossier
 
   function rename($data,$payload)
   {
+    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+    if (!preg_match("/^[a-z0-9_-\s]+$/",$data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
+
+    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1");
+    $authorize->bindParam(':email', $payload['user']->email);
+    $authorize->execute();
+    if ($authorize->rowCount() == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
+
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
     $new_name = $this->conn->query("UPDATE `" . $data->db . "`.dossiers SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
     @rename('/srv/files/' . $data->db . '/==DOSSIERS==/' . $old_name['nom'], '/srv/files/' . $data->db . '/==DOSSIERS==/' . $data->new_name);
@@ -68,13 +78,13 @@ class dossier
 
   function delete($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
-    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Invalid id");
+    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
-    $stmt->bindParam(':email', $payload['user']->email);
-    $stmt->execute();
-    if ($stmt->rowCount() == 0)
+    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
+    $authorize->bindParam(':email', $payload['user']->email);
+    $authorize->execute();
+    if ($authorize->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
