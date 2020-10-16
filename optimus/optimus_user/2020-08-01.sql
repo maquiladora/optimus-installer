@@ -25,10 +25,10 @@ CREATE TABLE IF NOT EXISTS `agendas_evenements` (
 CREATE TABLE IF NOT EXISTS `authorizations` (
   `email` varchar(128) DEFAULT NULL,
   `resource` varchar(128) DEFAULT NULL,
-  `read` bit NOT NULL DEFAULT 0,
-  `write` bit NOT NULL DEFAULT 0,
-  `create` bit NOT NULL DEFAULT 0,
-  `delete` bit NOT NULL DEFAULT 0,
+  `read` bit NOT NULL DEFAULT b'0',
+  `write` bit NOT NULL DEFAULT b'0',
+  `create` bit NOT NULL DEFAULT b'0',
+  `delete` bit NOT NULL DEFAULT b'0',
   PRIMARY KEY (`email`,`resource`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
