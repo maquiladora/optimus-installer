@@ -19,6 +19,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
 {
+  $data = new stdClass();
   $data->db = $_GET['db'];
   $data->id = $_GET['id'];
   $result = $dossier->list($data,$payload);
