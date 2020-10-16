@@ -65,6 +65,7 @@ class dossier
     if ($authorize->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
+    $data->new_name = trim($data->new_name);
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
     $new_name = $this->conn->query("UPDATE `" . $data->db . "`.dossiers SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
     @rename('/srv/files/' . $data->db . '/==DOSSIERS==/' . $old_name['nom'], '/srv/files/' . $data->db . '/==DOSSIERS==/' . $data->new_name);
