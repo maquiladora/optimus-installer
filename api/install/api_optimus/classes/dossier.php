@@ -20,6 +20,7 @@ class dossier
 
     $stmt = $this->conn->prepare("SELECT create FROM `" . $data->db . "`.authorizations WHERE email = ? AND resource = 'dossiers.*' AND 'create' = 1");
     $stmt->bindParam(1, $payload['user']->email);
+    echo $payload['user']->email;
     $stmt->execute();
     if ($stmt->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
