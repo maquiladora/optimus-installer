@@ -14,6 +14,19 @@ class dossier
   }
 
 
+  function list($data,$payload)
+  {
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+
+    $dossier = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = :id");
+    $dossier->bindParam(':id', $data->id);
+    $dossier->execute();
+    $dossier->fetch();
+    return array("code" => 200, "data" => $dossier);
+  }
+
+
   function create($data,$payload)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");

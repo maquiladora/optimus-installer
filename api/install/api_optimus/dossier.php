@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, MOVE, OPTIONS");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, MOVE, PATCH, OPTIONS");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type, Accept, Authorization");
 header("Access-Control-Max-Age: 5");
@@ -17,6 +17,9 @@ $db = $database->getConnection();
 $dossier = new dossier($db);
 $data = json_decode(file_get_contents("php://input"));
 
+if ($_SERVER['REQUEST_METHOD']=='GET')
+  $result = $dossier->list($data,$payload);
+
 if ($_SERVER['REQUEST_METHOD']=='PUT')
   $result = $dossier->create($data,$payload);
 
@@ -25,6 +28,9 @@ if ($_SERVER['REQUEST_METHOD']=='MOVE')
 
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
   $result = $dossier->delete($data,$payload);
+
+if ($_SERVER['REQUEST_METHOD']=='PATCH')
+  $result = $dossier->update($data,$payload);
 
 http_response_code($result['code']);
 echo json_encode($result);
