@@ -19,7 +19,7 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
 
     $stmt = $this->conn->prepare("SELECT create FROM `" . $data->db . "`.authorizations WHERE email = ? AND resource = 'dossiers.*' AND 'create' = 1");
-    $stmt->bindParam(1, $payload->user->email);
+    $stmt->bindParam(1, $payload['user']->email);
     if ($stmt->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
