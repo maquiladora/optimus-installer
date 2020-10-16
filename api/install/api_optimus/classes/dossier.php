@@ -53,7 +53,7 @@ class dossier
   }
 
 
-  function rename($data)
+  function rename($data,$payload)
   {
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
     $new_name = $this->conn->query("UPDATE `" . $data->db . "`.dossiers SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
@@ -66,7 +66,7 @@ class dossier
   }
 
 
-  function delete($data)
+  function delete($data,$payload)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
     if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Invalid id");
