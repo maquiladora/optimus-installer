@@ -18,8 +18,8 @@ class dossier
   {
     if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
 
-    $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = ? AND resource = 'dossiers.*' AND `create` = 1");
-    $stmt->bindParam(1, $payload['user']->email);
+    $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `create` = 1");
+    $stmt->bindParam(':email', $payload['user']->email);
     $stmt->execute();
     if ($stmt->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
@@ -68,6 +68,15 @@ class dossier
 
   function delete($data)
   {
+    if (!preg_match("/^[a-z0-9_@.]+$/",$data->db)) return array("code" => 400, "message" => "Invalid database");
+    if (!preg_match("/^\d+$/",$data->id)) return array("code" => 400, "message" => "Invalid id");
+
+    $stmt = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
+    $stmt->bindParam(':email', $payload['user']->email);
+    //$stmt->execute();
+    if ($stmt->rowCount() == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
+
     $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
 
     $interventions_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
