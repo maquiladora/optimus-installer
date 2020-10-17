@@ -21,9 +21,6 @@ if ($_SERVER['REQUEST_METHOD']=='GET')
 else
   $data = json_decode(file_get_contents("php://input"));
 
-
-print_r($data);
-
 if ($_SERVER['REQUEST_METHOD']=='GET')
   $result = $dossier->list($data,$payload);
 
