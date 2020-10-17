@@ -31,7 +31,7 @@ class dossier
     else
     {
       $dossier = $dossier->fetch(PDO::FETCH_ASSOC);
-      $dossier->authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+      $dossier['authorizations'] = $authorizations->fetch(PDO::FETCH_ASSOC);
       return array("code" => 200, "data" => $dossier);
     }
   }
