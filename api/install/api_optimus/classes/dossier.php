@@ -65,7 +65,7 @@ class dossier
     if($stmt->execute())
     {
       $this->id = $this->conn->lastInsertId();
-      return array("code" => 200, "data" => $this);
+      return array("code" => 201, "data" => $this);
     }
     else
       return array("code" => 400, "message" => $stmt->errorInfo()[2]);
@@ -97,7 +97,7 @@ class dossier
     $subscriptions = file_get_contents('/srv/mailboxes/' . $data->db . '/subscriptions');
     $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"), $subscriptions);
     @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions', $subscriptions);
-    return array("code" => 201);
+    return array("code" => 200);
   }
 
 
