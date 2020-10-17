@@ -115,8 +115,6 @@ class dossier
     $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
     if ($dossier->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
-    else
-      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC));
 
     $interventions_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
     if ($interventions_exists > 0)
