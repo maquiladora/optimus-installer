@@ -89,7 +89,7 @@ class dossier
     $authorizations->execute();
     $authorizations = $authorizations->fetch();
     if ($authorizations['write'] !== 1)
-      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action", "auth"=> json_encode($authorizations));
 
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
     if ($old_name->rowCount() == 0)
