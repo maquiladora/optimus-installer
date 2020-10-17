@@ -15,15 +15,14 @@ include_once 'api_optimus/classes/dossier.php';
 $database = new Database();
 $db = $database->getConnection();
 $dossier = new dossier($db);
-$data = json_decode(file_get_contents("php://input"));
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
-{
-  $data = new stdClass();
-  $data->db = $_GET['db'];
-  $data->id = $_GET['id'];
+  $data = json_decode(file_get_contents("php://input"));
+else
+  $data = json_decode($_GET['db']);
+
+if ($_SERVER['REQUEST_METHOD']=='GET')
   $result = $dossier->list($data,$payload);
-}
 
 if ($_SERVER['REQUEST_METHOD']=='PUT')
   $result = $dossier->create($data,$payload);
