@@ -157,7 +157,6 @@ class dossier
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
-
     if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
@@ -165,8 +164,17 @@ class dossier
     if ($exists->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
 
+    $field = $this->conn->prepare("SELECT DISTINCT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = 'dossiers' AND COLUMN_NAME = :field");
+    $field->bindParam(':field', $data->field);
+    if($field->execute())
+      $field = $field->fetch();
+    else
+      return array("code" => 400, "message" => $field->errorInfo()[2]);
+    if ($field['DATA TYPE'] == 'bit' OR ($field['DATA TYPE'] == 'tinyint' OR $field['DATA TYPE'] == 'smallint' OR $field['DATA TYPE'] == 'mediumint'  OR $field['DATA TYPE'] == 'int' OR $field['DATA TYPE'] == 'bigint')
+      $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
+    else
+      $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_STR);
     $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
-    $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
     if($dossier->execute())
       return array("code" => 200);
     else
