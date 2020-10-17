@@ -18,8 +18,18 @@ class dossier
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+
+    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1");
+    $authorize->bindParam(':email', $payload['user']->email);
+    $authorize->execute();
+    if ($authorize->rowCount() == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce dossier");
+
     $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id)->fetch(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $dossier);
+    if ($dossier->rowCount() == 0)
+      return array("code" => 404, "message" => "Ce dossier n'existe pas");
+    else
+      return array("code" => 200, "data" => $dossier);
   }
 
 
@@ -66,6 +76,7 @@ class dossier
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
+    if ($data->new_name == '.' OR $data->new_name = '..') return array("code" => 400, "message" => "Nom de dossier invalide");
     if (!preg_match('/^[a-zA-Z0-9 ._@àâäéèêëïîôöùûüÿç]+$/', $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
     $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1");
