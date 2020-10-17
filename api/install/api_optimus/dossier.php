@@ -35,4 +35,7 @@ if ($_SERVER['REQUEST_METHOD']=='DELETE')
 
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
   $result = $dossier->update($data,$payload);
+
+http_response_code($result['code']);
+echo json_encode($result);
 ?>
