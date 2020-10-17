@@ -170,11 +170,13 @@ class dossier
       $field = $field->fetch();
     else
       return array("code" => 400, "message" => $field->errorInfo()[2]);
+
+    $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
     if ($field['DATA_TYPE'] == 'bit' OR $field['DATA_TYPE'] == 'tinyint' OR $field['DATA_TYPE'] == 'smallint' OR $field['DATA_TYPE'] == 'mediumint'  OR $field['DATA_TYPE'] == 'int' OR $field['DATA_TYPE'] == 'bigint')
       $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
     else
       $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_STR);
-    $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
+
     if($dossier->execute())
       return array("code" => 200);
     else
