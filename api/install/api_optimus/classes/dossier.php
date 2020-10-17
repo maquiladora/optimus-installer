@@ -173,6 +173,8 @@ class dossier
     $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :value WHERE id = " . $data->id);
     if ($field['DATA_TYPE'] == 'bit' OR $field['DATA_TYPE'] == 'tinyint' OR $field['DATA_TYPE'] == 'smallint' OR $field['DATA_TYPE'] == 'mediumint'  OR $field['DATA_TYPE'] == 'int' OR $field['DATA_TYPE'] == 'bigint')
       $dossier->bindParam(':value', $data->value, PDO::PARAM_INT);
+    else if ($field['DATA_TYPE'] == 'date' OR $field['DATA_TYPE'] == 'datetime');
+      $dossier->bindParam(':value', $data->value);
     else
       $dossier->bindParam(':value', $data->value, PDO::PARAM_STR);
 
