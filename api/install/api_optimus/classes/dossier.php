@@ -170,7 +170,7 @@ class dossier
       $field = $field->fetch();
     else
       return array("code" => 400, "message" => $field->errorInfo()[2]);
-    if ($field['DATA TYPE'] == 'bit' OR ($field['DATA TYPE'] == 'tinyint' OR $field['DATA TYPE'] == 'smallint' OR $field['DATA TYPE'] == 'mediumint'  OR $field['DATA TYPE'] == 'int' OR $field['DATA TYPE'] == 'bigint')
+    if ($field['DATA_TYPE'] == 'bit' OR $field['DATA_TYPE'] == 'tinyint' OR $field['DATA_TYPE'] == 'smallint' OR $field['DATA_TYPE'] == 'mediumint'  OR $field['DATA_TYPE'] == 'int' OR $field['DATA_TYPE'] == 'bigint')
       $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
     else
       $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_STR);
