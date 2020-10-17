@@ -29,7 +29,7 @@ class dossier
     if ($dossier->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
     else
-      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC), "authorization" => $authorize->fetch(PDO::FETCH_ASSOC));
+      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC), "authorizations" => $authorize->fetch(PDO::FETCH_ASSOC));
   }
 
 
