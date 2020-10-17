@@ -166,7 +166,7 @@ class dossier
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
 
     $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
-    $dossier->bindParam(':new_value', $data->new_value);
+    $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
     if($dossier->execute())
       return array("code" => 200);
     else
