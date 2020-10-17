@@ -19,7 +19,7 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1");
+    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY length(resource) DESC");
     $authorize->bindParam(':email', $payload['user']->email);
     $authorize->execute();
     if ($authorize->rowCount() == 0)
@@ -29,7 +29,11 @@ class dossier
     if ($dossier->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
     else
-      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC), "authorizations" => $authorize->fetch(PDO::FETCH_ASSOC));
+    {
+      $dossier = $dossier->fetch(PDO::FETCH_ASSOC);
+      $dossier->authorizations = $authorizations->fetch(PDO::FETCH_ASSOC));
+      return array("code" => 200, "data" => $dossier);
+    }
   }
 
 
