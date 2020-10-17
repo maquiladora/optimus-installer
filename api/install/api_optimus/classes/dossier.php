@@ -25,11 +25,11 @@ class dossier
     if ($authorize->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce dossier");
 
-    $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id)->fetch(PDO::FETCH_ASSOC);
+    $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);
     if ($dossier->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
     else
-      return array("code" => 200, "data" => $dossier);
+      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC));
   }
 
 
