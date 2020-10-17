@@ -19,10 +19,11 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY length(resource) DESC");
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
-    if ($authorizations->rowCount() == 0)
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['read'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce dossier");
 
     $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);
@@ -41,10 +42,12 @@ class dossier
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
 
-    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `create` = 1");
-    $authorize->bindParam(':email', $payload['user']->email);
-    $authorize->execute();
-    if ($authorize->rowCount() == 0)
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers'");
+    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->execute();
+    $authorizations->execute();
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['create'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $last_numero = $this->conn->query("SELECT numero FROM `" . $data->db . "`.dossiers WHERE numero LIKE '" . date('y') . "/%' ORDER BY id DESC LIMIT 1")->fetch();
@@ -84,11 +87,11 @@ class dossier
     if ($data->new_name == '.' OR $data->new_name == '..') return array("code" => 400, "message" => "Nom de dossier invalide");
     if (!preg_match('/^[a-zA-Z0-9 ._@\-àâäéèêëïîôöùûüÿç]+$/', $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
-    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1 ORDER BY length(resource) DESC");
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
-    if ($authorizations['write'] != 1)
+    if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action", "auth"=> json_encode($authorizations));
 
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
@@ -111,10 +114,11 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `delete` = 1");
-    $authorize->bindParam(':email', $payload['user']->email);
-    $authorize->execute();
-    if ($authorize->rowCount() == 0)
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
+    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->execute();
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['delete'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
@@ -149,10 +153,11 @@ class dossier
     if (!preg_match("/^[a-z0-9_]+$/", $data->field)) return array("code" => 400, "message" => "Champ invalide");
     //if (!preg_match('/^[a-zA-Z0-9 ._@\-àâäéèêëïîôöùûüÿç]+$/', $data->new_value)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
-    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "' OR resource = 'dossiers." . $data->id . "." . $data->field . "') AND `write` = 1");
+    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "' OR resource = 'dossiers." . $data->id . "." . $data->field . "') ORDER BY length(resource) DESC");
     $authorize->bindParam(':email', $payload['user']->email);
     $authorize->execute();
-    if ($authorize->rowCount() == 0)
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $exists = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);
