@@ -87,8 +87,8 @@ class dossier
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1 ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
-    $authorizations = $authorizations->fetch();
-    if ($authorizations['write'] !== 1)
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['write'] != 1)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action", "auth"=> json_encode($authorizations));
 
     $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
