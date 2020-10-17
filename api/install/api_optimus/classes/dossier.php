@@ -151,7 +151,6 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
     if (!preg_match("/^[a-z0-9_]+$/", $data->field)) return array("code" => 400, "message" => "Champ invalide");
-    //if (!preg_match('/^[a-zA-Z0-9 ._@\-àâäéèêëïîôöùûüÿç]+$/', $data->new_value)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "' OR resource = 'dossiers." . $data->id . "." . $data->field . "') ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $payload['user']->email);
@@ -171,11 +170,11 @@ class dossier
     else
       return array("code" => 400, "message" => $field->errorInfo()[2]);
 
-    $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
+    $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :value WHERE id = " . $data->id);
     if ($field['DATA_TYPE'] == 'bit' OR $field['DATA_TYPE'] == 'tinyint' OR $field['DATA_TYPE'] == 'smallint' OR $field['DATA_TYPE'] == 'mediumint'  OR $field['DATA_TYPE'] == 'int' OR $field['DATA_TYPE'] == 'bigint')
-      $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_INT);
+      $dossier->bindParam(':value', $data->value, PDO::PARAM_INT);
     else
-      $dossier->bindParam(':new_value', $data->new_value, PDO::PARAM_STR);
+      $dossier->bindParam(':value', $data->value, PDO::PARAM_STR);
 
     if($dossier->execute())
       return array("code" => 200);
