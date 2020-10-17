@@ -19,7 +19,7 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY char_length(resource) DESC");
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
     if ($authorizations->rowCount() == 0)
