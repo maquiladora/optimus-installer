@@ -78,7 +78,7 @@ class dossier
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
     $data->new_name = trim($data->new_name);
     if ($data->new_name == '.' OR $data->new_name == '..') return array("code" => 400, "message" => "Nom de dossier invalide");
-    if (!preg_match('/^[a-zA-Z0-9 ._@àâäéèêëïîôöùûüÿç]+$/', $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
+    if (!preg_match('/^[a-zA-Z0-9 ._@\-àâäéèêëïîôöùûüÿç]+$/', $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
     $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `write` = 1");
     $authorize->bindParam(':email', $payload['user']->email);
