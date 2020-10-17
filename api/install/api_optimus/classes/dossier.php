@@ -86,14 +86,18 @@ class dossier
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $data->new_name = trim($data->new_name);
-    $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
+    $old_name = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
+    if ($old_name->rowCount() == 0)
+      return array("code" => 404, "message" => "Ce dossier n'existe pas");
+    else
+      $old_name = $old_name->fetch();
     $new_name = $this->conn->query("UPDATE `" . $data->db . "`.dossiers SET nom = '" . $data->new_name . "' WHERE id = '" . $data->id . "'")->fetch();
     @rename('/srv/files/' . $data->db . '/==DOSSIERS==/' . $old_name['nom'], '/srv/files/' . $data->db . '/==DOSSIERS==/' . $data->new_name);
     @rename('/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '/srv/mailboxes/' . $data->db . '/==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"));
     $subscriptions = file_get_contents('/srv/mailboxes/' . $data->db . '/subscriptions');
     $subscriptions = str_replace('==DOSSIERS==/' . mb_convert_encoding($old_name['nom'], "UTF7-IMAP","UTF-8"), '==DOSSIERS==/' . mb_convert_encoding($data->new_name, "UTF7-IMAP","UTF-8"), $subscriptions);
     @file_put_contents('/srv/mailboxes/' . $data->db . '/subscriptions', $subscriptions);
-    return array("code" => 200);
+    return array("code" => 201);
   }
 
 
@@ -102,13 +106,17 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' AND `delete` = 1");
+    $authorize = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') AND `delete` = 1");
     $authorize->bindParam(':email', $payload['user']->email);
     $authorize->execute();
     if ($authorize->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-    $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'")->fetch();
+    $dossier = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
+    if ($dossier->rowCount() == 0)
+      return array("code" => 404, "message" => "Ce dossier n'existe pas");
+    else
+      return array("code" => 200, "data" => $dossier->fetch(PDO::FETCH_ASSOC));
 
     $interventions_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.interventions WHERE dossier = '" . $data->id . "'")->rowCount();
     if ($interventions_exists > 0)
