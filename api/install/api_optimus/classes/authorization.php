@@ -15,9 +15,7 @@ class authorization
 
     $authorization = $this->conn->query("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = '" . $payload['user']->email . "' AND resource = '" . $data->resource . "'");
     if ($authorization->rowCount() == 0)
-      return array("code" => 404, "message" => "Aucune autorisation sur cette ressource");
-    else
-      return array("code" => 200, "data" => $authorization->fetch(PDO::FETCH_ASSOC));
+      return array($authorization->fetch(PDO::FETCH_ASSOC));
   }
 
 
