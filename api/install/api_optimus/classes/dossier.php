@@ -19,10 +19,10 @@ class dossier
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
-    $authorize = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY length(resource) DESC");
-    $authorize->bindParam(':email', $payload['user']->email);
-    $authorize->execute();
-    if ($authorize->rowCount() == 0)
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') AND `read` = 1 ORDER BY length(resource) DESC");
+    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->execute();
+    if ($authorizations->rowCount() == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce dossier");
 
     $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);
