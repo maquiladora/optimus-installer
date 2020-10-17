@@ -1,6 +1,11 @@
 <?php
 class authorization
 {
+  public function __construct($db)
+  {
+    $this->conn = $db;
+  }
+
   function list($data,$payload)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
