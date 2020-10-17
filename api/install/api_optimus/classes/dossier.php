@@ -157,7 +157,7 @@ class dossier
     $authorizations->bindParam(':email', $payload['user']->email);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
-    print_r($authorizations);
+
     if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
@@ -165,8 +165,12 @@ class dossier
     if ($exists->rowCount() == 0)
       return array("code" => 404, "message" => "Ce dossier n'existe pas");
 
-    $this->conn->query("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = '" . $data->new_value . "' WHERE id = " . $data->id);
-    return array("code" => 200);
+    $dossier = $this->conn->prepare("UPDATE `" . $data->db . "`.dossiers SET `" . $data->field . "` = :new_value WHERE id = " . $data->id);
+    $dossier->bindParam(':new_value', $data->new_value);
+    if($dossier->execute())
+      return array("code" => 200);
+    else
+      return array("code" => 400, "message" => $stmt->errorInfo()[2]);
   }
 }
 ?>
