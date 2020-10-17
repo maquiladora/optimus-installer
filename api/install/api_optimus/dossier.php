@@ -19,7 +19,7 @@ $dossier = new dossier($db);
 if ($_SERVER['REQUEST_METHOD']=='GET')
   $data = json_decode(file_get_contents("php://input"));
 else
-  $data = json_decode($_GET['db']);
+  $data = json_decode(urldecode($_GET['db']));
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
   $result = $dossier->list($data,$payload);
