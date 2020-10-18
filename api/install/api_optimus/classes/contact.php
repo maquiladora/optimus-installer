@@ -47,12 +47,12 @@ class contact
 
     $this->lastname = 'CLIENT ' . time();
 
-    $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.dossiers SET lastname=:lastname");
+    $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.contacts SET lastname=:lastname");
     $contact->bindParam(':lastname', $data->lastname, PDO::PARAM_STR);
     if($contact->execute())
     {
       $this->id = $this->conn->lastInsertId();
-      return array("code" => 201, "data" => $this);
+      return array("code" => 201, "data" => $this, "authorizations" => $authorizations);
     }
     else
       return array("code" => 400, "message" => $contact->errorInfo()[2]);
