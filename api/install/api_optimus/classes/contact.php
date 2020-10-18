@@ -53,7 +53,7 @@ class contact
         $query .= $key.'=:'.$key.',';
         $this->{$key} = $value;
       }
-      $query = substr($query,-1);
+      $query = substr($query,0,-1);
       $contact = $this->conn->prepare($query);
       foreach($data->values as $key => $value)
         $contact->bindParam(':'.$key, $this->{$key});
