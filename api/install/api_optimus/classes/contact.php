@@ -61,7 +61,34 @@ class contact
 
   function delete($data)
   {
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
+    $authorizations->bindParam(':email', $data->user);
+    $authorizations->execute();
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['delete'] == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
+    $contact = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = '" . $data->id . "'");
+    if ($contact->rowCount() == 0)
+      return array("code" => 404, "message" => "Ce dossier n'existe pas");
+    else
+      $contact = $contact->fetch();
+
+    $intervenants_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.dossiers_intervenants WHERE contact = '" . $data->id . "'")->rowCount();
+    if ($intervenants_exists > 0)
+      return array("code" => 400, "message" => "Ce contact ne peut pas être supprimé car il intervient dans un ou plusieurs dossiers");
+
+    //A FAIRE : CHECKER si le contact apparait dans une facture
+    //$factures_exists = $this->conn->query("SELECT id FROM optimus_user_1.interventions WHERE dossier = '" . $data->id . "' AND db IS NOT NULL")->rowCount();
+    //if ($factures_exists > 0)
+      //return array("code" => 400, "message" => "Ce dossier ne peut pas être supprimé car des factures le concernant ont été émises");
+
+    $contact_delete = $this->conn->prepare("DELETE FROM `" . $data->db . "`.contacts WHERE id = ?");
+    $contact_delete->bindParam(':id', $data->id, PDO::PARAM_INT);
+    if($contact_delete->execute())
+      return array("code" => 200);
+    else
+      return array("code" => 400, "message" => $contact_delete->errorInfo()[2]);
   }
 
 

@@ -65,7 +65,7 @@ class dossier
     if($dossier->execute())
     {
       $this->id = $this->conn->lastInsertId();
-      return array("code" => 201, "data" => $this);
+      return array("code" => 201, "data" => $this, "authorizations" => $authorizations);
     }
     else
       return array("code" => 400, "message" => $dossier->errorInfo()[2]);
