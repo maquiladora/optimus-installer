@@ -12,6 +12,8 @@ include_once 'connect.php';
 include_once 'api_allspark/auth.php';
 $data->user = $payload['user']->email;
 
+print_r($data);
+
 $database = new Database();
 $db = $database->getConnection();
 
