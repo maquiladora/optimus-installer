@@ -119,7 +119,7 @@ class dossier_intervenant
     else
       $intervenant_exists = $intervenant_exists->fetch(PDO::FETCH_ASSOC);
 
-    $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $intervenants_exists['dossier'] . "') ORDER BY length(resource) DESC");
+    $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $intervenant_exists['dossier'] . "') ORDER BY length(resource) DESC");
     $authorizations_dossier->bindParam(':email', $payload['user']->email);
     $authorizations_dossier->execute();
     $authorizations_dossier = $authorizations_dossier->fetch(PDO::FETCH_ASSOC);
