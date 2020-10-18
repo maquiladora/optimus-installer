@@ -19,7 +19,7 @@ class dossier_intervenants
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->dossier)) return array("code" => 400, "message" => "Identifiant de dossier invalide");
 
-    $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
+    $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->dossier . "') ORDER BY length(resource) DESC");
     $authorizations_dossier->bindParam(':email', $payload['user']->email);
     $authorizations_dossier->execute();
     $authorizations_dossier = $authorizations_dossier->fetch(PDO::FETCH_ASSOC);
