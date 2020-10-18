@@ -36,10 +36,8 @@ class dossier
 
   function create($data)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
-
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers'");
-    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['create'] == 0)
@@ -76,14 +74,12 @@ class dossier
 
   function rename($data)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
     $data->new_name = trim($data->new_name);
     if ($data->new_name == '.' OR $data->new_name == '..') return array("code" => 400, "message" => "Nom de dossier invalide");
     if (!preg_match('/^[a-zA-Z0-9 ._@\-àâäéèêëïîôöùûüÿç]+$/', $data->new_name)) return array("code" => 400, "message" => "Nom de dossier invalide");
 
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
-    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['write'] == 0)
@@ -106,11 +102,8 @@ class dossier
 
   function delete($data)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
-
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
-    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['delete'] == 0)
@@ -142,14 +135,12 @@ class dossier
   }
 
 
-  function update($data,$payload)
+  function update($data)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
     if (!preg_match("/^[a-z0-9_]+$/", $data->field)) return array("code" => 400, "message" => "Champ invalide");
 
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "' OR resource = 'dossiers." . $data->id . "." . $data->field . "') ORDER BY length(resource) DESC");
-    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['write'] == 0)
