@@ -25,7 +25,7 @@ else
 
 if (@$path[4])
 {
-  if (preg_match("/^\d+$/", @$path[4]))
+  if (@$path[4] != '' AND preg_match("/^\d+$/", @$path[4]))
     $data->id = intval($path[4]);
   else
   {
