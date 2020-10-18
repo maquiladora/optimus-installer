@@ -1,6 +1,8 @@
 <?php
-if ($path[2] == 'contact')
-  include_once 'contact.php';
-else if ($path[2] == 'dossier')
-  include_once 'dossier.php';
+if ($path[2] == 'contacts')
+  include_once 'contacts.php';
+else if ($path[2] == 'dossiers')
+  include_once 'dossiers.php';
+else if ($path[2] == 'dossiers_intervenants')
+  include_once 'dossiers_intervenants.php';
 ?>
