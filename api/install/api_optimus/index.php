@@ -5,7 +5,7 @@ else
   $data = json_decode(file_get_contents("php://input"));
 
 if (!$data)
-  $data = array();
+  $data = (object) array();
 
 if (@$path[2])
 {
