@@ -83,8 +83,8 @@ class dossier_intervenant
     $intervenant_exists->bindParam(':qualite', $data->qualite);
     $intervenant_exists->bindParam(':lien', $data->lien);
     $intervenant_exists->execute();
-    if ($intervenant_exists->numRows() > 0)
-        return array("code" => 400, "message" => "Cet intervenant a déjà été ajouté");
+    if ($intervenant_exists->rowCount() > 0)
+        return array("code" => 400, "message" => "Cet intervenant existe déjà");
 
     $this->dossier = $data->dossier;
     $this->contact = $data->contact;
