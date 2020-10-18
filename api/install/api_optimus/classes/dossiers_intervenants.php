@@ -77,7 +77,7 @@ class dossier_intervenant
     if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-    $intervenant_exists = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND contact = :contact AND qualite = qualite AND lien = :lien");
+    $intervenant_exists = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND contact = :contact AND qualite = :qualite AND lien = :lien");
     $intervenant_exists->bindParam(':dossier', $data->dossier);
     $intervenant_exists->bindParam(':contact', $data->contact);
     $intervenant_exists->bindParam(':qualite', $data->qualite);
