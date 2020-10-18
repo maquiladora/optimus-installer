@@ -113,7 +113,7 @@ class dossier_intervenant
     $intervenant_exists = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE id = :id");
     $intervenant_exists->bindParam(':id', $data->id);
     $intervenant_exists->execute();
-    if ($intervenant_exists->rowCount() > 0)
+    if ($intervenant_exists->rowCount() == 0)
       return array("code" => 404, "message" => "Cet intervenant n'existe pas");
     else
       $intervenants_exists = $intervenant_exists->fetch(PDO::FETCH_ASSOC);
