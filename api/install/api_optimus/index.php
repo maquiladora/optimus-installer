@@ -18,7 +18,7 @@ else
   die(json_encode(array("code" => 400, "message" => "Base de données invalide")));
 }
 
-if (@!$path[3] OR   if (preg_match("/^[a-z0-9_]+$/", @$path[3]))
+if (@!$path[3] OR !preg_match("/^[a-z0-9_]+$/", @$path[3]))
 {
   http_response_code(400);
   die(json_encode(array("code" => 400, "message" => "Resource invalide")));
