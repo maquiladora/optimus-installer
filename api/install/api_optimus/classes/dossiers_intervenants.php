@@ -34,13 +34,8 @@ class dossier_intervenants
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux contacts");
 
     $intervenants = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = " . $data->dossier);
-    if ($intervenants->rowCount() == 0)
-      return array("code" => 404, "message" => "Aucun intervenant n'a été trouvé pour ce dossier");
-    else
-    {
-      $intervenants = $intervenants->fetchAll(PDO::FETCH_ASSOC);
-      return array("code" => 200, "data" => $intervenants, "authorizations" => $authorizations_dossier);
-    }
+    $intervenants = $intervenants->fetchAll(PDO::FETCH_ASSOC);
+    return array("code" => 200, "data" => $intervenants, "authorizations" => $authorizations_dossier);
   }
 }
 
