@@ -23,9 +23,9 @@ else
   die(json_encode(array("code" => 400, "message" => "Resource invalide")));
 }
 
-if (@$path[4])
+if (@$path[4] AND @$path[4] !== '')
 {
-  if (@$path[4] != '' AND preg_match("/^\d+$/", @$path[4]))
+  if (AND preg_match("/^\d+$/", @$path[4]))
     $data->id = intval($path[4]);
   else
   {
