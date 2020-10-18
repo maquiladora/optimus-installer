@@ -14,7 +14,7 @@ if (@$path[2])
 }
 else
 {
-  http_response_code(400);
+  //http_response_code(400);
   die(json_encode(array("code" => 400, "message" => "Base de données invalide")));
   exit;
 }
