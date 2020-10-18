@@ -39,7 +39,7 @@ class dossier_intervenants
     else
     {
       $intervenants = $intervenants->fetchAll(PDO::FETCH_ASSOC);
-      return array("code" => 200, "data" => $dossier, "authorizations" => $authorizations_dossier);
+      return array("code" => 200, "data" => $intervenants, "authorizations" => $authorizations_dossier);
     }
   }
 }
