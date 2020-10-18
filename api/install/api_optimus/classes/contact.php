@@ -34,19 +34,19 @@ class contact
   }
 
 
-  function create($data,)
+  function create($data)
   {
 
   }
 
 
-  function delete($data,)
+  function delete($data)
   {
 
   }
 
 
-  function update($data,)
+  function update($data)
   {
     if (!preg_match("/^[a-z0-9_]+$/", $data->field)) return array("code" => 400, "message" => "Champ invalide");
 
