@@ -48,14 +48,14 @@ class contact
     $query = "INSERT INTO `" . $data->db . "`.contacts SET ";
     if ($data->values)
     {
-      foreach($values as $key => $value)
+      foreach($data->values as $key => $value)
       {
         $query .= $key.'=:'.$key.',';
         $this->{$key} = $value;
       }
       $query = substr($query,-1);
       $contact = $this->conn->prepare($query);
-      foreach($values as $key => $value)
+      foreach($data->values as $key => $value)
         $contact->bindParam(':'.$key, $this->{$key});
     }
     else
