@@ -27,13 +27,13 @@ else
 }
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
-  $result = $intervenants->list($data,$payload);
+  $result = $intervenants->list($data);
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-  $result = $intervenants->create($data,$payload);
+  $result = $intervenants->create($data);
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-  $result = $intervenants->delete($data,$payload);
+  $result = $intervenants->delete($data);
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
-  $result = $intervenants->update($data,$payload);
+  $result = $intervenants->update($data);
 
 http_response_code($result['code']);
 echo json_encode($result);
