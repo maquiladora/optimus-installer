@@ -27,25 +27,21 @@ class contacts
 
     if (@$data->categorie)
     {
-      $contact = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts WHERE categorie = :categorie");
-      $contact->bindParam(':categorie', $data->categorie, PDO::PARAM_INT);
+      $contacts = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts WHERE categorie = :categorie");
+      $contacts->bindParam(':categorie', $data->categorie, PDO::PARAM_INT);
     }
     else
-      $contact = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts");
+      $contacts = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts");
 
-    if($contact->execute())
+    if($contacts->execute())
     {
-      $contact = $contact->fetchAll(PDO::FETCH_ASSOC);
-      return array("code" => 200, "data" => $contact, 'authorizations' => $authorizations_contacts);
+      $contacts = $contacts->fetchAll(PDO::FETCH_ASSOC);
+      return array("code" => 200, "data" => $contacts, 'authorizations' => $authorizations_contacts);
     }
     else
-      return array("code" => 400, "message" => $contact->errorInfo()[2]);
+      return array("code" => 400, "message" => $contacts->errorInfo()[2]);
 
 
   }
-}
-
-
-
 }
 ?>

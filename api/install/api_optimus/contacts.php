@@ -18,12 +18,12 @@ $db = $database->getConnection();
 if (@$data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
 {
   include_once 'api_optimus/classes/contact.php';
-  $intervenants = new contact($db);
+  $contacts = new contact($db);
 }
 else
 {
   include_once 'api_optimus/classes/contacts.php';
-  $intervenants = new contacts($db);
+  $contacts = new contacts($db);
 }
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
