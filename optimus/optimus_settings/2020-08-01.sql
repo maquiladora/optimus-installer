@@ -354,6 +354,7 @@ CREATE TABLE IF NOT EXISTS `contacts_categories` (
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
+INSERT INTO `contacts_categories` VALUES (10,'Clients');
 INSERT INTO `contacts_categories` VALUES (30,'Avocats');
 INSERT INTO `contacts_categories` VALUES (50,'Juridictions');
 INSERT INTO `contacts_categories` VALUES (60,'Huissiers');
