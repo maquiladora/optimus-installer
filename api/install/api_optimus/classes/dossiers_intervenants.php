@@ -81,7 +81,7 @@ class dossier_intervenant
     $this->dossier = $data->dossier;
     $this->contact = $data->contact;
     $this->qualite = $data->qualite;
-    $this->lien = $data->qualite OR 0;
+    $this->lien = $data->lien OR 0;
 
     $intervenant = $this->conn->prepare("INSERT INTO `" . $data->db . "`.dossiers_intervenants SET dossier = :dossier, contact = :contact, qualite = :qualite, lien = :lien");
     $intervenant->bindParam(':dossier', $this->dossier);
