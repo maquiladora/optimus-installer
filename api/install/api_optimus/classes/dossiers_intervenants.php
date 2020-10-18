@@ -117,7 +117,7 @@ class dossier_intervenant
     if ($intervenant_exists->rowCount() == 0)
       return array("code" => 404, "message" => "Cet intervenant n'existe pas");
     else
-      $intervenants_exists = $intervenant_exists->fetch(PDO::FETCH_ASSOC);
+      $intervenant_exists = $intervenant_exists->fetch(PDO::FETCH_ASSOC);
 
     $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $intervenants_exists['dossier'] . "') ORDER BY length(resource) DESC");
     $authorizations_dossier->bindParam(':email', $payload['user']->email);
