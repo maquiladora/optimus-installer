@@ -109,7 +109,7 @@ class contact
     if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-    $exists = $this->conn->query("SELECT nom FROM `" . $data->db . "`.contacts WHERE id = " . $data->id);
+    $exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.contacts WHERE id = " . $data->id);
     if ($exists->rowCount() == 0)
       return array("code" => 404, "message" => "Ce contact n'existe pas");
 
