@@ -45,10 +45,27 @@ class contact
     if ($authorizations['create'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-    $this->lastname = 'CLIENT ' . time();
+    $query = "INSERT INTO `" . $data->db . "`.contacts SET ";
+    if ($data->values)
+    {
+      foreach($values as $key => $value)
+      {
+        $query .= $key.'=:'.$key.',';
+        $this->{$key} = $value;
+      }
+      $query = substr($query,-1);
+      $contact = $this->conn->prepare($query);
+      foreach($values as $key => $value)
+        $contact->bindParam(':'.$key, $this->{$key});
+    }
+    else
+    {
+      $this->lastname = 'CLIENT ' . time();
+      $query .= "lastname=:lastname";
+      $contact = $this->conn->prepare($query);
+      $contact->bindParam(':lastname', $this->lastname);
+    }
 
-    $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.contacts SET lastname=:lastname");
-    $contact->bindParam(':lastname', $this->lastname, PDO::PARAM_STR);
     if($contact->execute())
     {
       $this->id = $this->conn->lastInsertId();
