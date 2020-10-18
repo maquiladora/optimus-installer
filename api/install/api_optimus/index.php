@@ -7,16 +7,12 @@ else
 if (!$data)
   $data = (object) array();
 
-if (@$path[2])
-{
-  if (preg_match("/^[a-z0-9_@.]+$/", @$path[2]))
-    $data->db = $path[2];
-}
+if (@$path[2] AND preg_match("/^[a-z0-9_@.]+$/", @$path[2]))
+  $data->db = $path[2];
 else
 {
-  //http_response_code(400);
+  http_response_code(400);
   die(json_encode(array("code" => 400, "message" => "Base de données invalide")));
-  exit;
 }
 
 if (@!$path[3] OR !preg_match("/^[a-z0-9_]+$/", @$path[3]))
