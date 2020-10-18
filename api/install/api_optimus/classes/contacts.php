@@ -13,7 +13,7 @@ class contacts
     $this->conn = $db;
   }
 
-  function list()
+  function list($data,$payload)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->categorie)) return array("code" => 400, "message" => "Identifiant de categorie invalide");
