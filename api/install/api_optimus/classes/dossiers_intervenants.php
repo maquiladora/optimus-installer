@@ -81,7 +81,7 @@ class dossier_intervenant
     $intervenant_exists->bindParam(':dossier', $data->dossier);
     $intervenant_exists->bindParam(':contact', $data->contact);
     $intervenant_exists->bindParam(':qualite', $data->qualite);
-    $intervenant_exists->bindParam(':lien', $data->lien);
+    $intervenant_exists->bindParam(':lien', $data->lien OR 0);
     $intervenant_exists->execute();
     if ($intervenant_exists->rowCount() > 0)
         return array("code" => 400, "message" => "Cet intervenant existe déjà");
@@ -101,6 +101,35 @@ class dossier_intervenant
       $this->id = $this->conn->lastInsertId();
       return array("code" => 201, "data" => $this);
     }
+    else
+      return array("code" => 400, "message" => $stmt->errorInfo()[2]);
+  }
+
+  function delete($data,$payload)
+  {
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant de dossier invalide");
+
+    $intervenant_exists = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE id = :id");
+    $intervenant_exists->bindParam(':id', $data->id);
+    $intervenant_exists->execute();
+    if ($intervenant_exists->rowCount() > 0)
+      return array("code" => 404, "message" => "Cet intervenant n'existe pas");
+    else
+      $intervenants_exists = $intervenant_exists->fetch(PDO::FETCH_ASSOC);
+
+    $authorizations_dossier = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $intervenants_exists['dossier'] . "') ORDER BY length(resource) DESC");
+    $authorizations_dossier->bindParam(':email', $payload['user']->email);
+    $authorizations_dossier->execute();
+    $authorizations_dossier = $authorizations_dossier->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations_dossier['write'] == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour modifier ce dossier");
+
+    $intervenant = $this->conn->prepare("DELETE FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND (contact=:contact OR lien=:contact)");
+    $intervenant->bindParam(':dossier', $intervenants_exists['dossier']);
+    $intervenant->bindParam(':contact', $intervenants_exists['contact']);
+    if(!$intervenant->execute())
+      return array("code" => 200);
     else
       return array("code" => 400, "message" => $stmt->errorInfo()[2]);
   }
