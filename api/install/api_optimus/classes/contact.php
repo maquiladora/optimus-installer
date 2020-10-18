@@ -23,7 +23,9 @@ class contact
     if ($authorizations['read'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce contact");
 
-    $contact = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts WHERE id = " . $data->id);
+    $contact = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts WHERE id = :id");
+    $contact->bindParam(':id', $data->id, PDO::PARAM_INT);
+    $contact->execute();
     if ($contact->rowCount() == 0)
       return array("code" => 404, "message" => "Ce contact n'existe pas");
     else

@@ -1,5 +1,5 @@
 <?php
-class dossier_intervenant
+class dossiers_intervenant
 {
   private $conn;
 
