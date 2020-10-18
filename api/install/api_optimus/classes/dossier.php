@@ -16,11 +16,8 @@ class dossier
 
   function list($data,$payload)
   {
-    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
-    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
-
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
-    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['read'] == 0)
