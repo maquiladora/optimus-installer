@@ -27,6 +27,7 @@ class contacts
 
     if (@$data->categorie)
     {
+      echo $data->categorie;
       $contacts = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts AND categorie = :categorie");
       $contacts->bindParam(':categorie', $data->categorie, PDO::PARAM_INT);
       $contacts->execute();
