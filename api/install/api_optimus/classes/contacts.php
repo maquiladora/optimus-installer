@@ -34,12 +34,14 @@ class contacts
       $contacts = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts");
 
     if($contacts->execute())
-      return array("code" => 200);
+    {
+      $contacts = $contacts->fetchAll(PDO::FETCH_ASSOC);
+      return array("code" => 200, "data" => $contacts, 'authorizations' => $authorizations_contacts);
+    }
     else
       return array("code" => 400, "message" => $contacts->errorInfo()[2]);
 
-    $contacts = $contacts->fetchAll(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $contacts, 'authorizations' => $authorizations_contacts);
+
   }
 }
 
