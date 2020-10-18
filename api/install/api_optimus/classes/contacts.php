@@ -15,8 +15,10 @@ class contacts
 
   function list($data)
   {
+    if (@$data->categorie AND !preg_match("/^\d+$/", $data->categorie)) return array("code" => 400, "message" => "Identifiant de categorie invalide");
+
     $authorizations_contacts = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'contacts' ORDER BY length(resource) DESC");
-    $authorizations_contacts->bindParam(':email', $data->user);
+    $authorizations_contacts->bindParam(':email', $data->user, PDO::PARAM_STR);
     $authorizations_contacts->execute();
     $authorizations_contacts = $authorizations_contacts->fetch(PDO::FETCH_ASSOC);
     if ($authorizations_contacts['read'] == 0)
@@ -37,6 +39,8 @@ class contacts
     }
     else
       return array("code" => 400, "message" => $contacts->errorInfo()[2]);
+
+
   }
 }
 ?>
