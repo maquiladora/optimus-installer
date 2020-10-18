@@ -85,5 +85,6 @@ class contact
       return array("code" => 200);
     else
       return array("code" => 400, "message" => $contact->errorInfo()[2]);
+    }
   }
   ?>
