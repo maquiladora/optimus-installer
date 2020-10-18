@@ -96,7 +96,5 @@ class dossier_intervenant
     else
       return array("code" => 400, "message" => $stmt->errorInfo()[2]);
   }
-
-
-
+}
 ?>
