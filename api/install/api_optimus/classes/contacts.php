@@ -27,10 +27,12 @@ class contacts
 
     if (@$data->categorie)
     {
-      echo $data->categorie;
       $contacts = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.contacts AND categorie = :categorie");
       $contacts->bindParam(':categorie', $data->categorie, PDO::PARAM_INT);
-      $contacts->execute();
+      if($contacts->execute())
+        return array("code" => 200);
+      else
+        return array("code" => 400, "message" => $contacts->errorInfo()[2]);
     }
     else
       $contacts = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts");
