@@ -63,7 +63,24 @@ class contact
 
   function list($data,$payload)
   {
+    if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
+    if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
 
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' or resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
+    $authorizations->bindParam(':email', $payload['user']->email);
+    $authorizations->execute();
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['read'] == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce contact");
+
+    $contact = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);
+    if ($contact->rowCount() == 0)
+      return array("code" => 404, "message" => "Ce contact n'existe pas");
+    else
+    {
+      $contact = $contact->fetch(PDO::FETCH_ASSOC);
+      return array("code" => 200, "data" => $contact, "authorizations" => $authorizations);
+    }
   }
 
 
