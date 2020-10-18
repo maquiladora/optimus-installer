@@ -13,7 +13,7 @@ class dossiers
     $this->conn = $db;
   }
 
-  function list()
+  function list($data)
   {
 
   }

@@ -10,11 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 include_once 'config.php';
 include_once 'connect.php';
 include_once 'api_allspark/auth.php';
+$data->user = $payload['user']->email;
 
 $database = new Database();
 $db = $database->getConnection();
 
-if ($data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
+if (@$data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
 {
   include_once 'api_optimus/classes/dossier.php';
   $dossiers = new dossier($db);
@@ -26,15 +27,15 @@ else
 }
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
-  $result = $dossiers->list($data,$payload);
+  $result = $dossiers->list($data);
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-  $result = $dossiers->create($data,$payload);
+  $result = $dossiers->create($data);
 if ($_SERVER['REQUEST_METHOD']=='MOVE')
-  $result = $dossiers->rename($data,$payload);
+  $result = $dossiers->rename($data);
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-  $result = $dossiers->delete($data,$payload);
+  $result = $dossiers->delete($data);
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
-  $result = $dossiers->update($data,$payload);
+  $result = $dossiers->update($data);
 
 http_response_code($result['code']);
 echo json_encode($result);
