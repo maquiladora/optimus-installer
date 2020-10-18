@@ -37,7 +37,7 @@ class dossier
   function create($data)
   {
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers'");
-    $authorizations->bindParam(':email', $data->user);
+    $authorizations->bindParam(':email', $data->user, PDO::PARAM_INT);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['create'] == 0)
@@ -143,7 +143,7 @@ class dossier
     $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
-    if ($authorizations['write'] == 0) 
+    if ($authorizations['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $exists = $this->conn->query("SELECT nom FROM `" . $data->db . "`.dossiers WHERE id = " . $data->id);

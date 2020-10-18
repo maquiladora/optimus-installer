@@ -38,7 +38,21 @@ class contact
 
   function create($data)
   {
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'contacts'");
+    $authorizations->bindParam(':email', $data->user, PDO::PARAM_STR);
+    $authorizations->execute();
+    $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+    if ($authorizations['create'] == 0)
+      return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
+    $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.dossiers");
+    if($dossier->execute())
+    {
+      $this->id = $this->conn->lastInsertId();
+      return array("code" => 201, "data" => $this);
+    }
+    else
+      return array("code" => 400, "message" => $contact->errorInfo()[2]);
   }
 
 
