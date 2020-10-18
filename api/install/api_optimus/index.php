@@ -1,8 +1,8 @@
 <?php
 $data = array();
 
-if ($_SERVER['REQUEST_METHOD']=='GET')
-  $data = json_decode(urldecode(@$_GET['data']));
+if (@$_GET['data'] && $_SERVER['REQUEST_METHOD']=='GET')
+  $data = json_decode(urldecode($_GET['data']));
 else
   $data = json_decode(file_get_contents("php://input"));
 
