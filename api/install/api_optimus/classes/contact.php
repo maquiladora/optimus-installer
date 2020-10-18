@@ -72,7 +72,7 @@ class contact
       return array("code" => 201, "data" => $this, "authorizations" => $authorizations);
     }
     else
-      return array("code" => 400, "message" => $contact->errorInfo()[2]);
+      return array("code" => 400, "message" => $contact->errorInfo()[2] . ' ' . $query);
   }
 
 
