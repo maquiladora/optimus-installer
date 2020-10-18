@@ -33,17 +33,17 @@ if (@$path[4])
 print_r($data);
 
 
-if ($path[3] == 'contacts' AND $data->id)
+if ($path[3] == 'contacts' AND @$data->id)
   include_once 'contact.php';
 else if ($path[3] == 'contacts')
   include_once 'contacts.php';
 
-if ($path[3] == 'dossiers' AND $data->id)
+if ($path[3] == 'dossiers' AND @$data->id)
   include_once 'dossier.php';
 else if ($path[3] == 'dossiers')
-  include_once 'dossier.php';
+  include_once 'dossiers.php';
 
-if ($path[3] == 'dossiers_intervenants' AND $data->id)
+if ($path[3] == 'dossiers_intervenants' AND @$data->id)
   include_once 'dossiers_intervenant.php';
 else if ($path[3] == 'dossiers_intervenants')
   include_once 'dossiers_intervenants.php';
