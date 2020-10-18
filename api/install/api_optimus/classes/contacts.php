@@ -34,7 +34,7 @@ class contacts
     else
       $contacts = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts");
 
-    $contacts = $contacts->fetch(PDO::FETCH_ASSOC);
+    $contacts = $contacts->fetchAll(PDO::FETCH_ASSOC);
     $contacts['authorizations'] = $authorizations_contacts;
     return array("code" => 200, "data" => $contacts);
   }
