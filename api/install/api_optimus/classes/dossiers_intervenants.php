@@ -64,11 +64,11 @@ class dossier_intervenant
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->dossier)) return array("code" => 400, "message" => "Identifiant de dossier invalide");
-    if ($data->dossier > 0) return array("code" => 400, "message" => "Un identifiant de dossier doit être renseigné");
+    if ($data->dossier == 0) return array("code" => 400, "message" => "Un identifiant de dossier doit être renseigné");
     if (!preg_match("/^\d+$/", $data->contact)) return array("code" => 400, "message" => "Identifiant intervenant invalide");
-    if ($data->contact > 0) return array("code" => 400, "message" => "Un identifiant d'intervenant doit être renseigné");
+    if ($data->contact == 0) return array("code" => 400, "message" => "Un identifiant d'intervenant doit être renseigné");
     if (!preg_match("/^\d+$/", $data->qualite)) return array("code" => 400, "message" => "Identifiant qualite invalide");
-    if ($data->qualite > 0) return array("code" => 400, "message" => "Un identifiant qualite doit être renseigné");
+    if ($data->qualite == 0) return array("code" => 400, "message" => "Un identifiant qualite doit être renseigné");
     if (!preg_match("/^\d+$/", $data->lien)) return array("code" => 400, "message" => "Identifiant lien invalide");
 
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers'");

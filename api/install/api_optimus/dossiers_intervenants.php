@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD']=='GET')
 else
   $data = json_decode(file_get_contents("php://input"));
 
-if ($data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
+if (@$data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
   $intervenants = new dossier_intervenant($db);
 else
   $intervenants = new dossier_intervenants($db);
