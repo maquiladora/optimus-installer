@@ -15,7 +15,7 @@ if (@$path[2])
 else
 {
   http_response_code(400);
-  die({"code": 400, "message": "Base de données invalide"});
+  die('{"code": 400, "message": "Base de données invalide"}');
 }
 
 if (@!$path[3] OR !preg_match("/^[a-z0-9_]+$/", @$path[3]))
