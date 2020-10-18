@@ -49,7 +49,7 @@ class contact
 
     $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.dossiers SET lastname=:lastname");
     $contact->bindParam(':lastname', $data->lastname, PDO::PARAM_STR);
-    if($dossier->execute())
+    if($contact->execute())
     {
       $this->id = $this->conn->lastInsertId();
       return array("code" => 201, "data" => $this);
