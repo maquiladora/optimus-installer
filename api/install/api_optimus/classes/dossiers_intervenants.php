@@ -33,14 +33,13 @@ class dossier_intervenants
     if ($authorizations_contacts['read'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux contacts");
 
-    $dossier = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = " . $data->dossier);
-    if ($dossier->rowCount() == 0)
+    $intervenants = $this->conn->query("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = " . $data->dossier);
+    if ($intervenants->rowCount() == 0)
       return array("code" => 404, "message" => "Aucun intervenant n'a été trouvé pour ce dossier");
     else
     {
-      $dossier = $dossier->fetch(PDO::FETCH_ASSOC);
-      $dossier['authorizations'] = $authorizations_dossier;
-      return array("code" => 200, "data" => $dossier);
+      $intervenants = $intervenants->fetchAll(PDO::FETCH_ASSOC);
+      return array("code" => 200, "data" => $dossier, "authorizations" => $authorizations_dossier);
     }
   }
 }
