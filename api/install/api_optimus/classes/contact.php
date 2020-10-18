@@ -48,7 +48,7 @@ class contact
     $this->lastname = 'CLIENT ' . time();
 
     $contact = $this->conn->prepare("INSERT INTO `" . $data->db . "`.contacts SET lastname=:lastname");
-    $contact->bindParam(':lastname', $data->lastname, PDO::PARAM_STR);
+    $contact->bindParam(':lastname', $this->lastname, PDO::PARAM_STR);
     if($contact->execute())
     {
       $this->id = $this->conn->lastInsertId();
