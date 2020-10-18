@@ -28,6 +28,8 @@ if (@$path[4])
   }
 }
 
+print_r($data);
+
 
 if ($path[3] == 'contacts' AND $data->id)
   include_once 'contact.php';
