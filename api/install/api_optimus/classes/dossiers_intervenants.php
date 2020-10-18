@@ -102,8 +102,9 @@ class dossier_intervenant
       return array("code" => 201, "data" => $this);
     }
     else
-      return array("code" => 400, "message" => $stmt->errorInfo()[2]);
+      return array("code" => 400, "message" => $intervenant->errorInfo()[2]);
   }
+
 
   function delete($data,$payload)
   {
@@ -125,13 +126,24 @@ class dossier_intervenant
     if ($authorizations_dossier['write'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour modifier ce dossier");
 
-    $intervenant = $this->conn->prepare("DELETE FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND (contact=:contact OR lien=:contact)");
-    $intervenant->bindParam(':dossier', $intervenants_exists['dossier']);
-    $intervenant->bindParam(':contact', $intervenants_exists['contact']);
-    if(!$intervenant->execute())
-      return array("code" => 200);
-    else
-      return array("code" => 400, "message" => $stmt->errorInfo()[2]);
+    $intervenant_delete = $this->conn->prepare("DELETE FROM `" . $data->db . "`.dossiers_intervenants WHERE id = :id");
+    $intervenant_delete->bindParam(':id', $data->id);
+    if(!$intervenant_delete->execute())
+      return array("code" => 400, "message" => $intervenant_delete->errorInfo()[2]);
+
+    $intervenant_exists_encore = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND contact=:contact");
+    $intervenant_exists_encore->bindParam(':dossier', $intervenant_exists['dossier']);
+    $intervenant_exists_encore->bindParam(':contact', $intervenant_exists['contact']);
+    $intervenant_exists_encore->execute();
+    if ($intervenant_exists_encore->rowCount() == 0)
+    {
+      $intervenant_delete_lien = $this->conn->prepare("DELETE FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND lien=:contact");
+      $intervenant_delete_lien->bindParam(':dossier', $intervenant_exists['dossier']);
+      $intervenant_delete_lien->bindParam(':contact', $intervenant_exists['contact']);
+      if(!$intervenant_delete_lien->execute())
+        return array("code" => 400, "message" => $intervenant_delete_lien->errorInfo()[2]);
+    }
+    return array("code" => 200);
   }
 }
 ?>
