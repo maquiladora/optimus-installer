@@ -36,8 +36,13 @@ if (@$path[4] OR substr($url['path'],-1)=='/')
 
 if ($data->resource == 'contacts')
   include_once 'contacts.php';
-if ($data->resource ==  'dossiers')
+else if ($data->resource ==  'dossiers')
   include_once 'dossiers.php';
-if ($data->resource == 'dossiers_intervenants')
+else if ($data->resource == 'dossiers_intervenants')
   include_once 'dossiers_intervenants.php';
+else
+{
+  http_response_code(404);
+  die(json_encode(array("code" => 404, "message" => "Resource inconnue")));
+}
 ?>
