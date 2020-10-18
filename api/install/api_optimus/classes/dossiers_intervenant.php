@@ -23,7 +23,7 @@ class dossiers_intervenant
     if ($data->qualite == 0) return array("code" => 400, "message" => "Un identifiant qualite doit être renseigné");
     if (!preg_match("/^\d+$/", $data->lien)) return array("code" => 400, "message" => "Identifiant lien invalide");
 
-    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
+    $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' OR resource = 'dossiers." . $data->dossier . "') ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $data->user);
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
