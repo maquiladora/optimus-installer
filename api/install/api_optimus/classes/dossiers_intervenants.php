@@ -78,13 +78,13 @@ class dossier_intervenant
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $intervenant_exists = $this->conn->prepare("SELECT * FROM `" . $data->db . "`.dossiers_intervenants WHERE dossier = :dossier AND contact = :contact AND qualite = qualite AND lien = :lien");
-    $intervenant_exists->bindParam(':dossier', $this->dossier);
-    $intervenant_exists->bindParam(':contact', $this->contact);
-    $intervenant_exists->bindParam(':qualite', $this->qualite);
-    $intervenant_exists->bindParam(':lien', $this->lien);
+    $intervenant_exists->bindParam(':dossier', $data->dossier);
+    $intervenant_exists->bindParam(':contact', $data->contact);
+    $intervenant_exists->bindParam(':qualite', $data->qualite);
+    $intervenant_exists->bindParam(':lien', $data->lien);
     $intervenant_exists->execute();
     if ($interventions_exists->numRows() > 0)
-        return array("code" => 400, "message" => "Cet intervenant a déjà été renseigné");
+        return array("code" => 400, "message" => "Cet intervenant a déjà été ajouté");
 
     $this->dossier = $data->dossier;
     $this->contact = $data->contact;
