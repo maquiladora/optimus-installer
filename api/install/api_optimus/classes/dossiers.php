@@ -15,7 +15,7 @@ class dossiers
 
   function list()
   {
-    
+
   }
 }
 
@@ -65,7 +65,6 @@ class dossier
 
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers'");
     $authorizations->bindParam(':email', $payload['user']->email);
-    $authorizations->execute();
     $authorizations->execute();
     $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
     if ($authorizations['create'] == 0)
