@@ -4,9 +4,6 @@ if (@$_GET['data'] && $_SERVER['REQUEST_METHOD']=='GET')
 else
   $data = json_decode(file_get_contents("php://input"));
 
-print_r($data);
-echo $data->categorie;
-
 if (!$data)
   $data = (object) array();
 
