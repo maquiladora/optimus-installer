@@ -14,7 +14,7 @@ class dossier
   }
 
 
-  function list($data,$payload)
+  function list($data)
   {
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'dossiers' or resource = 'dossiers." . $data->id . "') ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $data->user);
@@ -34,7 +34,7 @@ class dossier
   }
 
 
-  function create($data,$payload)
+  function create($data)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
 
@@ -74,7 +74,7 @@ class dossier
   }
 
 
-  function rename($data,$payload)
+  function rename($data)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
@@ -104,7 +104,7 @@ class dossier
   }
 
 
-  function delete($data,$payload)
+  function delete($data)
   {
     if (!preg_match("/^[a-z0-9_@.]+$/", $data->db)) return array("code" => 400, "message" => "Base de données invalide");
     if (!preg_match("/^\d+$/", $data->id)) return array("code" => 400, "message" => "Identifiant invalide");
