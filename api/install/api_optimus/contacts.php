@@ -26,7 +26,7 @@ else
   $contacts = new contacts($db);
 }
 
-if ($_SERVER['REQUEST_METHOD']=='GET' OR $_SERVER['REQUEST_METHOD']=='POST')
+if ($_SERVER['REQUEST_METHOD']=='GET')
   $result = $contacts->list($data);
 if ($_SERVER['REQUEST_METHOD']=='PUT')
   $result = $contacts->create($data);
