@@ -81,7 +81,7 @@ class dossier_intervenant
     $intervenant_exists->bindParam(':dossier', $data->dossier);
     $intervenant_exists->bindParam(':contact', $data->contact);
     $intervenant_exists->bindParam(':qualite', $data->qualite);
-    $intervenant_exists->bindParam(':lien', $data->lien OR 0);
+    $intervenant_exists->bindParam(':lien', $data->lien);
     $intervenant_exists->execute();
     if ($intervenant_exists->rowCount() > 0)
         return array("code" => 400, "message" => "Cet intervenant existe déjà");
