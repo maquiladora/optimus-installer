@@ -10,30 +10,28 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 include_once 'config.php';
 include_once 'connect.php';
 include_once 'api_allspark/auth.php';
-include_once 'api_optimus/classes/dossiers_intervenants.php';
+$data->user = $payload['user']->email;
 
 $database = new Database();
 $db = $database->getConnection();
 
-if ($_SERVER['REQUEST_METHOD']=='GET')
-  $data = json_decode(urldecode($_GET['data']));
-else
-  $data = json_decode(file_get_contents("php://input"));
-
 if (@$data->id OR $_SERVER['REQUEST_METHOD']=='PUT')
-  $intervenants = new dossier_intervenant($db);
+{
+  include_once 'api_optimus/classes/dossiers_intervenant.php';
+  $intervenants = new dossiers_intervenant($db);
+}
 else
-  $intervenants = new dossier_intervenants($db);
+{
+  include_once 'api_optimus/classes/dossiers_intervenants.php';
+  $intervenants = new dossiers_intervenants($db);
+}
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
   $result = $intervenants->list($data,$payload);
-
 if ($_SERVER['REQUEST_METHOD']=='PUT')
   $result = $intervenants->create($data,$payload);
-
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
   $result = $intervenants->delete($data,$payload);
-
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
   $result = $intervenants->update($data,$payload);
 
