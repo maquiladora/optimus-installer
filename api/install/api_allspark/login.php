@@ -11,8 +11,6 @@ include_once 'config.php';
 include_once 'connect.php';
 include_once 'api_allspark/user.php';
 
-$database = new Database();
-$db = $database->getConnection();
 $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
