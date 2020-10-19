@@ -46,7 +46,7 @@ class contact
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
     $query = "INSERT INTO `" . $data->db . "`.contacts SET ";
-    if ($data->values)
+    if (@$data->values)
     {
       foreach($data->values as $key => $value)
       {
