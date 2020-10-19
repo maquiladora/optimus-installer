@@ -5,6 +5,7 @@ function read($db,$data)
   $settings = $db->prepare("SELECT * FROM `" . $data->db . "`.settings WHERE id LIKE :module");
   $settings->bindValue(':module', $data->module.'.%', PDO::PARAM_STR);
   $settings->execute();
+  $results = array();
   while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
     $results[substr($setting['id'],strlen($data->module)+1)] = $setting['value'];
   return array("code" => 200, "data" => @$results);
