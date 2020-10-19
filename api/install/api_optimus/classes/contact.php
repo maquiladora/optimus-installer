@@ -85,7 +85,7 @@ class contact
     if ($authorizations['delete'] == 0)
       return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-    $contact = $this->conn->query("SELECT nom FROM `" . $data->db . "`.contacts WHERE id = '" . $data->id . "'");
+    $contact = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts WHERE id = '" . $data->id . "'");
     if ($contact->rowCount() == 0)
       return array("code" => 404, "message" => "Ce contact n'existe pas");
     else
