@@ -2,7 +2,7 @@
 function read($db,$data)
 {
   $settings = $db->query("SELECT * FROM `" . $data->db . "`.settings WHERE id LIKE 'dossiers.%'");
-  $settings = $settings->fetch(PDO::FETCH_ASSOC);
+  $settings = $settings->fetchAll(PDO::FETCH_ASSOC);
   return array("code" => 200, "data" => $settings);
 }
 
