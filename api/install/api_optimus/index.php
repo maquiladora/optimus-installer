@@ -53,9 +53,6 @@ include_once 'connect.php';
 include_once 'api_allspark/auth.php';
 $data->user = $payload['user']->email;
 
-$database = new Database();
-$db = $database->getConnection();
-
 //if ($data->resource == 'contacts')
   //include_once 'contacts.php';
 //else if ($data->resource ==  'dossiers')
