@@ -68,15 +68,15 @@ else
 }
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
-  $result = read($data);
+  $result = read($db,$data);
 if ($_SERVER['REQUEST_METHOD']=='POST')
-  $result = create($data);
+  $result = create($db,$data);
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-  $result = replace($data);
+  $result = replace($db,$data);
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
-  $result = modify($data);
+  $result = modify($db,$data);
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-  $result = delete($data);
+  $result = delete($db,$data);
 
 http_response_code($result['code']);
 echo json_encode($result);
