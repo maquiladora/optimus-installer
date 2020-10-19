@@ -10,7 +10,7 @@ function read($db,$data)
   if (@$results)
     return array("code" => 200, "data" => $results);
   else
-    return array("code" => 200);
+    return array("code" => 200, "data" => null);
 }
 
 function create($db,$data)
