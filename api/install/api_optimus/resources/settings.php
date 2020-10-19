@@ -1,9 +1,12 @@
 <?php
 function read($db,$data)
 {
-  $settings = $db->query("SELECT * FROM `" . $data->db . "`.settings WHERE id LIKE 'dossiers.%'");
-  $settings = $settings->fetchAll(PDO::FETCH_ASSOC);
-  return array("code" => 200, "data" => $settings);
+  $settings = $db->prepare("SELECT * FROM `$data->db`.settings WHERE id LIKE :module");
+  $settings->bindParam(':module', $data->module.'.%', PDO::PARAM_STR);
+  $settings->execute(':module', $data->module.'.%', PDO::PARAM_STR);
+  while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
+    $results[$setting['id']] = $setting['value'];
+  return array("code" => 200, "data" => $results);
 }
 
 function create($db,$data)

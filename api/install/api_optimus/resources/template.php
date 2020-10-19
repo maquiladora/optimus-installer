@@ -1,5 +1,5 @@
 <?php
-function read($data)
+function read($db,$data)
 {
   //200 OK
   //404 NOT FOUND
@@ -8,29 +8,32 @@ function read($data)
   //501 NOT IMPLEMENTED
   //return array("code" => int, "message" => text, "data" => array, "authorizations" => array);
 
-  //VALIDATE USER DATA INPUTS
+  //SANITIZE USER DATA INPUTS
   //CHECK AUTHORIZATIONS
-  //EXECUTE COMMAND
+  //PREPARE
+  //BIND
+  //EXECUTE
+  //FETCH
   //RETURN CODE, MESSAGE, RESULT, AUTHORIZATIONS
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
 
-function create($data)
+function create($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
 
-function replace($data)
+function replace($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
 
-function update($data)
+function update($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
 
-function delete($data)
+function delete($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
