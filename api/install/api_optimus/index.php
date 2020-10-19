@@ -71,15 +71,15 @@ else
 }
 
 if ($_SERVER['REQUEST_METHOD']=='GET')
-  $result = $dossiers->read($data);
+  $result = read($data);
 if ($_SERVER['REQUEST_METHOD']=='POST')
-  $result = $dossiers->create($data);
+  $result = create($data);
 if ($_SERVER['REQUEST_METHOD']=='PUT')
-  $result = $dossiers->replace($data);
+  $result = replace($data);
 if ($_SERVER['REQUEST_METHOD']=='PATCH')
-  $result = $dossiers->modify($data);
+  $result = modify($data);
 if ($_SERVER['REQUEST_METHOD']=='DELETE')
-  $result = $dossiers->delete($data);
+  $result = delete($data);
 
 http_response_code($result['code']);
 echo json_encode($result);
