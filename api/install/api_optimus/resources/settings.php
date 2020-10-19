@@ -7,10 +7,7 @@ function read($db,$data)
   $settings->execute();
   while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
     $results[substr($setting['id'],strlen($data->module)+1)] = $setting['value'];
-  if (@$results)
-    return array("code" => 200, "data" => $results);
-  else
-    return array("code" => 200, "data" => null);
+  return array("code" => 200, "data" => @$results);
 }
 
 function create($db,$data)
