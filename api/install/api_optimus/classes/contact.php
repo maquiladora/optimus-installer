@@ -100,7 +100,7 @@ class contact
     //if ($factures_exists > 0)
       //return array("code" => 400, "message" => "Ce dossier ne peut pas être supprimé car des factures le concernant ont été émises");
 
-    $contact_delete = $this->conn->prepare("DELETE FROM `" . $data->db . "`.contacts WHERE id = ?");
+    $contact_delete = $this->conn->prepare("DELETE FROM `" . $data->db . "`.contacts WHERE id = :id");
     $contact_delete->bindParam(':id', $data->id, PDO::PARAM_INT);
     if($contact_delete->execute())
       return array("code" => 200);
