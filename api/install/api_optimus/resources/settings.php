@@ -6,7 +6,7 @@ function read($db,$data)
   $settings->bindValue(':module', $data->module.'.%', PDO::PARAM_STR);
   $settings->execute();
   while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
-    $results[substr($setting['id'],0,strlen($data->module))] = $setting['value'];
+    $results[substr($setting['id'],strlen($data->module)+1)] = $setting['value'];
   return array("code" => 200, "data" => $results);
 }
 
