@@ -1,6 +1,7 @@
 <?php
 function read($db,$data)
 {
+  if (!preg_match('/^[a-z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
   $settings = $db->prepare("SELECT * FROM `" . $data->db . "`.settings WHERE id LIKE :module");
   $settings->bindValue(':module', $data->module.'.%', PDO::PARAM_STR);
   $settings->execute();
