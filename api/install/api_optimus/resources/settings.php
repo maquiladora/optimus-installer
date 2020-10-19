@@ -2,7 +2,7 @@
 function read($db,$data)
 {
   $settings = $db->prepare("SELECT * FROM `$data->db`.settings WHERE id LIKE :module");
-  $settings->bindParam(':module', $data->module.'.%', PDO::PARAM_STR);
+  $settings->bindParam(':module', 'dossiers.%', PDO::PARAM_STR);
   $settings->execute();
   while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
     $results[$setting['id']] = $setting['value'];
