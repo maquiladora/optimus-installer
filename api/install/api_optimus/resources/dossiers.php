@@ -9,7 +9,7 @@ function read($db,$data)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
 
   $sousdomaines['0-0'] = 'inconnu';
-  $sousdomaines['0'] = 'inconnu';
+  $domaines['0'] = 'inconnu';
 
   $query = datagrid_request($data,$db);
   //SUBSTITUTIONS ICI
