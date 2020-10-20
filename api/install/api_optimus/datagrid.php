@@ -64,9 +64,9 @@ function datagrid_query($data,$dblink)
   	foreach ($data->column_search as $key => $col)
   		if ($data->columns[$col[0]]->dblink == null)
   		{
-  			if ($data->columns[$col[0]]->data_type=='text')
+  			if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
   				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type) . "%'";
-  			else
+  			else if ($data->columns[$col[0]]->data_type!='text')
   				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type) . "'";
   		}
   		else
