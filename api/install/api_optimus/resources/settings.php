@@ -19,12 +19,12 @@ function create($db,$data)
 function replace($db,$data)
 {
   if (!preg_match('/^[a-zA-Z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
-  
+
   foreach($data->settings as $key => $value)
   {
     $setting = $db->prepare("REPLACE INTO `" . $data->db . "`.settings VALUES(:id,:value)");
-    $settings->bindValue(':id', strip_tags($data->module) . "." . strip_tags($key), PDO::PARAM_STR);
-    $settings->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode(strip_tags($value)))), PDO::PARAM_STR);
+    $setting->bindValue(':id', strip_tags($data->module) . "." . strip_tags($key), PDO::PARAM_STR);
+    $setting->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode(strip_tags($value)))), PDO::PARAM_STR);
     $setting->execute();
   }
 
