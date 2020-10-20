@@ -64,7 +64,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   //GLOBAL SEARCH
   if ($data->global_search)
   {
-  	$query .= " AND (";
+  	//$query .= " AND (";
   	foreach ($data->columns as $key => $column)
   		if ($column->dblink == null)
   			$query .= $column->field . " LIKE '%" . $data->global_search . "%' OR ";
@@ -85,7 +85,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
 
   //COLUMN SEARCH
   if ($data->column_search)
-  	foreach ($data->column_search as $col)
+  	foreach ($data->column_search as $key => $column)
   		if ($data->columns[$col[0]]['dblink'] == null)
   		{
   			if ($data->columns[$col[0]]['data_type']=='text' OR $data->columns[$col[0]]['datatype']=='date')
@@ -96,7 +96,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   		else
   		{
   			unset($rowsearch);
-  			foreach ($data->columns[$col[0]]['dblink'] as $key => $value)
+  			foreach (${$data->columns[$col[0]]['dblink']} as $key => $value)
   			{
   				if ($data->columns[$col[0]]['data_type']=='text' OR $data->columns[$col[0]]['data_type']=='date')
   				{
@@ -115,6 +115,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   				$query .= ' AND 1=0';
   		}
 
+  return $query;
   //ADVANCED SEARCH
   if ($data->advanced_search)
   {
