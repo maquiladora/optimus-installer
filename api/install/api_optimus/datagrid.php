@@ -8,7 +8,7 @@ function datagrid_validation($data)
 //global_search
 }
 
-function datagrid_request($db,$data)
+function datagrid_request($db,$data,$dblink)
 {
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
@@ -33,7 +33,7 @@ function datagrid_request($db,$data)
   		{
   			unset($rowsearch);
 
-  			foreach (${$column->dblink} as $key => $value)
+  			foreach ($dblink[$column->dblink] as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				if (is_array(@$rowsearch))
@@ -55,7 +55,7 @@ function datagrid_request($db,$data)
   		else
   		{
   			unset($rowsearch);
-  			foreach (${$data->columns[$col[0]]->dblink} as $key => $value)
+  			foreach ($dblink[$data->columns[$col[0]]->dblink] as $key => $value)
   			{
   				if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
   				{
@@ -106,7 +106,7 @@ function datagrid_request($db,$data)
   		else
   		{
   			unset($rowsearch);
-  			foreach (${$data->columns[$col[0]]->dblink} as $key => $value)
+  			foreach ($dblink[$data->columns[$col[0]]->dblink] as $key => $value)
   				if ($col[1] == "==" AND $value == data_format($col[2],$data->columns[$col[0]]->data_type,$db))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				else if ($col[1] == "<>" AND $value != data_format($col[2],$data->columns[$col[0]]->data_type,$db))

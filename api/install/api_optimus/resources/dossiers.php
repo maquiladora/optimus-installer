@@ -13,14 +13,14 @@ function read($db,$data)
   $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_domaines"}');
   $domaineslist = json_decode($domaineslist, true);
   foreach ($domaineslist['data'] as $domaine)
-  	$domaines[$domaine['id']] = $domaine['value'];
+  	$dblink['domaines'][$domaine['id']] = $domaine['value'];
 
   $sousdomaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_sousdomaines"}');
   $sousdomaineslist = json_decode($sousdomaineslist, true);
   foreach ($sousdomaineslist['data'] as $sousdomaine)
-  	$sousdomaines[$sousdomaine['id']] = $sousdomaine['value'];
+  	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
-  $query = datagrid_request($db,$data);
+  $query = datagrid_request($db,$data,$dblink);
 
   $dossiers = $db->prepare($query);
   if($dossiers->execute())
