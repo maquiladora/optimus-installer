@@ -177,7 +177,7 @@ function datagrid_fetch($db,$data,$query)
           $fetched_result[$key] = array(@$dblink[$column->dblink][$fetched_result[$key]],$fetched_result[$key]);
       $results[] = $fetched_result;
     }
-    return $results;
+    return @$results;
   }
   else
     return $fetched_results->errorInfo()[2];
