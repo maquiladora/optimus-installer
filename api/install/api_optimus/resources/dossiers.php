@@ -10,9 +10,16 @@ function read($db,$data)
 
 
   //SUBSTITUTIONS ICI
-  $sousdomaines['85-0'] = 'inconnu';
-  $domaines[85] = 'Recouvrements';
-  $domaines[75] = 'test';
+  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?db=dossiers_domaines');
+  $domaineslist = json_decode($domaineslist, true);
+  foreach ($domaineslist as $domaine)
+  	$domaines[$domaine['id']] = $domaine['value'];
+
+  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?db=dossiers_sousdomaines');
+  $domaineslist = json_decode($domaineslist, true);
+  foreach ($domaineslist as $sousdomaine)
+  	$sousdomaines[$sousdomaine['id']] = $sousdomaine['value'];
+
   $query = datagrid_request($data,$db,$domaines,$sousdomaines);
 
   $dossiers = $db->prepare($query);
