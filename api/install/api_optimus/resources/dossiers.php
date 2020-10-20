@@ -32,13 +32,15 @@ function datagrid_request($data,$db)
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
 
   //CHAMPS
-  foreach ($data->columns as $key => $column)
-  	$query .= $column[0] . ',';
+  foreach ($data->columns as $key -> $column)
+  	$query .= $column->field . ',';
   $query = substr($query,0,-1);
 
   //BASE
   $query .= " FROM `" . $data->db . "`." .  $data->db_table;
   $query .= " WHERE id > 0";
+
+  return $query;
 
   //GLOBAL SEARCH
   if ($data->global_search)
@@ -58,6 +60,7 @@ function datagrid_request($data,$db)
   		}
   	$query = substr($query,0,-4) . ')';
   }
+
 
   //COLUMN SEARCH
   if ($data->column_search)
@@ -159,6 +162,7 @@ function datagrid_request($data,$db)
   		}
   	$query = substr($query,0,-4) . ')';
   }
+  return $query;
 }
 
 function data_format($value,$type,$db)
