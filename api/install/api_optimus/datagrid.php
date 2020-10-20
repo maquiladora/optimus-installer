@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 function datagrid_request($db,$data,$dblink)
 {
   $data = datagrid_validation($data);
@@ -66,7 +66,7 @@ function datagrid_query($data,$dblink)
   		{
   			if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
   				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type) . "%'";
-  			else if ($data->columns[$col[0]]->data_type!='text')
+  			else
   				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type) . "'";
   		}
   		else
