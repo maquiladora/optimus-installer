@@ -30,7 +30,7 @@ function read($db,$data)
 function datagrid_request($data,$db)
 {
   $sousdomaines['0-0'] = 'inconnu';
-  $domaines['0'] = 'inconnu';
+  $domaines[0] = 'inconnu';
 
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
@@ -54,10 +54,10 @@ function datagrid_request($data,$db)
   		else
   		{
   			unset($rowsearch);
-  			foreach (${$column->dblink} as $key => $value)
+  			foreach ($domaines as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				if (is_array($rowsearch))
+  				if (is_array(@$rowsearch))
   					$query .= $column->field . " IN (" . implode($rowsearch,',') . ") OR ";
   		}
   	$query = substr($query,0,-4) . ')';
