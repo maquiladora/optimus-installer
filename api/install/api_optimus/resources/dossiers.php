@@ -39,7 +39,6 @@ function read($db,$data)
       if ($results AND $data->page AND $data->results)
         $results = datagrid_limit($results, $data->page, $data->results);
       $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
-      $total = $total[0];
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
