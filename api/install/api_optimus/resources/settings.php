@@ -7,7 +7,7 @@ function read($db,$data)
   $settings->execute();
   $results = array();
   while ($setting = $settings->fetch(PDO::FETCH_ASSOC))
-    $results[substr($setting['id'],strlen($data->module)+1)] = $setting['value']);
+    $results[substr($setting['id'],strlen($data->module)+1)] = $setting['value'];
   return array("code" => 200, "data" => @$results);
 }
 
