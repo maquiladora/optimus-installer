@@ -10,8 +10,11 @@ function read($db,$data)
   $dossiers = $db->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,'-',sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.dossiers");
   if($dossiers->execute())
   {
-    $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
-    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations,"test" => json_encode($data));
+    if ($data->column_search)
+      $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
+    else
+      $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
+    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations);
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
