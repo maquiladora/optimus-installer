@@ -31,7 +31,7 @@ function read($db,$data)
       {
         foreach ($data->columns as $key => $column)
           if ($column->dblink)
-            $dossier[$key] = array(${$column->dblink}[$dossier[$key]],$dossier[$key]);
+            $dossier[$key] = array(@${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
       }
     }
