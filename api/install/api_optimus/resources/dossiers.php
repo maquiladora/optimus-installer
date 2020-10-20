@@ -154,7 +154,7 @@ function datagrid_request($data,$db)
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
 
   				if (is_array($rowsearch))
-  					$query .= $data->[$col[0]]['field'] . " IN (" . implode($rowsearch,',') . ") " . (($col[3]=='AND')?'AND':'OR') . " ";
+  					$query .= $data->$columns[$col[0]]['field'] . " IN (" . implode($rowsearch,',') . ") " . (($col[3]=='AND')?'AND':'OR') . " ";
   				else
   					$query .= '1=0 ' . (($col[3]=='AND')?'AND':'OR') . " ";
   		}
