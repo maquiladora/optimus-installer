@@ -18,9 +18,19 @@ function create($db,$data)
 
 function replace($db,$data)
 {
-  if (!preg_match('/^[a-z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
+  if (!preg_match('/^[a-zA-Z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
   foreach($data->settings as $key => $value)
-    $setting = $db->query("REPLACE INTO `" . $data->db . "`.settings VALUES('" . mysqli_real_escape_string($db,$data->module) . "." . mysqli_real_escape_string($db,$key) . "','" . str_replace(']"',']',str_replace('"[','[',json_encode(mysqli_real_escape_string($db,$value)))) . "')");
+      if (!preg_match('/^[a-z0-9_\[\]\"\']+$/', $key) || !preg_match('/^[a-z0-9_]+$/', $value))
+        return array("code" => 400, "message" => "Variable ou valeur invalide");
+
+  foreach($data->settings as $key => $value)
+  {
+    $setting = $db->prepare("REPLACE INTO `" . $data->db . "`.settings VALUES(:id,:value)");
+    $settings->bindValue(':id', strip_tags($data->module) . "." . strip_tags($key), PDO::PARAM_STR);
+    $settings->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode(strip_tags($value)))), PDO::PARAM_STR);
+    $setting->execute();
+  }
+
   return array("code" => 201);
 }
 
