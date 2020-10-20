@@ -147,7 +147,7 @@ function datagrid_query($data,$dblink)
 }
 
 
-function datagrid_fetch($db,$query)
+function datagrid_fetch($db,$data,$query)
 {
   $fetched_results = $db->prepare($query);
   if($fetched_results->execute())
