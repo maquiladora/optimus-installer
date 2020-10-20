@@ -50,7 +50,7 @@ function datagrid_query($data,$dblink)
   			unset($rowsearch);
 
   			foreach ($dblink[$column->dblink] as $key => $value)
-  				if (preg_match("/" . $data->global_search . "/i", $value))
+  				if (preg_match("/" . addslashes($data->global_search) . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				if (is_array(@$rowsearch))
   					$query .= $column->field . " IN (" . implode($rowsearch,',') . ") OR ";
