@@ -65,7 +65,7 @@ function datagrid_query($data,$dblink)
   		{
   			if ($data->columns[$col[0]]->data_type=='text')
   				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type) . "%'";
-        if ($data->columns[$col[0]]->datatype=='date')
+        if ($data->columns[$col[0]]->data_type=='date')
     			$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . $col[1] . "%'";
   			else
   				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type) . "'";
