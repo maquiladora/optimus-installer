@@ -86,31 +86,31 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   //COLUMN SEARCH
   if ($data->column_search)
   	foreach ($data->column_search as $key => $col)
-  		if ($data->columns[$col[0]]['dblink'] == null)
+  		if ($data->columns[$col[0]]->dblink == null)
   		{
-  			if ($data->columns[$col[0]]['data_type']=='text' OR $data->columns[$col[0]]['datatype']=='date')
-  				$query .= " AND " .$data->columns[$col[0]]['field'] . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]['data_type'],$db) . "%'";
+  			if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->datatype=='date')
+  				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "%'";
   			else
-  				$query .= " AND " .$data->columns[$col[0]]['field'] . " = '" . data_format($col[1],$data->columns[$col[0]]['data_type'],$db) . "'";
+  				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "'";
   		}
   		else
   		{
   			unset($rowsearch);
-  			foreach ($data->columns[$col[0]]['dblink'] as $key => $value)
+  			foreach ($data->columns[$col[0]]->dblink as $key => $value)
   			{
-  				if ($data->columns[$col[0]]['data_type']=='text' OR $data->columns[$col[0]]['data_type']=='date')
+  				if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
   				{
-  					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]['data_type'],$db) . "/i", $value))
+  					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
   						$rowsearch[] = "'".$key."'";
   				}
   				else
   				{
-  					if (data_format($col[1],$data->columns[$col[0]]['data_type'],$db)==$value)
+  					if (data_format($col[1],$data->columns[$col[0]]->data_type,$db)==$value)
   						$rowsearch[] = $key;
   				}
   			}
   			if (is_array($rowsearch))
-  				$query .= " AND " . $data->columns[$col[0]]['field'] . " IN (" . implode($rowsearch,',') . ")";
+  				$query .= " AND " . $data->columns[$col[0]]->field . " IN (" . implode($rowsearch,',') . ")";
   			else
   				$query .= ' AND 1=0';
   		}
