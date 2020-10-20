@@ -24,6 +24,7 @@ function read($db,$data)
           if ($column->dblink)
             $dossier[$key] = array(${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
+        print_r($results);
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
