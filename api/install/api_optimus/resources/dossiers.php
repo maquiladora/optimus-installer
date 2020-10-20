@@ -34,6 +34,7 @@ function read($db,$data)
             $dossier[$key] = array(@${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
       }
+      $results = datagrid_sort($results,$data->sort);
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
@@ -209,6 +210,44 @@ function data_format($value,$type,$db)
 }
 
 
+function datagrid_sort($data, $sorts)
+{
+  if ($data AND $sorts)
+  {
+    foreach($sort as $key => $column)
+      if ($column >= 0)
+        $sorts_arr[round(abs($column))] = 'SORT_DESC';
+      else
+        $sorts_arr[round(abs($column))] = 'SORT_ASC';
+
+    $colarr = array();
+    foreach ($sorts_arr as $col => $ordr)
+    {
+      $colarr[$col] = array();
+      foreach (data as $k => $row)
+        $colarr[$col]['_'.$k] = $row[$col];
+    }
+
+    $multi_params = array();
+    foreach ($sorts_arr as $col => $ordr)
+    {
+      $multi_params[] = '$colarr[\'' . $col .'\']';
+      $multi_params[] = $ordr;
+    }
+    $rum_params = implode(',',$multi_params);
+    eval("array_multisort({$rum_params});");
+    $sorted_array = array();
+    foreach ($colarr as $col => $arr)
+      foreach ($arr as $k => $v)
+      {
+        $k = substr($k,1);
+        if (!isset($sorted_array[$k]))
+          $sorted_array[$k] = $data[$k];
+        $sorted_array[$k][$col] = $data[$k][$col];
+      }
+    return array_values($sorted_array);
+  }
+}
 
 
 
