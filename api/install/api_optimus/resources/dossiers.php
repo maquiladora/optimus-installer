@@ -11,10 +11,13 @@ function read($db,$data)
   if($dossiers->execute())
   {
     $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
-    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations);
+    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations,"test=> "$data->global_search);
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
+
+  //retourner le total
+  //retourner une array si pas requete datagrid
 }
 
 function create($db,$data)

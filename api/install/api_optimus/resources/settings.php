@@ -13,7 +13,7 @@ function read($db,$data)
 
 function create($db,$data)
 {
-  replace($db,$data);
+  return replace($db,$data);
 }
 
 function replace($db,$data)
