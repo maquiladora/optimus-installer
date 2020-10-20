@@ -54,7 +54,7 @@ function datagrid_request($data,$db)
   		else
   		{
   			unset($rowsearch);
-        $domaines[85] = 'Recouvrements';
+        echo $column->dblink;
   			foreach (${$column->dblink} as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
