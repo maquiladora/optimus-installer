@@ -34,7 +34,7 @@ function read($db,$data)
             $dossier[$key] = array(@${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
       }
-      $results = datagrid_sort($results,$data->sort);
+      $results = datagrid_sort($results,$data->sorts);
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
