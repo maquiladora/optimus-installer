@@ -232,7 +232,7 @@ function data_format($value,$type)
 	if ($type=='date')
 	{
 		if (substr($value,2,1)=='/')
-			return substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
+			echo substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
 		else
 			return $value;
 	}
