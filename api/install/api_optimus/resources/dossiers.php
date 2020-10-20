@@ -11,7 +11,7 @@ function read($db,$data)
   if($dossiers->execute())
   {
     $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
-    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations,"test" => $data->global_search);
+    return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations,"test" => json_encode($data));
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
