@@ -20,35 +20,18 @@ function read($db,$data)
   foreach ($sousdomaineslist['data'] as $sousdomaine)
   	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
-  $query = datagrid_query($db,$data,$dblink);
+  $query = datagrid_query($data,$dblink);
+  if (!$results = datagrid_fetch($query))
+    return $results;
+  if ($results AND $data->sorts)
+    $results = datagrid_sort($results,$data->sorts);
+  if ($results AND $data->page AND $data->results)
+    $results = datagrid_limit($results, $data->page, $data->results);
+  $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
 
-  $dossiers = $db->prepare($query);
-  if($dossiers->execute())
-  {
-    if (@$data->results)
-    {
-      while($dossier = $dossiers->fetch(PDO::FETCH_NUM))
-      {
-        foreach ($data->columns as $key => $column)
-          if ($column->dblink)
-            $dossier[$key] = array(@$dblink[$column->dblink][$dossier[$key]],$dossier[$key]);
-        $results[] = $dossier;
-      }
-      if ($results AND $data->sorts)
-        $results = datagrid_sort($results,$data->sorts);
-      if ($results AND $data->page AND $data->results)
-        $results = datagrid_limit($results, $data->page, $data->results);
-      $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
-    }
-    else
-      $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total, "query" => $query);
-  }
-  else
-    return array("code" => 400, "message" => $dossiers->errorInfo()[2], "query" => $query);
+  //requête normale : $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
 
-  //retourner le total
-  //retourner une array si pas requete datagrid
+  return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total, "query" => $query);
 }
 
 

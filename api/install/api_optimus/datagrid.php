@@ -8,7 +8,7 @@ function datagrid_validation($data)
 //global_search
 }
 
-function datagrid_query($db,$data,$dblink)
+function datagrid_query($data,$dblink)
 {
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
@@ -144,6 +144,25 @@ function datagrid_query($db,$data,$dblink)
   	$query = substr($query,0,-4) . ')';
   }
   return $query;
+}
+
+
+function datagrid_fetch($db,$query)
+{
+  $fetched_results = $db->prepare($query);
+  if($fetched_results->execute())
+  {
+    while($fetched_result = $fetched_results->fetch(PDO::FETCH_NUM))
+    {
+      foreach ($data->columns as $key => $column)
+        if ($column->dblink)
+          $fetched_result[$key] = array(@$dblink[$column->dblink][$fetched_result[$key]],$fetched_result[$key]);
+      $results[] = $fetched_result;
+    }
+    return $results;
+  }
+  else
+    return $fetched_results->errorInfo()[2];
 }
 
 
