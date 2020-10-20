@@ -214,7 +214,7 @@ function datagrid_sort($data, $sorts)
 {
   if ($data AND $sorts)
   {
-    foreach($sort as $key => $column)
+    foreach($sorts as $key => $column)
       if ($column >= 0)
         $sorts_arr[round(abs($column))] = 'SORT_DESC';
       else
