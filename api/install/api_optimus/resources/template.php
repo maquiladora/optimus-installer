@@ -2,6 +2,7 @@
 function read($db,$data)
 {
   //200 OK
+  //201 CREATED
   //404 NOT FOUND
   //405 NOT ALLOWED
   //409 CONFLICT

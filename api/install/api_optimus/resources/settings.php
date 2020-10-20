@@ -18,7 +18,10 @@ function create($db,$data)
 
 function replace($db,$data)
 {
-  return array("code" => 501, "message" => 'Méthode non implémentée');
+  if (!preg_match('/^[a-z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
+  foreach($data->settings as $key => $value)
+    $setting = $db->query("REPLACE INTO `" . $data->db . "`.settings VALUES('" . $data->module . "." . $key . "',''" . $value . "')");
+  return array("code" => 201);
 }
 
 function update($db,$data)
