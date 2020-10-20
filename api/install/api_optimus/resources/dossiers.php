@@ -192,9 +192,9 @@ function data_format($value,$type,$db)
 	if ($type=='date')
 	{
 		if (substr($value,2,1)=='/')
-			return mysqli_real_escape_string($db,substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2));
+			return substr($value,6,4 . '-' . substr($value,3,2) . '-' . substr($value,0,2);
 		else
-			return mysqli_real_escape_string($db,$value);
+			return $value;
 	}
 	else if ($type=='integer')
 		return intval($value);
@@ -205,7 +205,7 @@ function data_format($value,$type,$db)
 	else if ($type=='rate')
 		return floatval($value);
 	else
-		return mysqli_real_escape_string($db,$value);
+		return $value;
 }
 
 
