@@ -81,11 +81,11 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   	$query = substr($query,0,-4) . ')';
   }
 
-  
+
 
   //COLUMN SEARCH
   if ($data->column_search)
-  	foreach ($data->column_search as $col)
+  	foreach ($data->column_search as $key => $col)
   		if ($data->columns[$col[0]]['dblink'] == null)
   		{
   			if ($data->columns[$col[0]]['data_type']=='text' OR $data->columns[$col[0]]['datatype']=='date')
