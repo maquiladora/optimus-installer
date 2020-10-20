@@ -115,11 +115,11 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   				$query .= ' AND 1=0';
   		}
 
-  return $query;
+
   //ADVANCED SEARCH
   if ($data->advanced_search)
   {
-  	//$query .= " AND (";
+  	$query .= " AND (";
   	foreach ($data->advanced_search as $key => $col)
   		if ($data->columns[$col[0]]->dblink == null)
   		{
