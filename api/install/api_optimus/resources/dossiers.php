@@ -28,12 +28,11 @@ function read($db,$data)
 
 function datagrid_request($data,$db)
 {
-  $data = json_decode($data, true);
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
 
   //CHAMPS
-  foreach ($data->columns as $column)
+  foreach ((array) $data->columns as $column)
   	$query .= $column[0] . ',';
   $query = substr($query,0,-1);
 
