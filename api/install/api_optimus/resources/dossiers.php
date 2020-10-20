@@ -20,12 +20,12 @@ function read($db,$data)
   foreach ($sousdomaineslist['data'] as $sousdomaine)
   	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
-  $results = datagrid_request($db,$data,$dblink)
+  $results = datagrid_request($db,$data,$dblink);
   $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
 
   //requête normale : $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
 
-  return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total, "query" => $query);
+  return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total);
 }
 
 
