@@ -44,7 +44,7 @@ function datagrid_query($data,$dblink)
   	$query .= ' AND (';
   	foreach ($data->columns as $key => $column)
   		if ($column->dblink == null)
-  			$query .= $column->field . " LIKE '%" . $data->global_search . "%' OR ";
+  			$query .= $column->field . " LIKE '%" . data_format($data->global_search,$column->data_type) . "%' OR ";
   		else
   		{
   			unset($rowsearch);
