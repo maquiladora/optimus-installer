@@ -10,7 +10,7 @@ function read($db,$data)
   $dossiers = $db->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,'-',sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.dossiers");
   if($dossiers->execute())
   {
-    if ($data->column_search)
+    if ($data->page)
       $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
     else
       $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
