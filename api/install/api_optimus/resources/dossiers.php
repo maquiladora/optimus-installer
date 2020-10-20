@@ -49,12 +49,12 @@ function datagrid_request($data,$db)
   {
   	$query .= " AND (";
   	foreach ($data->columns as $key => $column)
-  		if (${$column->dblink} == null)
+  		if ($column->dblink == null)
   			$query .= $column->field . " LIKE '%" . $data->global_search . "%' OR ";
   		else
   		{
   			unset($rowsearch);
-  			foreach ($$column->dblink as $key => $value)
+  			foreach (${$column->dblink} as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				if (is_array(@$rowsearch))
