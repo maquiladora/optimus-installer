@@ -98,7 +98,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   			unset($rowsearch);
   			foreach (${$data->columns[$col[0]]->dblink} as $key => $value)
   			{
-  				if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
+  				if ($data->columns[$col[0]]->data_type=='text')
   				{
   					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
   						$rowsearch[] = "'".$key."'";
