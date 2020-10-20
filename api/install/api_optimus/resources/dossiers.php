@@ -3,7 +3,7 @@ include_once('api_optimus/datagrid.php');
 
 function read($db,$data)
 {
-  if ($data->db_table != 'dossiers') return array("code" => 400, "message" => "La valeur db_table doit être 'dossiers'");
+  if (@$data->db_table AND @$data->db_table != 'dossiers') return array("code" => 400, "message" => "La valeur db_table doit être 'dossiers'");
 
   $authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' ORDER BY length(resource) DESC");
   $authorizations->bindParam(':email', $data->user, PDO::PARAM_STR);
