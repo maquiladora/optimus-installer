@@ -16,9 +16,12 @@ function datagrid_validation($data)
   foreach($data->columns as $key => $column)
     if (!preg_match("/^[a-z0-9_]+$/", $column->field)) return die(json_encode(array("code" => 400, "message" => "Champ invalide")));
 
-//advanced_search
-//column_search
-//global_search
+    //advanced_search
+    //column_search
+    //global_search
+    
+  return $data;
+
 }
 
 function datagrid_query($data,$dblink)
@@ -61,9 +64,9 @@ function datagrid_query($data,$dblink)
   		if ($data->columns[$col[0]]->dblink == null)
   		{
   			if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->datatype=='date')
-  				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "%'";
+  				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type) . "%'";
   			else
-  				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "'";
+  				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type) . "'";
   		}
   		else
   		{
@@ -72,12 +75,12 @@ function datagrid_query($data,$dblink)
   			{
   				if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
   				{
-  					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
+  					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]->data_type) . "/i", $value))
   						$rowsearch[] = "'".$key."'";
   				}
   				else
   				{
-  					if (data_format($col[1],$data->columns[$col[0]]->data_type,$db)==$value)
+  					if (data_format($col[1],$data->columns[$col[0]]->data_type)==$value)
   						$rowsearch[] = $key;
   				}
   			}
@@ -96,21 +99,21 @@ function datagrid_query($data,$dblink)
   		if ($data->columns[$col[0]]->dblink == null)
   		{
   			if ($col[1] == "==")
-  				$query .= $data->columns[$col[0]]->field . "= '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . "= '" . data_format($col[2],$data->columns[$col[0]]->data_type) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			if ($col[1] == "<>" OR $col[1] == ">" OR $col[1] == ">=" OR $col[1] == "<" OR $col[1] == "<=")
-  				$query .= $data->columns[$col[0]]->field . $col[1] . " '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . $col[1] . " '" . data_format($col[2],$data->columns[$col[0]]->data_type) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "%LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "%LIKE")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "NOT LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "%NOT LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "%NOT LIKE")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " .(($col[3]=='AND')?'AND':'OR') . " ";
+  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type) . "' " .(($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "IS NULL")
   				$query .= $data->columns[$col[0]]->field . " IS NULL " . (($col[3]=='AND')?'AND':'OR') . " ";
   			else if ($col[1] == "IS NOT NULL")
@@ -120,29 +123,29 @@ function datagrid_query($data,$dblink)
   		{
   			unset($rowsearch);
   			foreach ($dblink[$data->columns[$col[0]]->dblink] as $key => $value)
-  				if ($col[1] == "==" AND $value == data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				if ($col[1] == "==" AND $value == data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<>" AND $value != data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				else if ($col[1] == "<>" AND $value != data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == ">" AND $value > data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				else if ($col[1] == ">" AND $value > data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == ">=" AND $value >= data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				else if ($col[1] == ">=" AND $value >= data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<" AND $value < data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				else if ($col[1] == "<" AND $value < data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<=" AND $value <= data_format($col[2],$data->columns[$col[0]]->data_type,$db))
+  				else if ($col[1] == "<=" AND $value <= data_format($col[2],$data->columns[$col[0]]->data_type))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "LIKE%" AND preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
+  				else if ($col[1] == "LIKE%" AND preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type) . "/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%LIKE%" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
+  				else if ($col[1] == "%LIKE%" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type) . "/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%LIKE" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "$/i", $value))
+  				else if ($col[1] == "%LIKE" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type) . "$/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "NOT LIKE%" AND !preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
+  				else if ($col[1] == "NOT LIKE%" AND !preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type) . "/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%NOT LIKE%" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
+  				else if ($col[1] == "%NOT LIKE%" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type) . "/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%NOT LIKE" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "$/i", $value))
+  				else if ($col[1] == "%NOT LIKE" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type) . "$/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				else if ($col[1] == "IS NULL")
   					$rowsearch = [0];
@@ -177,29 +180,6 @@ function datagrid_fetch($db,$data,$query)
   else
     return $fetched_results->errorInfo()[2];
 }
-
-
-function data_format($value,$type,$db)
-{
-	if ($type=='date')
-	{
-		if (substr($value,2,1)=='/')
-			return substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
-		else
-			return $value;
-	}
-	else if ($type=='integer')
-		return intval($value);
-	else if ($type=='decimal')
-		return floatval($value);
-	else if ($type=='money')
-		return floatval($value);
-	else if ($type=='rate')
-		return floatval($value);
-	else
-		return $value;
-}
-
 
 function datagrid_sort($data, $sorts)
 {
@@ -242,4 +222,26 @@ function datagrid_sort($data, $sorts)
 function datagrid_limit($data,$page,$results)
 {
   return array_slice($data,($page-1)*$results,$results);
+}
+
+
+function data_format($value,$type)
+{
+	if ($type=='date')
+	{
+		if (substr($value,2,1)=='/')
+			return substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
+		else
+			return $value;
+	}
+	else if ($type=='integer')
+		return intval($value);
+	else if ($type=='decimal')
+		return floatval($value);
+	else if ($type=='money')
+		return floatval($value);
+	else if ($type=='rate')
+		return floatval($value);
+	else
+		return $value;
 }
