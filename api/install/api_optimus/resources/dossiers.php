@@ -49,7 +49,7 @@ function datagrid_request($data,$db)
   	$query .= " AND (";
   	foreach ($data->columns as $key => $column)
   		if ($column->dblink == null)
-  			$query .= $column->field . " LIKE '%" . $db->quote($data->global_search) . "%' OR ";
+  			$query .= $column->field . " LIKE $db->quote("%" . $data->global_search . "%") OR ";
   		else
   		{
   			unset($rowsearch);
