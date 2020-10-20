@@ -1,7 +1,19 @@
 <?php
+function datagrid_request($db,$data,$dblink)
+{
+  datagrid_validation($data);
+  $query = datagrid_query($data,$dblink);
+  $results = datagrid_fetch($db,$data,$query);
+  if ($results AND $data->sorts)
+    $results = datagrid_sort($results,$data->sorts);
+  if ($results AND $data->page AND $data->results)
+    $results = datagrid_limit($results, $data->page, $data->results);
+  return $results;
+}
+
 function datagrid_validation($data)
 {
-//table
+//db_table
 //fields
 //advanced_search
 //column_search

@@ -20,13 +20,7 @@ function read($db,$data)
   foreach ($sousdomaineslist['data'] as $sousdomaine)
   	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
-  $query = datagrid_query($data,$dblink);
-  if (!$results = datagrid_fetch($db,$data,$query))
-    return $results;
-  if ($results AND $data->sorts)
-    $results = datagrid_sort($results,$data->sorts);
-  if ($results AND $data->page AND $data->results)
-    $results = datagrid_limit($results, $data->page, $data->results);
+  $results = datagrid_request($db,$data,$dblink)
   $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
 
   //requête normale : $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
