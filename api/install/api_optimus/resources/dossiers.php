@@ -1,13 +1,13 @@
 <?php
 function read($db,$data)
 {
-  $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' ORDER BY length(resource) DESC");
+  $authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' ORDER BY length(resource) DESC");
   $authorizations->bindParam(':email', $data->user, PDO::PARAM_STR);
   $authorizations->execute();
   $authorizations = $authorizations_contacts->fetch(PDO::FETCH_ASSOC);
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
-  $dossiers = $this->conn->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,"-",sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.contacts");
+  $dossiers = $db->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,"-",sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.contacts");
   if($dossiers->execute())
   {
     $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
