@@ -19,10 +19,7 @@ function create($db,$data)
 function replace($db,$data)
 {
   if (!preg_match('/^[a-zA-Z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
-  foreach($data->settings as $key => $value)
-      if (!preg_match('/^[a-z0-9_\[\]\"\']+$/', $key) || !preg_match('/^[a-z0-9_]+$/', $value))
-        return array("code" => 400, "message" => "Variable ou valeur invalide");
-
+  
   foreach($data->settings as $key => $value)
   {
     $setting = $db->prepare("REPLACE INTO `" . $data->db . "`.settings VALUES(:id,:value)");
