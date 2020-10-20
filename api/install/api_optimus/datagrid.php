@@ -1,7 +1,7 @@
 <?php
 function datagrid_request($db,$data,$dblink)
 {
-  datagrid_validation($data);
+  $data = datagrid_validation($data);
   $query = datagrid_query($data,$dblink);
   $results = datagrid_fetch($db,$data,$query);
   if ($results AND $data->sorts)
@@ -13,8 +13,9 @@ function datagrid_request($db,$data,$dblink)
 
 function datagrid_validation($data)
 {
-//db_table
-//fields
+  foreach($data->columns as $key => $column)
+    if (!preg_match("/^[a-z0-9_]+$/", $column->field)) return die(json_encode(array("code" => 400, "message" => "Champ invalide")));
+
 //advanced_search
 //column_search
 //global_search
