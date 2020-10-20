@@ -12,6 +12,7 @@ function read($db,$data)
   //SUBSTITUTIONS ICI
   $sousdomaines['85-0'] = 'inconnu';
   $domaines[85] = 'Recouvrements';
+  $domaines[75] = 'test';
   $query = datagrid_request($data,$db,$domaines,$sousdomaines);
 
   $dossiers = $db->prepare($query);
