@@ -34,7 +34,8 @@ function read($db,$data)
             $dossier[$key] = array(@${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
       }
-      $results = datagrid_sort($results,$data->sorts);
+      if ($results AND $data->sorts)
+        $results = datagrid_sort($results,$data->sorts);
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
@@ -212,8 +213,6 @@ function data_format($value,$type,$db)
 
 function datagrid_sort($data, $sorts)
 {
-  if ($data AND $sorts)
-  {
     foreach($sort as $key => $column)
       if ($column >= 0)
         $sorts_arr[round(abs($column))] = 'SORT_DESC';
@@ -245,7 +244,7 @@ function datagrid_sort($data, $sorts)
           $sorted_array[$k] = $data[$k];
         $sorted_array[$k][$col] = $data[$k][$col];
       }
-  }
+
   return array_values($sorted_array);
 }
 
