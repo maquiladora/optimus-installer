@@ -3,6 +3,7 @@ function datagrid_request($db,$data,$dblink)
 {
   $data = datagrid_validation($data);
   $query = datagrid_query($data,$dblink);
+  echo $query;
   $results = datagrid_fetch($db,$data,$query);
   if ($results AND $data->sorts)
     $results = datagrid_sort($results,$data->sorts);
@@ -232,7 +233,7 @@ function data_format($value,$type)
 	if ($type=='date')
 	{
 		if (substr($value,2,1)=='/')
-			echo substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
+			return substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
 		else
 			return $value;
 	}
