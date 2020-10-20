@@ -20,10 +20,12 @@ function read($db,$data)
     if (@$data->page)
     {
       while($dossier = $dossiers->fetch(PDO::FETCH_NUM))
-        //foreach ($data->columns as $key => $column)
-          //if ($column->dblink)
-            //$dossier[$key] = array(${$column->dblink}[$dossier[$key]],$dossier[$key]);
+      {
+        foreach ($data->columns as $key => $column)
+          if ($column->dblink)
+            $dossier[$key] = array(${$column->dblink}[$dossier[$key]],$dossier[$key]);
         $results[] = $dossier;
+      }
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
