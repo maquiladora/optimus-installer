@@ -8,7 +8,7 @@ function datagrid_validation($data)
 //global_search
 }
 
-function datagrid_request($db,$data,$dblink)
+function datagrid_query($db,$data,$dblink)
 {
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
@@ -25,7 +25,7 @@ function datagrid_request($db,$data,$dblink)
   //GLOBAL SEARCH
   if ($data->global_search)
   {
-  	$query .= ` AND (`;
+  	$query .= ' AND (';
   	foreach ($data->columns as $key => $column)
   		if ($column->dblink == null)
   			$query .= $column->field . " LIKE '%" . $data->global_search . "%' OR ";
@@ -78,7 +78,7 @@ function datagrid_request($db,$data,$dblink)
   //ADVANCED SEARCH
   if ($data->advanced_search)
   {
-  	$query .= ` AND (`;
+  	$query .= ' AND (';
   	foreach ($data->advanced_search as $key => $col)
   		if ($data->columns[$col[0]]->dblink == null)
   		{

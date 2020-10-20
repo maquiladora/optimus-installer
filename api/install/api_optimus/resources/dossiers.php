@@ -20,7 +20,7 @@ function read($db,$data)
   foreach ($sousdomaineslist['data'] as $sousdomaine)
   	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
-  $query = datagrid_request($db,$data,$dblink);
+  $query = datagrid_query($db,$data,$dblink);
 
   $dossiers = $db->prepare($query);
   if($dossiers->execute())
