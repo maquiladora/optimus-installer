@@ -213,37 +213,37 @@ function data_format($value,$type,$db)
 
 function datagrid_sort($data, $sorts)
 {
-    foreach($sorts as $key => $column)
-      if ($column >= 0)
-        $sorts_arr[round(abs($column))] = 'SORT_DESC';
-      else
-        $sorts_arr[round(abs($column))] = 'SORT_ASC';
+  foreach($sorts as $key => $column)
+    if ($column >= 0)
+      $sorts_arr[round(abs($column))] = 'SORT_DESC';
+    else
+      $sorts_arr[round(abs($column))] = 'SORT_ASC';
 
-    $colarr = array();
-    foreach ($sorts_arr as $col => $ordr)
-    {
-      $colarr[$col] = array();
-      foreach ($data as $k => $row)
-        $colarr[$col]['_'.$k] = $row[$col];
-    }
+  $colarr = array();
+  foreach ($sorts_arr as $col => $ordr)
+  {
+    $colarr[$col] = array();
+    foreach ($data as $k => $row)
+      $colarr[$col]['_'.$k] = $row[$col];
+  }
 
-    $multi_params = array();
-    foreach ($sorts_arr as $col => $ordr)
+  $multi_params = array();
+  foreach ($sorts_arr as $col => $ordr)
+  {
+    $multi_params[] = '$colarr[\'' . $col .'\']';
+    $multi_params[] = $ordr;
+  }
+  $rum_params = implode(',',$multi_params);
+  array_multisort(${$rum_params});
+  $sorted_array = array();
+  foreach ($colarr as $col => $arr)
+    foreach ($arr as $k => $v)
     {
-      $multi_params[] = '$colarr[\'' . $col .'\']';
-      $multi_params[] = $ordr;
+      $k = substr($k,1);
+      if (!isset($sorted_array[$k]))
+        $sorted_array[$k] = $data[$k];
+      $sorted_array[$k][$col] = $data[$k][$col];
     }
-    $rum_params = implode(',',$multi_params);
-    eval("array_multisort({$rum_params});");
-    $sorted_array = array();
-    foreach ($colarr as $col => $arr)
-      foreach ($arr as $k => $v)
-      {
-        $k = substr($k,1);
-        if (!isset($sorted_array[$k]))
-          $sorted_array[$k] = $data[$k];
-        $sorted_array[$k][$col] = $data[$k][$col];
-      }
 
   return array_values($sorted_array);
 }
