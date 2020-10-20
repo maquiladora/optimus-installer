@@ -19,7 +19,7 @@ function read($db,$data)
     return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations);
   }
   else
-    return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
+    return array("code" => 400, "message" => $dossiers->errorInfo()[2], "query" => $query);
 
   //retourner le total
   //retourner une array si pas requete datagrid
@@ -45,16 +45,16 @@ function datagrid_request($data,$db)
   {
   	$query .= " AND (";
   	foreach ($data->columns as $key => $column)
-  		if ($data->column->dblink == null)
-  			$query .= $data->column->field . " LIKE '%" . mysqli_real_escape_string($db,$data->global_search) . "%' OR ";
+  		if ($column->dblink == null)
+  			$query .= $column->field . " LIKE '%" . mysqli_real_escape_string($db,$data->global_search) . "%' OR ";
   		else
   		{
   			unset($rowsearch);
-  			foreach ($data->column->dblink as $key => $value)
-  				if (preg_match("/" . $global_search . "/i", $value))
+  			foreach ($column->dblink as $key => $value)
+  				if (preg_match("/" . $data->global_search . "/i", $value))
   					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				if (is_array($rowsearch))
-  					$query .= $data->column['field'] . " IN (" . implode($rowsearch,',') . ") OR ";
+  					$query .= $column->field . " IN (" . implode($rowsearch,',') . ") OR ";
   		}
   	$query = substr($query,0,-4) . ')';
   }
