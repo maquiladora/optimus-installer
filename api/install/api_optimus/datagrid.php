@@ -4,7 +4,7 @@ function datagrid_request($db,$data,$dblink)
 {
   $data = datagrid_validation($data);
   $query = datagrid_query($data,$dblink);
-  $results = datagrid_fetch($db,$data,$query);
+  $results = datagrid_fetch($db,$data,$query,$dblink);
   if ($results AND $data->sorts)
     $results = datagrid_sort($results,$data->sorts);
   if ($results AND $data->page AND $data->results)
@@ -164,7 +164,7 @@ function datagrid_query($data,$dblink)
 }
 
 
-function datagrid_fetch($db,$data,$query)
+function datagrid_fetch($db,$data,$query,$dblink)
 {
   $fetched_results = $db->prepare($query);
   if($fetched_results->execute())
