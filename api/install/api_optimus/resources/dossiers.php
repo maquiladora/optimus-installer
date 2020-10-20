@@ -224,7 +224,7 @@ function datagrid_sort($data, $sorts)
     foreach ($sorts_arr as $col => $ordr)
     {
       $colarr[$col] = array();
-      foreach (data as $k => $row)
+      foreach ($data as $k => $row)
         $colarr[$col]['_'.$k] = $row[$col];
     }
 
