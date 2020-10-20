@@ -40,13 +40,11 @@ function datagrid_request($data,$db)
   $query .= " FROM `" . $data->db . "`." .  $data->db_table;
   $query .= " WHERE id > 0";
 
-  return $query;
-
   //GLOBAL SEARCH
   if ($data->global_search)
   {
   	$query .= " AND (";
-  	foreach ($data->columns as $column)
+  	foreach ($data->columns as $key => $column)
   		if ($data->column->dblink == null)
   			$query .= $data->column->field . " LIKE '%" . mysqli_real_escape_string($db,$data->global_search) . "%' OR ";
   		else
@@ -61,6 +59,7 @@ function datagrid_request($data,$db)
   	$query = substr($query,0,-4) . ')';
   }
 
+  return $query;
 
   //COLUMN SEARCH
   if ($data->column_search)
