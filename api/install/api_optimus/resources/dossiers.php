@@ -54,7 +54,7 @@ function datagrid_request($data,$db)
   		else
   		{
   			unset($rowsearch);
-  			foreach (${$column->dblink} as $key => $value)
+  			foreach (${(string)$column->dblink} as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
   				if (is_array(@$rowsearch))
