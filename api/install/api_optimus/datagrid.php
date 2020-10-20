@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 function datagrid_request($db,$data,$dblink)
 {
   $data = datagrid_validation($data);
