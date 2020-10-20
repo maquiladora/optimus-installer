@@ -36,6 +36,8 @@ function read($db,$data)
       }
       if ($results AND $data->sorts)
         $results = datagrid_sort($results,$data->sorts);
+      if ($results AND $data->page AND $data->results)
+        $results = datagrid_limit($results, $data->page, $data->results);
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
@@ -234,7 +236,7 @@ function datagrid_sort($data, $sorts)
     $multi_params[] = $ordr;
   }
   $rum_params = implode(',',$multi_params);
-  array_multisort(${$rum_params});
+  eval("array_multisort({$rum_params});");
   $sorted_array = array();
   foreach ($colarr as $col => $arr)
     foreach ($arr as $k => $v)
@@ -246,6 +248,12 @@ function datagrid_sort($data, $sorts)
     }
 
   return array_values($sorted_array);
+}
+
+
+function datagrid_limit($data,$page,$results)
+{
+  return array_slice($data,($page-1)*$results,$results);
 }
 
 
