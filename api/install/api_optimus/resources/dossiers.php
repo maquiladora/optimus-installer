@@ -8,13 +8,23 @@ function read($db,$data)
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
 
-  $query = datagrid_request($data,$db);
+
   //SUBSTITUTIONS ICI
+  $sousdomaines['0-0'] = 'inconnu';
+  $domaines[85] = 'Recouvrements';
+  $query = datagrid_request($data,$db,$domaines,$sousdomaines);
+
   $dossiers = $db->prepare($query);
   if($dossiers->execute())
   {
     if (@$data->page)
-      $dossiers = $dossiers->fetchAll(PDO::FETCH_NUM);
+    {
+      while($dossier = $dossiers->fetch(PDO::FETCH_NUM))
+        foreach ($data->columns as $key => $column)
+          if ($column->dblink)
+            $dossier[$key] = array(${$column->dblink}[$dossier[$key]],$dossier[$key]);
+        $results[] = $dossier;
+    }
     else
       $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
     return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations);
@@ -27,11 +37,8 @@ function read($db,$data)
 }
 
 
-function datagrid_request($data,$db)
+function datagrid_request($data,$db,$domaines,$sousdomaines)
 {
-  $sousdomaines['0-0'] = 'inconnu';
-  $domaines[85] = 'Recouvrements';
-
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
 
@@ -54,7 +61,7 @@ function datagrid_request($data,$db)
   		else
   		{
   			unset($rowsearch);
-        echo $column->dblink;
+
   			foreach (${$column->dblink} as $key => $value)
   				if (preg_match("/" . $data->global_search . "/i", $value))
   					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
