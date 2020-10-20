@@ -21,7 +21,7 @@ function read($db,$data)
   	$dblink['sousdomaines'][$sousdomaine['id']] = $sousdomaine['value'];
 
   $query = datagrid_query($data,$dblink);
-  if (!$results = datagrid_fetch($query))
+  if (!$results = datagrid_fetch($db,$query))
     return $results;
   if ($results AND $data->sorts)
     $results = datagrid_sort($results,$data->sorts);
