@@ -27,7 +27,7 @@ function read($db,$data)
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations);
+    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "query" => $query);
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2], "query" => $query);
