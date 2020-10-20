@@ -213,7 +213,7 @@ function data_format($value,$type,$db)
 
 function datagrid_sort($data, $sorts)
 {
-    foreach($sort as $key => $column)
+    foreach($sorts as $key => $column)
       if ($column >= 0)
         $sorts_arr[round(abs($column))] = 'SORT_DESC';
       else
