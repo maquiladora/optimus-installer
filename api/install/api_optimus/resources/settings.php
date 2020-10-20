@@ -22,9 +22,10 @@ function replace($db,$data)
 
   foreach($data->settings as $key => $value)
   {
+    if (!preg_match('/^[a-z0-9_.]+$/', $key)) return array("code" => 400, "message" => "Nom de variable invalide");
     $setting = $db->prepare("REPLACE INTO `" . $data->db . "`.settings VALUES(:id,:value)");
     $setting->bindValue(':id', strip_tags($data->module) . "." . $key, PDO::PARAM_STR);
-    $setting->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode(strip_tags($value)))), PDO::PARAM_STR);
+    $setting->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode($value))), PDO::PARAM_STR);
     $setting->execute();
   }
 
