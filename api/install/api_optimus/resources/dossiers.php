@@ -13,7 +13,7 @@ class dossiers
     $this->conn = $db;
   }
 
-  function read($data)
+  function read($db,$data)
   {
     $authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' ORDER BY length(resource) DESC");
     $authorizations->bindParam(':email', $data->user, PDO::PARAM_STR);
@@ -32,22 +32,22 @@ class dossiers
       return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
   }
 
-  function create($data)
+  function create($db,$data)
   {
     return array("code" => 501, "message" => 'Méthode non implémentée');
   }
 
-  function replace($data)
+  function replace($db,$data)
   {
     return array("code" => 501, "message" => 'Méthode non implémentée');
   }
 
-  function update($data)
+  function update($db,$data)
   {
     return array("code" => 501, "message" => 'Méthode non implémentée');
   }
 
-  function delete($data)
+  function delete($db,$data)
   {
     return array("code" => 501, "message" => 'Méthode non implémentée');
   }
