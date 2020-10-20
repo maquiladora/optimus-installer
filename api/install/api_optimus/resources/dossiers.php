@@ -12,7 +12,7 @@ function read($db,$data)
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
 
-  if ($data->db_table)
+  if (@$data->db_table)
   {
     $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_domaines"}');
     $domaineslist = json_decode($domaineslist, true);
@@ -35,7 +35,7 @@ function read($db,$data)
     if($dossiers->execute())
     {
       $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
-      return array("code" => 200, "data" => $contacts, 'authorizations' => $authorizations_contacts);
+      return array("code" => 200, "data" => $dossiers, 'authorizations' => $authorizations);
     }
     else
       return array("code" => 400, "message" => $dossiers->errorInfo()[2]);
