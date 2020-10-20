@@ -81,7 +81,7 @@ function datagrid_request($data,$db,$domaines,$sousdomaines)
   	$query = substr($query,0,-4) . ')';
   }
 
-  return $query;
+  
 
   //COLUMN SEARCH
   if ($data->column_search)
