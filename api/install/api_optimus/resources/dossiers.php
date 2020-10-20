@@ -32,7 +32,7 @@ function datagrid_request($data,$db)
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
 
   //CHAMPS
-  foreach ($data->columns as $key => $value)
+  foreach ($data->columns as $key => $column)
   	$query .= $column[0] . ',';
   $query = substr($query,0,-1);
 
