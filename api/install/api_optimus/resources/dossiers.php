@@ -8,9 +8,6 @@ function read($db,$data)
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
 
-  $sousdomaines['0-0'] = 'inconnu';
-  $domaines['0'] = 'inconnu';
-
   $query = datagrid_request($data,$db);
   //SUBSTITUTIONS ICI
   $dossiers = $db->prepare($query);
@@ -32,6 +29,9 @@ function read($db,$data)
 
 function datagrid_request($data,$db)
 {
+  $sousdomaines['0-0'] = 'inconnu';
+  $domaines['0'] = 'inconnu';
+
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
 
