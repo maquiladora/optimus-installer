@@ -7,7 +7,7 @@ function read($db,$data)
   $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
-  $dossiers = $db->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,'-',sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.contacts");
+  $dossiers = $db->prepare("SELECT id, numero, nom, rg, date_ouverture, date_classement, numero_archive, domaine, CONCAT(domaine,'-',sous_domaine), conseil, aj, id, id FROM `" . $data->db . "`.dossiers");
   if($dossiers->execute())
   {
     $dossiers = $dossiers->fetchAll(PDO::FETCH_ASSOC);
