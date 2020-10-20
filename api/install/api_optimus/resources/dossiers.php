@@ -38,10 +38,12 @@ function read($db,$data)
         $results = datagrid_sort($results,$data->sorts);
       if ($results AND $data->page AND $data->results)
         $results = datagrid_limit($results, $data->page, $data->results);
+      $total = $db->query('SELECT FOUND_ROWS()')->fetchColumn();
+      $total = $total[0];
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "query" => $query);
+    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total, "query" => $query);
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2], "query" => $query);
