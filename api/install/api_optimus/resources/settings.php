@@ -23,8 +23,8 @@ function replace($db,$data)
   foreach($data->settings as $key => $value)
   {
     $setting = $db->prepare("REPLACE INTO `" . $data->db . "`.settings VALUES(:id,:value)");
-    $setting->bindValue(':id', strip_tags($data->module) . "." . strip_tags($key), PDO::PARAM_STR);
-    $setting->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode(strip_tags($value)))), PDO::PARAM_STR);
+    $setting->bindValue(':id', strip_tags($data->module) . "." . $key, PDO::PARAM_STR);
+    $setting->bindValue(':value', str_replace(']"',']',str_replace('"[','[',json_encode($value))), PDO::PARAM_STR);
     $setting->execute();
   }
 
