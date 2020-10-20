@@ -20,7 +20,7 @@ function replace($db,$data)
 {
   if (!preg_match('/^[a-z0-9_]+$/', $data->module)) return array("code" => 400, "message" => "Nom de module invalide");
   foreach($data->settings as $key => $value)
-    $setting = $db->query("REPLACE INTO `" . $data->db . "`.settings VALUES('" . $data->module . "." . $key . "','" . str_replace('"-0"','-0',$value) . "')");
+    $setting = $db->query("REPLACE INTO `" . $data->db . "`.settings VALUES('" . $data->module . "." . $key . "','" . json_encode(str_replace('"','',$value)) . "')");
   return array("code" => 201);
 }
 
