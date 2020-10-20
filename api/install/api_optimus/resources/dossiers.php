@@ -10,12 +10,12 @@ function read($db,$data)
 
 
   //SUBSTITUTIONS ICI
-  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?db=dossiers_domaines');
+  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_domaines"}');
   $domaineslist = json_decode($domaineslist, true);
   foreach ($domaineslist as $domaine)
   	$domaines[$domaine['id']] = $domaine['value'];
 
-  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?db=dossiers_sousdomaines');
+  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_sousdomaines"}');
   $domaineslist = json_decode($domaineslist, true);
   foreach ($domaineslist as $sousdomaine)
   	$sousdomaines[$sousdomaine['id']] = $sousdomaine['value'];
