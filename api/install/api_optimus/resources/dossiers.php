@@ -1,4 +1,6 @@
 <?php
+include_once('../datagrid.php');
+
 function read($db,$data)
 {
   $authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND resource = 'dossiers' ORDER BY length(resource) DESC");
@@ -8,24 +10,22 @@ function read($db,$data)
   if ($authorizations['read'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder aux dossiers");
 
-
-  //SUBSTITUTIONS ICI
   $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_domaines"}');
   $domaineslist = json_decode($domaineslist, true);
   foreach ($domaineslist['data'] as $domaine)
   	$domaines[$domaine['id']] = $domaine['value'];
 
-  $domaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_sousdomaines"}');
-  $domaineslist = json_decode($domaineslist, true);
-  foreach ($domaineslist['data'] as $sousdomaine)
+  $sousdomaineslist = file_get_contents('https://api.optimus-avocats.fr/constants/?data={"db":"dossiers_sousdomaines"}');
+  $sousdomaineslist = json_decode($sousdomaineslist, true);
+  foreach ($sousdomaineslist['data'] as $sousdomaine)
   	$sousdomaines[$sousdomaine['id']] = $sousdomaine['value'];
 
-  $query = datagrid_request($data,$db,$domaines,$sousdomaines);
+  $query = datagrid_request($db,$data);
 
   $dossiers = $db->prepare($query);
   if($dossiers->execute())
   {
-    if (@$data->page)
+    if (@$data->results)
     {
       while($dossier = $dossiers->fetch(PDO::FETCH_NUM))
       {
@@ -42,7 +42,7 @@ function read($db,$data)
     }
     else
       $results = $dossiers->fetchAll(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total, "query" => $query);
+    return array("code" => 200, "data" => $results, 'authorizations' => $authorizations, "total" => $total);
   }
   else
     return array("code" => 400, "message" => $dossiers->errorInfo()[2], "query" => $query);
@@ -51,211 +51,6 @@ function read($db,$data)
   //retourner une array si pas requete datagrid
 }
 
-
-function datagrid_request($data,$db,$domaines,$sousdomaines)
-{
-  //START
-  $query = "SELECT SQL_CALC_FOUND_ROWS ";
-
-  //CHAMPS
-  foreach ($data->columns as $key => $column)
-  	$query .= $column->field . ',';
-  $query = substr($query,0,-1);
-
-  //BASE
-  $query .= " FROM `" . $data->db . "`." .  $data->db_table;
-  $query .= " WHERE id > 0";
-
-  //GLOBAL SEARCH
-  if ($data->global_search)
-  {
-  	//$query .= " AND (";
-  	foreach ($data->columns as $key => $column)
-  		if ($column->dblink == null)
-  			$query .= $column->field . " LIKE '%" . $data->global_search . "%' OR ";
-  		else
-  		{
-  			unset($rowsearch);
-
-  			foreach (${$column->dblink} as $key => $value)
-  				if (preg_match("/" . $data->global_search . "/i", $value))
-  					@$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				if (is_array(@$rowsearch))
-  					$query .= $column->field . " IN (" . implode($rowsearch,',') . ") OR ";
-  		}
-  	$query = substr($query,0,-4) . ')';
-  }
-
-
-
-  //COLUMN SEARCH
-  if ($data->column_search)
-  	foreach ($data->column_search as $key => $col)
-  		if ($data->columns[$col[0]]->dblink == null)
-  		{
-  			if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->datatype=='date')
-  				$query .= " AND " .$data->columns[$col[0]]->field . " LIKE '%" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "%'";
-  			else
-  				$query .= " AND " .$data->columns[$col[0]]->field . " = '" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "'";
-  		}
-  		else
-  		{
-  			unset($rowsearch);
-  			foreach (${$data->columns[$col[0]]->dblink} as $key => $value)
-  			{
-  				if ($data->columns[$col[0]]->data_type=='text' OR $data->columns[$col[0]]->data_type=='date')
-  				{
-  					if (preg_match("/" . data_format($col[1],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
-  						$rowsearch[] = "'".$key."'";
-  				}
-  				else
-  				{
-  					if (data_format($col[1],$data->columns[$col[0]]->data_type,$db)==$value)
-  						$rowsearch[] = $key;
-  				}
-  			}
-  			if (is_array($rowsearch))
-  				$query .= " AND " . $data->columns[$col[0]]->field . " IN (" . implode($rowsearch,',') . ")";
-  			else
-  				$query .= ' AND 1=0';
-  		}
-
-
-  //ADVANCED SEARCH
-  if ($data->advanced_search)
-  {
-  	$query .= " AND (";
-  	foreach ($data->advanced_search as $key => $col)
-  		if ($data->columns[$col[0]]->dblink == null)
-  		{
-  			if ($col[1] == "==")
-  				$query .= $data->columns[$col[0]]->field . "= '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			if ($col[1] == "<>" OR $col[1] == ">" OR $col[1] == ">=" OR $col[1] == "<" OR $col[1] == "<=")
-  				$query .= $data->columns[$col[0]]->field . $col[1] . " '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "%LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "%LIKE")
-  				$query .= $data->columns[$col[0]]->field . " LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "NOT LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "%NOT LIKE%")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "%' " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "%NOT LIKE")
-  				$query .= $data->columns[$col[0]]->field . " NOT LIKE '%" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "' " .(($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "IS NULL")
-  				$query .= $data->columns[$col[0]]->field . " IS NULL " . (($col[3]=='AND')?'AND':'OR') . " ";
-  			else if ($col[1] == "IS NOT NULL")
-  				$query .= $data->columns[$col[0]]->field . " IS NOT NULL " . (($col[3]=='AND')?'AND':'OR') . " ";
-  		}
-  		else
-  		{
-  			unset($rowsearch);
-  			foreach (${$data->columns[$col[0]]->dblink} as $key => $value)
-  				if ($col[1] == "==" AND $value == data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<>" AND $value != data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == ">" AND $value > data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == ">=" AND $value >= data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<" AND $value < data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "<=" AND $value <= data_format($col[2],$data->columns[$col[0]]->data_type,$db))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "LIKE%" AND preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%LIKE%" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%LIKE" AND preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "$/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "NOT LIKE%" AND !preg_match("/^" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%NOT LIKE%" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "%NOT LIKE" AND !preg_match("/" . data_format($col[2],$data->columns[$col[0]]->data_type,$db) . "$/i", $value))
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-  				else if ($col[1] == "IS NULL")
-  					$rowsearch = [0];
-  				else if ($col[1] == "IS NOT NULL" AND $key!=0)
-  					$rowsearch[] = (is_numeric($key))? $key : "'".$key."'";
-
-  				if (is_array($rowsearch))
-  					$query .= $data->$columns[$col[0]]->field . " IN (" . implode($rowsearch,',') . ") " . (($col[3]=='AND')?'AND':'OR') . " ";
-  				else
-  					$query .= '1=0 ' . (($col[3]=='AND')?'AND':'OR') . " ";
-  		}
-  	$query = substr($query,0,-4) . ')';
-  }
-  return $query;
-}
-
-function data_format($value,$type,$db)
-{
-	if ($type=='date')
-	{
-		if (substr($value,2,1)=='/')
-			return substr($value,6,4) . '-' . substr($value,3,2) . '-' . substr($value,0,2);
-		else
-			return $value;
-	}
-	else if ($type=='integer')
-		return intval($value);
-	else if ($type=='decimal')
-		return floatval($value);
-	else if ($type=='money')
-		return floatval($value);
-	else if ($type=='rate')
-		return floatval($value);
-	else
-		return $value;
-}
-
-
-function datagrid_sort($data, $sorts)
-{
-  foreach($sorts as $key => $column)
-    if ($column >= 0)
-      $sorts_arr[round(abs($column))] = 'SORT_DESC';
-    else
-      $sorts_arr[round(abs($column))] = 'SORT_ASC';
-
-  $colarr = array();
-  foreach ($sorts_arr as $col => $ordr)
-  {
-    $colarr[$col] = array();
-    foreach ($data as $k => $row)
-      $colarr[$col]['_'.$k] = $row[$col];
-  }
-
-  $multi_params = array();
-  foreach ($sorts_arr as $col => $ordr)
-  {
-    $multi_params[] = '$colarr[\'' . $col .'\']';
-    $multi_params[] = $ordr;
-  }
-  $rum_params = implode(',',$multi_params);
-  eval("array_multisort({$rum_params});");
-  $sorted_array = array();
-  foreach ($colarr as $col => $arr)
-    foreach ($arr as $k => $v)
-    {
-      $k = substr($k,1);
-      if (!isset($sorted_array[$k]))
-        $sorted_array[$k] = $data[$k];
-      $sorted_array[$k][$col] = $data[$k][$col];
-    }
-
-  return array_values($sorted_array);
-}
-
-
-function datagrid_limit($data,$page,$results)
-{
-  return array_slice($data,($page-1)*$results,$results);
-}
 
 
 
