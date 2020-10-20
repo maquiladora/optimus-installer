@@ -30,7 +30,7 @@ function read($db,$data)
 function datagrid_request($data,$db)
 {
   $sousdomaines['0-0'] = 'inconnu';
-  $domaines[0] = 'inconnu';
+  $domaines[85] = 'Recouvrements';
 
   //START
   $query = "SELECT SQL_CALC_FOUND_ROWS ";
