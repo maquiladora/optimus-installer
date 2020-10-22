@@ -44,8 +44,6 @@ function create($db,$data)
 	if ($authorizations['create'] == 0)
 		return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-		echo file_get_contents("php://input");
-		print_r($data);
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 	while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 		$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
@@ -57,10 +55,13 @@ function create($db,$data)
 	$query = "INSERT INTO `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
 	{
+		if (!array_key_exists('lastname', $fields))
+			$data->values->lastname = 'CLIENT ' . time();
+
 		foreach($data->values as $key => $value)
 			$query .= $key.'=:'.$key.',';
 		$query = substr($query,0,-1);
-		echo $query;
+
 		$contact = $db->prepare($query);
 		foreach($data->values as $key => $value)
 			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
@@ -74,13 +75,6 @@ function create($db,$data)
 				$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
 			else
 				$contact->bindParam(':'.$key, $data->values->$key, PDO::PARAM_STR);
-	}
-	else
-	{
-		$query .= "lastname=:lastname";
-		$contact = $db->prepare($query);
-		$lastname = 'CLIENT ' . time();
-		$contact->bindParam(':lastname', $lastname, PDO::PARAM_STR);
 	}
 
 	if($contact->execute())
