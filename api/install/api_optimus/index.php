@@ -16,8 +16,6 @@ else
 if (!$data)
   $data = (object) array();
 
-print_r($path);
-
 if ($path[2]=='auth')
 	include_once 'api_allspark/login.php';
 else if ($path[2]=='ping')
