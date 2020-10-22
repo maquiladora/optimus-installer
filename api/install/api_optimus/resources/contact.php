@@ -1,36 +1,36 @@
 <?php
 function read($db,$data)
 {
-  $authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' or resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
-  $authorizations->bindParam(':email', $data->user);
-  $authorizations->execute();
-  $authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
-  if ($authorizations['read'] == 0)
-    return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce contact");
+	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' or resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
+	$authorizations->bindParam(':email', $data->user);
+	$authorizations->execute();
+	$authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
+	if ($authorizations['read'] == 0)
+	return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce contact");
 
-  if (@$data->fields)
-  {
-    $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
-    while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
-      $fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
-    foreach($data->fields as $field)
-      if (!array_keys_exists($field, $fields))
-          return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
+	if (@$data->fields)
+	{
+		$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
+		while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
+			$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
+		foreach($data->fields as $field)
+			if (!array_keys_exists($field, $fields))
+				return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
-    $contact = $db->prepare("SELECT " . implode(',', $data->fields) . " FROM `" . $data->db . "`.contacts WHERE id = :id");
-  }
-  else
-    $contact = $db->prepare("SELECT * FROM `" . $data->db . "`.contacts WHERE id = :id");
+		$contact = $db->prepare("SELECT " . implode(',', $data->fields) . " FROM `" . $data->db . "`.contacts WHERE id = :id");
+	}
+	else
+		$contact = $db->prepare("SELECT * FROM `" . $data->db . "`.contacts WHERE id = :id");
 
-  $contact->bindParam(':id', $data->id, PDO::PARAM_INT);
-  $contact->execute();
-  if ($contact->rowCount() == 0)
-    return array("code" => 404, "message" => "Ce contact n'existe pas");
-  else
-  {
-    $contact = $contact->fetch(PDO::FETCH_ASSOC);
-    return array("code" => 200, "data" => $contact, "authorizations" => $authorizations);
-  }
+	$contact->bindParam(':id', $data->id, PDO::PARAM_INT);
+	$contact->execute();
+	if ($contact->rowCount() == 0)
+		return array("code" => 404, "message" => "Ce contact n'existe pas");
+	else
+	{
+		$contact = $contact->fetch(PDO::FETCH_ASSOC);
+		return array("code" => 200, "data" => $contact, "authorizations" => $authorizations);
+	}
 }
 
 
