@@ -10,7 +10,7 @@ elseif (isset($_COOKIE['token']))
 else
 {
   http_response_code(401);
-  echo json_encode(array("code" => 401, "message" => "Access denied", "error" => "No Token"));
+  echo json_encode(array("code" => 401, "message" => "Access denied - No Token"));
   exit;
 }
 
@@ -21,7 +21,7 @@ try
 catch (Throwable $e)
 {
     http_response_code(401);
-    echo json_encode(array("code" => 401, "message" => "Access denied", "error" => $e->getMessage()));
+    echo json_encode(array("code" => 401, "message" => "Access denied - " . $e->getMessage()));
     exit;
 }
 ?>
