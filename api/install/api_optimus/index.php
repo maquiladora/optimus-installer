@@ -21,7 +21,7 @@ print_r($path);
 if ($path[2]=='auth')
 	include_once 'api_allspark/login.php';
 else if ($path[2]=='ping')
-	die(json_encode(array("code" => 200, "message" => 'API OPTIMUS V1.0'));
+	die(json_encode(array("code" => 200, "message" => 'API OPTIMUS V1.0')));
 
 if (urldecode(@$path[2]) AND preg_match("/^[a-z0-9_@.]+$/", urldecode(@$path[2])))
   $data->db = urldecode(@$path[2]);
