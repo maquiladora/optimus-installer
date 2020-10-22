@@ -81,7 +81,7 @@ function create($db,$data)
 	if($contact->execute())
 	{
 		$contact->id = $db->lastInsertId();
-		return array("code" => 201, "data" => $this, "authorizations" => $authorizations);
+		return array("code" => 201, "data" => $contact, "authorizations" => $authorizations);
 	}
 	else
 		return array("code" => 400, "message" => $contact->errorInfo()[2]);
@@ -135,7 +135,7 @@ function modify($db,$data)
 	}
 
 	if($contact->execute())
-		return array("code" => 200, "data" => $this, "authorizations" => $authorizations);
+		return array("code" => 200, "data" => $contact, "authorizations" => $authorizations);
 	else
 		return array("code" => 400, "message" => $contact->errorInfo()[2]);
 }
