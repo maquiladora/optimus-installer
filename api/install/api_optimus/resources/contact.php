@@ -119,7 +119,7 @@ function modify($db,$data)
 	foreach($data->values as $key => $value)
 		$query .= $key.'=:'.$key.',';
 	$query = substr($query,0,-1);
-	$query .= " WHERE id = '" . $data->id . "'");
+	$query .= " WHERE id = '" . $data->id . "'";
 
 	$contact = $db->prepare($query);
 	foreach($data->values as $key => $value)
