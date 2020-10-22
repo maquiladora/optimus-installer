@@ -16,7 +16,7 @@ function read($db,$data)
 		if (@$data->fields)
 			foreach($data->fields as $key => $value)
 				if (!array_key_exists($key, $fields))
-					return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+					return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
 		$contact = $db->prepare("SELECT " . implode(',', $data->fields) . " FROM `" . $data->db . "`.contacts WHERE id = :id");
 	}
@@ -52,7 +52,7 @@ function create($db,$data)
 	if (@$data->values)
 		foreach($data->values as $key => $value)
 			if (!array_key_exists($key, $fields))
-				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+				return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
 	$query = "INSERT INTO `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
@@ -62,14 +62,14 @@ function create($db,$data)
 		$query = substr($query,0,-1);
 		$contact = $db->prepare($query);
 		foreach($data->values as $key => $value)
-			if ($field[$key] == 'bit' OR $field[$key] == 'tinyint' OR $field[$key] == 'smallint' OR $field[$key] == 'mediumint' OR $field[$key] == 'int' OR $field[$key] == 'bigint')
+			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
 			{
 				if ($data->value=='')
 				$contact->bindValue(':value', null, PDO::PARAM_NULL);
 				else
 					$contact->bindParam(':value', $data->value, PDO::PARAM_INT);
 			}
-			else if (($field[$key] == 'date' OR $field[$key] == 'datetime') AND $data->value =='')
+			else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $data->value =='')
 				$contact->bindValue(':value', null, PDO::PARAM_NULL);
 			else
 				$contact->bindParam(':value', $data->value, PDO::PARAM_STR);
@@ -113,7 +113,7 @@ function modify($db,$data)
 	if (@$data->values)
 		foreach(@$data->values as $key => $value)
 			if (!array_keys_exist($key, $fields))
-				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+				return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
 	$query = "UPDATE `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
