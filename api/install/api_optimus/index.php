@@ -56,7 +56,7 @@ $data->user = $payload['user']->email;
 
 
 if (file_exists('api_optimus/resources/' . $data->resource . '.php'))
-  include_once 'api_optimus/resources/' . $data->resource . '.php')
+  include_once 'api_optimus/resources/' . $data->resource . '.php';
 else
 {
   http_response_code(404);
