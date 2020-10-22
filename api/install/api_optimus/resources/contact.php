@@ -44,6 +44,9 @@ function create($db,$data)
 	if ($authorizations['create'] == 0)
 		return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
+	if (!$data->values->lastname)
+		$data->values->lastname = 'CLIENT ' . time();
+
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 	while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 		$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
@@ -55,9 +58,6 @@ function create($db,$data)
 	$query = "INSERT INTO `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
 	{
-		if (!array_key_exists('lastname', $fields))
-			$data->values->lastname = 'CLIENT ' . time();
-
 		foreach($data->values as $key => $value)
 			$query .= $key.'=:'.$key.',';
 		$query = substr($query,0,-1);
