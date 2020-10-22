@@ -13,9 +13,10 @@ function read($db,$data)
 		$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 		while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 			$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
-		foreach($data->fields as $field)
-			if (!array_key_exists($field, $fields))
-				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+		if (@$data->fields)
+			foreach($data->fields as $key => $value)
+				if (!array_key_exists($key, $fields))
+					return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
 
 		$contact = $db->prepare("SELECT " . implode(',', $data->fields) . " FROM `" . $data->db . "`.contacts WHERE id = :id");
 	}
@@ -46,10 +47,10 @@ function create($db,$data)
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 	while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 		$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
-	print_r($data);
-	foreach(@$data->values as $key => $value)
-		if (!array_key_exists($key, $fields))
-			return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+	if (@$data->values)
+		foreach($data->values as $key => $value)
+			if (!array_key_exists($key, $fields))
+				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
 
 	$query = "INSERT INTO `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
@@ -80,10 +81,7 @@ function create($db,$data)
 	}
 
 	if($contact->execute())
-	{
-		$contact->id = $db->lastInsertId();
-		return array("code" => 201, "data" => $contact, "authorizations" => $authorizations);
-	}
+		return array("code" => 201, "data" => $db->lastInsertId(), "authorizations" => $authorizations);
 	else
 		return array("code" => 400, "message" => $contact->errorInfo()[2]);
 }
@@ -110,9 +108,10 @@ function modify($db,$data)
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 	while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 		$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
-	foreach(@$data->values as $key => $value)
-		if (!array_keys_exist($key, $fields))
-			return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
+	if (@$data->values)
+		foreach(@$data->values as $key => $value)
+			if (!array_keys_exist($key, $fields))
+				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
 
 	$query = "UPDATE `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
