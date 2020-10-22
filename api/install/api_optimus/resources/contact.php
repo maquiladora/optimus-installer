@@ -87,7 +87,7 @@ function replace($db,$data)
 {
 	delete($db,$data);
 	$data->values->id = $data->id;
-	create($db,$data);
+	return create($db,$data);
 }
 
 
