@@ -44,6 +44,7 @@ function create($db,$data)
 	if ($authorizations['create'] == 0)
 		return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
+		echo file_get_contents("php://input");
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 	while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 		$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
