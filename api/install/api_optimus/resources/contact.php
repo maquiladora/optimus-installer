@@ -66,14 +66,14 @@ function create($db,$data)
 			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
 			{
 				if ($value=='')
-					$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
+					$contact->bindValue(':'.$data->values->key], null, PDO::PARAM_NULL);
 				else
-					$contact->bindParam(':'.$key, $value, PDO::PARAM_INT);
+					$contact->bindParam(':'.$data->values->key, $value, PDO::PARAM_INT);
 			}
 			else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $value =='')
-				$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
+				$contact->bindValue(':'.$data->values->key, null, PDO::PARAM_NULL);
 			else
-				$contact->bindParam(':'.$key, $value, PDO::PARAM_STR);
+				$contact->bindParam(':'.$data->values->key, $value, PDO::PARAM_STR);
 	}
 	else
 	{
