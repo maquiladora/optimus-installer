@@ -10,7 +10,7 @@ function read($db,$data)
 
   if (@$data->fields)
   {
-    $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'"))
+    $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
     while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
       $fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE']];
     foreach($data->fields as $field)
@@ -43,7 +43,7 @@ function create($db,$data)
   if ($authorizations['create'] == 0)
     return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-  $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'"))
+  $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
   while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
     $fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE']];
   foreach(@$data->values as $key => $value)
@@ -106,7 +106,7 @@ function modify($db,$data)
   if ($exists->rowCount() == 0)
     return array("code" => 404, "message" => "Ce contact n'existe pas");
 
-  $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'"))
+  $database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
   while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
     $fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE']];
   foreach(@$data->values as $key => $value)
