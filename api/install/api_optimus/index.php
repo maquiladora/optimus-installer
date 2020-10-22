@@ -62,6 +62,8 @@ $data->user = $payload['user']->email;
   //include_once 'dossiers_intervenants.php';
 if ($data->resource == 'settings')
   include_once 'api_optimus/resources/settings.php';
+  else if ($data->resource == 'contact')
+    include_once 'api_optimus/resources/contact.php';
 else if ($data->resource == 'dossiers')
   include_once 'api_optimus/resources/dossiers.php';
 else
