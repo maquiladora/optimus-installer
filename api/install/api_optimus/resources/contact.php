@@ -7,7 +7,7 @@ function read($db,$data)
 	$authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
 	if ($authorizations['read'] == 0)
 	return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour accéder à ce contact");
-print_r($data->fields);
+print_r($data);
 	if (@$data->fields)
 	{
 		$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
