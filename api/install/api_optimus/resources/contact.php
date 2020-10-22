@@ -74,7 +74,8 @@ function create($db,$data)
 	{
 		$query .= "lastname=:lastname";
 		$contact = $db->prepare($query);
-		$contact->bindParam(':lastname', 'CLIENT ' . time(), PDO::PARAM_STR);
+		$lastname = 'CLIENT ' . time();
+		$contact->bindParam(':lastname', $lastname, PDO::PARAM_STR);
 	}
 
 	if($contact->execute())
