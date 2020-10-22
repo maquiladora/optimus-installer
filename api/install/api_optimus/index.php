@@ -16,8 +16,8 @@ else
 if (!$data)
   $data = (object) array();
 
-
-//optimus/{database}/{resource}/{id}
+if ($path[2]=='auth')
+	include_once 'api_allspark/login.php';
 
 if (urldecode(@$path[2]) AND preg_match("/^[a-z0-9_@.]+$/", urldecode(@$path[2])))
   $data->db = urldecode(@$path[2]);
@@ -54,9 +54,7 @@ include_once 'connect.php';
 include_once 'api_allspark/auth.php';
 $data->user = $payload['user']->email;
 
-if ($path[2]=='auth')
-	include_once 'api_allspark/login.php';
-else if (file_exists('api_optimus/resources/' . $data->resource . '.php'))
+if (file_exists('api_optimus/resources/' . $data->resource . '.php'))
   include_once 'api_optimus/resources/' . $data->resource . '.php';
 else
 {
