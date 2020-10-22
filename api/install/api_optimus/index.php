@@ -54,19 +54,8 @@ include_once 'connect.php';
 include_once 'api_allspark/auth.php';
 $data->user = $payload['user']->email;
 
-//if ($data->resource == 'contacts')
-  //include_once 'contacts.php';
-//else if ($data->resource ==  'dossiers')
-  //include_once 'dossiers.php';
-//else if ($data->resource == 'dossiers_intervenants')
-  //include_once 'dossiers_intervenants.php';
-if ($data->resource == 'settings')
-  include_once 'api_optimus/resources/settings.php';
-  else if ($data->resource == 'contact')
-    include_once 'api_optimus/resources/contact.php';
-else if ($data->resource == 'dossiers')
-  include_once 'api_optimus/resources/dossiers.php';
-else
+
+if (!include_once 'api_optimus/resources/' . $data->resource . '.php')
 {
   http_response_code(404);
   die(json_encode(array("code" => 404, "message" => "Resource inconnue")));
