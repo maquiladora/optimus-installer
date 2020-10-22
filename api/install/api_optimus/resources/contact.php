@@ -85,8 +85,11 @@ function create($db,$data)
 
 function replace($db,$data)
 {
-	return array("code" => 501, "message" => 'Méthode non implémentée');
+	delete($db,$data);
+	$data->values->id = $data->id;
+	create($db,$data);
 }
+
 
 function modify($db,$data)
 {
@@ -139,20 +142,20 @@ function modify($db,$data)
 
 function delete($db,$data)
 {
-	$authorizations = $this->conn->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
+	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
 	$authorizations->bindParam(':email', $data->user);
 	$authorizations->execute();
 	$authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
 	if ($authorizations['delete'] == 0)
 		return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-	$contact = $this->conn->query("SELECT * FROM `" . $data->db . "`.contacts WHERE id = '" . $data->id . "'");
+	$contact = $db->query("SELECT * FROM `" . $data->db . "`.contacts WHERE id = '" . $data->id . "'");
 	if ($contact->rowCount() == 0)
 		return array("code" => 404, "message" => "Ce contact n'existe pas");
 	else
 		$contact = $contact->fetch();
 
-	$intervenants_exists = $this->conn->query("SELECT id FROM `" . $data->db . "`.dossiers_intervenants WHERE contact = '" . $data->id . "'")->rowCount();
+	$intervenants_exists = $db->query("SELECT id FROM `" . $data->db . "`.dossiers_intervenants WHERE contact = '" . $data->id . "'")->rowCount();
 	if ($intervenants_exists > 0)
 		return array("code" => 400, "message" => "Ce contact ne peut pas être supprimé car il intervient dans un ou plusieurs dossiers");
 
@@ -161,7 +164,7 @@ function delete($db,$data)
   //if ($factures_exists > 0)
     //return array("code" => 400, "message" => "Ce dossier ne peut pas être supprimé car des factures le concernant ont été émises");
 
-	$contact_delete = $this->conn->prepare("DELETE FROM `" . $data->db . "`.contacts WHERE id = :id");
+	$contact_delete = $db->prepare("DELETE FROM `" . $data->db . "`.contacts WHERE id = :id");
 	$contact_delete->bindParam(':id', $data->id, PDO::PARAM_INT);
 	if($contact_delete->execute())
 		return array("code" => 200);
