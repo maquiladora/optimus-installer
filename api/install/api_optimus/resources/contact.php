@@ -64,15 +64,15 @@ function create($db,$data)
 		foreach($data->values as $key => $value)
 			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
 			{
-				if ($data->value=='')
-				$contact->bindValue(':value', null, PDO::PARAM_NULL);
+				if ($value=='')
+					$contact->bindValue(':value', null, PDO::PARAM_NULL);
 				else
-					$contact->bindParam(':value', $data->value, PDO::PARAM_INT);
+					$contact->bindParam(':value', $value, PDO::PARAM_INT);
 			}
-			else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $data->value =='')
+			else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $value =='')
 				$contact->bindValue(':value', null, PDO::PARAM_NULL);
 			else
-				$contact->bindParam(':value', $data->value, PDO::PARAM_STR);
+				$contact->bindParam(':value', $value, PDO::PARAM_STR);
 	}
 	else
 	{
