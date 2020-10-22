@@ -19,7 +19,7 @@ if (!$data)
 if ($path[2]=='auth')
 	include_once 'api_allspark/login.php';
 else if ($path[2]=='ping')
-		include_once 'api_optimus/resources/ping.php';
+	include_once 'api_optimus/resources/ping.php';
 
 if (urldecode(@$path[2]) AND preg_match("/^[a-z0-9_@.]+$/", urldecode(@$path[2])))
   $data->db = urldecode(@$path[2]);
