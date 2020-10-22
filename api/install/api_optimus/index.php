@@ -19,8 +19,8 @@ if (!$data)
 
 //optimus/{database}/{resource}/{id}
 
-if (@$path[2] AND preg_match("/^[a-z0-9_@.]+$/", @$path[2]))
-  $data->db = $path[2];
+if (urldecode(@$path[2]) AND preg_match("/^[a-z0-9_@.]+$/", urldecode(@$path[2])))
+  $data->db = urldecode(@$path[2]);
 else
 {
   http_response_code(400);
