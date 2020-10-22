@@ -44,7 +44,7 @@ function create($db,$data)
 	if ($authorizations['create'] == 0)
 		return array("code" => 403, "message" => "Vous n'avez pas les autorisations suffisantes pour effectuer cette action");
 
-	if (!$data->values->lastname)
+	if (@!$data->values->lastname)
 		$data->values->lastname = 'CLIENT ' . time();
 
 	$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
