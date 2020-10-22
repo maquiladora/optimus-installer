@@ -13,10 +13,9 @@ function read($db,$data)
 		$database_fields = $db->query("SELECT DISTINCT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'contacts'");
 		while ($database_field = $database_fields->fetch(PDO::FETCH_ASSOC))
 			$fields[$database_field['COLUMN_NAME']] = $database_field['DATA_TYPE'];
-		if (@$data->fields)
-			foreach($data->fields as $key => $value)
-				if (!array_key_exists($key, $fields))
-					return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
+		foreach($data->fields as $field)
+			if (!array_key_exists($field, $fields))
+				return array("code" => 400, "message" => "Le champ " . $field . " n'existe pas dans la table contacts");
 
 		$contact = $db->prepare("SELECT " . implode(',', $data->fields) . " FROM `" . $data->db . "`.contacts WHERE id = :id");
 	}
