@@ -54,9 +54,8 @@ include_once 'connect.php';
 include_once 'api_allspark/auth.php';
 $data->user = $payload['user']->email;
 
-if (file_exists('api_optimus/resources/' . $data->resource . '.php'))
-  include_once 'api_optimus/resources/' . $data->resource . '.php';
-else
+
+if (!include_once 'api_optimus/resources/' . $data->resource . '.php')
 {
   http_response_code(404);
   die(json_encode(array("code" => 404, "message" => "Resource inconnue")));
