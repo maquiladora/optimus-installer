@@ -60,6 +60,7 @@ function create($db,$data)
 		foreach($data->values as $key => $value)
 			$query .= $key.'=:'.$key.',';
 		$query = substr($query,0,-1);
+		echo $query;
 		$contact = $db->prepare($query);
 		foreach($data->values as $key => $value)
 			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
