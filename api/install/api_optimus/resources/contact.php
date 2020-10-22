@@ -93,6 +93,9 @@ function replace($db,$data)
 
 function modify($db,$data)
 {
+	if (!@$data->values)
+		return array("code" => 400, "message" => "la varible 'value' n'a pas été transmise");
+
 	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
 	$authorizations->bindParam(':email', $data->user);
 	$authorizations->execute();
@@ -112,30 +115,27 @@ function modify($db,$data)
 			if (!array_key_exists($key, $fields))
 				return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
-	if (@$data->values)
-	{
-		$query = "UPDATE `" . $data->db . "`.contacts SET ";
-		foreach($data->values as $key => $value)
-			$query .= $key.'=:'.$key.',';
-		$query = substr($query,0,-1);
+	$query = "UPDATE `" . $data->db . "`.contacts SET ";
+	foreach($data->values as $key => $value)
+		$query .= $key.'=:'.$key.',';
+	$query = substr($query,0,-1);
 
-		$contact = $db->prepare($query);
-		foreach($data->values as $key => $value)
-			if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
-			{
-				if ($value=='')
-					$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
-				else
-					$contact->bindParam(':'.$key, $data->values->$key, PDO::PARAM_INT);
-			}
-			else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $value =='')
+	$contact = $db->prepare($query);
+	foreach($data->values as $key => $value)
+		if ($fields[$key] == 'bit' OR $fields[$key] == 'tinyint' OR $fields[$key] == 'smallint' OR $fields[$key] == 'mediumint' OR $fields[$key] == 'int' OR $fields[$key] == 'bigint')
+		{
+			if ($value=='')
 				$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
 			else
-				$contact->bindParam(':'.$key, $data->values->$key, PDO::PARAM_STR);
-	}
+				$contact->bindParam(':'.$key, $data->values->$key, PDO::PARAM_INT);
+		}
+		else if (($fields[$key] == 'date' OR $fields[$key] == 'datetime') AND $value =='')
+			$contact->bindValue(':'.$key, null, PDO::PARAM_NULL);
+		else
+			$contact->bindParam(':'.$key, $data->values->$key, PDO::PARAM_STR);
 
 	if($contact->execute())
-		return array("code" => 201, "data" => $db->lastInsertId(), "authorizations" => $authorizations);
+		return array("code" => 201, "authorizations" => $authorizations);
 	else
 		return array("code" => 400, "message" => $contact->errorInfo()[2]);
 }
