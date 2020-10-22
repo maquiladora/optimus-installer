@@ -43,24 +43,23 @@ function read($db,$data)
 }
 
 
-
-
-
-
 function create($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
+
 
 function replace($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
 
+
 function update($db,$data)
 {
   return array("code" => 501, "message" => 'Méthode non implémentée');
 }
+
 
 function delete($db,$data)
 {
