@@ -27,7 +27,10 @@ if ($email_exists && openssl_encrypt($data->password, 'aes-128-ecb', $aes_key) =
     $cookie_options = array ('expires' => time() + 3600, 'path' => '/', 'domain' => $domain, 'secure' => true, 'httponly' => true, 'samesite' => 'None');
     setcookie('token', $token, $cookie_options);
     http_response_code(200);
-    die(json_encode(array("code" => 200, "message" => "Successful login")));
+		if ($data->bearer)
+			die(json_encode(array("code" => 200, "message" => "Successful login", "data" => $token)));
+		else
+    	die(json_encode(array("code" => 200, "message" => "Successful login")));
 }
 else
 {
