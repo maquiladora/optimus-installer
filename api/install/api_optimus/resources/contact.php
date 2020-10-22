@@ -93,7 +93,7 @@ function replace($db,$data)
 
 function modify($db,$data)
 {
-	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "' OR resource = 'contacts." . $data->id . "." . $data->field . "') ORDER BY length(resource) DESC");
+	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
 	$authorizations->bindParam(':email', $data->user);
 	$authorizations->execute();
 	$authorizations = $authorizations->fetch(PDO::FETCH_ASSOC);
