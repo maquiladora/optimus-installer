@@ -94,7 +94,7 @@ function replace($db,$data)
 function modify($db,$data)
 {
 	if (!@$data->values)
-		return array("code" => 400, "message" => "la varible 'value' n'a pas été transmise");
+		return array("code" => 400, "message" => "la variable 'values' n'a pas été transmise");
 
 	$authorizations = $db->prepare("SELECT `read`, `write`, `create`, `delete` FROM `" . $data->db . "`.authorizations WHERE email = :email AND (resource = 'contacts' OR resource = 'contacts." . $data->id . "') ORDER BY length(resource) DESC");
 	$authorizations->bindParam(':email', $data->user);
@@ -119,6 +119,7 @@ function modify($db,$data)
 	foreach($data->values as $key => $value)
 		$query .= $key.'=:'.$key.',';
 	$query = substr($query,0,-1);
+	$query .= " WHERE id = '" . $data->id . "'");
 
 	$contact = $db->prepare($query);
 	foreach($data->values as $key => $value)
