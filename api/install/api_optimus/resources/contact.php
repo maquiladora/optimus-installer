@@ -112,9 +112,9 @@ function modify($db,$data)
 			if (!array_key_exists($key, $fields))
 				return array("code" => 400, "message" => "Le champ " . $key . " n'existe pas dans la table contacts");
 
-	$query = "UPDATE `" . $data->db . "`.contacts SET ";
 	if (@$data->values)
 	{
+		$query = "UPDATE `" . $data->db . "`.contacts SET ";
 		foreach($data->values as $key => $value)
 			$query .= $key.'=:'.$key.',';
 		$query = substr($query,0,-1);
