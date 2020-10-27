@@ -9,6 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] == "OPTIONS") die(http_response_code(200));
 
 include_once 'auth.php';
 
-http_response_code(200)
+http_response_code(200);
 die(json_encode(array("code" => 200, "message" => "Successful login")));
 ?>

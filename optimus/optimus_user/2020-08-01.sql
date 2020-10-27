@@ -50,9 +50,8 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `company_name` varchar(255) DEFAULT '',
   `company_type` smallint unsigned NOT NULL DEFAULT 0,
   `company_capital` varchar(255) DEFAULT NULL,
-  `rcs` varchar(255) DEFAULT NULL,
   `siret` varchar(255) DEFAULT NULL,
-  `company_registration_city` smallint unsigned NOT NULL DEFAULT '0',
+  `company_registration_city` varchar(255) DEFAULT NULL,
   `company_representative` tinyint unsigned NOT NULL DEFAULT 0,
   `address` varchar(255) DEFAULT NULL,
   `zipcode` varchar(255) DEFAULT NULL,
@@ -157,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `interventions_diligences` (
 
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` varchar(32) NOT NULL DEFAULT '',
-  `value` varchar(255) DEFAULT NULL,
+  `value` text DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4;
 
