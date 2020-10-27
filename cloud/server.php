@@ -1,5 +1,12 @@
 <?php
-header("Access-Control-Allow-Origin: " . (isset($_SERVER['HTTP_ORIGIN'])?$_SERVER['HTTP_ORIGIN']:$_SERVER['SERVER_NAME']));
+if (!preg_match("/^https:\/\/v\d+.optimus-avocats.fr$/",$_SERVER['HTTP_ORIGIN']))
+{
+	header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
+	header("Access-Control-Allow-Credentials: true");
+	http_response_code(401);
+	die(json_encode(array("code" => 401, "message" => "Les requêtes depuis " . $_SERVER['HTTP_ORIGIN'] . " ne sont pas autorisées")));
+}
+header("Access-Control-Allow-Origin: " . $_SERVER['HTTP_ORIGIN']);
 header("Access-Control-Allow-Methods: OPTIONS,GET,HEAD,DELETE,PROPFIND,PUT,PROPPATCH,COPY,MOVE,REPORT,MKCOL,POST,LOCK,UNLOCK");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Authorization, Digest, Content-Type, Credentials, Depth, Destination, Overwrite, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control, Access-Control-Allow-Headers, Authorization, X-Requested-With");
